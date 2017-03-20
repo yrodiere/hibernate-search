@@ -71,21 +71,11 @@ public class SearchFactoryTest {
 	@TestForIssue(jiraKey = "HSEARCH-2277")
 	@BMRules(rules = {
 			@BMRule(
-					name = "Skip failure on first index manager initialization",
-					isInterface = true,
-					targetClass = "org.hibernate.search.indexes.spi.IndexManager",
-					targetMethod = "initialize(String, Properties, Similarity, WorkerBuildContext)",
-					helper = "org.hibernate.search.testsupport.BytemanHelper",
-					condition = "NOT flagged(\"mustFailIndexManagerInitialization\")",
-					action = "flag(\"mustFailIndexManagerInitialization\")"
-			),
-			@BMRule(
 					name = "Simulate failure on second index manager initialization",
 					isInterface = true,
 					targetClass = "org.hibernate.search.indexes.spi.IndexManager",
 					targetMethod = "initialize(String, Properties, Similarity, WorkerBuildContext)",
 					helper = "org.hibernate.search.testsupport.BytemanHelper",
-					condition = "flagged(\"mustFailIndexManagerInitialization\")",
 					action = "simulateFailure()"
 			),
 			@BMRule(
@@ -100,13 +90,14 @@ public class SearchFactoryTest {
 		SearchConfigurationForTest cfg = new SearchConfigurationForTest()
 				.addClass( AnnotatedClass.class ).addClass( SecondAnnotatedClass.class );
 
+		boolean failed = false;
 		try {
 			new SearchIntegratorBuilder().configuration( cfg ).buildSearchIntegrator();
 		}
 		catch (SearchException e) {
-			// Ignore the exception
+			failed = true;
 		}
-
+		assertTrue( failed );
 		assertEquals( 1, bytemanAccessor.getAndResetInvocationCount() );
 	}
 
@@ -115,21 +106,11 @@ public class SearchFactoryTest {
 	@TestForIssue(jiraKey = "HSEARCH-2277")
 	@BMRules(rules = {
 			@BMRule(
-					name = "Skip failure on first index manager initialization",
-					isInterface = true,
-					targetClass = "org.hibernate.search.indexes.spi.IndexManager",
-					targetMethod = "initialize(String, Properties, Similarity, WorkerBuildContext)",
-					helper = "org.hibernate.search.testsupport.BytemanHelper",
-					condition = "NOT flagged(\"mustFailIndexManagerInitialization\")",
-					action = "flag(\"mustFailIndexManagerInitialization\")"
-			),
-			@BMRule(
 					name = "Simulate failure on second index manager initialization",
 					isInterface = true,
 					targetClass = "org.hibernate.search.indexes.spi.IndexManager",
 					targetMethod = "initialize(String, Properties, Similarity, WorkerBuildContext)",
 					helper = "org.hibernate.search.testsupport.BytemanHelper",
-					condition = "flagged(\"mustFailIndexManagerInitialization\")",
 					action = "simulateFailure()"
 			),
 			@BMRule(
@@ -144,13 +125,14 @@ public class SearchFactoryTest {
 		SearchConfigurationForTest cfg = new SearchConfigurationForTest()
 				.addClass( AnnotatedClass.class ).addClass( SecondAnnotatedClass.class );
 
+		boolean failed = false;
 		try {
 			new SearchIntegratorBuilder().configuration( cfg ).buildSearchIntegrator();
 		}
 		catch (SearchException e) {
-			// Ignore the exception
+			failed = true;
 		}
-
+		assertTrue( failed );
 		assertEquals( 1, bytemanAccessor.getAndResetInvocationCount() );
 	}
 
@@ -176,13 +158,14 @@ public class SearchFactoryTest {
 	public void testServicesStoppedAfterIndexManagerSearchFactorySetupException() {
 		SearchConfigurationForTest cfg = new SearchConfigurationForTest().addClass( AnnotatedClass.class );
 
+		boolean failed = false;
 		try {
 			new SearchIntegratorBuilder().configuration( cfg ).buildSearchIntegrator();
 		}
 		catch (SimulatedFailureException e) {
-			// Ignore the exception
+			failed = true;
 		}
-
+		assertTrue( failed );
 		assertEquals( 1, bytemanAccessor.getAndResetInvocationCount() );
 	}
 
@@ -208,13 +191,14 @@ public class SearchFactoryTest {
 	public void testIndexManagerStoppedAfterIndexManagerSearchFactorySetupException() {
 		SearchConfigurationForTest cfg = new SearchConfigurationForTest().addClass( AnnotatedClass.class );
 
+		boolean failed = false;
 		try {
 			new SearchIntegratorBuilder().configuration( cfg ).buildSearchIntegrator();
 		}
 		catch (SimulatedFailureException e) {
-			// Ignore the exception
+			failed = true;
 		}
-
+		assertEquals( true, failed );
 		assertEquals( 1, bytemanAccessor.getAndResetInvocationCount() );
 	}
 
