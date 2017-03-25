@@ -39,8 +39,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * This integration test (IT) aims to test the performance of the existing mass-indexer and the new mass-indexer under
- * JSR352.
+ * This integration test compares the performance between the existing mass-indexer and the new mass-indexing batch job,
+ * introduced by the integration of JSR 352.
  *
  * @author Mincong Huang
  */
