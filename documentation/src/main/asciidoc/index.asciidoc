@@ -1,5 +1,5 @@
 = Hibernate Search {hibernateSearchVersion}: Reference Guide
-Emmanuel Bernard; Hardy Ferentschik; Gustavo Fernandes; Sanne Grinovero; Nabeel Ali Memon; Gunnar Morling; Yoann Rodière; Guillaume Smet
+Emmanuel Bernard; Hardy Ferentschik; Gustavo Fernandes; Sanne Grinovero; Mincong Huang; Nabeel Ali Memon; Gunnar Morling; Yoann Rodière; Guillaume Smet
 :doctype: book
 :revdate: {docdate}
 :sectanchors:
