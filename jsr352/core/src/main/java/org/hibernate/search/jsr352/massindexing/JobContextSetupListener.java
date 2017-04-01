@@ -21,7 +21,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.criterion.Criterion;
-import org.hibernate.search.exception.SearchException;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.jsr352.context.jpa.EntityManagerFactoryRegistry;
 import org.hibernate.search.jsr352.context.jpa.impl.ActiveSessionFactoryRegistry;
@@ -92,11 +91,7 @@ public class JobContextSetupListener extends AbstractJobListener {
 		}
 		else {
 			if ( StringHelper.isEmpty( entityManagerFactoryReference ) ) {
-				throw new SearchException( "An 'entityManagerFactoryScope' was defined, but"
-						+ " the 'entityManagerFactoryReference' parameter is empty."
-						+ " Please also set the 'entityManagerFactoryReference' parameter to"
-						+ " select an entity manager factory, or do not set the"
-						+ " 'entityManagerFactoryScope' to try to use a default entity manager factory." );
+				throw log.entityManagerFactoryReferenceIsEmpty();
 			}
 			else {
 				return registry.get( entityManagerFactoryScope, entityManagerFactoryReference );
