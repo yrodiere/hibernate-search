@@ -12,7 +12,8 @@ import javax.batch.api.partition.PartitionCollector;
 import javax.batch.runtime.context.StepContext;
 import javax.inject.Inject;
 
-import org.jboss.logging.Logger;
+import org.hibernate.search.util.logging.impl.Log;
+import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
  * Progress collectors run on the partitioned step threads and there's one collector per partition. They collect the
@@ -22,7 +23,7 @@ import org.jboss.logging.Logger;
  */
 public class ProgressCollector implements PartitionCollector {
 
-	private static final Logger LOGGER = Logger.getLogger( ProgressCollector.class );
+	private static final Log log = LoggerFactory.make();
 
 	@Inject
 	private StepContext stepContext;
@@ -33,7 +34,7 @@ public class ProgressCollector implements PartitionCollector {
 	 */
 	@Override
 	public Serializable collectPartitionData() throws Exception {
-		LOGGER.debug( "Collecting partition data ..." );
+		log.debug( "Collecting partition data ..." );
 		return ( (PartitionContextData) stepContext.getTransientUserData() )
 				.getPartitionProgress();
 	}

@@ -31,7 +31,8 @@ import org.hibernate.search.jsr352.massindexing.MassIndexingJobParameters;
 import org.hibernate.search.jsr352.massindexing.impl.JobContextData;
 import org.hibernate.search.jsr352.massindexing.impl.util.MassIndexingPartitionProperties;
 import org.hibernate.search.jsr352.massindexing.impl.util.PartitionBound;
-import org.jboss.logging.Logger;
+import org.hibernate.search.util.logging.impl.Log;
+import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
  * Lucene partition mapper provides a partition plan to the Lucene production step: "produceLuceneDoc". The partition
@@ -41,7 +42,7 @@ import org.jboss.logging.Logger;
  */
 public class PartitionMapper implements javax.batch.api.partition.PartitionMapper {
 
-	private static final Logger LOGGER = Logger.getLogger( PartitionMapper.class );
+	private static final Log log = LoggerFactory.make();
 
 	private enum Type {
 		HQL, CRITERIA, FULL_ENTITY
@@ -136,7 +137,7 @@ public class PartitionMapper implements javax.batch.api.partition.PartitionMappe
 			final int threads = Integer.valueOf( maxThreads );
 			final int partitions = partitionBounds.size();
 			final Properties[] props = new Properties[partitions];
-			LOGGER.infof( "%d partitions, %d threads.", partitions, threads );
+			log.infof( "%d partitions, %d threads.", partitions, threads );
 
 			for ( int i = 0; i < partitionBounds.size(); i++ ) {
 				props[i] = new Properties();
@@ -157,19 +158,19 @@ public class PartitionMapper implements javax.batch.api.partition.PartitionMappe
 				}
 			}
 			catch (Exception e) {
-				LOGGER.error( e );
+				log.error( e );
 			}
 			try {
 				ss.close();
 			}
 			catch (Exception e) {
-				LOGGER.error( e );
+				log.error( e );
 			}
 			try {
 				session.close();
 			}
 			catch (Exception e) {
-				LOGGER.error( e );
+				log.error( e );
 			}
 		}
 	}

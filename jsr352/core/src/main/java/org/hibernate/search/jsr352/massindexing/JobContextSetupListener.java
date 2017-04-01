@@ -28,7 +28,8 @@ import org.hibernate.search.jsr352.context.jpa.impl.ActiveSessionFactoryRegistry
 import org.hibernate.search.jsr352.massindexing.impl.JobContextData;
 import org.hibernate.search.jsr352.massindexing.impl.util.MassIndexerUtil;
 import org.hibernate.search.util.StringHelper;
-import org.jboss.logging.Logger;
+import org.hibernate.search.util.logging.impl.Log;
+import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
  * Listener before the start of the job. It aims to setup the job context data, shared by all the steps.
@@ -43,7 +44,7 @@ import org.jboss.logging.Logger;
  */
 public class JobContextSetupListener extends AbstractJobListener {
 
-	private static final Logger LOGGER = Logger.getLogger( JobContextSetupListener.class );
+	private static final Log log = LoggerFactory.make();
 
 	@Inject
 	private JobContext jobContext;
@@ -108,7 +109,7 @@ public class JobContextSetupListener extends AbstractJobListener {
 		EntityManager em = null;
 
 		try {
-			LOGGER.debug( "Creating entity manager ..." );
+			log.debug( "Creating entity manager ..." );
 
 			em = emf.createEntityManager();
 			List<String> entityNamesToIndex = Arrays.asList( rootEntities.split( "," ) );
@@ -121,7 +122,7 @@ public class JobContextSetupListener extends AbstractJobListener {
 					.collect( Collectors.toCollection( HashSet::new ) );
 
 			Set<Criterion> criteria = MassIndexerUtil.deserializeCriteria( serializedCustomQueryCriteria );
-			LOGGER.infof( "%d criteria found.", criteria.size() );
+			log.infof( "%d criteria found.", criteria.size() );
 
 			JobContextData jobContextData = new JobContextData();
 			jobContextData.setEntityManagerFactory( emf );
@@ -134,7 +135,7 @@ public class JobContextSetupListener extends AbstractJobListener {
 				em.close();
 			}
 			catch (Exception e) {
-				LOGGER.error( e );
+				log.error( e );
 			}
 		}
 	}
