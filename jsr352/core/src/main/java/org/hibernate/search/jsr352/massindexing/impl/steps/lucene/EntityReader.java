@@ -145,24 +145,24 @@ public class EntityReader extends AbstractItemReader {
 		log.debug( "Closing everything..." );
 		try {
 			scroll.close();
-			log.debug( "Scrollable results closed." );
+			log.scrollableResultsClosed();
 		}
 		catch (Exception e) {
-			log.error( e );
+			log.unableToCloseScrollableResults( e );
 		}
 		try {
 			ss.close();
-			log.debug( "Stateless session closed." );
+			log.statelessSessionClosed();
 		}
 		catch (Exception e) {
-			log.error( e );
+			log.unableToCloseStatelessSession( e );
 		}
 		try {
 			session.close();
-			log.debug( "Session closed." );
+			log.sessionClosed();
 		}
 		catch (Exception e) {
-			log.error( e );
+			log.unableToCloseSession( e );
 		}
 		// reset the chunk work count to avoid over-count in item collector
 		// release session

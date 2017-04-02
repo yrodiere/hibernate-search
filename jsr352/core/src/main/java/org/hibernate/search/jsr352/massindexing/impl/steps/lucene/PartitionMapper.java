@@ -158,19 +158,19 @@ public class PartitionMapper implements javax.batch.api.partition.PartitionMappe
 				}
 			}
 			catch (Exception e) {
-				log.error( e );
+				log.unableToCloseScrollableResults( e );
 			}
 			try {
 				ss.close();
 			}
 			catch (Exception e) {
-				log.error( e );
+				log.unableToCloseStatelessSession( e );
 			}
 			try {
 				session.close();
 			}
 			catch (Exception e) {
-				log.error( e );
+				log.unableToCloseSession( e );
 			}
 		}
 	}

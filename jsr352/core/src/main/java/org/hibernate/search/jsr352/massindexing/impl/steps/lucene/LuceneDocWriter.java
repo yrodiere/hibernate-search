@@ -71,7 +71,7 @@ public class LuceneDocWriter extends AbstractItemWriter {
 			em.close();
 		}
 		catch (Exception e) {
-			log.error( e );
+			log.unableToCloseEntityManager( e );
 		}
 	}
 

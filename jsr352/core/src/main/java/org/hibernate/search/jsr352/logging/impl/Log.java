@@ -1,7 +1,19 @@
+/*
+ * Hibernate Search, full-text search for your domain model
+ *
+ * License: GNU Lesser General Public License (LGPL), version 2.1 or later
+ * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+ */
 package org.hibernate.search.jsr352.logging.impl;
+
+import static org.jboss.logging.Logger.Level.DEBUG;
+import static org.jboss.logging.Logger.Level.ERROR;
+import static org.jboss.logging.Logger.Level.INFO;
 
 import org.hibernate.search.exception.SearchException;
 
+import org.jboss.logging.annotations.Cause;
+import org.jboss.logging.annotations.LogMessage;
 import org.jboss.logging.annotations.Message;
 import org.jboss.logging.annotations.MessageLogger;
 
@@ -74,4 +86,59 @@ public interface Log extends org.hibernate.search.util.logging.impl.Log {
 					+ " parameter for more referencing options)."
 	)
 	SearchException tooManyActiveEntityManagerFactories();
+
+	@LogMessage(level = INFO)
+	@Message(id = JSR_352_MESSAGES_START_ID + 10,
+			value = "%1$s"
+	)
+	void analyzeIndexProgress(StringBuilder stringBuilder);
+
+	@LogMessage(level = DEBUG)
+	@Message(id = JSR_352_MESSAGES_START_ID + 11,
+			value = "Session is closed."
+	)
+	void sessionClosed();
+
+	@LogMessage(level = DEBUG)
+	@Message(id = JSR_352_MESSAGES_START_ID + 12,
+			value = "Stateless session is closed."
+	)
+	void statelessSessionClosed();
+
+	@LogMessage(level = DEBUG)
+	@Message(id = JSR_352_MESSAGES_START_ID + 13,
+			value = "Scrollable results are closed."
+	)
+	void scrollableResultsClosed();
+
+	@LogMessage(level = DEBUG)
+	@Message(id = JSR_352_MESSAGES_START_ID + 14,
+			value = "Entity manager is closed."
+	)
+	void entityManagerClosed();
+
+	@LogMessage(level = ERROR)
+	@Message(id = JSR_352_MESSAGES_START_ID + 15,
+			value = "Unable to close session."
+	)
+	void unableToCloseSession(@Cause Exception e);
+
+	@LogMessage(level = ERROR)
+	@Message(id = JSR_352_MESSAGES_START_ID + 16,
+			value = "Unable to close stateless session."
+	)
+	void unableToCloseStatelessSession(@Cause Exception e);
+
+	@LogMessage(level = ERROR)
+	@Message(id = JSR_352_MESSAGES_START_ID + 17,
+			value = "Unable to close scrollable results."
+	)
+	void unableToCloseScrollableResults(@Cause Exception e);
+
+	@LogMessage(level = ERROR)
+	@Message(id = JSR_352_MESSAGES_START_ID + 18,
+			value = "Unable to close entity manager."
+	)
+	void unableToCloseEntityManager(@Cause Exception e);
+
 }

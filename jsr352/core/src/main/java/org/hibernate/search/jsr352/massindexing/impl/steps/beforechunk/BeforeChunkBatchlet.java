@@ -68,7 +68,7 @@ public class BeforeChunkBatchlet extends AbstractBatchlet {
 			session.close();
 		}
 		catch (Exception e) {
-			log.error( e );
+			log.unableToCloseSession( e );
 		}
 	}
 }

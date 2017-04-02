@@ -57,7 +57,7 @@ public class AfterChunkBatchlet extends AbstractBatchlet {
 			session.close();
 		}
 		catch (Exception e) {
-			log.error( e );
+			log.unableToCloseSession( e );
 		}
 	}
 }

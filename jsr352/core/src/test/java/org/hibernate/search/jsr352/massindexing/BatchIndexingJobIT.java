@@ -98,7 +98,7 @@ public class BatchIndexingJobIT {
 				em.close();
 			}
 			catch (Exception e) {
-				log.error( e );
+				log.unableToCloseEntityManager( e );
 			}
 		}
 	}

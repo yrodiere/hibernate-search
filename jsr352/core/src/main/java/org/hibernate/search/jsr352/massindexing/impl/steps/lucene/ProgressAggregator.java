@@ -50,6 +50,6 @@ public class ProgressAggregator extends AbstractPartitionAnalyzer {
 			sb.append( System.lineSeparator() ).append( "\t" ).append( msg );
 		}
 		sb.append( System.lineSeparator() );
-		log.info( sb );
+		log.analyzeIndexProgress( sb );
 	}
 }
