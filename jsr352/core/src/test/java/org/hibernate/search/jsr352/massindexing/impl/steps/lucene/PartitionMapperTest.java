@@ -17,10 +17,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.jsr352.massindexing.impl.JobContextData;
 import org.hibernate.search.jsr352.massindexing.test.entity.Company;
 import org.hibernate.search.jsr352.massindexing.test.entity.Person;
-import org.hibernate.search.util.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 import org.junit.After;
@@ -38,7 +38,7 @@ import org.mockito.MockitoAnnotations;
  */
 public class PartitionMapperTest {
 
-	private static final Log log = LoggerFactory.make();
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	private static final String PERSISTENCE_UNIT_NAME = "h2";
 	private static final int COMP_ROWS = 3;

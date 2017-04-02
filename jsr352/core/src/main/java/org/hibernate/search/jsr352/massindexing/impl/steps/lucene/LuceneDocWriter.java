@@ -24,11 +24,11 @@ import org.hibernate.search.backend.impl.StreamingOperationExecutorSelector;
 import org.hibernate.search.engine.spi.EntityIndexBinding;
 import org.hibernate.search.indexes.spi.IndexManager;
 import org.hibernate.search.jpa.Search;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.jsr352.massindexing.impl.JobContextData;
 import org.hibernate.search.jsr352.massindexing.impl.util.MassIndexingPartitionProperties;
 import org.hibernate.search.spi.SearchIntegrator;
 import org.hibernate.search.store.IndexShardingStrategy;
-import org.hibernate.search.util.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
@@ -40,7 +40,7 @@ import org.hibernate.search.util.logging.impl.LoggerFactory;
 @SuppressWarnings("deprecation")
 public class LuceneDocWriter extends AbstractItemWriter {
 
-	private static final Log log = LoggerFactory.make();
+	private static final Log log = LoggerFactory.make( Log.class );
 	private static final boolean FORCE_ASYNC = true;
 
 	@Inject

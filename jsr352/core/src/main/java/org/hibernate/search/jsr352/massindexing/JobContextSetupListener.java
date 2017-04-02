@@ -24,10 +24,10 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.jsr352.context.jpa.EntityManagerFactoryRegistry;
 import org.hibernate.search.jsr352.context.jpa.impl.ActiveSessionFactoryRegistry;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.jsr352.massindexing.impl.JobContextData;
 import org.hibernate.search.jsr352.massindexing.impl.util.MassIndexerUtil;
 import org.hibernate.search.util.StringHelper;
-import org.hibernate.search.util.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
@@ -43,7 +43,7 @@ import org.hibernate.search.util.logging.impl.LoggerFactory;
  */
 public class JobContextSetupListener extends AbstractJobListener {
 
-	private static final Log log = LoggerFactory.make();
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	@Inject
 	private JobContext jobContext;

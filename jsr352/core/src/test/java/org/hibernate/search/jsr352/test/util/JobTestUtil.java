@@ -15,7 +15,7 @@ import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
-import org.hibernate.search.util.logging.impl.Log;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 import org.apache.lucene.search.Query;
@@ -25,7 +25,7 @@ import org.apache.lucene.search.Query;
  */
 public final class JobTestUtil {
 
-	private static final Log log = LoggerFactory.make();
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	private static final int THREAD_SLEEP = 1000;
 

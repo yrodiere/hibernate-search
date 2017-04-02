@@ -16,7 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.jpa.AvailableSettings;
-import org.hibernate.search.util.logging.impl.Log;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
@@ -36,7 +36,7 @@ import org.hibernate.search.util.logging.impl.LoggerFactory;
  */
 public class ActiveSessionFactoryRegistry implements MutableSessionFactoryRegistry {
 
-	private static final Log log = LoggerFactory.make();
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	private static final MutableSessionFactoryRegistry INSTANCE = new ActiveSessionFactoryRegistry();
 

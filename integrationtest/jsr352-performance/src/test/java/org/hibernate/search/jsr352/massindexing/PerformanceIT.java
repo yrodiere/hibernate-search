@@ -23,12 +23,12 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.CacheMode;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.jsr352.massindexing.test.entity.Company;
 import org.hibernate.search.jsr352.massindexing.test.entity.CompanyManager;
 import org.hibernate.search.jsr352.massindexing.test.entity.Person;
 import org.hibernate.search.jsr352.massindexing.test.entity.PersonManager;
 import org.hibernate.search.jsr352.test.util.JobTestUtil;
-import org.hibernate.search.util.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -49,7 +49,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class PerformanceIT {
 
-	private static final Log log = LoggerFactory.make();
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	private static final String PERSISTENCE_UNIT_NAME = "h2";
 

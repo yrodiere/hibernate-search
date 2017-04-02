@@ -27,12 +27,12 @@ import javax.persistence.Persistence;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.jsr352.massindexing.test.entity.Company;
 import org.hibernate.search.jsr352.massindexing.test.entity.Person;
 import org.hibernate.search.jsr352.massindexing.test.entity.WhoAmI;
 import org.hibernate.search.jsr352.test.util.JobFactory;
 import org.hibernate.search.jsr352.test.util.JobTestUtil;
-import org.hibernate.search.util.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 import org.junit.After;
@@ -44,7 +44,7 @@ import org.junit.Test;
  */
 public class BatchIndexingJobIT {
 
-	private static final Log log = LoggerFactory.make();
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	private static final String PERSISTENCE_UNIT_NAME = "h2";
 	private static final String SESSION_FACTORY_NAME = "h2-entityManagerFactory";

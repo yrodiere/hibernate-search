@@ -12,7 +12,7 @@ import javax.batch.api.partition.PartitionCollector;
 import javax.batch.runtime.context.StepContext;
 import javax.inject.Inject;
 
-import org.hibernate.search.util.logging.impl.Log;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
@@ -23,7 +23,7 @@ import org.hibernate.search.util.logging.impl.LoggerFactory;
  */
 public class ProgressCollector implements PartitionCollector {
 
-	private static final Log log = LoggerFactory.make();
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	@Inject
 	private StepContext stepContext;

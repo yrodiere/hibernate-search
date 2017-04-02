@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.jsr352.massindexing.impl.util.MassIndexerUtil;
-import org.hibernate.search.util.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
@@ -41,7 +41,7 @@ import org.hibernate.search.util.logging.impl.LoggerFactory;
  */
 public final class MassIndexingJob {
 
-	public static final Log log = LoggerFactory.make();
+	public static final Log log = LoggerFactory.make( Log.class );
 
 	public static final String NAME = "hibernate-search-mass-indexing";
 

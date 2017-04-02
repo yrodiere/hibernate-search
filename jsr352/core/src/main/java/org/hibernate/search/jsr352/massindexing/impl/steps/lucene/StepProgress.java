@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.hibernate.search.util.logging.impl.Log;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
@@ -25,7 +25,8 @@ import org.hibernate.search.util.logging.impl.LoggerFactory;
  */
 public class StepProgress implements Serializable {
 
-	private static final Log log = LoggerFactory.make();
+	private static final Log log = LoggerFactory.make( Log.class );
+
 	private static final long serialVersionUID = 7808926033388850340L;
 
 	/**

@@ -22,7 +22,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 
 import org.hibernate.search.jsr352.context.jpa.EntityManagerFactoryRegistry;
-import org.hibernate.search.util.logging.impl.Log;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
@@ -84,7 +84,7 @@ public class EntityManagerFactoriesProducer {
 @Singleton
 public class CDIEntityManagerFactoryRegistry implements EntityManagerFactoryRegistry {
 
-	private static final Log log = LoggerFactory.make();
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	private static final String CDI_SCOPE_NAME = "cdi";
 
