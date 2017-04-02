@@ -68,6 +68,13 @@
         </developer>
     </developers>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging-annotations</artifactId>
+        </dependency>
+    </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <!-- Test -->

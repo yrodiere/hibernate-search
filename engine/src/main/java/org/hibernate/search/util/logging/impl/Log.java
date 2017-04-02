@@ -56,6 +56,7 @@ public interface Log extends BasicLogger {
 	int JGROUPS_BACKEND_MESSAGES_START_ID = 200000;
 	int AVRO_SERIALIZATION_MESSAGES_START_ID = 300000;
 	int ES_BACKEND_MESSAGES_START_ID = 400000;
+	int JSR_352_MESSAGES_START_ID = 500000;
 
 	@LogMessage(level = WARN)
 	@Message(id = 1, value = "initialized \"blackhole\" backend. Index changes will be prepared but discarded!")

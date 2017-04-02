@@ -27,10 +27,11 @@ import org.hibernate.search.engine.integration.impl.ExtendedSearchIntegrator;
 import org.hibernate.search.engine.spi.DocumentBuilderIndexedEntity;
 import org.hibernate.search.engine.spi.EntityIndexBinding;
 import org.hibernate.search.hcore.util.impl.ContextHelper;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.jsr352.massindexing.impl.JobContextData;
 import org.hibernate.search.jsr352.massindexing.impl.util.MassIndexingPartitionProperties;
 import org.hibernate.search.spi.InstanceInitializer;
-import org.jboss.logging.Logger;
+import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
  * ItemProcessor receives entities coming from item reader and process then into an AddLuceneWorks. Only one entity is
@@ -40,7 +41,7 @@ import org.jboss.logging.Logger;
  */
 public class LuceneDocProducer implements ItemProcessor {
 
-	private static final Logger LOGGER = Logger.getLogger( LuceneDocProducer.class );
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	@Inject
 	private JobContext jobContext;
@@ -63,7 +64,7 @@ public class LuceneDocProducer implements ItemProcessor {
 
 	@Override
 	public Object processItem(Object item) throws Exception {
-		LOGGER.debug( "processing item ..." );
+		log.debug( "Processing item ..." );
 		if ( !isSetup ) {
 			setup();
 			isSetup = true;
@@ -120,7 +121,7 @@ public class LuceneDocProducer implements ItemProcessor {
 					.setClass( entityType )
 					.twoWayConversionContext( idBridge )
 					.objectToString( id );
-			LOGGER.debugf( "idInString=%s", idInString );
+			log.debugf( "idInString=%s", idInString );
 		}
 		finally {
 			conversionContext.popProperty();

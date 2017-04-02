@@ -23,14 +23,16 @@ import javax.persistence.PersistenceContext;
 import org.hibernate.CacheMode;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.jsr352.massindexing.test.entity.Company;
 import org.hibernate.search.jsr352.massindexing.test.entity.CompanyManager;
 import org.hibernate.search.jsr352.massindexing.test.entity.Person;
 import org.hibernate.search.jsr352.massindexing.test.entity.PersonManager;
 import org.hibernate.search.jsr352.test.util.JobTestUtil;
+import org.hibernate.search.util.logging.impl.LoggerFactory;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.logging.Logger;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -47,7 +49,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class PerformanceIT {
 
-	private static final Logger LOGGER = Logger.getLogger( PerformanceIT.class );
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	private static final String PERSISTENCE_UNIT_NAME = "h2";
 
@@ -127,7 +129,7 @@ public class PerformanceIT {
 		long end1 = System.currentTimeMillis();
 		double delta0 = ( end0 - start0 ) / 1000f;
 		double delta1 = ( end1 - start1 ) / 1000f;
-		LOGGER.infof( "%n%n"
+		log.infof( "%n%n"
 				+ "\told massindexer = %.2fs%n"
 				+ "\tnew massindexer = %.2fs%n",
 				delta0, delta1 );

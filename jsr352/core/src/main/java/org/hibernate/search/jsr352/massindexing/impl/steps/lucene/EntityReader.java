@@ -23,11 +23,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.StatelessSession;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.search.jsr352.logging.impl.Log;
 import org.hibernate.search.jsr352.massindexing.MassIndexingJobParameters;
 import org.hibernate.search.jsr352.massindexing.impl.JobContextData;
 import org.hibernate.search.jsr352.massindexing.impl.util.MassIndexingPartitionProperties;
 import org.hibernate.search.jsr352.massindexing.impl.util.PartitionBound;
-import org.jboss.logging.Logger;
+import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 /**
  * Item reader reads entities using scrollable results. For each reader, there's only one target entity type. The range
@@ -48,7 +49,7 @@ import org.jboss.logging.Logger;
  */
 public class EntityReader extends AbstractItemReader {
 
-	private static final Logger LOGGER = Logger.getLogger( EntityReader.class );
+	private static final Log log = LoggerFactory.make( Log.class );
 
 	@Inject
 	private JobContext jobContext;
@@ -121,12 +122,16 @@ public class EntityReader extends AbstractItemReader {
 	 * checkpoint is committed.
 	 *
 	 * @return the checkpoint info
+	 *
 	 * @throws Exception thrown for any errors.
 	 */
 	@Override
 	public Serializable checkpointInfo() throws Exception {
-		LOGGER.debug( "checkpointInfo() called. "
-				+ "Saving last read ID to batch runtime..." );
+		log.debugf(
+				"Checkpoint reached. Sending checkpoint ID to batch runtime... (entity='%s', id='%s')%n",
+				entityName,
+				checkpointId
+		);
 		return checkpointId;
 	}
 
@@ -137,27 +142,27 @@ public class EntityReader extends AbstractItemReader {
 	 */
 	@Override
 	public void close() throws Exception {
-		LOGGER.debug( "closing everything..." );
+		log.debug( "Closing everything..." );
 		try {
 			scroll.close();
-			LOGGER.debug( "Scrollable results closed." );
+			log.scrollableResultsClosed();
 		}
 		catch (Exception e) {
-			LOGGER.error( e );
+			log.unableToCloseScrollableResults( e );
 		}
 		try {
 			ss.close();
-			LOGGER.debug( "Stateless session closed." );
+			log.statelessSessionClosed();
 		}
 		catch (Exception e) {
-			LOGGER.error( e );
+			log.unableToCloseStatelessSession( e );
 		}
 		try {
 			session.close();
-			LOGGER.debug( "Session closed." );
+			log.sessionClosed();
 		}
 		catch (Exception e) {
-			LOGGER.error( e );
+			log.unableToCloseSession( e );
 		}
 		// reset the chunk work count to avoid over-count in item collector
 		// release session
@@ -179,11 +184,11 @@ public class EntityReader extends AbstractItemReader {
 
 		final int partitionId = Integer.parseInt( partitionIdStr );
 
-		LOGGER.debugf( "[partitionId=%d] open reader for entity %s ...", (Integer) partitionId, entityName );
+		log.debugf( "[partitionId=%d] Prepare reader for entity '%s'.", (Integer) partitionId, entityName );
 		JobContextData jobData = (JobContextData) jobContext.getTransientUserData();
 		entityType = jobData.getIndexedType( entityName );
 		PartitionBound bound = jobData.getPartitionBound( partitionId );
-		LOGGER.debug( bound );
+		log.debug( bound );
 
 		emf = jobData.getEntityManagerFactory();
 		sessionFactory = emf.unwrap( SessionFactory.class );
@@ -270,7 +275,7 @@ public class EntityReader extends AbstractItemReader {
 	 */
 	@Override
 	public Object readItem() throws Exception {
-		LOGGER.debug( "Reading item ..." );
+		log.debug( "Reading item ..." );
 		Object entity = null;
 
 		if ( scroll.next() ) {
@@ -279,7 +284,7 @@ public class EntityReader extends AbstractItemReader {
 					.getIdentifier( entity );
 		}
 		else {
-			LOGGER.debug( "no more result. read ends." );
+			log.debug( "No more result, read ends." );
 		}
 		return entity;
 	}
