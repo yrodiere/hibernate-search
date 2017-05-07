@@ -200,7 +200,7 @@ public interface Log extends org.hibernate.search.util.logging.impl.Log {
 	void rowsToIndex(String entityName, long rowsToIndex);
 
 	@Message(id = JSR_352_MESSAGES_START_ID + 28,
-			value = "Unable to parse value '%1$s' for job parameter '%2$s'."
+			value = "Unable to parse value '%2$s' for job parameter '%1$s'."
 	)
 	SearchException unableToParseJobParameter(String parameterName, Object parameterValue, @Cause Exception e);
 
