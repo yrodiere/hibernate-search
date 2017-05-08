@@ -45,4 +45,7 @@ public final class MassIndexingJobParameters {
 	public static final String CUSTOM_QUERY_LIMIT = "customQueryLimit";
 
 	public static final String TENANT_ID = "tenantId";
+
+	public static final String TRANSACTION_TIMEOUT_IN_SECOND = "javax.transaction.global.timeout";
+
 }

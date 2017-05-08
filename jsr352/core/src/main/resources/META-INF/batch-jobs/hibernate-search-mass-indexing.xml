@@ -41,6 +41,10 @@
     </step>
 
     <step id="produceLuceneDoc" next="afterChunk">
+        <properties>
+            <!-- In seconds -->
+            <property name="javax.transaction.global.timeout" value="#{jobParameters['javax.transaction.global.timeout']}?:180;" />
+        </properties>
         <listeners>
             <listener ref="org.hibernate.search.jsr352.massindexing.impl.steps.lucene.StepProgressSetupListener">
                 <properties>
