@@ -116,6 +116,8 @@ public class RestartIT {
 		jobExec1 = JobTestUtil.waitForTermination( jobOperator, jobExec1, JOB_TIMEOUT_MS );
 		JobInterruptorUtil.disable();
 
+		assertEquals( BatchStatus.FAILED, jobExec1.getBatchStatus() );
+
 		// Restart the job. This is the 2nd execution.
 		long execId2 = jobOperator.restart( execId1, null );
 		JobExecution jobExec2 = jobOperator.getJobExecution( execId2 );
@@ -145,6 +147,8 @@ public class RestartIT {
 		JobExecution jobExec1 = jobOperator.getJobExecution( execId1 );
 		jobExec1 = JobTestUtil.waitForTermination( jobOperator, jobExec1, JOB_TIMEOUT_MS );
 		JobInterruptorUtil.disable();
+
+		assertEquals( BatchStatus.FAILED, jobExec1.getBatchStatus() );
 
 		// Restart the job. This is the 2nd execution.
 		long execId2 = jobOperator.restart( execId1, null );
