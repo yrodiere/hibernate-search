@@ -30,6 +30,7 @@ import org.hibernate.search.test.integration.jsr352.massindexing.test.common.Mes
 import org.hibernate.search.test.integration.jsr352.massindexing.test.common.MessageManager;
 import org.hibernate.search.test.integration.jsr352.massindexing.test.util.JobInterruptorUtil;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -78,6 +79,7 @@ public class RestartIT {
 	}
 
 	@Before
+	@RunAsClient
 	public void insertData() throws ParseException {
 		List<Message> messages = new LinkedList<>();
 		for ( int i = 0; i < DB_DAY1_ROWS; i++ ) {
@@ -90,6 +92,7 @@ public class RestartIT {
 	}
 
 	@After
+	@RunAsClient
 	public void removeAll() {
 		messageManager.removeAll();
 	}
@@ -112,6 +115,8 @@ public class RestartIT {
 		JobExecution jobExec1 = jobOperator.getJobExecution( execId1 );
 		jobExec1 = JobTestUtil.waitForTermination( jobOperator, jobExec1, JOB_TIMEOUT_MS );
 		JobInterruptorUtil.disable();
+
+		assertEquals( BatchStatus.FAILED, jobExec1.getBatchStatus() );
 
 		// Restart the job. This is the 2nd execution.
 		long execId2 = jobOperator.restart( execId1, null );
@@ -142,6 +147,8 @@ public class RestartIT {
 		JobExecution jobExec1 = jobOperator.getJobExecution( execId1 );
 		jobExec1 = JobTestUtil.waitForTermination( jobOperator, jobExec1, JOB_TIMEOUT_MS );
 		JobInterruptorUtil.disable();
+
+		assertEquals( BatchStatus.FAILED, jobExec1.getBatchStatus() );
 
 		// Restart the job. This is the 2nd execution.
 		long execId2 = jobOperator.restart( execId1, null );
