@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManagerFactory;
@@ -109,6 +110,7 @@ public final class MassIndexingJob {
 		private String customQueryHql;
 		private Integer maxResultsPerEntity;
 		private String tenantId;
+		private Integer transactionTimeoutInSecond;
 
 		private ParametersBuilder(Class<?> entityType, Class<?>... entityTypes) {
 			if ( entityType == null ) {
@@ -370,6 +372,32 @@ public final class MassIndexingJob {
 		}
 
 		/**
+		 * Define the transaction timeout for entity indexing, which will be applied each partition of the indexation
+		 * step.
+		 * <p>
+		 * Spec 1.0, §9.7 Transactionality:
+		 * <br>
+		 * Chunk type check points are transactional. The batch runtime uses global transaction mode on the Java EE
+		 * platform and local transaction mode on the Java SE platform. Global transaction timeout is configurable at
+		 * step-level with a step-level property (default is 180 seconds):
+		 * <pre>
+		 * javax.transaction.global.timeout={seconds}
+		 * </pre>
+		 *
+		 * @param value The transaction timeout value, which must be 0 (no-timeout) or positive value.
+		 * @param unit The time-unit of the value.
+		 *
+		 * @return itself
+		 */
+		public ParametersBuilder transactionTimeout(int value, TimeUnit unit) {
+			if ( value < 0 ) {
+				throw new IllegalArgumentException( "Transaction timeout must be 0 (no-timeout) or positive value." );
+			}
+			transactionTimeoutInSecond = (int) unit.toSeconds( value );
+			return this;
+		}
+
+		/**
 		 * Build the parameters.
 		 *
 		 * @return the parameters.
@@ -396,6 +424,7 @@ public final class MassIndexingJob {
 			addIfNotNull( jobParams, MassIndexingJobParameters.ENTITY_TYPES, getEntityTypesAsString() );
 			addIfNotNull( jobParams, MassIndexingJobParameters.ROWS_PER_PARTITION, rowsPerPartition );
 			addIfNotNull( jobParams, MassIndexingJobParameters.TENANT_ID, tenantId );
+			addIfNotNull( jobParams, MassIndexingJobParameters.TRANSACTION_TIMEOUT_IN_SECOND, transactionTimeoutInSecond );
 
 			if ( !customQueryCriteria.isEmpty() ) {
 				try {

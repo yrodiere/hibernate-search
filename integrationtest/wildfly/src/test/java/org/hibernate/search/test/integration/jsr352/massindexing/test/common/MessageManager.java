@@ -49,6 +49,7 @@ public class MessageManager {
 	}
 
 	@SuppressWarnings("unchecked")
+	@TransactionTimeout(value = 5, unit = TimeUnit.MINUTES)
 	public List<Message> findMessagesFor(Date date) {
 		FullTextEntityManager ftem = Search.getFullTextEntityManager( em );
 		Date dateDay = DateTools.round( date, DateTools.Resolution.DAY );
