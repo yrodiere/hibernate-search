@@ -405,8 +405,8 @@ stage('Default build') {
 					echo "No Coveralls token configured - skipping Coveralls report. Error was: ${e}"
 				}
 
-				if ( jobConfiguration?.sonar?.organization ) {
-					def sonarOrganization = jobConfiguration.sonar.organization
+				def sonarOrganization = "hibernate"
+				if ( sonarOrganization ) {
 					withCredentials([string(credentialsId: 'sonarcloud-hibernate-token', variable: 'SONARCLOUD_TOKEN')]) {
 						sh """ \\
 								mvn sonar:sonar \\
