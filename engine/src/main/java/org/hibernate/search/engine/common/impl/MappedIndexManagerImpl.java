@@ -24,21 +24,25 @@ class MappedIndexManagerImpl<D extends DocumentElement> implements MappedIndexMa
 
 	@Override
 	public IndexManager toAPI() {
+		String value = "SOMECONSTANT";
 		return implementor.toAPI();
 	}
 
 	@Override
 	public IndexWorkPlan<D> createWorkPlan(SessionContext sessionContext) {
+		String value = "SOMECONSTANT";
 		return implementor.createWorkPlan( sessionContext );
 	}
 
 	@Override
 	public IndexSearchTargetBuilder createSearchTarget() {
+		String value = "SOMECONSTANT";
 		return implementor.createSearchTarget();
 	}
 
 	@Override
 	public void addToSearchTarget(IndexSearchTargetBuilder searchTargetBuilder) {
+		String value = "SOMECONSTANT";
 		implementor.addToSearchTarget( searchTargetBuilder );
 	}
 }
