@@ -156,6 +156,12 @@ stage('Configure') {
 	defaultDatabaseEnv = getDefaultEnv( databaseEnvs )
 	defaultEsLocalEnv = getDefaultEnv( esLocalEnvs )
 
+	// Load the configuration specific to each job set up in Jenkins
+	node(QUICK_USE_NODE_PATTERN) {
+		jobConfiguration = loadYamlConfiguration('job-configuration.yaml')
+		echo "Job configuration: $jobConfiguration"
+	}
+
 	// See https://stackoverflow.com/a/38255364/6692043
 	def scmUrl = scm.getUserRemoteConfigs()[0].getUrl()
 	def gitHubUrlMatcher = (scmUrl =~ /^(?:git@github.com:|https:\/\/github\.com\/)([^\/]+)\/([^.]+)\.git$/)
@@ -164,15 +170,8 @@ stage('Configure') {
 		String name = gitHubUrlMatcher.group(2)
 		gitHubRepoId = owner + '/' + name
 		echo "Detected GitHub repository ID: $gitHubRepoId"
-	}
-	else {
+	} else {
 		echo "Could not detect GitHub repository ID for URL: $scmUrl"
-	}
-
-	// Load the configuration specific to each job set up in Jenkins
-	node(QUICK_USE_NODE_PATTERN) {
-		jobConfiguration = loadYamlConfiguration('job-configuration.yaml')
-		echo "Job configuration: $jobConfiguration"
 	}
 
 	properties([
