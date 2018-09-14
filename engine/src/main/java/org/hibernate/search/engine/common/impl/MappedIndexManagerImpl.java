@@ -34,13 +34,11 @@ class MappedIndexManagerImpl<D extends DocumentElement> implements MappedIndexMa
 
 	@Override
 	public IndexSearchTargetBuilder createSearchTarget() {
-		String value = "SOMECONSTANT";
 		return implementor.createSearchTarget();
 	}
 
 	@Override
 	public void addToSearchTarget(IndexSearchTargetBuilder searchTargetBuilder) {
-		String value = "SOMECONSTANT";
 		implementor.addToSearchTarget( searchTargetBuilder );
 	}
 }
