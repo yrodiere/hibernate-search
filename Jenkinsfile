@@ -374,6 +374,7 @@ stage('Default build') {
 		return
 	}
 	node(NODE_PATTERN_BASE) {
+		cleanWs()
 		checkout scm
 		withDefaultedMaven {
 			sh """ \\
@@ -439,6 +440,7 @@ stage('Non-default environment ITs') {
 	jdkEnvs.each { itEnv ->
 		executions.put(itEnv.tag, {
 			node(NODE_PATTERN_BASE) {
+				cleanWs()
 				withDefaultedMaven(jdk: itEnv.tool) {
 					checkout scm
 					mavenNonDefaultIT itEnv,
@@ -452,6 +454,7 @@ stage('Non-default environment ITs') {
 	databaseEnvs.each { itEnv ->
 		executions.put(itEnv.tag, {
 			node(NODE_PATTERN_BASE) {
+				cleanWs()
 				withDefaultedMaven {
 					resumeFromDefaultBuild()
 					mavenNonDefaultIT itEnv, """ \\
@@ -466,6 +469,7 @@ stage('Non-default environment ITs') {
 	esLocalEnvs.each { itEnv ->
 		executions.put(itEnv.tag, {
 			node(NODE_PATTERN_BASE) {
+				cleanWs()
 				withDefaultedMaven {
 					resumeFromDefaultBuild()
 					mavenNonDefaultIT itEnv, """ \\
@@ -488,6 +492,7 @@ stage('Non-default environment ITs') {
 		executions.put(itEnv.tag, {
 			lock(label: itEnv.lockedResourcesLabel) {
 				node(NODE_PATTERN_BASE + '&&AWS') {
+					cleanWs()
 					withDefaultedMaven {
 						resumeFromDefaultBuild()
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding',
