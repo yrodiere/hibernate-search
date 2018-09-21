@@ -482,17 +482,10 @@ stage('Default build') {
 		checkoutScm()
 		withDefaultedMaven(mavenSettingsConfig: deploySnapshot ? jobConfiguration.deployment.maven.settingsId : null) {
 			sh """ \\
-					mvn clean \\
-					${deploySnapshot ? """ \\
-							deploy \\
-					""" : """ \\
-							install \\
-					"""} \\
-					-Pdist -Pcoverage -Pjqassistant \\
-					${enableDefaultEnvIT ? '' : '-DskipITs'} \\
-					${enableDefaultEnvLegacyIT ? '-Dsurefire.legacy.skip=false -Dfailsafe.legacy.skip=false' : ''}
+true
 			"""
 
+			/*
 			// Don't try to report to Coveralls.io or SonarCloud if coverage data is missing
 			if ( enableDefaultEnvIT ) {
 				try {
@@ -539,6 +532,7 @@ stage('Default build') {
 			dir("$env.WORKSPACE/$MAVEN_LOCAL_REPOSITORY_RELATIVE") {
 				stash name:'main-build', includes:"org/hibernate/search/**"
 			}
+			*/
 		}
 	}
 }
