@@ -9,6 +9,8 @@ import groovy.transform.Field
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 import org.jenkinsci.plugins.credentialsbinding.impl.CredentialNotFoundException
 
+import java.util.regex.Pattern
+
 /*
  * WARNING: DO NOT IMPORT LOCAL LIBRARIES HERE.
  *
@@ -29,6 +31,8 @@ import org.jenkinsci.plugins.credentialsbinding.impl.CredentialNotFoundException
  *
  * ### Jenkins configuration
  *
+ * #### Jenkins plugins
+ *
  * This file requires the following plugins in particular:
  *
  * - https://plugins.jenkins.io/pipeline-maven
@@ -39,6 +43,8 @@ import org.jenkinsci.plugins.credentialsbinding.impl.CredentialNotFoundException
  * - https://plugins.jenkins.io/config-file-provider
  * - https://plugins.jenkins.io/pipeline-utility-steps
  *
+ * #### Script approval
+ *
  * Also you might need to allow the following calls in <jenkinsUrl>/scriptApproval/:
  *
  * - method java.util.Map putIfAbsent java.lang.Object java.lang.Object
@@ -47,10 +53,21 @@ import org.jenkinsci.plugins.credentialsbinding.impl.CredentialNotFoundException
  * - method hudson.plugins.git.GitSCM getUserRemoteConfigs
  * - method hudson.plugins.git.UserRemoteConfig getUrl
  * - method java.lang.Throwable addSuppressed java.lang.Throwable
+ * - method java.util.regex.MatchResult groupCount
  *
  * Just run the script a few times, it will fail and display a link to allow these calls.
  *
  * ### Integrations
+ *
+ * #### Nexus deployment
+ *
+ * This job includes two deployment modes:
+ *
+ * - A deployment of snapshot artifacts for every non-PR build on "primary" branches (master and maintenance branches).
+ * - A full release when starting the job with specific parameters.
+ *
+ * In the first case, the name of a Maven settings file must be provided in the job configuration file
+ * (see below).
  *
  * #### Coveralls (optional)
  *
@@ -69,9 +86,24 @@ import org.jenkinsci.plugins.credentialsbinding.impl.CredentialNotFoundException
  *
  * ### Job configuration
  *
- * This file gets its configuration from three sources: environment variables, a configuration file, and credentials.
+ * This file gets its configuration from four sources: branch name, environment variables, a configuration file, and credentials.
  * All configuration is optional for the default build (and it should stay that way),
  * but some features require some configuration.
+ *
+ * #### Branch name
+ *
+ * Branches named "master" or matching the regex /[0-9]+.[0-9]+/ will be considered as "primary" branches,
+ * and will undergo additional testing.
+ *
+ * Branches named "tracking-<some-name>"
+ * will be considered as "tracking branches", i.e. branches containing a patch to be applied regularly
+ * on top of a base branch, whenever that base branch changes, or another job succeeds.
+ * The corresponding job will be configured to run:
+ * - when the PR is updated (as usual)
+ * - when a snapshot dependency is updated in the same Jenkins instance (as usual)
+ * - when the base branch is built successfully
+ * - when the Jenkins jobs mentioned in the branch name are built successfully
+ * Also, when such branches are built, they are automatically merged with the base branch.
  *
  * #### Environment variables
  *
@@ -82,9 +114,9 @@ import org.jenkinsci.plugins.credentialsbinding.impl.CredentialNotFoundException
  * containing the URL of an AWS Elasticsearch service endpoint using that exact version,
  * to test Elasticsearch as a service on AWS.
  *
- * #### Configuration file
+ * #### Job configuration file
  *
- * The configuration file is optional. Its purpose is to host job-specific configuration, such as notification recipients.
+ * The job configuration file is optional. Its purpose is to host job-specific configuration, such as notification recipients.
  *
  * The file is named 'job-configuration.yaml', and it should be set up using the config file provider plugin
  * (https://plugins.jenkins.io/config-file-provider).
@@ -92,9 +124,35 @@ import org.jenkinsci.plugins.credentialsbinding.impl.CredentialNotFoundException
  *
  *     notification:
  *       email:
- *         recipients: ... # string containing a space-separated list of email addresses to notify in case of failing non-PR builds>
+ *         # String containing a space-separated list of email addresses to notify in case of failing non-PR builds.
+ *         recipients: ...
  *     sonar:
- *       organization: ... # string containing the sonar organization. Mandatory in order to enable Sonar analysis.
+ *       # String containing the sonar organization. Mandatory in order to enable Sonar analysis.
+ *       organization: ...
+ *     deployment:
+ *       maven:
+ *         # String containing the ID of a Maven settings file registered using the config-file-provider Jenkins plugin.
+ *         # The settings must provide credentials to the servers with ID
+ *         # 'jboss-releases-repository' and 'jboss-snapshots-repository'.
+ *         settingsId: ...
+ *     # Remotes to be added to git when checking out. Useful for tracking (see below) in particular.
+ *     remotes:
+ *       <remote-name>:
+ *         # The URL of a remote
+ *         url: ...
+ *     tracking:
+ *       # The tracking ID, used as a suffix for tracking branche names:
+ *       # if the branch is named "tracking-foo", the tracking ID will be "foo".
+ *       <tracking-name>:
+ *         # The Git refspec to the base of this tracking branch.
+ *         # For example this can be "origin/master" or "upstream/master" (if a remote named "upstream" is defined).
+ *         base: ...
+ *         # The Jenkins jobs to track.
+ *         # Use "branchname" to reference jobs corresponding to other branches in the same multibranch job.
+ *         # Use a "/" prefix ("/somename") to reference jobs outside of the multibranch job.
+ *         tracked:
+ *           - <job name>
+ *           - <other job name>
  *
  * #### Credentials
  *
@@ -108,7 +166,7 @@ import org.jenkinsci.plugins.credentialsbinding.impl.CredentialNotFoundException
  */
 
 @Field final String MAVEN_LOCAL_REPOSITORY_RELATIVE = '.repository'
-@Field final String MAVEN_TOOL = 'Apache Maven 3.5.2'
+@Field final String MAVEN_TOOL = 'Apache Maven 3.5.4'
 
 // Default node pattern, to be used for resource-intensive stages.
 // Should not include the master node.
@@ -159,9 +217,12 @@ import org.jenkinsci.plugins.credentialsbinding.impl.CredentialNotFoundException
 @Field boolean enableDefaultEnvLegacyIT = false
 @Field boolean enableNonDefaultSupportedEnvIT = false
 @Field boolean enableExperimentalEnvIT = false
+@Field boolean performRelease = false
+@Field boolean deploySnapshot = false
 
 @Field def jobConfiguration = null
-@Field String gitHubRepoId = null
+@Field ScmSource scmSource = null
+@Field def trackingConfiguration = null
 
 @Field String releaseVersionFamily
 
@@ -179,22 +240,47 @@ stage('Configure') {
 		echo "Job configuration: $jobConfiguration"
 	}
 
-	// See https://stackoverflow.com/a/38255364/6692043
-	def scmUrl = scm.getUserRemoteConfigs()[0].getUrl()
-	def gitHubUrlMatcher = (scmUrl =~ /^(?:git@github.com:|https:\/\/github\.com\/)([^\/]+)\/([^.]+)\.git$/)
-	if (gitHubUrlMatcher.matches()) {
-		String owner = gitHubUrlMatcher.group(1)
-		String name = gitHubUrlMatcher.group(2)
-		gitHubRepoId = owner + '/' + name
-		echo "Detected GitHub repository ID: $gitHubRepoId"
-	} else {
-		echo "Could not detect GitHub repository ID for URL: $scmUrl"
+	scmSource = new ScmSource(env, scm)
+	echo "SCM source: $scmSource"
+
+	String trackedJobs = ''
+	if (scmSource.branch.tracking) {
+		def trackingName = scmSource.branch.trackingName
+		trackingConfiguration = jobConfiguration?.tracking?.get(trackingName)
+		if (!trackingConfiguration) {
+			error "Missing tracking configuration for tracking ID '$trackingName'." +
+					" Add tracking configuration to job-configuration.yaml." +
+					" See the documentation in the Jenkinsfile for more information."
+		}
+
+		// Configure jobs that are tracked (should trigger a build of this branch on successful builds)
+		// If additional jobs are mentioned in the branch name, take them into account
+		// (and prepend "/" to reference jobs outside of the multibranch job)
+		trackingConfiguration.tracked.each { jobName ->
+			if (!trackedJobs.isEmpty()) {
+				trackedJobs += ","
+			}
+			trackedJobs += jobName
+		}
+
+		echo "This is a tracking-patch branch. Tracking name: $trackingName." +
+				" Base branch: ${trackingConfiguration.base}." +
+				" Tracked Jenkins jobs: $trackedJobs"
 	}
 
 	properties([
-			pipelineTriggers([
-					issueCommentTrigger('.*test this please.*')
-			]),
+			pipelineTriggers(
+					[
+							issueCommentTrigger('.*test this please.*'),
+							// Normally we don't have snapshot dependencies, so this doesn't matter, but some branches do
+							snapshotDependencies()
+					]
+							+ trackedJobs ? [
+									// Rebuild when tracked jobs are rebuilt
+									upstream(trackedJobs)
+							]
+							: []
+			),
 			parameters([
 					choice(
 							name: 'INTEGRATION_TESTS',
@@ -233,6 +319,17 @@ ALL_ENV""",
 			])
 	])
 
+	performRelease = (params.RELEASE_VERSION ? true : false)
+
+	if (!performRelease && scmSource.branch.primary && !scmSource.pullRequest) {
+		if (jobConfiguration?.deployment?.maven?.settingsId) {
+			deploySnapshot = true
+		}
+		else {
+			echo "Missing deployment configuration in job configuration file - snapshot deployment will be skipped."
+		}
+	}
+
 	switch (params.INTEGRATION_TESTS) {
 		case 'DEFAULT_ENV_ONLY':
 			enableDefaultEnvIT = true
@@ -252,18 +349,18 @@ ALL_ENV""",
 		case 'AUTOMATIC':
 			if (params.RELEASE_VERSION) {
 				echo "Skipping default build and integration tests to speed up the release of version $params.RELEASE_VERSION"
-			} else if (env.CHANGE_ID) {
-				echo "Enabling only the default build and integration tests in the default environment for pull request $env.CHANGE_ID"
+			} else if (scmSource.pullRequest) {
+				echo "Enabling only the default build and integration tests in the default environment for pull request $scmSource.pullRequest.id"
 				enableDefaultEnvIT = true
-			} else if (env.BRANCH_NAME ==~ /master|\d+\.\d+/) {
-				echo "Enabling integration tests on all supported environments for master or maintenance branch '$env.BRANCH_NAME'"
+			} else if (scmSource.branch.primary) {
+				echo "Enabling integration tests on all supported environments for primary branch '$scmSource.branch.name'"
 				enableDefaultBuild = true
 				enableDefaultEnvIT = true
 				enableNonDefaultSupportedEnvIT = true
-				echo "Enabling legacy integration tests for master or maintenance branch '$env.BRANCH_NAME'"
+				echo "Enabling legacy integration tests for primary branch '$scmSource.branch.name'"
 				enableDefaultEnvLegacyIT = true
 			} else {
-				echo "Enabling only the default build and integration tests in the default environment for feature branch $env.BRANCH_NAME"
+				echo "Enabling only the default build and integration tests in the default environment for feature branch $scmSource.branch.name"
 				enableDefaultBuild = true
 				enableDefaultEnvIT = true
 			}
@@ -279,14 +376,17 @@ ALL_ENV""",
 		enableDefaultEnvLegacyIT = true
 	}
 
-	enableDefaultBuild = enableDefaultEnvIT || enableNonDefaultSupportedEnvIT || enableExperimentalEnvIT
+	enableDefaultBuild =
+			enableDefaultEnvIT || enableNonDefaultSupportedEnvIT || enableExperimentalEnvIT || deploySnapshot
 
-	echo """Integration test setting: $params.INTEGRATION_TESTS, result:
+	echo """Branch: ${scmSource.branch.name}, PR: ${scmSource.pullRequest?.id}, integration test setting: $params.INTEGRATION_TESTS, resulting execution plan:
 enableDefaultBuild=$enableDefaultBuild
 enableDefaultEnvIT=$enableDefaultEnvIT
 enableNonDefaultSupportedEnvIT=$enableNonDefaultSupportedEnvIT
 enableExperimentalEnvIT=$enableExperimentalEnvIT
-enableDefaultEnvLegacyIT=$enableDefaultEnvLegacyIT"""
+enableDefaultEnvLegacyIT=$enableDefaultEnvLegacyIT
+performRelease=$performRelease
+deploySnapshot=$deploySnapshot"""
 
 	allEnvironmentLists.each { envList ->
 		// No need to re-test these environments, they are already tested as part of the default build
@@ -339,7 +439,7 @@ enableDefaultEnvLegacyIT=$enableDefaultEnvLegacyIT"""
 
 	// Compute the version truncated to the minor component, a.k.a. the version family
 	// To be used for the documentation upload in particular
-	if (params.RELEASE_VERSION) {
+	if (performRelease) {
 		def matcher = (params.RELEASE_VERSION =~ versionPattern)
 		if (!matcher.matches()) {
 			throw new IllegalArgumentException(
@@ -378,14 +478,14 @@ stage('Default build') {
 		return
 	}
 	node(NODE_PATTERN_BASE) {
-		checkout scm
-		withDefaultedMaven {
+		cleanWs()
+		checkoutScm()
+		withDefaultedMaven(mavenSettingsConfig: deploySnapshot ? jobConfiguration.deployment.maven.settingsId : null) {
 			sh """ \\
-					mvn clean install -Pdist -Pcoverage -Pjqassistant \\
-					${enableDefaultEnvIT ? '' : '-DskipITs'} \\
-					${enableDefaultEnvLegacyIT ? '-Dsurefire.legacy.skip=false -Dfailsafe.legacy.skip=false' : ''}
+true
 			"""
 
+			/*
 			// Don't try to report to Coveralls.io or SonarCloud if coverage data is missing
 			if ( enableDefaultEnvIT ) {
 				try {
@@ -393,10 +493,10 @@ stage('Default build') {
 						sh """ \\
 								mvn coveralls:report \\
 								-DrepoToken=${COVERALLS_TOKEN} \\
-								${env.CHANGE_ID ? """ \\
-										-DpullRequest=${env.CHANGE_ID} \\
+								${scmSource.pullRequest ? """ \\
+										-DpullRequest=${scmSource.pullRequest.id} \\
 								""" : """ \\
-										-Dbranch=${env.BRANCH_NAME} \\
+										-Dbranch=${scmSource.branch.name} \\
 								"""} \\
 						"""
 					}
@@ -413,16 +513,16 @@ stage('Default build') {
 								-Dsonar.organization=${sonarOrganization} \\
 								-Dsonar.host.url=https://sonarcloud.io \\
 								-Dsonar.login=${SONARCLOUD_TOKEN} \\
-								${env.CHANGE_ID ? """ \\
-										-Dsonar.pullrequest.branch=${env.BRANCH_NAME} \\
-										-Dsonar.pullrequest.key=${env.CHANGE_ID} \\
-										-Dsonar.pullrequest.base=${env.CHANGE_TARGET} \\
-										${gitHubRepoId ? """ \\
+								${scmSource.pullRequest ? """ \\
+										-Dsonar.pullrequest.branch=${scmSource.branch.name} \\
+										-Dsonar.pullrequest.key=${scmSource.pullRequest.id} \\
+										-Dsonar.pullrequest.base=${scmSource.pullRequest.target.name} \\
+										${scmSource.gitHubRepoId ? """ \\
 												-Dsonar.pullrequest.provider=GitHub \\
-												-Dsonar.pullrequest.github.repository=${gitHubRepoId} \\
+												-Dsonar.pullrequest.github.repository=${scmSource.gitHubRepoId} \\
 										""" : ''} \\
 								""" : """ \\
-										-Dsonar.branch.name=${env.BRANCH_NAME} \\
+										-Dsonar.branch.name=${scmSource.branch.name} \\
 								"""} \\
 						"""
 					}
@@ -432,6 +532,7 @@ stage('Default build') {
 			dir("$env.WORKSPACE/$MAVEN_LOCAL_REPOSITORY_RELATIVE") {
 				stash name:'main-build', includes:"org/hibernate/search/**"
 			}
+			*/
 		}
 	}
 }
@@ -443,8 +544,9 @@ stage('Non-default environment ITs') {
 	jdkEnvs.each { itEnv ->
 		executions.put(itEnv.tag, {
 			node(NODE_PATTERN_BASE) {
+				cleanWs()
 				withDefaultedMaven(jdk: itEnv.tool) {
-					checkout scm
+					checkoutScm()
 					mavenNonDefaultIT itEnv,
 							"clean install --fail-at-end"
 				}
@@ -456,6 +558,7 @@ stage('Non-default environment ITs') {
 	databaseEnvs.each { itEnv ->
 		executions.put(itEnv.tag, {
 			node(NODE_PATTERN_BASE) {
+				cleanWs()
 				withDefaultedMaven {
 					resumeFromDefaultBuild()
 					mavenNonDefaultIT itEnv, """ \\
@@ -470,6 +573,7 @@ stage('Non-default environment ITs') {
 	esLocalEnvs.each { itEnv ->
 		executions.put(itEnv.tag, {
 			node(NODE_PATTERN_BASE) {
+				cleanWs()
 				withDefaultedMaven {
 					resumeFromDefaultBuild()
 					mavenNonDefaultIT itEnv, """ \\
@@ -492,6 +596,7 @@ stage('Non-default environment ITs') {
 		executions.put(itEnv.tag, {
 			lock(label: itEnv.lockedResourcesLabel) {
 				node(NODE_PATTERN_BASE + '&&AWS') {
+					cleanWs()
 					withDefaultedMaven {
 						resumeFromDefaultBuild()
 						withCredentials([[$class: 'AmazonWebServicesCredentialsBinding',
@@ -524,38 +629,44 @@ stage('Non-default environment ITs') {
 	}
 }
 
-stage('Release') {
-	if (!params.RELEASE_VERSION) {
-		echo "Skipping the release"
+stage('Deploy') {
+	if (deploySnapshot) {
+		// TODO delay the release to this stage? This would require to use staging repositories for snapshots, not sure it's possible.
+		echo "Already deployed snapshot as part of the 'Default build' stage."
+	}
+	else if (performRelease) {
+		echo "Performing full release for version ${params.RELEASE_VERSION}"
+		node(NODE_PATTERN_BASE) {
+			cleanWs()
+			withDefaultedMaven {
+				checkout scm
+
+				sh "git clone https://github.com/hibernate/hibernate-noorm-release-scripts.git"
+				sh "bash -xe hibernate-noorm-release-scripts/prepare-release.sh search ${params.RELEASE_VERSION}"
+
+				if (!params.RELEASE_DRY_RUN) {
+					sh "bash -xe hibernate-noorm-release-scripts/deploy.sh search"
+				} else {
+					echo "WARNING: Not deploying"
+				}
+
+				if (!params.RELEASE_DRY_RUN) {
+					sh "bash -xe hibernate-noorm-release-scripts/upload-distribution.sh search ${params.RELEASE_VERSION}"
+					sh "bash -xe hibernate-noorm-release-scripts/upload-documentation.sh search ${params.RELEASE_VERSION} ${releaseVersionFamily}"
+				}
+				else {
+					echo "WARNING: Not uploading anything"
+				}
+
+				sh "bash -xe hibernate-noorm-release-scripts/update-version.sh search ${params.RELEASE_DEVELOPMENT_VERSION}"
+				sh "bash -xe hibernate-noorm-release-scripts/push-upstream.sh search ${params.RELEASE_VERSION} ${scmSource.branch.name} ${!params.RELEASE_DRY_RUN}"
+			}
+		}
+	}
+	else {
+		echo "Skipping deployment"
 		Utils.markStageSkippedForConditional(STAGE_NAME)
 		return
-	}
-	node(NODE_PATTERN_BASE) {
-		cleanWs()
-
-		withDefaultedMaven {
-			checkout scm
-
-			sh "git clone https://github.com/hibernate/hibernate-noorm-release-scripts.git"
-			sh "bash -xe hibernate-noorm-release-scripts/prepare-release.sh search ${params.RELEASE_VERSION}"
-
-			if (!params.RELEASE_DRY_RUN) {
-				sh "bash -xe hibernate-noorm-release-scripts/deploy.sh search"
-			} else {
-				echo "WARNING: Not deploying"
-			}
-
-			if (!params.RELEASE_DRY_RUN) {
-				sh "bash -xe hibernate-noorm-release-scripts/upload-distribution.sh search ${params.RELEASE_VERSION}"
-				sh "bash -xe hibernate-noorm-release-scripts/upload-documentation.sh search ${params.RELEASE_VERSION} ${releaseVersionFamily}"
-			}
-			else {
-				echo "WARNING: Not uploading anything"
-			}
-
-			sh "bash -xe hibernate-noorm-release-scripts/update-version.sh search ${params.RELEASE_DEVELOPMENT_VERSION}"
-			sh "bash -xe hibernate-noorm-release-scripts/push-upstream.sh search ${params.RELEASE_VERSION} ${env.BRANCH_NAME} ${!params.RELEASE_DRY_RUN}"
-		}
 	}
 }
 
@@ -592,6 +703,75 @@ finally {
 }
 
 // Helpers
+
+class ScmSource {
+	final String remoteUrl
+	final String gitHubRepoId
+	final ScmBranch branch
+	final ScmPullRequest pullRequest
+
+	ScmSource(env, scm) {
+		// See https://stackoverflow.com/a/38255364/6692043
+		remoteUrl = scm.getUserRemoteConfigs()[0].getUrl()
+		def gitHubUrlMatcher = (remoteUrl =~ /^(?:git@github.com:|https:\/\/github\.com\/)([^\/]+)\/([^.]+)\.git$/)
+		if (gitHubUrlMatcher.matches()) {
+			String owner = gitHubUrlMatcher.group(1)
+			String name = gitHubUrlMatcher.group(2)
+			gitHubRepoId = owner + '/' + name
+		}
+		else {
+			gitHubRepoId = null
+		}
+		if (env.CHANGE_ID) {
+			def source = new ScmBranch(name: env.CHANGE_BRANCH)
+			def target = new ScmBranch(name: env.CHANGE_TARGET)
+			pullRequest = new ScmPullRequest(id: env.CHANGE_ID, source: source, target: target)
+			branch = source
+		}
+		else {
+			branch = new ScmBranch(name: env.BRANCH_NAME)
+			pullRequest = null
+		}
+	}
+
+	String toString() {
+		"ScmSource(remoteUrl: $remoteUrl, gitHubRepoId: $gitHubRepoId, branch: $branch, pullRequest: $pullRequest)"
+	}
+}
+
+class ScmBranch {
+	private static final Pattern PRIMARY_PATTERN = ~/master|\d+\.\d+/
+	private static final Pattern TRACKING_PATTERN = ~/^tracking-([^_]+)$/
+
+	String name
+
+	String toString() { "ScmBranch(name:$name)" }
+
+	/**
+	 * @return Whether this branch is "primary", i.e. it's either "master" or a maintenance branch.
+	 * The purpose of primary branches is to hold the history of a major version of the code,
+	 * whereas the only purpose  of "feature" branches is to eventually be merged into a primary branch.
+	 */
+	boolean isPrimary() {
+		(name ==~ PRIMARY_PATTERN)
+	}
+
+	/**
+	 * @return The name of the "tracking" for this branch, to allow for configuration retrieval.
+	 */
+	String getTracking() {
+		def matcher = (name =~ TRACKING_PATTERN)
+		return matcher.matches() ? matcher.group(1) : null
+	}
+}
+
+class ScmPullRequest {
+	String id
+	ScmBranch source
+	ScmBranch target
+
+	String toString() { "ScmPullRequest(id: $id, source: $source, target: $target)" }
+}
 
 enum ITEnvironmentStatus {
 	// For environments used as part of the integration tests in the default build (tested on all branches)
@@ -660,8 +840,24 @@ void withDefaultedMaven(Map args, Closure body) {
 	withMaven(args, body)
 }
 
-void resumeFromDefaultBuild() {
+void checkoutScm() {
 	checkout scm
+	if (trackingConfiguration?.base) {
+		if (jobConfiguration?.remotes) {
+			remotesConfiguration = jobConfiguration?.remotes
+			echo "Adding configured remotes"
+			remotesConfiguration.each { name, config ->
+				sh "git remote add -f $name $config.url"
+			}
+		}
+		String base = trackingConfiguration?.base
+		echo "Merging with tracking base: $base"
+		sh "git merge $base"
+	}
+}
+
+void resumeFromDefaultBuild() {
+	checkoutScm()
 	dir("$env.WORKSPACE/$MAVEN_LOCAL_REPOSITORY_RELATIVE") {
 		unstash name:'main-build'
 	}
@@ -720,8 +916,8 @@ def notifyBuildEnd() {
 	}
 
 	// Notify the notification recipients configured on the job,
-	// except in the case of a PR build or of a "success after a success"
-	if (!env.CHANGE_ID && !successAfterSuccess) {
+	// except in the case of a non-tracking PR build or of a "success after a success"
+	if ((!scmSource.pullRequest || scmSource.branch.tracking) && !successAfterSuccess) {
 		explicitRecipients = jobConfiguration?.notification?.email?.recipients
 	}
 
