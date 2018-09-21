@@ -194,25 +194,26 @@ stage('Configure') {
 
 	def trackedJobs = ''
 	if (env.CHANGE_BRANCH) {
-		def trackingPatchBranchNameMatcher = (env.CHANGE_BRANCH =~ /^tracking-patch-([^-]+)(?:-([^_]+)(?:_([^_]+)))+$/)
+		def trackingPatchBranchNameMatcher = (env.CHANGE_BRANCH =~ /^tracking-patch-([^_]+)(?:_([^_]+))+$/)
 		if (trackingPatchBranchNameMatcher.matches()) {
 			if (!env.CHANGE_TARGET) {
 				error "This is a tracking patch branch. These branches can only be built as part of a pull request."
 			}
 			patchName = trackingPatchBranchNameMatcher.group(1)
-			trackingPatchBranchBase = env.CHANGE_TARGET
+			def trackingPatchBaseBranch = env.CHANGE_TARGET
 
 			// Configure jobs that are tracked (should trigger a build of this branch on successful builds)
 			// The base branch should have a job with the same name
-			trackedJobs = trackingPatchBranchBase
+			trackedJobs = trackingPatchBaseBranch
 			// If additional jobs are mentioned in the branch name, take them into account
+			// (and prepend "/" to reference jobs outside of the multibranch job)
 			for (int i = 2; i <= trackingPatchBranchNameMatcher.groupCount(); ++i) {
-				trackedJobs += "/" + trackingPatchBranchNameMatcher.group(i) + ","
+				trackedJobs += ", /" + trackingPatchBranchNameMatcher.group(i)
 			}
 
 			echo "This is a tracking-patch branch. Patch name: $patchName." +
-					" Base branch: $trackingPatchBranchBase." +
-					" Upstream Jenkins jobs: $upstreamProjects"
+					" Base branch: $trackingPatchBaseBranch." +
+					" Tracked Jenkins jobs: $trackedJobs"
 		}
 	}
 
