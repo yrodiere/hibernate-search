@@ -95,14 +95,15 @@ import java.util.regex.Pattern
  * Branches named "master" or matching the regex /[0-9]+.[0-9]+/ will be considered as "primary" branches,
  * and will undergo additional testing.
  *
- * Branches named "tracking-<some-name>_<some-jenkins-job>_<some-other-jenkins-job>_<etc>"
+ * Branches named "tracking-<some-name>"
  * will be considered as "tracking branches", i.e. branches containing a patch to be applied regularly
- * on top of the tracked branch.
- * As soon as a pull request is submitted for such a branch, the corresponding job will be configured to run:
+ * on top of a base branch, whenever that base branch changes, or another job succeeds.
+ * The corresponding job will be configured to run:
  * - when the PR is updated (as usual)
  * - when a snapshot dependency is updated in the same Jenkins instance (as usual)
- * - when the tracked branch (the target of the PR) is built successfully
+ * - when the base branch is built successfully
  * - when the Jenkins jobs mentioned in the branch name are built successfully
+ * Also, when such branches are built, they are automatically merged with the base branch.
  *
  * #### Environment variables
  *
@@ -134,6 +135,24 @@ import java.util.regex.Pattern
  *         # The settings must provide credentials to the servers with ID
  *         # 'jboss-releases-repository' and 'jboss-snapshots-repository'.
  *         settingsId: ...
+ *     # Remotes to be added to git when checking out. Useful for tracking (see below) in particular.
+ *     remotes:
+ *       <remote-name>:
+ *         # The URL of a remote
+ *         url: ...
+ *     tracking:
+ *       # The tracking ID, used as a suffix for tracking branche names:
+ *       # if the branch is named "tracking-foo", the tracking ID will be "foo".
+ *       <tracking-name>:
+ *         # The Git refspec to the base of this tracking branch.
+ *         # For example this can be "origin/master" or "upstream/master" (if a remote named "upstream" is defined).
+ *         base: ...
+ *         # The Jenkins jobs to track.
+ *         # Use "branchname" to reference jobs corresponding to other branches in the same multibranch job.
+ *         # Use a "/" prefix ("/somename") to reference jobs outside of the multibranch job.
+ *         tracked:
+ *           - <job name>
+ *           - <other job name>
  *
  * #### Credentials
  *
@@ -203,6 +222,7 @@ import java.util.regex.Pattern
 
 @Field def jobConfiguration = null
 @Field ScmSource scmSource = null
+@Field def trackingConfiguration = null
 
 @Field String releaseVersionFamily
 
@@ -223,25 +243,28 @@ stage('Configure') {
 	scmSource = new ScmSource(env, scm)
 	echo "SCM source: $scmSource"
 
-	def trackedJobs = ''
+	String trackedJobs = ''
 	if (scmSource.branch.tracking) {
-		if (!scmSource.pullRequest) {
-			error "This is a tracking patch branch. These branches can only be built as part of a pull request."
+		def trackingName = scmSource.branch.trackingName
+		trackingConfiguration = jobConfiguration?.tracking?.get(trackingName)
+		if (!trackingConfiguration) {
+			error "Missing tracking configuration for tracking ID '$trackingName'." +
+					" Add tracking configuration to job-configuration.yaml." +
+					" See the documentation in the Jenkinsfile for more information."
 		}
-		def patchName = scmSource.branch.trackingName
-		def targetBranchName = scmSource.pullRequest.target.name
 
 		// Configure jobs that are tracked (should trigger a build of this branch on successful builds)
-		// The target branch should have a job with the same name
-		trackedJobs = targetBranchName
 		// If additional jobs are mentioned in the branch name, take them into account
 		// (and prepend "/" to reference jobs outside of the multibranch job)
-		scmSource.branch.trackingParameters.each({
-			param -> trackedJobs += ", /" + param
-		})
+		trackingConfiguration.tracked.each { jobName ->
+			if (!trackedJobs.isEmpty()) {
+				trackedJobs += ","
+			}
+			trackedJobs += jobName
+		}
 
-		echo "This is a tracking-patch branch. Patch name: $patchName." +
-				" Base branch: $targetBranchName." +
+		echo "This is a tracking-patch branch. Tracking name: $trackingName." +
+				" Base branch: ${trackingConfiguration.base}." +
 				" Tracked Jenkins jobs: $trackedJobs"
 	}
 
@@ -456,7 +479,7 @@ stage('Default build') {
 	}
 	node(NODE_PATTERN_BASE) {
 		cleanWs()
-		checkout scm
+		checkoutScm()
 		withDefaultedMaven(mavenSettingsConfig: deploySnapshot ? jobConfiguration.deployment.maven.settingsId : null) {
 			sh """ \\
 					mvn clean \\
@@ -529,7 +552,7 @@ stage('Non-default environment ITs') {
 			node(NODE_PATTERN_BASE) {
 				cleanWs()
 				withDefaultedMaven(jdk: itEnv.tool) {
-					checkout scm
+					checkoutScm()
 					mavenNonDefaultIT itEnv,
 							"clean install --fail-at-end"
 				}
@@ -724,7 +747,7 @@ class ScmSource {
 
 class ScmBranch {
 	private static final Pattern PRIMARY_PATTERN = ~/master|\d+\.\d+/
-	private static final Pattern TRACKING_PATTERN = ~/^tracking-([^_]+)(?:_([^_]+))*$/
+	private static final Pattern TRACKING_PATTERN = ~/^tracking-([^_]+)$/
 
 	String name
 
@@ -740,27 +763,11 @@ class ScmBranch {
 	}
 
 	/**
-	 * @return Whether this branch is a "tracking" branch, i.e. it contains a patch that should be applied
-	 * on another branch regularly.
+	 * @return The name of the "tracking" for this branch, to allow for configuration retrieval.
 	 */
-	boolean isTracking() {
-		(name ==~ TRACKING_PATTERN)
-	}
-
-	String getTrackingName() {
+	String getTracking() {
 		def matcher = (name =~ TRACKING_PATTERN)
 		return matcher.matches() ? matcher.group(1) : null
-	}
-
-	List<String> getTrackingParameters() {
-		List<String> parameters = []
-		def matcher = (name =~ TRACKING_PATTERN)
-		if (matcher.matches()) {
-			for (int i = 2; i <= matcher.groupCount(); ++i) {
-				parameters.add(matcher.group(i))
-			}
-		}
-		return parameters
 	}
 }
 
@@ -839,8 +846,24 @@ void withDefaultedMaven(Map args, Closure body) {
 	withMaven(args, body)
 }
 
-void resumeFromDefaultBuild() {
+void checkoutScm() {
 	checkout scm
+	if (trackingConfiguration?.base) {
+		if (jobConfiguration?.remotes) {
+			remotesConfiguration = jobConfiguration?.remotes
+			echo "Adding configured remotes"
+			remotesConfiguration.each { name, config ->
+				sh "git remote add -f $name $config.url"
+			}
+		}
+		String base = trackingConfiguration?.base
+		echo "Merging with tracking base: $base"
+		sh "git merge $base"
+	}
+}
+
+void resumeFromDefaultBuild() {
+	checkoutScm()
 	dir("$env.WORKSPACE/$MAVEN_LOCAL_REPOSITORY_RELATIVE") {
 		unstash name:'main-build'
 	}
