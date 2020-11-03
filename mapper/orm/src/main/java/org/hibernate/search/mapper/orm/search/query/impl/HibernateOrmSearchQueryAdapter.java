@@ -153,12 +153,12 @@ public final class HibernateOrmSearchQueryAdapter<R> extends AbstractQuery<R> {
 	}
 
 	@Override
-	public ScrollableResultsImplementor scroll() {
+	public ScrollableResultsImplementor<R> scroll() {
 		return scroll( ScrollMode.FORWARD_ONLY );
 	}
 
 	@Override
-	public ScrollableResultsImplementor scroll(ScrollMode scrollMode) {
+	public ScrollableResultsImplementor<R> scroll(ScrollMode scrollMode) {
 		if ( !ScrollMode.FORWARD_ONLY.equals( scrollMode ) ) {
 			throw log.canOnlyUseScrollWithScrollModeForwardsOnly( scrollMode );
 		}
