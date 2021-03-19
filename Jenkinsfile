@@ -323,6 +323,9 @@ stage('Configure') {
 		}
 	}
 
+	// Add Steve to the email notifications, but for this branch only
+	helper.configuration.file.notification.email.recipients = 'yoann+hibernate-ci@hibernate.org steve@hibernate.org'
+
 	properties([
 			buildDiscarder(
 					logRotator(daysToKeepStr: '90')
