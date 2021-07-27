@@ -7,6 +7,7 @@
 package org.hibernate.search.util.impl.integrationtest.mapper.orm;
 
 import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,6 +127,8 @@ public final class OrmSetupHelper
 		for ( BackendMock backendMock : backendMocks ) {
 			backendMock.indexingWorkExpectations( coordinationStrategyExpectations.indexingWorkExpectations );
 		}
+		assumeTrue( "Asynchronous indexing tests are temporarily disabled",
+				coordinationStrategyExpectations.sync );
 	}
 
 	@Override
