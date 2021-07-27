@@ -20,6 +20,9 @@
             See also the failsafe configuration.
          -->
         <failsafe.jvm.args.hibernate-orm></failsafe.jvm.args.hibernate-orm>
+
+        <!-- Override some dependency versions in Spring Boot -->
+        <hibernate.version>${version.org.hibernate.orm}</hibernate.version>
     </properties>
 
     <dependencyManagement>
@@ -70,6 +73,11 @@
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+                <!-- Using the version of Jandex provided by ORM -->
+                <exclusion>
+                    <groupId>org.jboss</groupId>
+                    <artifactId>jandex</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
