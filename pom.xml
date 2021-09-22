@@ -250,7 +250,7 @@
         <version.org.slf4j>1.7.32</version.org.slf4j>
 
         <!-- >>> ORM -->
-        <version.org.hibernate.orm>6.0.0.Beta2</version.org.hibernate.orm>
+        <version.org.hibernate.orm>6.0.0.Final</version.org.hibernate.orm>
         <javadoc.org.hibernate.orm.url>https://docs.jboss.org/hibernate/orm/${parsed-version.org.hibernate.orm.majorVersion}.${parsed-version.org.hibernate.orm.minorVersion}/javadocs/</javadoc.org.hibernate.orm.url>
         <documentation.org.hibernate.orm.url>https://docs.jboss.org/hibernate/orm/${parsed-version.org.hibernate.orm.majorVersion}.${parsed-version.org.hibernate.orm.minorVersion}/userguide/html_single/Hibernate_User_Guide.html</documentation.org.hibernate.orm.url>
         <version.org.hibernate.commons.annotations>5.1.2.Final</version.org.hibernate.commons.annotations>
@@ -2052,26 +2052,6 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <repositories>
-        <!--
-            Enable the sonatype-oss Snapshots repository, for Hibernate ORM.
-         -->
-        <repository>
-            <id>sonatype-oss</id>
-            <name>JBoss Public Maven Repository Group</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <distributionManagement>
         <repository>
