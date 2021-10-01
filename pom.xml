@@ -172,7 +172,6 @@
         <module>util/internal/integrationtest</module>
         <module>parents/integrationtest</module>
         <module>integrationtest</module>
-        <module>javaee</module>
         <module>documentation</module>
     </modules>
 
@@ -254,32 +253,24 @@
         <javadoc.org.hibernate.url>https://docs.jboss.org/hibernate/orm/${parsed-version.org.hibernate.majorVersion}.${parsed-version.org.hibernate.minorVersion}/javadocs/</javadoc.org.hibernate.url>
         <documentation.org.hibernate.url>https://docs.jboss.org/hibernate/orm/${parsed-version.org.hibernate.majorVersion}.${parsed-version.org.hibernate.minorVersion}/userguide/html_single/Hibernate_User_Guide.html</documentation.org.hibernate.url>
         <version.org.hibernate.commons.annotations>5.1.2.Final</version.org.hibernate.commons.annotations>
-        <version.javax.persistence>2.2</version.javax.persistence>
         <version.jakarta.persistence>3.0.0</version.jakarta.persistence>
 
         <!-- >>> JSR 352 -->
-        <version.javax.batch>1.0.1</version.javax.batch>
         <version.jakarta.batch>2.0.0</version.jakarta.batch>
         <version.org.jberet>2.0.2.Final</version.org.jberet>
-        <version.org.jberet.javaee>1.4.0.Final</version.org.jberet.javaee>
 
         <!-- >>> Java EE/Jakarta EE dependencies -->
         <!-- Used in the JSR352 integration in particular, but also in the ORM integration (?) and various tests -->
-        <version.javax.inject>1</version.javax.inject>
         <version.jakarta.inject-api>2.0.0</version.jakarta.inject-api>
-        <version.javax.enterprise>2.0</version.javax.enterprise>
         <version.jakarta.enterprise>3.0.0</version.jakarta.enterprise>
-        <version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.2_spec>1.0.2.Final</version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.2_spec>
         <version.jakarta.annotation>2.0.0</version.jakarta.annotation>
-        <version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.2_spec>1.1.1.Final</version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.2_spec>
         <version.jakarta.transaction>2.0.0</version.jakarta.transaction>
         <!-- We need dependency management on these ones to avoid a dependency divergence created by Hibernate ORM
              Ideally, we should remove this dependency management when Hibernate ORM fixes that dependency divergence.
          -->
         <version.jakarta.xml.bind>3.0.1</version.jakarta.xml.bind>
         <version.jakarta.activation>2.0.1</version.jakarta.activation>
-        <!-- This is used to generate a link to the Java EE javadoc -->
-        <javadoc.javaee.url>https://javaee.github.io/javaee-spec/javadocs/</javadoc.javaee.url>
+        <!-- This is used to generate a link to the Jakarta EE javadoc -->
         <javadoc.jakarta.batch.url>https://jakarta.ee/specifications/batch/2.0/apidocs/</javadoc.jakarta.batch.url>
 
         <!-- Test dependencies -->
@@ -300,14 +291,12 @@
         <version.org.apache.commons.math3>3.2</version.org.apache.commons.math3>
         <version.org.apache.avro>1.10.2</version.org.apache.avro>
         <version.org.jboss.weld>4.0.2.Final</version.org.jboss.weld>
-        <version.org.jboss.weld.javaee>3.1.5.SP1</version.org.jboss.weld.javaee>
 
         <!-- >>> Performance tests -->
         <version.org.openjdk.jmh>1.23</version.org.openjdk.jmh>
 
         <!-- >>> JSR 352: JBatch runtime -->
         <version.com.ibm.jbatch>2.0.0</version.com.ibm.jbatch>
-        <version.com.ibm.jbatch.javaee>1.0</version.com.ibm.jbatch.javaee>
         <version.org.apache.derby>10.13.1.1</version.org.apache.derby>
 
         <!-- >>> JSR 352: JBeret SE dependencies -->
@@ -694,17 +683,7 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate.search</groupId>
-                <artifactId>hibernate-search-v5migrationhelper-orm-javaee</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate.search</groupId>
                 <artifactId>hibernate-search-mapper-orm-batch-jsr352-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate.search</groupId>
-                <artifactId>hibernate-search-mapper-orm-batch-jsr352-core-javaee</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -714,17 +693,7 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate.search</groupId>
-                <artifactId>hibernate-search-mapper-orm-batch-jsr352-jberet-javaee</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate.search</groupId>
                 <artifactId>hibernate-search-mapper-orm-coordination-outbox-polling</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate.search</groupId>
-                <artifactId>hibernate-search-mapper-orm-coordination-outbox-polling-javaee</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -806,17 +775,7 @@
 
             <dependency>
                 <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-core</artifactId>
-                <version>${version.org.hibernate}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core-jakarta</artifactId>
-                <version>${version.org.hibernate}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-envers</artifactId>
                 <version>${version.org.hibernate}</version>
             </dependency>
             <dependency>
@@ -889,22 +848,11 @@
                 <version>${version.org.apache.lucene}</version>
             </dependency>
 
-            <!-- JavaEE/JakartaEE dependencies -->
-            <dependency>
-                <groupId>javax.persistence</groupId>
-                <artifactId>javax.persistence-api</artifactId>
-                <version>${version.javax.persistence}</version>
-            </dependency>
+            <!-- JakartaEE dependencies -->
             <dependency>
                 <groupId>jakarta.persistence</groupId>
                 <artifactId>jakarta.persistence-api</artifactId>
                 <version>${version.jakarta.persistence}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.enterprise</groupId>
-                <artifactId>cdi-api</artifactId>
-                <version>${version.javax.enterprise}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>jakarta.enterprise</groupId>
@@ -912,31 +860,14 @@
                 <version>${version.jakarta.enterprise}</version>
             </dependency>
             <dependency>
-                <groupId>javax.inject</groupId>
-                <artifactId>javax.inject</artifactId>
-                <version>${version.javax.inject}</version>
-            </dependency>
-            <dependency>
                 <groupId>jakarta.inject</groupId>
                 <artifactId>jakarta.inject-api</artifactId>
                 <version>${version.jakarta.inject-api}</version>
             </dependency>
             <dependency>
-                <groupId>org.jboss.spec.javax.annotation</groupId>
-                <artifactId>jboss-annotations-api_1.2_spec</artifactId>
-                <version>${version.org.jboss.spec.javax.annotation.jboss-annotations-api_1.2_spec}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
                 <groupId>jakarta.annotation</groupId>
                 <artifactId>jakarta.annotation-api</artifactId>
                 <version>${version.jakarta.annotation}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.spec.javax.transaction</groupId>
-                <artifactId>jboss-transaction-api_1.2_spec</artifactId>
-                <version>${version.org.jboss.spec.javax.transaction.jboss-transaction-api_1.2_spec}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>jakarta.transaction</groupId>
@@ -1115,20 +1046,6 @@
             <!-- Hibernate ORM testing tools -->
             <dependency>
                 <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-testing</artifactId>
-                <version>${version.org.hibernate}</version>
-                <exclusions>
-                    <!-- we use Log4J 2 -->
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!-- Hibernate ORM testing tools -->
-            <dependency>
-                <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-testing-jakarta</artifactId>
                 <version>${version.org.hibernate}</version>
                 <exclusions>
@@ -1141,11 +1058,6 @@
             </dependency>
 
             <!-- JBatch runtime -->
-            <dependency>
-                <groupId>com.ibm.jbatch</groupId>
-                <artifactId>com.ibm.jbatch-runtime</artifactId>
-                <version>${version.com.ibm.jbatch.javaee}</version>
-            </dependency>
             <dependency>
                 <groupId>com.ibm.jbatch</groupId>
                 <artifactId>com.ibm.jbatch.container</artifactId>
@@ -1410,16 +1322,6 @@
                         <configuration>
                             <propertyPrefix>parsed-version.com.google.code.gson</propertyPrefix>
                             <versionString>${version.com.google.code.gson}</versionString>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>parse-jpa-version</id>
-                        <goals>
-                            <goal>parse-version</goal>
-                        </goals>
-                        <configuration>
-                            <propertyPrefix>parsed-version.javax.persistence</propertyPrefix>
-                            <versionString>${version.javax.persistence}</versionString>
                         </configuration>
                     </execution>
                     <execution>
