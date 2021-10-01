@@ -7,7 +7,7 @@
 package org.hibernate.search.mapper.orm.coordination.databasepolling.cluster.impl;
 
 import java.time.Instant;
-import javax.persistence.Transient;
+import jakarta.persistence.Transient;
 
 public class Agent {
 	private Long id;
