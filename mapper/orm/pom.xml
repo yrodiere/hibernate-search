@@ -33,15 +33,22 @@
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <artifactId>hibernate-core-jakarta</artifactId>
+            <!-- Use `jakarta.activation:jakarta.activation-api` instead of `com.sun.activation:jakarta.activation` in Jakarta EE 10 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>jakarta.activation</groupId>
+                    <artifactId>jakarta.activation-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -79,12 +86,16 @@
                 <executions>
                     <execution>
                         <id>add-module-infos</id>
-                        <!--
-                        This module depends on some packages of unnamed module jar: cdi-api*.jar.
-                        It seems that it is not possible to use directly unnamed modules from an explicit module,
-                        but we need an automatic module that acts as a bridge.
-                        -->
-                        <phase>none</phase>
+                        <configuration>
+                            <module>
+                                <moduleInfo>
+                                    <requires>
+                                        static jakarta.cdi;
+                                        *;
+                                    </requires>
+                                </moduleInfo>
+                            </module>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

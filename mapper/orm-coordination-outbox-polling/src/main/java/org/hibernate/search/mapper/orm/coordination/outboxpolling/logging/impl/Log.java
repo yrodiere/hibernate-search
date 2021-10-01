@@ -12,7 +12,7 @@ import static org.jboss.logging.Logger.Level.WARN;
 
 import java.time.Instant;
 import java.util.List;
-import javax.persistence.OptimisticLockException;
+import jakarta.persistence.OptimisticLockException;
 
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.Agent;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentReference;

@@ -10,7 +10,7 @@ package org.hibernate.search.documentation.backend.elasticsearch.type.asnative;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
 
 import org.hibernate.search.backend.elasticsearch.ElasticsearchExtension;
 import org.hibernate.search.documentation.testsupport.BackendConfigurations;

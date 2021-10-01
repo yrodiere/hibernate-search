@@ -18,12 +18,12 @@ to integrate Hibernate Search into your application.
 |Hibernate ORM (for the ORM mapper)
 |{hibernateVersion}
 |
-|JPA (Java EE) (for the ORM mapper)
-|{jpaVersion}
-|
 |Jakarta Persistence (for the ORM mapper)
 |{jakartaPersistenceVersion}
-|Need to use <<other-integrations-jakarta,different Maven artifacts>>.
+|
+|JPA (Java EE) (for the ORM mapper)
+|{jpaVersion}
+|Need to use <<other-integrations-javaee,different Maven artifacts>>.
 |Apache Lucene (for the Lucene backend)
 |{luceneVersion}
 |

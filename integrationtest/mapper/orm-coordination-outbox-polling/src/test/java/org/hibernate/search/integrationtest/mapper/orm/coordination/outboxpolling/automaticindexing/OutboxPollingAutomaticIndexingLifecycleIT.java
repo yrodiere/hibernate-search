@@ -10,9 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.integrationtest.mapper.orm.coordination.outboxpolling.automaticindexing.OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry;
 
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.search.integrationtest.mapper.orm.coordination.outboxpolling.FilteringOutboxEventFinder;

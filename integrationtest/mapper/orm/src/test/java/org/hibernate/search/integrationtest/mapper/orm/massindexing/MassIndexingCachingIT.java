@@ -12,11 +12,11 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.Arrays;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.SharedCacheMode;
-import javax.persistence.Table;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.SharedCacheMode;
+import jakarta.persistence.Table;
+import jakarta.persistence.TypedQuery;
 
 import org.hibernate.CacheMode;
 import org.hibernate.Session;

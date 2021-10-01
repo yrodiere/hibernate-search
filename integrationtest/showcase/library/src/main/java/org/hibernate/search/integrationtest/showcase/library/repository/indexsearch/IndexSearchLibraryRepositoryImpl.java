@@ -9,7 +9,7 @@ package org.hibernate.search.integrationtest.showcase.library.repository.indexse
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.hibernate.search.engine.search.aggregation.AggregationKey;
 import org.hibernate.search.engine.search.query.SearchResult;
