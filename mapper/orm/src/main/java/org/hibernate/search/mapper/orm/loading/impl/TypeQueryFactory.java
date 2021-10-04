@@ -13,7 +13,7 @@ import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.metamodel.model.domain.EntityDomainType;
-import org.hibernate.metamodel.spi.MetamodelImplementor;
+import org.hibernate.metamodel.model.domain.JpaMetamodel;
 import org.hibernate.persister.entity.EntityPersister;
 import org.hibernate.query.Query;
 import org.hibernate.search.mapper.orm.massindexing.impl.ConditionalExpression;
@@ -22,7 +22,7 @@ public interface TypeQueryFactory<E, I> {
 
 	static TypeQueryFactory<?, ?> create(SessionFactoryImplementor sessionFactory, EntityPersister entityPersister,
 			String uniquePropertyName) {
-		MetamodelImplementor metamodel = sessionFactory.getMetamodel();
+		JpaMetamodel metamodel = sessionFactory.getMetamodel();
 		EntityDomainType<?> typeOrNull = metamodel.entity( entityPersister.getEntityName() );
 		if ( typeOrNull != null ) {
 			return CriteriaTypeQueryFactory.create( typeOrNull, uniquePropertyName );
