@@ -6,6 +6,7 @@
  */
 package org.hibernate.search.integrationtest.mapper.orm.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -121,25 +122,17 @@ public class GenericPropertyIT {
 	}
 
 	@Entity(name = "generic")
-	public abstract static class GenericEntity<T> {
+	public abstract static class GenericEntity<T extends Serializable> {
 
 		@Id
 		private Integer id;
 
 		@Basic
 		@GenericField
-		// Necessary for Hibernate ORM: even if we make T extend Serializable,
-		// ORM doesn't take it into account for some reason.
-		@SuppressWarnings("deprecation")
-		@org.hibernate.annotations.Type(type = "serializable")
 		private T content;
 
 		@Basic
 		@GenericField
-		// Necessary for Hibernate ORM: even if we make T extend Serializable,
-		// ORM doesn't take it into account for some reason.
-		@SuppressWarnings("deprecation")
-		@org.hibernate.annotations.Type(type = "serializable")
 		private T[] arrayContent;
 
 		@OneToMany(mappedBy = "genericProperty")
