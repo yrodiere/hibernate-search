@@ -8,10 +8,8 @@ package org.hibernate.search.integrationtest.mapper.orm.model;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
+import org.hibernate.search.integrationtest.mapper.orm.testsupport.categories.RequiresOrm5;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
@@ -21,6 +19,11 @@ import org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmSetupHelper;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 public class DefaultDecimalScaleMappingIT {
 
@@ -33,6 +36,9 @@ public class DefaultDecimalScaleMappingIT {
 	public OrmSetupHelper ormSetupHelper = OrmSetupHelper.withBackendMock( backendMock );
 
 	@Test
+	@Category(RequiresOrm5.class)
+	// TODO HSEARCH-3277 Hibernate ORM 6 does not put the decimal scale on the column.
+	//  We need to find another way to get it (e.g.: taking it from the metamodel).
 	public void mapping() {
 		backendMock.expectSchema( INDEX_NAME, b -> b
 				.field( "scaled", BigDecimal.class, f -> f.defaultDecimalScale( 7 ) )
@@ -71,7 +77,7 @@ public class DefaultDecimalScaleMappingIT {
 		@ScaledNumberField
 		// Without a precision,
 		// the default column scale will be taken from the underlying ORM mapping.
-		// In the case of this test is 2.
+		// In the case of this test is not defined.
 		private BigDecimal defaultScaled;
 
 		@ScaledNumberField(decimalScale = 7)
