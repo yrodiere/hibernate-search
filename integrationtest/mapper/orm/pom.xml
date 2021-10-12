@@ -67,6 +67,11 @@
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
+                        <configuration>
+                            <excludedGroups>
+                                org.hibernate.search.integrationtest.mapper.orm.testsupport.categories.RequiresOrm5
+                            </excludedGroups>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
