@@ -24,6 +24,7 @@ import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.query.Query;
 import org.hibernate.search.engine.backend.work.execution.DocumentCommitStrategy;
 import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrategy;
+import org.hibernate.search.integrationtest.mapper.orm.testsupport.categories.RequiresOrm5;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.cfg.HibernateOrmMapperSettings;
 import org.hibernate.search.mapper.orm.massindexing.MassIndexer;
@@ -40,11 +41,15 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.rules.MethodRule;
 
 import org.assertj.core.api.AbstractLongAssert;
 import org.assertj.core.api.SoftAssertions;
 
+@Category( RequiresOrm5.class )
+// TODO HSEARCH-3277 ORM 6 has some issues doing the multiloading of 2nd lvl cached entities:
+//  sometimes some null is retrieved using the API.
 public class MassIndexingCachingIT {
 
 	@ClassRule
