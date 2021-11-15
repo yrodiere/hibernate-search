@@ -40,7 +40,6 @@ class HibernateOrmSelectionEntityByIdLoader<E> extends AbstractHibernateOrmSelec
 		List<E> loadedEntities = createListContainingNulls( allIds.size() );
 
 		int fetchSize = loadingOptions.fetchSize();
-		Query<E> query = createQuery( fetchSize, timeout );
 
 		List<Object> ids = new ArrayList<>( fetchSize );
 		for ( int i = 0; i < keys.length; i++ ) {
@@ -56,6 +55,7 @@ class HibernateOrmSelectionEntityByIdLoader<E> extends AbstractHibernateOrmSelec
 
 			ids.add( key.getIdentifier() );
 			if ( ids.size() >= fetchSize ) {
+				Query<E> query = createQuery( fetchSize, timeout );
 				query.setParameterList( IDS_PARAMETER_NAME, ids );
 				// The result is worthless, as entities are not in the right order.
 				// However, this will load entities into the persistence context... see further down.
@@ -64,6 +64,7 @@ class HibernateOrmSelectionEntityByIdLoader<E> extends AbstractHibernateOrmSelec
 			}
 		}
 		if ( !ids.isEmpty() ) {
+			Query<E> query = createQuery( fetchSize, timeout );
 			query.setParameterList( IDS_PARAMETER_NAME, ids );
 			// Same as above: the result is worthless.
 			query.getResultList();
