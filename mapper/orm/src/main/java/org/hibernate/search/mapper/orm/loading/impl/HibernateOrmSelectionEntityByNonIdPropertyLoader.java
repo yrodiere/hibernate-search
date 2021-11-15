@@ -51,18 +51,19 @@ class HibernateOrmSelectionEntityByNonIdPropertyLoader<E> extends AbstractHibern
 		Map<Object, E> entityById = CollectionHelper.newHashMap( allIds.size() );
 
 		int fetchSize = loadingOptions.fetchSize();
-		Query<E> query = createQuery( fetchSize, timeout );
 
 		List<Object> ids = new ArrayList<>( fetchSize );
 		for ( Object documentIdSourceValue : allIds ) {
 			ids.add( documentIdSourceValue );
 			if ( ids.size() >= fetchSize ) {
+				Query<E> query = createQuery( fetchSize, timeout );
 				query.setParameterList( IDS_PARAMETER_NAME, ids );
 				addResults( entityById, query.getResultList() );
 				ids.clear();
 			}
 		}
 		if ( !ids.isEmpty() ) {
+			Query<E> query = createQuery( fetchSize, timeout );
 			query.setParameterList( IDS_PARAMETER_NAME, ids );
 			addResults( entityById, query.getResultList() );
 		}
