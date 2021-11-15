@@ -233,4 +233,8 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 53, value = "Configuration property '%1$s' is deprecated; use '%2$s' instead.")
 	void automaticIndexingStrategyIsDeprecated(String resolveOrRaw, String resolveOrRaw1);
 
+	@LogMessage(level = Logger.Level.INFO)
+	@Message(id = ID_OFFSET + 54, value = "Ignoring unrecognized query hint [%s]")
+	void ignoringUnrecognizedQueryHint(String hintName);
+
 }

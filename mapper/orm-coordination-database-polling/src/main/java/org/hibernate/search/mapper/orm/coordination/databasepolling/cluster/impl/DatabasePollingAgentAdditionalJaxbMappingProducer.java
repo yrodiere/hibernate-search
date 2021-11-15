@@ -32,6 +32,8 @@ public class DatabasePollingAgentAdditionalJaxbMappingProducer
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
+	public static final String HIBERNATE_SEARCH = "hibernate-search";
+
 	// WARNING: Always use this prefix for all tables added by Hibernate Search:
 	// we guarantee that in the documentation.
 	public static final String HSEARCH_PREFIX = "HSEARCH_";
@@ -84,7 +86,7 @@ public class DatabasePollingAgentAdditionalJaxbMappingProducer
 
 		JaxbHbmHibernateMapping root = (JaxbHbmHibernateMapping) binding.getRoot();
 
-		MappingDocument mappingDocument = new MappingDocument( root, origin, buildingContext );
+		MappingDocument mappingDocument = new MappingDocument( HIBERNATE_SEARCH, root, origin, buildingContext );
 		return Collections.singletonList( mappingDocument );
 	}
 }
