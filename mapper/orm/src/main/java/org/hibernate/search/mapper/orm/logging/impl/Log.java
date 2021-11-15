@@ -245,4 +245,9 @@ public interface Log extends BasicLogger {
 			+ " which should be set to a comma-separated string containing all possible tenant identifiers."
 			+ " Currently configured tenant identifiers: %2$s." )
 	SearchException invalidTenantId(String tenantId, Set<String> allTenantIds, String tenantIdsConfigurationPropertyKey);
+
+	@LogMessage(level = Logger.Level.INFO)
+	@Message(id = ID_OFFSET + 56, value = "Ignoring unrecognized query hint [%s]")
+	void ignoringUnrecognizedQueryHint(String hintName);
+
 }

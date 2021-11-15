@@ -33,6 +33,8 @@ public final class OutboxPollingOutboxEventAdditionalJaxbMappingProducer
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
+	private static final String HIBERNATE_SEARCH = OutboxPollingAgentAdditionalJaxbMappingProducer.HIBERNATE_SEARCH;
+
 	private static final String HSEARCH_PREFIX = OutboxPollingAgentAdditionalJaxbMappingProducer.HSEARCH_PREFIX;
 
 	// Must not be longer than 20 characters, so that the generator does not exceed the 30 characters for Oracle11g
@@ -73,7 +75,7 @@ public final class OutboxPollingOutboxEventAdditionalJaxbMappingProducer
 	public Collection<MappingDocument> produceAdditionalMappings(final MetadataImplementor metadata,
 			IndexView jandexIndex, final MappingBinder mappingBinder, final MetadataBuildingContext buildingContext) {
 		log.outboxEventGeneratedEntityMapping( ENTITY_DEFINITION );
-		Origin origin = new Origin( SourceType.OTHER, "search" );
+		Origin origin = new Origin( SourceType.OTHER, HIBERNATE_SEARCH );
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream( ENTITY_DEFINITION.getBytes() );
 		BufferedInputStream bufferedInputStream = new BufferedInputStream( byteArrayInputStream );
@@ -81,7 +83,7 @@ public final class OutboxPollingOutboxEventAdditionalJaxbMappingProducer
 
 		JaxbHbmHibernateMapping root = (JaxbHbmHibernateMapping) binding.getRoot();
 
-		MappingDocument mappingDocument = new MappingDocument( root, origin, buildingContext );
+		MappingDocument mappingDocument = new MappingDocument( HIBERNATE_SEARCH, root, origin, buildingContext );
 		return Collections.singletonList( mappingDocument );
 	}
 }
