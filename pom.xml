@@ -249,9 +249,9 @@
         <version.org.slf4j>1.7.30</version.org.slf4j>
 
         <!-- >>> ORM -->
-        <version.org.hibernate>5.6.0.Final</version.org.hibernate>
-        <javadoc.org.hibernate.url>https://docs.jboss.org/hibernate/orm/${parsed-version.org.hibernate.majorVersion}.${parsed-version.org.hibernate.minorVersion}/javadocs/</javadoc.org.hibernate.url>
-        <documentation.org.hibernate.url>https://docs.jboss.org/hibernate/orm/${parsed-version.org.hibernate.majorVersion}.${parsed-version.org.hibernate.minorVersion}/userguide/html_single/Hibernate_User_Guide.html</documentation.org.hibernate.url>
+        <version.org.hibernate.orm>6.0.0-SNAPSHOT</version.org.hibernate.orm>
+        <javadoc.org.hibernate.orm.url>https://docs.jboss.org/hibernate/orm/${parsed-version.org.hibernate.orm.majorVersion}.${parsed-version.org.hibernate.orm.minorVersion}/javadocs/</javadoc.org.hibernate.orm.url>
+        <documentation.org.hibernate.orm.url>https://docs.jboss.org/hibernate/orm/${parsed-version.org.hibernate.orm.majorVersion}.${parsed-version.org.hibernate.orm.minorVersion}/userguide/html_single/Hibernate_User_Guide.html</documentation.org.hibernate.orm.url>
         <version.org.hibernate.commons.annotations>5.1.2.Final</version.org.hibernate.commons.annotations>
         <version.jakarta.persistence>3.0.0</version.jakarta.persistence>
 
@@ -774,14 +774,14 @@
             </dependency>
 
             <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-core-jakarta</artifactId>
-                <version>${version.org.hibernate}</version>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${version.org.hibernate.orm}</version>
             </dependency>
             <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-envers-jakarta</artifactId>
-                <version>${version.org.hibernate}</version>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-envers</artifactId>
+                <version>${version.org.hibernate.orm}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.common</groupId>
@@ -1045,14 +1045,19 @@
 
             <!-- Hibernate ORM testing tools -->
             <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-testing-jakarta</artifactId>
-                <version>${version.org.hibernate}</version>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-testing</artifactId>
+                <version>${version.org.hibernate.orm}</version>
                 <exclusions>
                     <!-- we use Log4J 2 -->
                     <exclusion>
                         <groupId>log4j</groupId>
                         <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <!-- We don't need this stuff, and it causes dependency divergence errors -->
+                    <exclusion>
+                        <groupId>org.wildfly.transaction</groupId>
+                        <artifactId>wildfly-transaction-client-jakarta</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -1280,8 +1285,8 @@
                             <goal>parse-version</goal>
                         </goals>
                         <configuration>
-                            <propertyPrefix>parsed-version.org.hibernate</propertyPrefix>
-                            <versionString>${version.org.hibernate}</versionString>
+                            <propertyPrefix>parsed-version.org.hibernate.orm</propertyPrefix>
+                            <versionString>${version.org.hibernate.orm}</versionString>
                         </configuration>
                     </execution>
                     <execution>
@@ -2010,6 +2015,26 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <repositories>
+        <!--
+            Enable the sonatype-oss Snapshots repository, for Hibernate ORM.
+         -->
+        <repository>
+            <id>sonatype-oss</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <distributionManagement>
         <repository>

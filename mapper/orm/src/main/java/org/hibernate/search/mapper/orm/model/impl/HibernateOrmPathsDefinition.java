@@ -16,6 +16,7 @@ import java.util.Set;
 import org.hibernate.MappingException;
 import org.hibernate.event.spi.PostUpdateEvent;
 import org.hibernate.mapping.Any;
+import org.hibernate.mapping.BasicValue;
 import org.hibernate.mapping.Component;
 import org.hibernate.mapping.OneToMany;
 import org.hibernate.mapping.PersistentClass;
@@ -252,7 +253,7 @@ public class HibernateOrmPathsDefinition implements PojoPathsDefinition {
 				return Optional.of( baseValue );
 			}
 		}
-		else if ( SimpleValue.class.equals( valueClass ) ) { // equals() and not isAssignableFrom(), we mean it.
+		else if ( BasicValue.class.isAssignableFrom( valueClass ) ) {
 			pathsAsStrings.add( propertyNode.toPropertyString() );
 			// The string representation of the path was added, we can stop here
 			return Optional.empty();
@@ -309,7 +310,7 @@ public class HibernateOrmPathsDefinition implements PojoPathsDefinition {
 		if ( !extractorNameIterator.hasNext() ) {
 			// We managed to resolve the whole container value extractor list
 			Class<? extends Value> containedValueClass = containedValue.getClass();
-			if ( SimpleValue.class.equals( containedValueClass ) // equals() and not isAssignableFrom(), we mean it.
+			if ( BasicValue.class.isAssignableFrom( containedValueClass )
 					|| Component.class.isAssignableFrom( containedValueClass )
 					|| isWholePath && isAssociation( containedValueClass ) ) {
 				pathsAsStrings.add( propertyNode.toPropertyString() );
