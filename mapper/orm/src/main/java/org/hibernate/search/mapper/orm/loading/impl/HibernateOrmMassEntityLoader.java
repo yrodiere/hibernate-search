@@ -46,8 +46,10 @@ public final class HibernateOrmMassEntityLoader<E, I> implements PojoMassEntityL
 	public void load(List<I> identifiers) throws InterruptedException {
 		transactionHelper.begin( session, null );
 		try {
-			sink.accept( typeQueryLoader.uniquePropertyIsTheEntityId() ?
-					multiLoad( identifiers ) : queryByIds( identifiers ) );
+			// TODO HSEARCH-3277 Multiloading on ORM 6 sometimes return [ null ]. Probably it depends on caching strategy.
+//			sink.accept( typeQueryLoader.uniquePropertyIsTheEntityId() ?
+//					multiLoad( identifiers ) : queryByIds( identifiers ) );
+			sink.accept( queryByIds( identifiers ) );
 			session.clear();
 		}
 		catch (Exception e) {
