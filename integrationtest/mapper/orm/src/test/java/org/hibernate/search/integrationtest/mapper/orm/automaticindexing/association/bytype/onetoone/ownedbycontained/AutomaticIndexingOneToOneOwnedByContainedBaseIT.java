@@ -17,6 +17,7 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -276,10 +277,10 @@ public class AutomaticIndexingOneToOneOwnedByContainedBaseIT
 
 		private String nonIndexedField;
 
-		@OneToOne
+		@OneToOne(fetch = FetchType.LAZY)
 		private ContainingEntity parent;
 
-		@OneToOne(mappedBy = "parent")
+		@OneToOne(mappedBy = "parent", fetch = FetchType.LAZY)
 		@IndexedEmbedded(includePaths = {
 				"containedIndexedEmbedded.indexedField",
 				"containedIndexedEmbedded.indexedElementCollectionField",
@@ -437,27 +438,27 @@ public class AutomaticIndexingOneToOneOwnedByContainedBaseIT
 		@Id
 		private Integer id;
 
-		@OneToOne
+		@OneToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name = "CIndexedEmbedded")
 		private ContainingEntity containingAsIndexedEmbedded;
 
-		@OneToOne
+		@OneToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name = "CNonIndexedEmbedded")
 		private ContainingEntity containingAsNonIndexedEmbedded;
 
-		@OneToOne
+		@OneToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name = "CIndexedEmbeddedSROU")
 		private ContainingEntity containingAsIndexedEmbeddedShallowReindexOnUpdate;
 
-		@OneToOne
+		@OneToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name = "CIndexedEmbeddedNROU")
 		private ContainingEntity containingAsIndexedEmbeddedNoReindexOnUpdate;
 
-		@OneToOne
+		@OneToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name = "CCrossEntityDerived")
 		private ContainingEntity containingAsUsedInCrossEntityDerivedProperty;
 
-		@OneToOne(targetEntity = ContainingEntity.class)
+		@OneToOne(targetEntity = ContainingEntity.class, fetch = FetchType.LAZY)
 		@JoinColumn(name = "CIndexedEmbeddedCast")
 		private Object containingAsIndexedEmbeddedWithCast;
 
