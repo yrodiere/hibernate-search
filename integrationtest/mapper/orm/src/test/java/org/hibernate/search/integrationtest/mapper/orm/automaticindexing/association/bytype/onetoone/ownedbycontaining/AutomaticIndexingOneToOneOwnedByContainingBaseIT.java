@@ -15,6 +15,7 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -241,10 +242,10 @@ public class AutomaticIndexingOneToOneOwnedByContainingBaseIT
 
 		private String nonIndexedField;
 
-		@OneToOne
+		@OneToOne(fetch = FetchType.LAZY)
 		private ContainingEntity parent;
 
-		@OneToOne(mappedBy = "parent")
+		@OneToOne(mappedBy = "parent", fetch = FetchType.LAZY)
 		@IndexedEmbedded(includePaths = {
 				"containedIndexedEmbedded.indexedField",
 				"containedIndexedEmbedded.indexedElementCollectionField",
@@ -406,22 +407,22 @@ public class AutomaticIndexingOneToOneOwnedByContainingBaseIT
 		@Id
 		private Integer id;
 
-		@OneToOne(mappedBy = "containedIndexedEmbedded")
+		@OneToOne(mappedBy = "containedIndexedEmbedded", fetch = FetchType.LAZY)
 		private ContainingEntity containingAsIndexedEmbedded;
 
-		@OneToOne(mappedBy = "containedNonIndexedEmbedded")
+		@OneToOne(mappedBy = "containedNonIndexedEmbedded", fetch = FetchType.LAZY)
 		private ContainingEntity containingAsNonIndexedEmbedded;
 
-		@OneToOne(mappedBy = "containedIndexedEmbeddedShallowReindexOnUpdate")
+		@OneToOne(mappedBy = "containedIndexedEmbeddedShallowReindexOnUpdate", fetch = FetchType.LAZY)
 		private ContainingEntity containingAsIndexedEmbeddedShallowReindexOnUpdate;
 
-		@OneToOne(mappedBy = "containedIndexedEmbeddedNoReindexOnUpdate")
+		@OneToOne(mappedBy = "containedIndexedEmbeddedNoReindexOnUpdate", fetch = FetchType.LAZY)
 		private ContainingEntity containingAsIndexedEmbeddedNoReindexOnUpdate;
 
-		@OneToOne(mappedBy = "containedUsedInCrossEntityDerivedProperty")
+		@OneToOne(mappedBy = "containedUsedInCrossEntityDerivedProperty", fetch = FetchType.LAZY)
 		private ContainingEntity containingAsUsedInCrossEntityDerivedProperty;
 
-		@OneToOne(mappedBy = "containedIndexedEmbeddedWithCast", targetEntity = ContainingEntity.class)
+		@OneToOne(mappedBy = "containedIndexedEmbeddedWithCast", targetEntity = ContainingEntity.class, fetch = FetchType.LAZY)
 		private Object containingAsIndexedEmbeddedWithCast;
 
 		@Basic
