@@ -65,7 +65,7 @@ public final class OutboxPollingOutboxEventAdditionalJaxbMappingProducer
 			"        <property name=\"entityIdHash\" type=\"integer\" index=\"entityIdHash\" />\n" +
 			"        <property name=\"payload\" type=\"materialized_blob\" />\n" +
 			"        <property name=\"retries\" type=\"integer\" />\n" +
-			"        <property name=\"processAfter\" type=\"Instant\" index=\"processAfter\" />\n" +
+			"        <property name=\"processAfter\" type=\"instant\" index=\"processAfter\" />\n" +
 			"    </class>\n" +
 			"</hibernate-mapping>\n";
 
