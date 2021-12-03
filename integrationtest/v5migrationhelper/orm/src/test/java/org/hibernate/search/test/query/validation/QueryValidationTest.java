@@ -6,9 +6,9 @@
  */
 package org.hibernate.search.test.query.validation;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.TermQuery;

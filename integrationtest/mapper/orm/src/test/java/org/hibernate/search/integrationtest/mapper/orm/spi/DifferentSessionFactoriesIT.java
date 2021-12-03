@@ -8,9 +8,9 @@ package org.hibernate.search.integrationtest.mapper.orm.spi;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Id;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
