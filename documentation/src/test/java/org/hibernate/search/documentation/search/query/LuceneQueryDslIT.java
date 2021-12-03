@@ -8,7 +8,7 @@ package org.hibernate.search.documentation.search.query;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
 
 import org.hibernate.search.backend.lucene.LuceneExtension;
 import org.hibernate.search.backend.lucene.search.query.LuceneSearchQuery;

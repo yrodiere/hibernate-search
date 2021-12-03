@@ -6,9 +6,9 @@
  */
 package org.hibernate.search.integrationtest.mapper.orm.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.search.engine.backend.analysis.AnalyzerNames;

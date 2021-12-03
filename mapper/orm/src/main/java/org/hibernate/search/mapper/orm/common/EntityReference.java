@@ -18,7 +18,7 @@ public interface EntityReference {
 
 	/**
 	 * @return The name of the referenced entity in the Hibernate ORM mapping.
-	 * @see javax.persistence.Entity#name()
+	 * @see jakarta.persistence.Entity#name()
 	 */
 	String name();
 
