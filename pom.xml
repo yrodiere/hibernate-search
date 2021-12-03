@@ -174,7 +174,7 @@
         <module>parents/integrationtest</module>
         <module>integrationtest</module>
         <module>documentation</module>
-        <module>jakarta</module>
+        <module>javaee</module>
     </modules>
 
     <properties>
@@ -264,8 +264,8 @@
         <!-- >>> JSR 352 -->
         <version.javax.batch>1.0.1</version.javax.batch>
         <version.jakarta.batch>2.0.0</version.jakarta.batch>
-        <version.org.jberet>1.4.0.Final</version.org.jberet>
-        <version.org.jberet.jakarta>2.0.2.Final</version.org.jberet.jakarta>
+        <version.org.jberet>2.0.2.Final</version.org.jberet>
+        <version.org.jberet.javaee>1.4.0.Final</version.org.jberet.javaee>
 
         <!-- >>> Java EE/Jakarta EE dependencies -->
         <!-- Used in the JSR352 integration in particular, but also in the ORM integration (?) and various tests -->
@@ -307,15 +307,15 @@
         <version.org.apache.commons.lang3>3.12.0</version.org.apache.commons.lang3>
         <version.org.apache.commons.math3>3.6.1</version.org.apache.commons.math3>
         <version.org.apache.avro>1.11.0</version.org.apache.avro>
-        <version.org.jboss.weld>3.1.5.SP1</version.org.jboss.weld>
-        <version.org.jboss.weld.jakarta>4.0.2.Final</version.org.jboss.weld.jakarta>
+        <version.org.jboss.weld>4.0.2.Final</version.org.jboss.weld>
+        <version.org.jboss.weld.javaee>3.1.5.SP1</version.org.jboss.weld.javaee>
 
         <!-- >>> Performance tests -->
         <version.org.openjdk.jmh>1.33</version.org.openjdk.jmh>
 
         <!-- >>> JSR 352: JBatch runtime -->
-        <version.com.ibm.jbatch>1.0</version.com.ibm.jbatch>
-        <version.com.ibm.jbatch.jakarta>2.0.0</version.com.ibm.jbatch.jakarta>
+        <version.com.ibm.jbatch>2.0.0</version.com.ibm.jbatch>
+        <version.com.ibm.jbatch.javaee>1.0</version.com.ibm.jbatch.javaee>
         <version.org.apache.derby>10.13.1.1</version.org.apache.derby>
 
         <!-- >>> JSR 352: JBeret SE dependencies -->
@@ -657,7 +657,7 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate.search</groupId>
-                <artifactId>hibernate-search-util-internal-test-orm-jakarta</artifactId>
+                <artifactId>hibernate-search-util-internal-test-orm-javaee</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -697,7 +697,7 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate.search</groupId>
-                <artifactId>hibernate-search-mapper-orm-jakarta</artifactId>
+                <artifactId>hibernate-search-mapper-orm-javaee</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -712,7 +712,7 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate.search</groupId>
-                <artifactId>hibernate-search-v5migrationhelper-orm-jakarta</artifactId>
+                <artifactId>hibernate-search-v5migrationhelper-orm-javaee</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -722,7 +722,7 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate.search</groupId>
-                <artifactId>hibernate-search-mapper-orm-batch-jsr352-core-jakarta</artifactId>
+                <artifactId>hibernate-search-mapper-orm-batch-jsr352-core-javaee</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -732,7 +732,7 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate.search</groupId>
-                <artifactId>hibernate-search-mapper-orm-batch-jsr352-jberet-jakarta</artifactId>
+                <artifactId>hibernate-search-mapper-orm-batch-jsr352-jberet-javaee</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -742,7 +742,7 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate.search</groupId>
-                <artifactId>hibernate-search-mapper-orm-coordination-outbox-polling-jakarta</artifactId>
+                <artifactId>hibernate-search-mapper-orm-coordination-outbox-polling-javaee</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -1164,6 +1164,8 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <!-- Hibernate ORM testing tools -->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-testing-jakarta</artifactId>
@@ -1181,12 +1183,12 @@
             <dependency>
                 <groupId>com.ibm.jbatch</groupId>
                 <artifactId>com.ibm.jbatch-runtime</artifactId>
-                <version>${version.com.ibm.jbatch}</version>
+                <version>${version.com.ibm.jbatch.javaee}</version>
             </dependency>
             <dependency>
                 <groupId>com.ibm.jbatch</groupId>
                 <artifactId>com.ibm.jbatch.container</artifactId>
-                <version>${version.com.ibm.jbatch.jakarta}</version>
+                <version>${version.com.ibm.jbatch}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.derby</groupId>

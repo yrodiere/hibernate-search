@@ -9,9 +9,9 @@ package org.hibernate.search.util.impl.integrationtest.mapper.orm;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

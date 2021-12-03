@@ -7,7 +7,7 @@
 package org.hibernate.search.mapper.orm.coordination.outboxpolling.event.impl;
 
 import java.time.Instant;
-import javax.persistence.Transient;
+import jakarta.persistence.Transient;
 
 public final class OutboxEvent {
 
