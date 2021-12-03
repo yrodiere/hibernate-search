@@ -8,9 +8,9 @@ package org.hibernate.search.integrationtest.mapper.orm.automaticindexing.bridge
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.QueryTimeoutException;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.QueryTimeoutException;
 
 import org.hibernate.graph.GraphSemantic;
 import org.hibernate.query.Query;
@@ -282,7 +282,7 @@ public class ToHibernateOrmQueryIT {
 			SearchSession searchSession = Search.session( session );
 			Query<IndexedEntity> query = Search.toOrmQuery( createSimpleQuery( searchSession ) );
 
-			query.setHint( "javax.persistence.query.timeout", 200 );
+			query.setHint( "jakarta.persistence.query.timeout", 200 );
 
 			SearchTimeoutException timeoutException = new SearchTimeoutException( "Timed out" );
 
@@ -408,7 +408,7 @@ public class ToHibernateOrmQueryIT {
 			SearchSession searchSession = Search.session( session );
 			Query<IndexedEntity> query = Search.toOrmQuery( createSimpleQuery( searchSession ) );
 
-			query.setHint( "javax.persistence.fetchgraph", session.getEntityGraph( IndexedEntity.GRAPH_EAGER ) );
+			query.setHint( "jakarta.persistence.fetchgraph", session.getEntityGraph( IndexedEntity.GRAPH_EAGER ) );
 
 			backendMock.expectSearchObjects(
 					IndexedEntity.NAME,
@@ -424,7 +424,7 @@ public class ToHibernateOrmQueryIT {
 			SearchSession searchSession = Search.session( session );
 			Query<IndexedEntity> query = Search.toOrmQuery( createSimpleQuery( searchSession ) );
 
-			query.setHint( "javax.persistence.fetchgraph", session.getEntityGraph( IndexedEntity.GRAPH_LAZY ) );
+			query.setHint( "jakarta.persistence.fetchgraph", session.getEntityGraph( IndexedEntity.GRAPH_LAZY ) );
 
 			backendMock.expectSearchObjects(
 					IndexedEntity.NAME,
@@ -445,7 +445,7 @@ public class ToHibernateOrmQueryIT {
 			SearchSession searchSession = Search.session( session );
 			Query<IndexedEntity> query = Search.toOrmQuery( createSimpleQuery( searchSession ) );
 
-			query.setHint( "javax.persistence.loadgraph", session.getEntityGraph( IndexedEntity.GRAPH_EAGER ) );
+			query.setHint( "jakarta.persistence.loadgraph", session.getEntityGraph( IndexedEntity.GRAPH_EAGER ) );
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( IndexedEntity.NAME ), b -> { },
@@ -461,7 +461,7 @@ public class ToHibernateOrmQueryIT {
 			SearchSession searchSession = Search.session( session );
 			Query<IndexedEntity> query = Search.toOrmQuery( createSimpleQuery( searchSession ) );
 
-			query.setHint( "javax.persistence.loadgraph", session.getEntityGraph( IndexedEntity.GRAPH_LAZY ) );
+			query.setHint( "jakarta.persistence.loadgraph", session.getEntityGraph( IndexedEntity.GRAPH_LAZY ) );
 
 			backendMock.expectSearchObjects(
 					IndexedEntity.NAME,
@@ -560,7 +560,7 @@ public class ToHibernateOrmQueryIT {
 							.toQuery()
 			);
 
-			query.setHint( "javax.persistence.fetchgraph", session.getEntityGraph( IndexedEntity.GRAPH_LAZY ) );
+			query.setHint( "jakarta.persistence.fetchgraph", session.getEntityGraph( IndexedEntity.GRAPH_LAZY ) );
 
 			backendMock.expectSearchObjects(
 					IndexedEntity.NAME,
