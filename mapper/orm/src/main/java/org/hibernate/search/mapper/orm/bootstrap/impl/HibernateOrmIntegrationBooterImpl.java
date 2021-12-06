@@ -59,7 +59,7 @@ public class HibernateOrmIntegrationBooterImpl implements HibernateOrmIntegratio
 		else {
 			ConfigurationService ormConfigurationService =
 					HibernateOrmUtils.getServiceOrFail( serviceRegistry, ConfigurationService.class );
-			Object unknownBeanManager = ormConfigurationService.getSettings().get( AvailableSettings.CDI_BEAN_MANAGER );
+			Object unknownBeanManager = ormConfigurationService.getSettings().get( AvailableSettings.JAKARTA_CDI_BEAN_MANAGER );
 			if ( unknownBeanManager instanceof ExtendedBeanManager ) {
 				ExtendedBeanManager extendedBeanManager = (ExtendedBeanManager) unknownBeanManager;
 				ExtendedBeanManagerSynchronizer synchronizer = new ExtendedBeanManagerSynchronizer();
