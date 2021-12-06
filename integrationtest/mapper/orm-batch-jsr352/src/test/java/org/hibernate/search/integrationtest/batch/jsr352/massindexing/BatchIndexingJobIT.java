@@ -188,7 +188,7 @@ public class BatchIndexingJobIT {
 			CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 			CriteriaQuery<Company> criteria = criteriaBuilder.createQuery( Company.class );
 			Root<Company> root = criteria.from( Company.class );
-			Path<Integer> id = root.get( root.getModel().getId( int.class ) );
+			Path<Integer> id = root.get( root.getModel().getId( Integer.class ) );
 			criteria.orderBy( criteriaBuilder.asc( id ) );
 			List<Company> companies = em.createQuery( criteria ).getResultList();
 			List<CompanyGroup> groups = new ArrayList<>();
@@ -419,7 +419,7 @@ public class BatchIndexingJobIT {
 			CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 			CriteriaQuery<Company> criteria = criteriaBuilder.createQuery( Company.class );
 			Root<Company> root = criteria.from( Company.class );
-			Path<Integer> id = root.get( root.getModel().getId( int.class ) );
+			Path<Integer> id = root.get( root.getModel().getId( Integer.class ) );
 			criteria.orderBy( criteriaBuilder.asc( id ) );
 			List<Company> companies = em.createQuery( criteria ).setMaxResults( count ).getResultList();
 			SearchSession session = Search.session( em );
