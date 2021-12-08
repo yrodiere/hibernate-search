@@ -252,8 +252,9 @@ public class ElasticsearchSearchQueryImpl<H> extends AbstractSearchQuery<H, Elas
 		/*
 		 * If the user has given a 'size' value, take it as is, let ES itself complain if it's too high;
 		 * if no value is given, take as much as possible, as by default only 10 rows would be returned.
+		 * Integer special value Integer.MAX_VALUE will be handled as null, as unbounded.
 		 */
-		if ( limit != null ) {
+		if ( limit != null && !limit.equals( Integer.MAX_VALUE ) ) {
 			return limit;
 		}
 		else {

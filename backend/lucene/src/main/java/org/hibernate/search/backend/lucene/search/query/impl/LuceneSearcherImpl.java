@@ -165,7 +165,7 @@ class LuceneSearcherImpl<H> implements LuceneSearcher<LuceneLoadableSearchResult
 	}
 
 	private int getMaxDocs(IndexReader reader, int offset, Integer limit) {
-		if ( limit == null ) {
+		if ( limit == null || (long) offset + limit >= Integer.MAX_VALUE ) {
 			return reader.maxDoc();
 		}
 		else if ( limit.equals( 0 ) ) {

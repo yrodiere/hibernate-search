@@ -120,6 +120,18 @@ public class SearchQueryFetchIT {
 				.hasNoHits();
 	}
 
+	@Test
+	public void fetch_offset_limit_usingIntegerMaxValue() {
+		// test when Integer.MAX_VALUE is used in place of null
+		assertThatResult( matchAllQuerySortByField().fetch( 1, Integer.MAX_VALUE ) )
+				.hasTotalHitCount( DOCUMENT_COUNT )
+				.hasDocRefHitsExactOrder( builder -> {
+					for ( int i = 1; i < DOCUMENT_COUNT; i++ ) {
+						builder.doc( index.typeName(), docId( i ) );
+					}
+				} );
+	}
+
 	/**
 	 * Same as the test above, but with the default, score sort.
 	 * This is important in the Lucene implementation in particular,
