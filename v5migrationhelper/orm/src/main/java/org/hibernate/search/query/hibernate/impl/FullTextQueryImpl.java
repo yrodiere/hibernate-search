@@ -222,12 +222,14 @@ public class FullTextQueryImpl extends AbstractQuery implements FullTextQuery {
 	@Override
 	public FullTextQuery setMaxResults(int maxResults) {
 		super.setMaxResults( maxResults );
+		hSearchQuery.maxResults( maxResults );
 		return this;
 	}
 
 	@Override
 	public FullTextQuery setFirstResult(int firstResult) {
 		super.setFirstResult( firstResult );
+		hSearchQuery.firstResult( firstResult );
 		return this;
 	}
 
