@@ -132,6 +132,9 @@ public class FullTextQueryImpl extends AbstractQuery implements FullTextQuery {
 	@Override
 	public List list() {
 		try {
+			if ( resultTransformer != null ) {
+				return resultTransformer.transformList( super.list() );
+			}
 			return super.list();
 		}
 		catch (SearchTimeoutException e) {
