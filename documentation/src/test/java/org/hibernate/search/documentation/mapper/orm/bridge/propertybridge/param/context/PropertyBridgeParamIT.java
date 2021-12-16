@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManagerFactory;
 
 import org.hibernate.search.documentation.mapper.orm.bridge.propertybridge.param.InvoiceLineItem;
 import org.hibernate.search.documentation.mapper.orm.bridge.propertybridge.param.InvoiceLineItemCategory;

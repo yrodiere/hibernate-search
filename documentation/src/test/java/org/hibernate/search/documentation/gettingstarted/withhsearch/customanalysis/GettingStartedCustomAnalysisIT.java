@@ -10,8 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.integrationtest.common.rule.BackendConfiguration.BACKEND_TYPE;
 
 import java.util.concurrent.atomic.AtomicReference;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 import org.hibernate.search.documentation.testsupport.JpaConfiguration;
 import org.hibernate.search.engine.search.query.SearchResult;
