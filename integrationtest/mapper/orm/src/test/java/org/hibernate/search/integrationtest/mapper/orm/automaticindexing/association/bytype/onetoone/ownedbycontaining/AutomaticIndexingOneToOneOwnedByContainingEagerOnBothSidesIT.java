@@ -15,6 +15,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -36,16 +37,17 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyVa
 /**
  * Test automatic indexing caused by single-valued association updates
  * or by updates of associated (contained) entities,
- * with a {@code @OneToOne} association owned by the containing side.
+ * with a {@code @OneToOne} association owned by the containing side,
+ * with eager associations on both sides.
  */
-public class AutomaticIndexingOneToOneOwnedByContainingBaseIT
+public class AutomaticIndexingOneToOneOwnedByContainingEagerOnBothSidesIT
 		extends AbstractAutomaticIndexingAssociationBaseIT<
-						AutomaticIndexingOneToOneOwnedByContainingBaseIT.IndexedEntity,
-						AutomaticIndexingOneToOneOwnedByContainingBaseIT.ContainingEntity,
-						AutomaticIndexingOneToOneOwnedByContainingBaseIT.ContainedEntity
+						AutomaticIndexingOneToOneOwnedByContainingEagerOnBothSidesIT.IndexedEntity,
+						AutomaticIndexingOneToOneOwnedByContainingEagerOnBothSidesIT.ContainingEntity,
+						AutomaticIndexingOneToOneOwnedByContainingEagerOnBothSidesIT.ContainedEntity
 				> {
 
-	public AutomaticIndexingOneToOneOwnedByContainingBaseIT() {
+	public AutomaticIndexingOneToOneOwnedByContainingEagerOnBothSidesIT() {
 		super( new ModelPrimitivesImpl() );
 	}
 
