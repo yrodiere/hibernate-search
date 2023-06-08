@@ -10,6 +10,7 @@ import static org.hibernate.search.util.common.impl.CollectionHelper.asSetIgnore
 
 import java.lang.invoke.MethodHandles;
 import java.util.Collection;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Synchronization;
 
@@ -38,13 +39,13 @@ import org.hibernate.search.mapper.orm.work.SearchIndexingPlan;
 import org.hibernate.search.mapper.orm.work.SearchWorkspace;
 import org.hibernate.search.mapper.orm.work.impl.SearchIndexingPlanImpl;
 import org.hibernate.search.mapper.orm.work.impl.SearchIndexingPlanSessionContext;
-import org.hibernate.search.mapper.pojo.work.SearchIndexingPlanFilter;
-import org.hibernate.search.mapper.pojo.work.spi.ConfiguredSearchIndexingPlanFilter;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoSelectionLoadingContext;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRuntimeIntrospector;
 import org.hibernate.search.mapper.pojo.session.spi.AbstractPojoSearchSession;
 import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
+import org.hibernate.search.mapper.pojo.work.SearchIndexingPlanFilter;
 import org.hibernate.search.mapper.pojo.work.spi.ConfiguredIndexingPlanSynchronizationStrategy;
+import org.hibernate.search.mapper.pojo.work.spi.ConfiguredSearchIndexingPlanFilter;
 import org.hibernate.search.mapper.pojo.work.spi.PojoIndexer;
 import org.hibernate.search.mapper.pojo.work.spi.PojoIndexingPlan;
 import org.hibernate.search.mapper.pojo.work.spi.PojoIndexingQueueEventProcessingPlan;
@@ -115,7 +116,8 @@ public class HibernateOrmSearchSession extends AbstractPojoSearchSession
 		this.runtimeIntrospector = builder.buildRuntimeIntrospector();
 		// make sure that even if a session filter is not configured we will fall back to an application one if needed.
 		this.configuredIndexingPlanFilter = mappingContext.applicationIndexingPlanFilter();
-		this.indexingPlanSynchronizationStrategy = automaticIndexingStrategy.defaultIndexingPlanSynchronizationStrategy();
+		this.indexingPlanSynchronizationStrategy = automaticIndexingStrategy
+				.defaultIndexingPlanSynchronizationStrategy();
 	}
 
 	@Override
@@ -134,19 +136,34 @@ public class HibernateOrmSearchSession extends AbstractPojoSearchSession
 	}
 
 	@Override
-	public <T> SearchQuerySelectStep<?, org.hibernate.search.mapper.orm.common.EntityReference, T, SearchLoadingOptionsStep, ?, ?> search(
-			Collection<? extends Class<? extends T>> types) {
+	public <T> SearchQuerySelectStep<?,
+			org.hibernate.search.mapper.orm.common.EntityReference,
+			T,
+			SearchLoadingOptionsStep,
+			?,
+			?> search(
+					Collection<? extends Class<? extends T>> types) {
 		return search( scope( types ) );
 	}
 
 	@Override
-	public <T> SearchQuerySelectStep<?, org.hibernate.search.mapper.orm.common.EntityReference, T, SearchLoadingOptionsStep, ?, ?> search(
-			SearchScope<T> scope) {
+	public <T> SearchQuerySelectStep<?,
+			org.hibernate.search.mapper.orm.common.EntityReference,
+			T,
+			SearchLoadingOptionsStep,
+			?,
+			?> search(
+					SearchScope<T> scope) {
 		return search( (SearchScopeImpl<T>) scope );
 	}
 
-	public <T> SearchQuerySelectStep<?, org.hibernate.search.mapper.orm.common.EntityReference, T, SearchLoadingOptionsStep, ?, ?> search(
-			SearchScopeImpl<T> scope) {
+	public <T> SearchQuerySelectStep<?,
+			org.hibernate.search.mapper.orm.common.EntityReference,
+			T,
+			SearchLoadingOptionsStep,
+			?,
+			?> search(
+					SearchScopeImpl<T> scope) {
 		return scope.search( this, loadingContextBuilder() );
 	}
 

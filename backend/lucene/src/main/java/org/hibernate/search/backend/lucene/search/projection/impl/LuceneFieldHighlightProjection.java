@@ -51,9 +51,12 @@ public class LuceneFieldHighlightProjection implements LuceneSearchProjection<Li
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "absoluteFieldPath=" + absoluteFieldPath
-				+ "highlighterName=" + highlighterName
+		return getClass().getSimpleName()
+				+ "["
+				+ "absoluteFieldPath="
+				+ absoluteFieldPath
+				+ "highlighterName="
+				+ highlighterName
 				+ "]";
 	}
 
@@ -118,7 +121,8 @@ public class LuceneFieldHighlightProjection implements LuceneSearchProjection<Li
 
 		protected LeafReaderContext leafReaderContext;
 
-		protected HighlighterValues(String parentDocumentPath, String nestedDocumentPath, TopDocsDataCollectorExecutionContext context,
+		protected HighlighterValues(String parentDocumentPath, String nestedDocumentPath,
+				TopDocsDataCollectorExecutionContext context,
 				ProjectionAccumulator<String, ?, A, List<String>> accumulator) {
 			super( parentDocumentPath, nestedDocumentPath, accumulator, context );
 		}

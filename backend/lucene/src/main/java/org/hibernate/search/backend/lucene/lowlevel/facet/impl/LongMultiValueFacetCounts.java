@@ -17,6 +17,7 @@ import com.carrotsearch.hppc.LongHashSet;
 import com.carrotsearch.hppc.LongIntScatterMap;
 import com.carrotsearch.hppc.cursors.LongIntCursor;
 import com.carrotsearch.hppc.procedures.LongProcedure;
+
 import org.apache.lucene.facet.FacetResult;
 import org.apache.lucene.facet.Facets;
 import org.apache.lucene.facet.FacetsCollector;
@@ -39,12 +40,14 @@ public class LongMultiValueFacetCounts extends Facets {
 
 	private int totCount;
 
-	public LongMultiValueFacetCounts(String field, LongMultiValuesSource valueSource, FacetsCollector hits) throws IOException {
+	public LongMultiValueFacetCounts(String field, LongMultiValuesSource valueSource,
+			FacetsCollector hits) throws IOException {
 		this.field = field;
 		count( valueSource, hits.getMatchingDocs() );
 	}
 
-	private void count(LongMultiValuesSource valueSource, List<FacetsCollector.MatchingDocs> matchingDocs) throws IOException {
+	private void count(LongMultiValuesSource valueSource, List<
+			FacetsCollector.MatchingDocs> matchingDocs) throws IOException {
 		LongHashSet uniqueValuesForDocument = new LongHashSet();
 		LongProcedure incrementCountForDocumentId = this::increment;
 
@@ -97,7 +100,7 @@ public class LongMultiValueFacetCounts extends Facets {
 			@Override
 			protected boolean lessThan(Entry a, Entry b) {
 				// sort by count descending, breaking ties by value ascending:
-				return a.count < b.count || (a.count == b.count && a.value > b.value);
+				return a.count < b.count || ( a.count == b.count && a.value > b.value );
 			}
 		};
 

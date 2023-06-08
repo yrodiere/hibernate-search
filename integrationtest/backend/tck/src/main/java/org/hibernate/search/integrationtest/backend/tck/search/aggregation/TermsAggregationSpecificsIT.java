@@ -24,10 +24,10 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import org.hibernate.search.engine.backend.common.DocumentReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
 import org.hibernate.search.engine.backend.types.Aggregable;
 import org.hibernate.search.engine.backend.types.Searchable;
-import org.hibernate.search.engine.backend.common.DocumentReference;
 import org.hibernate.search.engine.search.aggregation.AggregationKey;
 import org.hibernate.search.engine.search.query.dsl.SearchQueryOptionsStep;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.operations.AggregationDescriptor;
@@ -39,7 +39,6 @@ import org.hibernate.search.integrationtest.backend.tck.testsupport.util.ValueWr
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.BulkIndexer;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
-
 import org.hibernate.search.util.impl.test.annotation.PortedFromSearch5;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
@@ -182,7 +181,8 @@ public class TermsAggregationSpecificsIT<F> {
 	}
 
 	@Test
-	@PortedFromSearch5(original = "org.hibernate.search.test.query.facet.SimpleFacetingTest.testDefaultSortOrderIsCount")
+	@PortedFromSearch5(
+			original = "org.hibernate.search.test.query.facet.SimpleFacetingTest.testDefaultSortOrderIsCount")
 	public void order_default() {
 		String fieldPath = index.binding().fieldModels.get( fieldType ).relativeFieldName;
 
@@ -444,9 +444,8 @@ public class TermsAggregationSpecificsIT<F> {
 	public void minDocumentCount_negative() {
 		String fieldPath = index.binding().fieldModels.get( fieldType ).relativeFieldName;
 
-		assertThatThrownBy( () ->
-				index.createScope().aggregation().terms().field( fieldPath, fieldType.getJavaType() )
-						.minDocumentCount( -1 ) )
+		assertThatThrownBy( () -> index.createScope().aggregation().terms().field( fieldPath, fieldType.getJavaType() )
+				.minDocumentCount( -1 ) )
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContaining( "'minDocumentCount'" )
 				.hasMessageContaining( "must be positive or zero" );
@@ -475,7 +474,8 @@ public class TermsAggregationSpecificsIT<F> {
 						 */
 						containsInAnyOrder( c -> {
 							F valueWithMostDocuments = dataSet.valuesInDescendingDocumentCountOrder.get( 0 );
-							c.accept( valueWithMostDocuments, (long) dataSet.documentIdPerTerm.get( valueWithMostDocuments ).size() );
+							c.accept( valueWithMostDocuments, (long) dataSet.documentIdPerTerm.get(
+									valueWithMostDocuments ).size() );
 						} )
 				);
 	}
@@ -537,7 +537,8 @@ public class TermsAggregationSpecificsIT<F> {
 						 */
 						containsInAnyOrder( c -> {
 							F valueWithLeastDocuments = dataSet.valuesInAscendingDocumentCountOrder.get( 0 );
-							c.accept( valueWithLeastDocuments, (long) dataSet.documentIdPerTerm.get( valueWithLeastDocuments ).size() );
+							c.accept( valueWithLeastDocuments, (long) dataSet.documentIdPerTerm.get(
+									valueWithLeastDocuments ).size() );
 						} )
 				);
 	}
@@ -546,9 +547,8 @@ public class TermsAggregationSpecificsIT<F> {
 	public void maxTermCount_zero() {
 		String fieldPath = index.binding().fieldModels.get( fieldType ).relativeFieldName;
 
-		assertThatThrownBy( () ->
-				index.createScope().aggregation().terms().field( fieldPath, fieldType.getJavaType() )
-						.maxTermCount( 0 ) )
+		assertThatThrownBy( () -> index.createScope().aggregation().terms().field( fieldPath, fieldType.getJavaType() )
+				.maxTermCount( 0 ) )
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContaining( "'maxTermCount'" )
 				.hasMessageContaining( "must be strictly positive" );
@@ -558,9 +558,8 @@ public class TermsAggregationSpecificsIT<F> {
 	public void maxTermCount_negative() {
 		String fieldPath = index.binding().fieldModels.get( fieldType ).relativeFieldName;
 
-		assertThatThrownBy( () ->
-				index.createScope().aggregation().terms().field( fieldPath, fieldType.getJavaType() )
-						.maxTermCount( -1 ) )
+		assertThatThrownBy( () -> index.createScope().aggregation().terms().field( fieldPath, fieldType.getJavaType() )
+				.maxTermCount( -1 ) )
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContaining( "'maxTermCount'" )
 				.hasMessageContaining( "must be strictly positive" );
@@ -698,7 +697,7 @@ public class TermsAggregationSpecificsIT<F> {
 					} );
 				}
 			}
-			indexer.add( name + "_document_empty", name, document -> { } );
+			indexer.add( name + "_document_empty", name, document -> {} );
 			indexer.join();
 		}
 

@@ -21,7 +21,6 @@ import org.hibernate.search.backend.elasticsearch.work.result.impl.CreateIndexRe
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-
 public class CreateIndexWork extends AbstractNonBulkableWork<CreateIndexResult> {
 
 	private static final String MAPPINGS_PROPERTY = "mappings";
@@ -31,7 +30,8 @@ public class CreateIndexWork extends AbstractNonBulkableWork<CreateIndexResult> 
 	}
 
 	@Override
-	protected CreateIndexResult generateResult(ElasticsearchWorkExecutionContext context, ElasticsearchResponse response) {
+	protected CreateIndexResult generateResult(ElasticsearchWorkExecutionContext context,
+			ElasticsearchResponse response) {
 		int statusCode = response.statusCode();
 		if ( ElasticsearchClientUtils.isSuccessCode( statusCode ) ) {
 			return CreateIndexResult.CREATED;
@@ -125,7 +125,7 @@ public class CreateIndexWork extends AbstractNonBulkableWork<CreateIndexResult> 
 		protected ElasticsearchRequest buildRequest() {
 			ElasticsearchRequest.Builder builder =
 					ElasticsearchRequest.put()
-					.pathComponent( indexName );
+							.pathComponent( indexName );
 			// ES6.7 and later 6.x only
 			if ( includeTypeName != null ) {
 				builder.param( "include_type_name", includeTypeName );

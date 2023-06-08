@@ -8,24 +8,24 @@ package org.hibernate.search.engine.search.sort.dsl.impl;
 
 import java.util.function.Function;
 
-import org.hibernate.search.engine.search.sort.SearchSort;
-import org.hibernate.search.engine.search.sort.dsl.FieldSortOptionsStep;
-import org.hibernate.search.engine.search.sort.dsl.FieldSortMissingValueBehaviorStep;
-import org.hibernate.search.engine.search.sort.dsl.SortOrder;
-import org.hibernate.search.engine.search.sort.dsl.spi.AbstractSortThenStep;
-import org.hibernate.search.engine.search.sort.dsl.spi.SearchSortDslContext;
-import org.hibernate.search.engine.search.common.ValueConvert;
 import org.hibernate.search.engine.search.common.SortMode;
+import org.hibernate.search.engine.search.common.ValueConvert;
 import org.hibernate.search.engine.search.predicate.SearchPredicate;
 import org.hibernate.search.engine.search.predicate.dsl.PredicateFinalStep;
 import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
+import org.hibernate.search.engine.search.sort.SearchSort;
+import org.hibernate.search.engine.search.sort.dsl.FieldSortMissingValueBehaviorStep;
+import org.hibernate.search.engine.search.sort.dsl.FieldSortOptionsStep;
+import org.hibernate.search.engine.search.sort.dsl.SortOrder;
+import org.hibernate.search.engine.search.sort.dsl.spi.AbstractSortThenStep;
+import org.hibernate.search.engine.search.sort.dsl.spi.SearchSortDslContext;
 import org.hibernate.search.engine.search.sort.spi.FieldSortBuilder;
 import org.hibernate.search.engine.search.sort.spi.SortTypeKeys;
 
 public class FieldSortOptionsStepImpl<PDF extends SearchPredicateFactory>
 		extends AbstractSortThenStep
 		implements FieldSortOptionsStep<FieldSortOptionsStepImpl<PDF>, PDF>,
-				FieldSortMissingValueBehaviorStep<FieldSortOptionsStepImpl<PDF>> {
+		FieldSortMissingValueBehaviorStep<FieldSortOptionsStepImpl<PDF>> {
 
 	private final SearchSortDslContext<?, ? extends PDF> dslContext;
 	private final FieldSortBuilder builder;

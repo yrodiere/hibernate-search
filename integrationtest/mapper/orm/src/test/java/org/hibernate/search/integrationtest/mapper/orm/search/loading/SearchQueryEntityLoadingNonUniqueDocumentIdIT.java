@@ -62,7 +62,8 @@ public class SearchQueryEntityLoadingNonUniqueDocumentIdIT {
 					.fetchAllHits();
 		} ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContaining( "Multiple instances of entity type '" + IndexedEntity.NAME
+				.hasMessageContaining( "Multiple instances of entity type '"
+						+ IndexedEntity.NAME
 						+ "' have their property 'nonUniqueProperty' set to '0'."
 						+ " 'nonUniqueProperty' is the document ID and must be assigned unique values." );
 	}

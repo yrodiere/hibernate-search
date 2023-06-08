@@ -8,9 +8,9 @@ package org.hibernate.search.backend.elasticsearch.document.model.dsl.impl;
 
 import java.util.Map;
 
-import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexField;
 import org.hibernate.search.backend.elasticsearch.document.model.impl.AbstractElasticsearchIndexFieldTemplate;
 import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexCompositeNode;
+import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexField;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.mapping.impl.AbstractTypeMapping;
 import org.hibernate.search.engine.backend.common.spi.FieldPaths;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaFieldTemplateOptionsStep;
@@ -21,9 +21,8 @@ import org.hibernate.search.util.common.pattern.spi.SimpleGlobPattern;
 import org.hibernate.search.util.common.reporting.EventContext;
 
 abstract class AbstractElasticsearchIndexFieldTemplateBuilder<
-				S extends AbstractElasticsearchIndexFieldTemplateBuilder<S, T>,
-				T extends AbstractElasticsearchIndexFieldTemplate<?>
-		>
+		S extends AbstractElasticsearchIndexFieldTemplateBuilder<S, T>,
+		T extends AbstractElasticsearchIndexFieldTemplate<?>>
 		implements IndexSchemaFieldTemplateOptionsStep<S>,
 		ElasticsearchIndexNodeContributor, IndexSchemaBuildContext {
 

@@ -25,6 +25,7 @@ import org.hibernate.search.util.impl.integrationtest.mapper.orm.StaticIndexingS
 import org.hibernate.stat.Statistics;
 
 import org.hibernate.testing.cache.CachingRegionFactory;
+
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -90,7 +91,7 @@ public class StrictSecondLCAndPCLookupTest extends SearchTestBase {
 	}
 
 	@Override
-	public void configure(Map<String,Object> cfg) {
+	public void configure(Map<String, Object> cfg) {
 		super.configure( cfg );
 		cfg.put( Environment.USE_SECOND_LEVEL_CACHE, "true" );
 		cfg.put( Environment.CACHE_REGION_FACTORY, CachingRegionFactory.class.getCanonicalName() );

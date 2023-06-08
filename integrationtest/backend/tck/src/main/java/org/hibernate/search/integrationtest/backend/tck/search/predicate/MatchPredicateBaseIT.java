@@ -59,7 +59,8 @@ public class MatchPredicateBaseIT {
 						SearchableIT.searchableYesIndex, SearchableIT.searchableNoIndex,
 						ArgumentCheckingIT.index,
 						TypeCheckingAndConversionIT.index, TypeCheckingAndConversionIT.compatibleIndex,
-						TypeCheckingAndConversionIT.rawFieldCompatibleIndex, TypeCheckingAndConversionIT.missingFieldIndex,
+						TypeCheckingAndConversionIT.rawFieldCompatibleIndex,
+						TypeCheckingAndConversionIT.missingFieldIndex,
 						TypeCheckingAndConversionIT.incompatibleIndex,
 						ScaleCheckingIT.index, ScaleCheckingIT.compatibleIndex, ScaleCheckingIT.incompatibleIndex
 				)
@@ -88,9 +89,11 @@ public class MatchPredicateBaseIT {
 
 		final BulkIndexer typeCheckingMainIndexer = TypeCheckingAndConversionIT.index.bulkIndexer();
 		final BulkIndexer typeCheckingCompatibleIndexer = TypeCheckingAndConversionIT.compatibleIndex.bulkIndexer();
-		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingAndConversionIT.rawFieldCompatibleIndex.bulkIndexer();
+		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingAndConversionIT.rawFieldCompatibleIndex
+				.bulkIndexer();
 		final BulkIndexer typeCheckingMissingFieldIndexer = TypeCheckingAndConversionIT.missingFieldIndex.bulkIndexer();
-		TypeCheckingAndConversionIT.dataSets.forEach( d -> d.contribute( TypeCheckingAndConversionIT.index, typeCheckingMainIndexer,
+		TypeCheckingAndConversionIT.dataSets.forEach( d -> d.contribute( TypeCheckingAndConversionIT.index,
+				typeCheckingMainIndexer,
 				TypeCheckingAndConversionIT.compatibleIndex, typeCheckingCompatibleIndexer,
 				TypeCheckingAndConversionIT.rawFieldCompatibleIndex, typeCheckingRawFieldCompatibleIndexer,
 				TypeCheckingAndConversionIT.missingFieldIndex, typeCheckingMissingFieldIndexer ) );
@@ -185,7 +188,8 @@ public class MatchPredicateBaseIT {
 		}
 
 		@Override
-		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths, int matchingDocOrdinal) {
+		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths,
+				int matchingDocOrdinal) {
 			return f.match().fields( fieldPaths ).matching( dataSet.values.matchingArg( matchingDocOrdinal ) );
 		}
 

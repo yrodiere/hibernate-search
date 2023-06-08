@@ -14,15 +14,16 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
 import javax.persistence.OptimisticLockException;
 
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.Agent;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentReference;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.ShardAssignmentDescriptor;
 import org.hibernate.search.util.common.SearchException;
-import org.hibernate.search.util.common.spi.ToStringTreeAppendable;
 import org.hibernate.search.util.common.logging.impl.MessageConstants;
 import org.hibernate.search.util.common.logging.impl.ToStringTreeMultilineFormatter;
+import org.hibernate.search.util.common.spi.ToStringTreeAppendable;
 
 import org.jboss.logging.BasicLogger;
 import org.jboss.logging.annotations.Cause;
@@ -35,27 +36,31 @@ import org.jboss.logging.annotations.ValidIdRanges;
 
 @MessageLogger(projectCode = MessageConstants.PROJECT_CODE)
 @ValidIdRanges({
-		@ValidIdRange(min = MessageConstants.MAPPER_ORM_OUTBOX_POLLING_ID_RANGE_MIN, max = MessageConstants.MAPPER_ORM_OUTBOX_POLLING_ID_RANGE_MAX)
+		@ValidIdRange(min = MessageConstants.MAPPER_ORM_OUTBOX_POLLING_ID_RANGE_MIN,
+				max = MessageConstants.MAPPER_ORM_OUTBOX_POLLING_ID_RANGE_MAX)
 })
 public interface Log extends BasicLogger {
 
 	int ID_OFFSET = MessageConstants.MAPPER_ORM_OUTBOX_POLLING_ID_RANGE_MIN;
 
 	@LogMessage(level = DEBUG)
-	@Message(id = ID_OFFSET + 1, value = "Generated entity mapping for outbox events used in the outbox-polling coordination strategy: %1$s")
+	@Message(id = ID_OFFSET + 1,
+			value = "Generated entity mapping for outbox events used in the outbox-polling coordination strategy: %1$s")
 	void outboxEventGeneratedEntityMapping(String xmlMappingDefinition);
 
 	@Message(id = ID_OFFSET + 3, value = "Max '%1$s' retries exhausted to process the event. Event will be aborted.")
 	SearchException maxRetryExhausted(int retries);
 
 	@LogMessage(level = WARN)
-	@Message(id = ID_OFFSET + 4, value = "Automatic indexing failed for event #%1$s on entity of type '%2$s' with ID '%3$s'."
-			+ " Attempts so far: %4$d. The event will be reprocessed after the moment: %5$s.")
+	@Message(id = ID_OFFSET + 4,
+			value = "Automatic indexing failed for event #%1$s on entity of type '%2$s' with ID '%3$s'."
+					+ " Attempts so far: %4$d. The event will be reprocessed after the moment: %5$s.")
 	void automaticIndexingRetry(UUID eventId, String entityName, String entityId, int attempts, Instant processAfter);
 
 	@LogMessage(level = DEBUG)
 	@Message(id = ID_OFFSET + 5, value = "Starting outbox event processor '%1$s': %2$s")
-	void startingOutboxEventProcessor(String name, @FormatWith(ToStringTreeMultilineFormatter.class) ToStringTreeAppendable processor);
+	void startingOutboxEventProcessor(String name,
+			@FormatWith(ToStringTreeMultilineFormatter.class) ToStringTreeAppendable processor);
 
 	@LogMessage(level = DEBUG)
 	@Message(id = ID_OFFSET + 6, value = "Stopping outbox event processor '%1$s'")
@@ -91,24 +96,27 @@ public interface Log extends BasicLogger {
 	SearchException unableToDeserializeOutboxEventPayloadWithAvro(String causeMessage, @Cause Throwable cause);
 
 	@LogMessage(level = DEBUG)
-	@Message(id = ID_OFFSET + 14, value = "Generated entity mapping for agents used in the outbox-polling coordination strategy: %1$s")
+	@Message(id = ID_OFFSET + 14,
+			value = "Generated entity mapping for agents used in the outbox-polling coordination strategy: %1$s")
 	void agentGeneratedEntityMapping(String xmlMappingDefinition);
 
 	@Message(id = ID_OFFSET + 15, value = "The pulse interval must be greater than or equal to the polling interval"
 			+ " i.e. in this case at least %s")
 	SearchException invalidPollingIntervalAndPulseInterval(long pollingInterval);
 
-	@Message(id = ID_OFFSET + 16, value = "The pulse expiration must be greater than or equal to 3 times the pulse interval"
-			+ " i.e. in this case at least %s")
+	@Message(id = ID_OFFSET + 16,
+			value = "The pulse expiration must be greater than or equal to 3 times the pulse interval"
+					+ " i.e. in this case at least %s")
 	SearchException invalidPulseIntervalAndPulseExpiration(long pulseInterfaceTimes3);
 
 	@Message(value = "Pulse operation for agent '%1$s'")
 	String outboxEventProcessorPulse(AgentReference agentReference);
 
-	@Message(id = ID_OFFSET + 17, value = "Agent '%1$s': failed to infer a target cluster from the list of registered agents."
-			+ " The agent will try again in the next pulse."
-			+ " Cause: %2$s"
-			+ " Registered agents: %3$s.")
+	@Message(id = ID_OFFSET + 17,
+			value = "Agent '%1$s': failed to infer a target cluster from the list of registered agents."
+					+ " The agent will try again in the next pulse."
+					+ " Cause: %2$s"
+					+ " Registered agents: %3$s.")
 	SearchException outboxEventProcessorPulseFailed(AgentReference agentReference, String causeMessage,
 			List<Agent> allAgentsInIdOrder,
 			@Cause RuntimeException cause);
@@ -145,7 +153,8 @@ public interface Log extends BasicLogger {
 
 	@LogMessage(level = DEBUG)
 	@Message(id = ID_OFFSET + 21, value = "Starting outbox mass indexer agent '%1$s': %2$s")
-	void startingOutboxMassIndexerAgent(String name, @FormatWith(ToStringTreeMultilineFormatter.class) ToStringTreeAppendable processor);
+	void startingOutboxMassIndexerAgent(String name,
+			@FormatWith(ToStringTreeMultilineFormatter.class) ToStringTreeAppendable processor);
 
 	@LogMessage(level = DEBUG)
 	@Message(id = ID_OFFSET + 22, value = "Stopping outbox mass indexer agent '%1$s'")
@@ -170,7 +179,8 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET + 27, value = "Outbox event configuration property conflict."
 			+ " Either mapping property %1$s or subset of name adjustment properties %2$s should be provided at the same time.")
-	SearchException outboxEventConfigurationPropertyConflict(String mappingPropertyName, String[] nameAdjustmentProperties);
+	SearchException outboxEventConfigurationPropertyConflict(String mappingPropertyName,
+			String[] nameAdjustmentProperties);
 
 	@Message(id = ID_OFFSET + 28, value = "Agent '%1$s': could not find the agent after starting a new transaction."
 			+ " The agent was present just a moment ago."

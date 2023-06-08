@@ -235,7 +235,8 @@ public class NestedPredicateSpecificsIT {
 				.hasMessageContainingAll( "Invalid search predicate",
 						"This predicate targets fields [" + fieldInParentPath + "]",
 						"only fields that are contained in the nested object with path '"
-								+ objectFieldPath + "'"
+								+ objectFieldPath
+								+ "'"
 								+ " are allowed here." );
 	}
 
@@ -259,7 +260,8 @@ public class NestedPredicateSpecificsIT {
 				.hasMessageContainingAll( "Invalid search predicate",
 						"This predicate targets fields [" + fieldInSiblingPath + "]",
 						"only fields that are contained in the nested object with path '"
-								+ objectFieldPath + "'"
+								+ objectFieldPath
+								+ "'"
 								+ " are allowed here." );
 	}
 
@@ -426,10 +428,10 @@ public class NestedPredicateSpecificsIT {
 					secondLevelObject.addValue( level2.field1, MATCHING_SECOND_LEVEL_CONDITION1_FIELD1 );
 					secondLevelObject.addValue( level2.field2, NON_MATCHING_SECOND_LEVEL_CONDITION1_FIELD2 );
 				} )
-				.add( "empty", document -> { } );
+				.add( "empty", document -> {} );
 
 		BulkIndexer missingFieldIndexIndexer = missingFieldIndex.bulkIndexer();
-		missingFieldIndexIndexer.add( MISSING_FIELD_INDEX_DOCUMENT_1, document -> { } );
+		missingFieldIndexIndexer.add( MISSING_FIELD_INDEX_DOCUMENT_1, document -> {} );
 
 		mainIndexIndexer.join( missingFieldIndexIndexer );
 	}

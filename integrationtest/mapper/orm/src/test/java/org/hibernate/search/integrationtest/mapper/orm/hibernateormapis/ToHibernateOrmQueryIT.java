@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -61,7 +62,8 @@ public class ToHibernateOrmQueryIT {
 	public MethodRule setupHolderMethodRule = setupHolder.methodRule();
 
 	@ReusableOrmSetupHolder.Setup
-	public void setup(OrmSetupHelper.SetupContext setupContext, ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
+	public void setup(OrmSetupHelper.SetupContext setupContext,
+			ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
 		backendMock.expectAnySchema( IndexedEntity.NAME );
 		setupContext.withAnnotatedTypes( IndexedEntity.class, ContainedEntity.class );
 
@@ -149,7 +151,7 @@ public class ToHibernateOrmQueryIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( IndexedEntity.NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							6L,
 							reference( IndexedEntity.NAME, "1" ),
@@ -174,7 +176,7 @@ public class ToHibernateOrmQueryIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( IndexedEntity.NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							1L,
 							reference( IndexedEntity.NAME, "1" )
@@ -187,7 +189,7 @@ public class ToHibernateOrmQueryIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( IndexedEntity.NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.empty()
 			);
 			result = query.uniqueResult();
@@ -196,7 +198,7 @@ public class ToHibernateOrmQueryIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( IndexedEntity.NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							2L,
 							reference( IndexedEntity.NAME, "1" ),
@@ -209,7 +211,7 @@ public class ToHibernateOrmQueryIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( IndexedEntity.NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							2L,
 							reference( IndexedEntity.NAME, "1" ),
@@ -448,7 +450,7 @@ public class ToHibernateOrmQueryIT {
 			query.setHint( "javax.persistence.loadgraph", session.getEntityGraph( IndexedEntity.GRAPH_EAGER ) );
 
 			backendMock.expectSearchObjects(
-					Arrays.asList( IndexedEntity.NAME ), b -> { },
+					Arrays.asList( IndexedEntity.NAME ), b -> {},
 					StubSearchWorkBehavior.of( 1, reference( IndexedEntity.NAME, "1" ) )
 			);
 

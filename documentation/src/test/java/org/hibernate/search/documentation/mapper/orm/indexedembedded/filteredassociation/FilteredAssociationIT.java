@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -42,7 +43,7 @@ public class FilteredAssociationIT {
 							.indexedEmbedded()
 							.associationInverseSide( PojoModelPath.parse( "book" ) )
 							.indexingDependency()
-									.derivedFrom( PojoModelPath.parse( "editions.status" ) );
+							.derivedFrom( PojoModelPath.parse( "editions.status" ) );
 					TypeMappingStep bookEditionMapping = mapping.type( BookEdition.class );
 					bookEditionMapping.property( "label" )
 							.fullTextField().analyzer( "english" );

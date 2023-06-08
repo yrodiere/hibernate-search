@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.function.Consumer;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -63,17 +64,17 @@ public class RealBackendDatabaseMultitenancyIT {
 
 	@Test
 	public void multiTenancyStrategy_none() {
-		assertThatThrownBy( () ->
-				setupHelper.start()
-						.withProperty( "hibernate.search.backend.multi_tenancy.strategy", "none" )
-						.tenants( TENANT_ID_1, TENANT_ID_2 )
-						.setup( IndexedEntity.class ) )
+		assertThatThrownBy( () -> setupHelper.start()
+				.withProperty( "hibernate.search.backend.multi_tenancy.strategy", "none" )
+				.tenants( TENANT_ID_1, TENANT_ID_2 )
+				.setup( IndexedEntity.class ) )
 				// This is necessary to correctly rethrow assumption failures (when not using H2)
 				.satisfies( AssertionAndAssumptionViolationFallThrough.get() )
 				.isInstanceOf( SearchException.class )
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.defaultBackendContext()
-						.failure( "Invalid backend configuration: " +
+						.failure( "Invalid backend configuration: "
+								+
 								"mapping requires multi-tenancy but no multi-tenancy strategy is set" )
 				);
 	}

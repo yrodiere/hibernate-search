@@ -57,7 +57,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
-@SuppressWarnings({"unchecked", "rawtypes"}) // Raw types are the only way to mock parameterized types
+@SuppressWarnings({ "unchecked", "rawtypes" }) // Raw types are the only way to mock parameterized types
 @RunWith(Parameterized.class)
 public class BatchingExecutorTest {
 
@@ -449,12 +449,13 @@ public class BatchingExecutorTest {
 
 	@Test
 	public void simple_newTasksBlockedAndOffloadedCompletes() throws InterruptedException {
-		AtomicReference<Runnable> offloadAction = new AtomicReference<>( () -> { } );
+		AtomicReference<Runnable> offloadAction = new AtomicReference<>( () -> {} );
 		createAndStartExecutor( 2, true, w -> offloadAction.get().run() );
 
 		assumeFalse(
 				"This test only makes sense for offloading submitter",
-				OperationSubmitter.blocking().equals( operationSubmitter ) ||
+				OperationSubmitter.blocking().equals( operationSubmitter )
+						||
 						OperationSubmitter.rejecting().equals( operationSubmitter )
 		);
 
@@ -528,8 +529,7 @@ public class BatchingExecutorTest {
 	 * Block the executor by submitting a batch that will only complete when the returned runnable is executed.
 	 * Used to give us the time to carefully craft the next batch with a specific sequence of works.
 	 */
-	private Runnable blockExecutor()
-			throws InterruptedException {
+	private Runnable blockExecutor() throws InterruptedException {
 		StubWork blockingWorkMock = workMock( 0 );
 		CompletableFuture<Object> blockingBatchFuture = new CompletableFuture<>();
 		when( processorMock.endBatch() ).thenReturn( (CompletableFuture) blockingBatchFuture );
@@ -547,7 +547,9 @@ public class BatchingExecutorTest {
 	private void createAndStartExecutor(int maxTasksPerBatch, boolean fair) {
 		createAndStartExecutor( maxTasksPerBatch, fair, w -> fail( "Work shouldn't be offloaded." ) );
 	}
-	private void createAndStartExecutor(int maxTasksPerBatch, boolean fair, Consumer<? super BatchedWork<? super StubWorkProcessor>> blockingRetryProducer) {
+
+	private void createAndStartExecutor(int maxTasksPerBatch, boolean fair, Consumer<? super BatchedWork<
+			? super StubWorkProcessor>> blockingRetryProducer) {
 		this.executor = new BatchingExecutor<>(
 				NAME, processorMock, maxTasksPerBatch, fair, failureHandlerMock, blockingRetryProducer
 		);
@@ -612,16 +614,13 @@ public class BatchingExecutorTest {
 		return mock;
 	}
 
-	private interface StubWork extends BatchedWork<StubWorkProcessor> {
-	}
+	private interface StubWork extends BatchedWork<StubWorkProcessor> {}
 
-	private interface StubWorkProcessor extends BatchedWorkProcessor {
-	}
+	private interface StubWorkProcessor extends BatchedWorkProcessor {}
 
 	private interface StubCompletionListener {
 		void onComplete();
 	}
 
-	private static class SimulatedFailure extends RuntimeException {
-	}
+	private static class SimulatedFailure extends RuntimeException {}
 }

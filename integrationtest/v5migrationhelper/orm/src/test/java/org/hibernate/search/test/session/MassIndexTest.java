@@ -75,7 +75,8 @@ public class MassIndexTest extends SearchTestBase {
 				//insert an object never indexed
 				Statement stmt = connection.createStatement();
 				stmt.executeUpdate( "insert into Email(id, title, body, header) values( + "
-						+ ( loop + 1 ) + ", 'Bob Sponge', 'Meet the guys who create the software', 'nope')" );
+						+ ( loop + 1 )
+						+ ", 'Bob Sponge', 'Meet the guys who create the software', 'nope')" );
 				stmt.close();
 			}
 		} );

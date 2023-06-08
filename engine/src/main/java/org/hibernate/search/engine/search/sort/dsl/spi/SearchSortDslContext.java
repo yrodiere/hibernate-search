@@ -26,8 +26,8 @@ import org.hibernate.search.engine.search.sort.spi.SearchSortIndexScope;
  */
 public final class SearchSortDslContext<SC extends SearchSortIndexScope<?>, PDF extends SearchPredicateFactory> {
 
-	public static <SC extends SearchSortIndexScope<?>, PDF extends SearchPredicateFactory>
-			SearchSortDslContext<SC, PDF> root(SC scope,
+	public static <SC extends SearchSortIndexScope<?>, PDF extends SearchPredicateFactory> SearchSortDslContext<SC,
+			PDF> root(SC scope,
 					Function<SearchSortDslContext<SC, PDF>, SearchSortFactory> factoryProvider,
 					PDF predicateFactory) {
 		return new SearchSortDslContext<>( scope, factoryProvider, null, null, predicateFactory );

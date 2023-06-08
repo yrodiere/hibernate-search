@@ -72,7 +72,8 @@ public class ElasticsearchTextRegexpPredicate extends AbstractElasticsearchSingl
 		private JsonPrimitive pattern;
 		private Set<RegexpQueryFlag> flags;
 
-		private Builder(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<String> field) {
+		private Builder(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<
+				String> field) {
 			super( scope, field );
 		}
 

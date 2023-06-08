@@ -20,7 +20,6 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 
-
 public class UpdateEntryWork extends AbstractSingleDocumentIndexingWork {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -51,7 +50,8 @@ public class UpdateEntryWork extends AbstractSingleDocumentIndexingWork {
 			}
 		}
 		catch (IOException e) {
-			throw log.unableToIndexEntry( tenantId, entityTypeName, entityIdentifier, e.getMessage(), context.getEventContext(), e );
+			throw log.unableToIndexEntry( tenantId, entityTypeName, entityIdentifier, e.getMessage(), context
+					.getEventContext(), e );
 		}
 	}
 

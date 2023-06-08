@@ -11,5 +11,4 @@ package org.hibernate.search.query.dsl.sort;
  * @deprecated See the deprecation note on {@link SortContext}.
  */
 @Deprecated
-public interface SortOrderTermination extends SortTermination, SortOrder<SortTermination> {
-}
+public interface SortOrderTermination extends SortTermination, SortOrder<SortTermination> {}

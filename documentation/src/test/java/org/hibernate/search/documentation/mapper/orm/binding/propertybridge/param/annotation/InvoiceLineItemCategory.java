@@ -8,7 +8,6 @@ package org.hibernate.search.documentation.mapper.orm.binding.propertybridge.par
 
 public enum InvoiceLineItemCategory {
 
-	BOOK,
-	SHIPPING;
+	BOOK, SHIPPING;
 
 }

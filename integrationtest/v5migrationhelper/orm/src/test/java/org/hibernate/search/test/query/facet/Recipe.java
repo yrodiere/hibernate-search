@@ -9,6 +9,7 @@ package org.hibernate.search.test.query.facet;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -52,10 +53,18 @@ public class Recipe {
 
 	@Override
 	public String toString() {
-		return "Recipe{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", ingredients=" + ingredients +
+		return "Recipe{"
+				+
+				"id="
+				+ id
+				+
+				", name='"
+				+ name
+				+ '\''
+				+
+				", ingredients="
+				+ ingredients
+				+
 				'}';
 	}
 }

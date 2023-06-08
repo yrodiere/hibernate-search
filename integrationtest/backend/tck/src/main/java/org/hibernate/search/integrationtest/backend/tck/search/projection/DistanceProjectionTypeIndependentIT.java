@@ -120,7 +120,8 @@ public class DistanceProjectionTypeIndependentIT {
 		final ObjectMapping nestedObject;
 
 		IndexBinding(IndexSchemaElement root) {
-			geoPointField = SimpleFieldModel.mapper( GeoPointFieldTypeDescriptor.INSTANCE, c -> c.projectable( Projectable.YES ) )
+			geoPointField = SimpleFieldModel.mapper( GeoPointFieldTypeDescriptor.INSTANCE, c -> c.projectable(
+					Projectable.YES ) )
 					.map( root, "geoPoint" );
 
 			flattenedObject = new ObjectMapping( root, "flattenedObject", ObjectStructure.FLATTENED );

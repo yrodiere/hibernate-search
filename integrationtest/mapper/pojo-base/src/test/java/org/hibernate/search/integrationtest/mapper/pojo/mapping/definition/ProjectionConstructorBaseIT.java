@@ -39,7 +39,8 @@ import org.junit.Test;
 public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT {
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Test
 	public void typeLevelAnnotation() {
@@ -56,6 +57,7 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		class MyProjection {
 			public final String text;
 			public final Integer integer;
+
 			public MyProjection(String text, Integer integer) {
 				this.text = text;
 				this.integer = integer;
@@ -97,10 +99,12 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		class MyProjection {
 			public final String text;
 			public final Integer integer;
+
 			public MyProjection(String text, Integer integer) {
 				this.text = text;
 				this.integer = integer;
 			}
+
 			public MyProjection(String text, Integer integer, String somethingElse) {
 				this.text = text;
 				this.integer = integer;
@@ -132,15 +136,18 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		class MyProjection {
 			public final String text;
 			public final Integer integer;
+
 			public MyProjection() {
 				this.text = "foo";
 				this.integer = 42;
 			}
+
 			@ProjectionConstructor
 			public MyProjection(String text, Integer integer) {
 				this.text = text;
 				this.integer = integer;
 			}
+
 			public MyProjection(String text, Integer integer, String somethingElse) {
 				this.text = text;
 				this.integer = integer;
@@ -181,11 +188,13 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		abstract class MyAbstractProjection {
 			public final String text;
 			public final Integer integer;
+
 			@ProjectionConstructor
 			public MyAbstractProjection(String text, Integer integer) {
 				this.text = text;
 				this.integer = integer;
 			}
+
 			public MyAbstractProjection(String text, Integer integer, String somethingElse) {
 				this.text = text;
 				this.integer = integer;
@@ -257,11 +266,13 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		class MyProjection {
 			public final String text;
 			public final Integer integer;
+
 			@ProjectionConstructor
 			public MyProjection() {
 				this.text = "foo";
 				this.integer = 42;
 			}
+
 			public MyProjection(String text, Integer integer) {
 				this.text = text;
 				this.integer = integer;
@@ -302,10 +313,12 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		class MyNonProjection {
 			public final String text;
 			public final Integer integer;
+
 			public MyNonProjection() {
 				this.text = "foo";
 				this.integer = 42;
 			}
+
 			public MyNonProjection(String text, Integer integer) {
 				this.text = text;
 				this.integer = integer;
@@ -343,10 +356,12 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		class MyProjection {
 			public final String text;
 			public final Integer integer;
+
 			public MyProjection() {
 				this.text = "foo";
 				this.integer = 42;
 			}
+
 			@ProjectionConstructor
 			public MyProjection(String text, Integer integer) {
 				this.text = text;
@@ -387,14 +402,17 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		class MyNonProjection {
 			public final String text;
 			public final Integer integer;
+
 			public MyNonProjection() {
 				this.text = "foo";
 				this.integer = 42;
 			}
+
 			public MyNonProjection(String text, Integer integer) {
 				this.text = text;
 				this.integer = integer;
 			}
+
 			public MyNonProjection(String text, Integer integer, String somethingElse) {
 				this.text = text;
 				this.integer = integer;
@@ -404,10 +422,12 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 			public MyProjectionSubclass() {
 				super();
 			}
+
 			@ProjectionConstructor
 			public MyProjectionSubclass(String text, Integer integer) {
 				super( text + "_fromSubclass", integer );
 			}
+
 			public MyProjectionSubclass(String text, Integer integer, String somethingElse) {
 				super( text, integer, somethingElse );
 			}
@@ -455,15 +475,18 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		class MyProjection {
 			public final String text;
 			public final Integer integer;
+
 			public MyProjection() {
 				this.text = "foo";
 				this.integer = 42;
 			}
+
 			@ProjectionConstructor
 			public MyProjection(String text, Integer integer) {
 				this.text = text;
 				this.integer = integer;
 			}
+
 			public MyProjection(String text, Integer integer, String somethingElse) {
 				this.text = text;
 				this.integer = integer;
@@ -473,9 +496,11 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 			public MyNonProjectionSubclass() {
 				super();
 			}
+
 			public MyNonProjectionSubclass(String text, Integer integer) {
 				super( text + "_fromSubclass", integer );
 			}
+
 			public MyNonProjectionSubclass(String text, Integer integer, String somethingElse) {
 				super( text, integer, somethingElse );
 			}
@@ -523,15 +548,18 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		class MyProjection {
 			public final String text;
 			public final Integer integer;
+
 			public MyProjection() {
 				this.text = "foo";
 				this.integer = 42;
 			}
+
 			@ProjectionConstructor
 			public MyProjection(String text, Integer integer) {
 				this.text = text;
 				this.integer = integer;
 			}
+
 			public MyProjection(String text, Integer integer, String somethingElse) {
 				this.text = text;
 				this.integer = integer;
@@ -541,10 +569,12 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 			public MyProjectionSubclass() {
 				super();
 			}
+
 			@ProjectionConstructor
 			public MyProjectionSubclass(String text, Integer integer) {
 				super( text + "_fromSubclass", integer );
 			}
+
 			public MyProjectionSubclass(String text, Integer integer, String somethingElse) {
 				super( text, integer, somethingElse );
 			}
@@ -596,6 +626,7 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 				@IndexedEmbedded(includeDepth = 10)
 				public Level2 level2;
 			}
+
 			class Level2 {
 				@DocumentId
 				public Integer id;
@@ -604,18 +635,22 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 				@IndexedEmbedded
 				Level1 level1;
 			}
+
 			class ProjectionLevel1 {
 				public final String text;
 				public final ProjectionLevel2 level2;
+
 				@ProjectionConstructor
 				public ProjectionLevel1(String text, ProjectionLevel2 level2) {
 					this.text = text;
 					this.level2 = level2;
 				}
 			}
+
 			class ProjectionLevel2 {
 				public final String text;
 				public final ProjectionLevel1 level1;
+
 				@ProjectionConstructor
 				public ProjectionLevel2(String text, ProjectionLevel1 level1) {
 					this.text = text;
@@ -636,15 +671,32 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 						.constructorContext( Model.class, String.class, Model.ProjectionLevel1.class )
 						.methodParameterContext( 2, "level1" )
 						.multilineFailure( "Infinite object projection recursion:",
-								Model.ProjectionLevel1.class.getName() + "("
-										+ Model.class.getName() + ", " + String.class.getName() + ", "
-										+ Model.ProjectionLevel2.class.getName() + ")",
-								"for parameter #2 in " + Model.ProjectionLevel2.class.getName() + "("
-										+ Model.class.getName() + ", " + String.class.getName() + ", *"
-										+ Model.ProjectionLevel1.class.getName() + "*)",
-								"for parameter #2 in " + Model.ProjectionLevel1.class.getName() + "("
-										+ Model.class.getName() + ", " + String.class.getName() + ", *"
-										+ Model.ProjectionLevel2.class.getName() + "*)" ) );
+								Model.ProjectionLevel1.class.getName()
+										+ "("
+										+ Model.class.getName()
+										+ ", "
+										+ String.class.getName()
+										+ ", "
+										+ Model.ProjectionLevel2.class.getName()
+										+ ")",
+								"for parameter #2 in "
+										+ Model.ProjectionLevel2.class.getName()
+										+ "("
+										+ Model.class.getName()
+										+ ", "
+										+ String.class.getName()
+										+ ", *"
+										+ Model.ProjectionLevel1.class.getName()
+										+ "*)",
+								"for parameter #2 in "
+										+ Model.ProjectionLevel1.class.getName()
+										+ "("
+										+ Model.class.getName()
+										+ ", "
+										+ String.class.getName()
+										+ ", *"
+										+ Model.ProjectionLevel2.class.getName()
+										+ "*)" ) );
 	}
 
 	@Test
@@ -659,6 +711,7 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 				@IndexedEmbedded(includeDepth = 10)
 				public Level2 level2;
 			}
+
 			class Level2 {
 				@DocumentId
 				public Integer id;
@@ -667,6 +720,7 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 				@IndexedEmbedded
 				Level3 level3;
 			}
+
 			class Level3 {
 				@DocumentId
 				public Integer id;
@@ -675,27 +729,33 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 				@IndexedEmbedded
 				Level1 level1;
 			}
+
 			class ProjectionLevel1 {
 				public final String text;
 				public final ProjectionLevel2 level2;
+
 				@ProjectionConstructor
 				public ProjectionLevel1(String text, ProjectionLevel2 level2) {
 					this.text = text;
 					this.level2 = level2;
 				}
 			}
+
 			class ProjectionLevel2 {
 				public final String text;
 				public final ProjectionLevel3 level3;
+
 				@ProjectionConstructor
 				public ProjectionLevel2(String text, ProjectionLevel3 level3) {
 					this.text = text;
 					this.level3 = level3;
 				}
 			}
+
 			class ProjectionLevel3 {
 				public final String text;
 				public final ProjectionLevel1 level1;
+
 				@ProjectionConstructor
 				public ProjectionLevel3(String text, ProjectionLevel1 level1) {
 					this.text = text;
@@ -719,18 +779,41 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 						.constructorContext( Model.class, String.class, Model.ProjectionLevel1.class )
 						.methodParameterContext( 2, "level1" )
 						.multilineFailure( "Infinite object projection recursion:",
-								Model.ProjectionLevel1.class.getName() + "("
-										+ Model.class.getName() + ", " + String.class.getName() + ", "
-										+ Model.ProjectionLevel2.class.getName() + ")",
-								"for parameter #2 in " + Model.ProjectionLevel3.class.getName() + "("
-										+ Model.class.getName() + ", " + String.class.getName() + ", *"
-										+ Model.ProjectionLevel1.class.getName() + "*)",
-								"for parameter #2 in " + Model.ProjectionLevel2.class.getName() + "("
-										+ Model.class.getName() + ", " + String.class.getName() + ", *"
-										+ Model.ProjectionLevel3.class.getName() + "*)",
-								"for parameter #2 in " + Model.ProjectionLevel1.class.getName() + "("
-										+ Model.class.getName() + ", " + String.class.getName() + ", *"
-										+ Model.ProjectionLevel2.class.getName() + "*)" ) );
+								Model.ProjectionLevel1.class.getName()
+										+ "("
+										+ Model.class.getName()
+										+ ", "
+										+ String.class.getName()
+										+ ", "
+										+ Model.ProjectionLevel2.class.getName()
+										+ ")",
+								"for parameter #2 in "
+										+ Model.ProjectionLevel3.class.getName()
+										+ "("
+										+ Model.class.getName()
+										+ ", "
+										+ String.class.getName()
+										+ ", *"
+										+ Model.ProjectionLevel1.class.getName()
+										+ "*)",
+								"for parameter #2 in "
+										+ Model.ProjectionLevel2.class.getName()
+										+ "("
+										+ Model.class.getName()
+										+ ", "
+										+ String.class.getName()
+										+ ", *"
+										+ Model.ProjectionLevel3.class.getName()
+										+ "*)",
+								"for parameter #2 in "
+										+ Model.ProjectionLevel1.class.getName()
+										+ "("
+										+ Model.class.getName()
+										+ ", "
+										+ String.class.getName()
+										+ ", *"
+										+ Model.ProjectionLevel2.class.getName()
+										+ "*)" ) );
 	}
 
 	@Test
@@ -745,6 +828,7 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 				@IndexedEmbedded(includeDepth = 10)
 				public Level2 level2;
 			}
+
 			class Level2 {
 				@DocumentId
 				public Integer id;
@@ -753,6 +837,7 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 				@IndexedEmbedded
 				Level3 level3;
 			}
+
 			class Level3 {
 				@DocumentId
 				public Integer id;
@@ -761,27 +846,33 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 				@IndexedEmbedded
 				Level1 level1;
 			}
+
 			class ProjectionLevel1 {
 				public final String text;
 				public final ProjectionLevel2 level2;
+
 				@ProjectionConstructor
 				public ProjectionLevel1(String text, ProjectionLevel2 level2) {
 					this.text = text;
 					this.level2 = level2;
 				}
 			}
+
 			class ProjectionLevel2 {
 				public final String text;
 				public final ProjectionLevel3 level3;
+
 				@ProjectionConstructor
 				public ProjectionLevel2(String text, ProjectionLevel3 level3) {
 					this.text = text;
 					this.level3 = level3;
 				}
 			}
+
 			class ProjectionLevel3 {
 				public final String text;
 				public final ProjectionLevel2 level2;
+
 				@ProjectionConstructor
 				public ProjectionLevel3(String text, ProjectionLevel2 level2) {
 					this.text = text;
@@ -805,15 +896,32 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 						.constructorContext( Model.class, String.class, Model.ProjectionLevel2.class )
 						.methodParameterContext( 2, "level2" )
 						.multilineFailure( "Infinite object projection recursion:",
-								Model.ProjectionLevel2.class.getName() + "("
-										+ Model.class.getName() + ", " + String.class.getName() + ", "
-										+ Model.ProjectionLevel3.class.getName() + ")",
-								"for parameter #2 in " + Model.ProjectionLevel3.class.getName() + "("
-										+ Model.class.getName() + ", " + String.class.getName() + ", *"
-										+ Model.ProjectionLevel2.class.getName() + "*)",
-								"for parameter #2 in " + Model.ProjectionLevel2.class.getName() + "("
-										+ Model.class.getName() + ", " + String.class.getName() + ", *"
-										+ Model.ProjectionLevel3.class.getName() + "*)" ) );
+								Model.ProjectionLevel2.class.getName()
+										+ "("
+										+ Model.class.getName()
+										+ ", "
+										+ String.class.getName()
+										+ ", "
+										+ Model.ProjectionLevel3.class.getName()
+										+ ")",
+								"for parameter #2 in "
+										+ Model.ProjectionLevel3.class.getName()
+										+ "("
+										+ Model.class.getName()
+										+ ", "
+										+ String.class.getName()
+										+ ", *"
+										+ Model.ProjectionLevel2.class.getName()
+										+ "*)",
+								"for parameter #2 in "
+										+ Model.ProjectionLevel2.class.getName()
+										+ "("
+										+ Model.class.getName()
+										+ ", "
+										+ String.class.getName()
+										+ ", *"
+										+ Model.ProjectionLevel3.class.getName()
+										+ "*)" ) );
 	}
 
 	// This checks that everything works correctly when a constructor projection
@@ -841,6 +949,7 @@ public class ProjectionConstructorBaseIT extends AbstractProjectionConstructorIT
 		class MyProjection {
 			public final String text;
 			public final Integer integer;
+
 			@ProjectionConstructor
 			public MyProjection(String text, Integer integer) {
 				this.text = text;

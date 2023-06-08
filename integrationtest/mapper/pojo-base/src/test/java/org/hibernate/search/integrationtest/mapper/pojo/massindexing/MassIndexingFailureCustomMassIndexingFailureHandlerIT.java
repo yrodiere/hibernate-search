@@ -155,7 +155,8 @@ public class MassIndexingFailureCustomMassIndexingFailureHandlerIT extends Abstr
 	}
 
 	@Override
-	protected void assertMassIndexerLoadingOperationFailureHandling(Class<? extends Throwable> exceptionType, String exceptionMessage,
+	protected void assertMassIndexerLoadingOperationFailureHandling(Class<? extends Throwable> exceptionType,
+			String exceptionMessage,
 			String failingOperationAsString,
 			int failureFloodingThreshold, Class<? extends Throwable> closingExceptionType,
 			String closingExceptionMessage, String closingFailingOperationAsString) {
@@ -226,7 +227,8 @@ public class MassIndexingFailureCustomMassIndexingFailureHandlerIT extends Abstr
 		return DEFAULT_FAILURE_FLOODING_THRESHOLD;
 	}
 
-	private static void assertSingleEntityFailure(MassIndexingEntityFailureContext context, EntityReference entityReference,
+	private static void assertSingleEntityFailure(MassIndexingEntityFailureContext context,
+			EntityReference entityReference,
 			String failingOperationAsString,
 			Consumer<Throwable> throwableAssertion) {
 		assertThat( context.throwable() )

@@ -52,7 +52,8 @@ public class SingleFieldAggregationUnsupportedTypesIT<F> {
 		for ( AggregationDescriptor aggregationDescriptor : AggregationDescriptor.getAll() ) {
 			for ( FieldTypeDescriptor<?> fieldTypeDescriptor : FieldTypeDescriptor.getAll() ) {
 				Optional<? extends UnsupportedSingleFieldAggregationExpectations> expectations =
-						aggregationDescriptor.getSingleFieldAggregationExpectations( fieldTypeDescriptor ).getUnsupported();
+						aggregationDescriptor.getSingleFieldAggregationExpectations( fieldTypeDescriptor )
+								.getUnsupported();
 				if ( expectations.isPresent() ) {
 					unsupportedFieldTypes.add( fieldTypeDescriptor );
 					parameters.add( new Object[] { fieldTypeDescriptor, expectations.get() } );
@@ -83,7 +84,8 @@ public class SingleFieldAggregationUnsupportedTypesIT<F> {
 
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-1748")
-	@PortedFromSearch5(original = "org.hibernate.search.test.query.facet.RangeFacetingTest.testRangeQueryWithUnsupportedType")
+	@PortedFromSearch5(
+			original = "org.hibernate.search.test.query.facet.RangeFacetingTest.testRangeQueryWithUnsupportedType")
 	public void simple() {
 		SimpleFieldModel<F> model = index.binding().fieldModels.get( fieldType );
 		String fieldPath = model.relativeFieldName;
@@ -94,7 +96,8 @@ public class SingleFieldAggregationUnsupportedTypesIT<F> {
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
 						"Cannot use 'aggregation:" + expectations.aggregationName() + "' on field '" + fieldPath + "'",
-						"'aggregation:" + expectations.aggregationName()
+						"'aggregation:"
+								+ expectations.aggregationName()
 								+ "' is not available for fields of this type"
 				)
 				.satisfies( FailureReportUtils.hasContext(

@@ -35,10 +35,17 @@ public interface Log extends BasicLogger {
 	int ID_OFFSET = MessageConstants.BATCH_JSR352_CORE_ID_RANGE_MIN;
 
 	@Message(id = ID_OFFSET + 1,
-			value = "The '" + MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_NAMESPACE + "' parameter was defined,"
-					+ " but the '" + MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_REFERENCE + "' parameter is empty."
-					+ " Set the '" + MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_REFERENCE + "' parameter"
-					+ " to select an entity manager factory, or do not set the '" + MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_NAMESPACE
+			value = "The '"
+					+ MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_NAMESPACE
+					+ "' parameter was defined,"
+					+ " but the '"
+					+ MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_REFERENCE
+					+ "' parameter is empty."
+					+ " Set the '"
+					+ MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_REFERENCE
+					+ "' parameter"
+					+ " to select an entity manager factory, or do not set the '"
+					+ MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_NAMESPACE
 					+ "' parameter to try to use a default entity manager factory."
 	)
 	SearchException entityManagerFactoryReferenceIsEmpty();
@@ -58,7 +65,8 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 7,
 			value = "No entity manager factory has been created with this name yet: '%1$s'."
 					+ " Make sure that your entity manager factory is named (for instance by setting the '"
-					+ AvailableSettings.SESSION_FACTORY_NAME + "' option),"
+					+ AvailableSettings.SESSION_FACTORY_NAME
+					+ "' option),"
 					+ " that it has already been created,"
 					+ " and that it hasn't been closed yet."
 	)
@@ -73,9 +81,11 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET + 9,
 			value = "Multiple entity manager factories are currently active."
-					+ " Set the '" + MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_REFERENCE
+					+ " Set the '"
+					+ MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_REFERENCE
 					+ " parameter to select a persistence unit."
-					+ " You may also set the '" + MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_NAMESPACE
+					+ " You may also set the '"
+					+ MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_NAMESPACE
 					+ "' parameter for more referencing options."
 	)
 	SearchException tooManyActiveEntityManagerFactories();
@@ -146,9 +156,11 @@ public interface Log extends BasicLogger {
 			String causeMessage, @Cause Exception cause);
 
 	@Message(id = ID_OFFSET + 30,
-			value = "The value of parameter '" + MassIndexingJobParameters.CHECKPOINT_INTERVAL
+			value = "The value of parameter '"
+					+ MassIndexingJobParameters.CHECKPOINT_INTERVAL
 					+ "' (value=%1$d) should be equal to or less than the value of parameter '"
-					+ MassIndexingJobParameters.ROWS_PER_PARTITION + "' (value=%2$d)."
+					+ MassIndexingJobParameters.ROWS_PER_PARTITION
+					+ "' (value=%2$d)."
 	)
 	SearchException illegalCheckpointInterval(int checkpointInterval, int rowsPerPartition);
 
@@ -164,9 +176,11 @@ public interface Log extends BasicLogger {
 	SearchException failingEntityTypes(String failingEntityNames);
 
 	@Message(id = ID_OFFSET + 33,
-			value = "The value of parameter '" + MassIndexingJobParameters.SESSION_CLEAR_INTERVAL
+			value = "The value of parameter '"
+					+ MassIndexingJobParameters.SESSION_CLEAR_INTERVAL
 					+ "' (value=%1$d) should be equal to or less than the value of parameter '"
-					+ MassIndexingJobParameters.CHECKPOINT_INTERVAL + "' (value=%2$d)."
+					+ MassIndexingJobParameters.CHECKPOINT_INTERVAL
+					+ "' (value=%2$d)."
 	)
 	SearchException illegalSessionClearInterval(int sessionClearInterval, int checkpointInterval);
 

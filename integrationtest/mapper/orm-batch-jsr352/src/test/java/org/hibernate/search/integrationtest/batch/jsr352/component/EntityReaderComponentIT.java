@@ -14,6 +14,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
+
 import javax.batch.runtime.context.JobContext;
 import javax.batch.runtime.context.StepContext;
 import javax.persistence.EntityManagerFactory;
@@ -112,7 +113,8 @@ public class EntityReaderComponentIT {
 	public void testReadItem_withoutBoundary() throws Exception {
 		JobContextData jobData = new JobContextData();
 		jobData.setEntityManagerFactory( emf );
-		jobData.setEntityTypeDescriptors( Arrays.asList( JobTestUtil.createSimpleEntityTypeDescriptor( emf, Company.class ) ) );
+		jobData.setEntityTypeDescriptors( Arrays.asList( JobTestUtil.createSimpleEntityTypeDescriptor( emf,
+				Company.class ) ) );
 
 		when( mockedJobContext.getTransientUserData() ).thenReturn( jobData );
 		mockedStepContext.setTransientUserData( any() );

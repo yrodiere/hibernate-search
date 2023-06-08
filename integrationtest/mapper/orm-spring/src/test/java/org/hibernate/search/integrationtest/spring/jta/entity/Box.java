@@ -8,6 +8,7 @@ package org.hibernate.search.integrationtest.spring.jta.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,11 +24,13 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmb
 @Indexed
 public class Box extends Container {
 
-	@OneToMany(mappedBy = "box", cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "box", cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
+			CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	@IndexedEmbedded
 	private Set<Muffin> muffinSet;
 
-	@OneToMany(mappedBy = "box", cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "box", cascade = { CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH,
+			CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	@IndexedEmbedded
 	private Set<Doughnut> doughnutSet;
 

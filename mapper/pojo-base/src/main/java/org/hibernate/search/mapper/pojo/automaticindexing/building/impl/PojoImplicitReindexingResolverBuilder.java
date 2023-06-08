@@ -18,11 +18,11 @@ import org.hibernate.search.mapper.pojo.automaticindexing.impl.PojoImplicitReind
 import org.hibernate.search.mapper.pojo.automaticindexing.impl.PojoImplicitReindexingResolverNode;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathPropertyNode;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
-import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathWalker;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathValueNode;
-import org.hibernate.search.mapper.pojo.model.path.spi.PojoPathFilter;
 import org.hibernate.search.mapper.pojo.model.path.impl.PojoRuntimePathsBuildingHelper;
+import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathWalker;
+import org.hibernate.search.mapper.pojo.model.path.spi.PojoPathFilter;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 import org.hibernate.search.util.common.AssertionFailure;
 
@@ -38,8 +38,9 @@ class PojoImplicitReindexingResolverBuilder<T> {
 	// Use a LinkedHashSet for deterministic iteration
 	private final Set<PojoModelPathValueNode> dirtyPathsTriggeringSelfReindexing = new LinkedHashSet<>();
 
-	private final Map<PojoModelPathValueNode, Map<PojoRawTypeModel<?>, PojoModelPathValueNode>> containingAssociationPaths =
-			new LinkedHashMap<>();
+	private final Map<PojoModelPathValueNode,
+			Map<PojoRawTypeModel<?>, PojoModelPathValueNode>> containingAssociationPaths =
+					new LinkedHashMap<>();
 
 	private final PojoImplicitReindexingResolverOriginalTypeNodeBuilder<T> containingEntitiesResolverRootBuilder;
 
@@ -89,7 +90,8 @@ class PojoImplicitReindexingResolverBuilder<T> {
 		Optional<PojoImplicitReindexingResolverNode<T>> containingEntitiesResolverRootOptional =
 				containingEntitiesResolverRootBuilder.build( pathsBuildingHelper, null );
 
-		if ( immutableDirtyPathsAcceptedByFilter.isEmpty() && !containingEntitiesResolverRootOptional.isPresent()
+		if ( immutableDirtyPathsAcceptedByFilter.isEmpty()
+				&& !containingEntitiesResolverRootOptional.isPresent()
 				&& containingAssociationPaths.isEmpty() ) {
 			/*
 			 * If this resolver won't resolve to anything, it is useless and we don't need to build it.
@@ -133,11 +135,12 @@ class PojoImplicitReindexingResolverBuilder<T> {
 		}
 	}
 
-	static class Walker implements PojoModelPathWalker<
-			Void, AbstractPojoImplicitReindexingResolverTypeNodeBuilder<?, ?>,
-			PojoImplicitReindexingResolverPropertyNodeBuilder<?, ?>,
-			PojoImplicitReindexingResolverValueNodeBuilderDelegate<?>
-			> {
+	static class Walker
+			implements PojoModelPathWalker<
+					Void,
+					AbstractPojoImplicitReindexingResolverTypeNodeBuilder<?, ?>,
+					PojoImplicitReindexingResolverPropertyNodeBuilder<?, ?>,
+					PojoImplicitReindexingResolverValueNodeBuilderDelegate<?>> {
 		public static final Walker INSTANCE = new Walker();
 
 		@Override

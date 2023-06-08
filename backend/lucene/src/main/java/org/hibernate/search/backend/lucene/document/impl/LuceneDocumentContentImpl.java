@@ -38,7 +38,8 @@ public class LuceneDocumentContentImpl implements LuceneDocumentContent {
 	}
 
 	void checkNoValueYetForSingleValued(String absoluteFieldPath) {
-		EncounteredFieldStatus previousValue = fieldStatus.putIfAbsent( absoluteFieldPath, EncounteredFieldStatus.ENCOUNTERED );
+		EncounteredFieldStatus previousValue = fieldStatus.putIfAbsent( absoluteFieldPath,
+				EncounteredFieldStatus.ENCOUNTERED );
 		if ( previousValue != null ) {
 			throw log.multipleValuesForSingleValuedField( absoluteFieldPath );
 		}
@@ -49,7 +50,8 @@ public class LuceneDocumentContentImpl implements LuceneDocumentContent {
 			EncounteredFieldStatus status = entry.getValue();
 			if ( EncounteredFieldStatus.ENCOUNTERED_AND_NAME_INDEXED.equals( status ) ) {
 				String fieldName = entry.getKey();
-				document.add( MetadataFields.searchableMetadataField( MetadataFields.fieldNamesFieldName(), fieldName ) );
+				document.add( MetadataFields.searchableMetadataField( MetadataFields.fieldNamesFieldName(),
+						fieldName ) );
 			}
 		}
 
@@ -68,8 +70,7 @@ public class LuceneDocumentContentImpl implements LuceneDocumentContent {
 	}
 
 	private enum EncounteredFieldStatus {
-		ENCOUNTERED,
-		ENCOUNTERED_AND_NAME_INDEXED;
+		ENCOUNTERED, ENCOUNTERED_AND_NAME_INDEXED;
 	}
 
 }

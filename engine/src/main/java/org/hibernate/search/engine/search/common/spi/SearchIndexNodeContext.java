@@ -45,7 +45,8 @@ public interface SearchIndexNodeContext<SC extends SearchIndexScope<?>>
 
 	default String nestedDocumentPath() {
 		List<String> hierarchy = nestedPathHierarchy();
-		return ( hierarchy.isEmpty() ) ? null :
+		return ( hierarchy.isEmpty() ) ?
+				null :
 				// nested path is the LAST element on the path hierarchy
 				hierarchy.get( hierarchy.size() - 1 );
 	}

@@ -13,5 +13,4 @@ package org.hibernate.search.query.dsl.sort;
  */
 @Deprecated
 public interface SortDistanceFieldAndReferenceContext
-		extends SortOrder<SortDistanceFieldAndReferenceContext>, SortAdditionalSortFieldContext, SortTermination {
-}
+		extends SortOrder<SortDistanceFieldAndReferenceContext>, SortAdditionalSortFieldContext, SortTermination {}

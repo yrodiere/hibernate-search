@@ -48,38 +48,72 @@ public class OutboxPollingAgentAdditionalJaxbMappingProducer
 	// because our override actually matches the default for the native entity name.
 	public static final String ENTITY_NAME = CLASS_NAME;
 
-	private static final String ENTITY_DEFINITION_TEMPLATE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-			"<hibernate-mapping schema=\"%1$s\" catalog=\"%2$s\">\n" +
-			"    <class name=\"" + CLASS_NAME + "\" entity-name=\"" + ENTITY_NAME + "\" table=\"%3$s\">\n" +
-			"        <id name=\"id\" type=\"%5$s\">\n" +
-			"            <generator class=\"org.hibernate.id.UUIDGenerator\">\n" +
-			"                <param name=\"uuid_gen_strategy_class\">%4$s</param>\n" +
-			"            </generator>\n" +
-			"        </id>\n" +
-			"        <property name=\"type\" nullable=\"false\">\n" +
-			"            <type name=\"org.hibernate.type.EnumType\">\n" +
-			"                <param name=\"enumClass\">" + AgentType.class.getName() + "</param>\n" +
-			"            </type>\n" +
-			"        </property>\n" +
-			"        <property name=\"name\" nullable=\"false\" />\n" +
-			"        <property name=\"expiration\" nullable=\"false\" />\n" +
-			"        <property name=\"state\" nullable=\"false\">\n" +
-			"            <type name=\"org.hibernate.type.EnumType\">\n" +
-			"                <param name=\"enumClass\">" + AgentState.class.getName() + "</param>\n" +
-			"            </type>\n" +
-			"        </property>\n" +
-			"        <property name=\"totalShardCount\" nullable=\"true\" />\n" +
-			"        <property name=\"assignedShardIndex\" nullable=\"true\" />\n" +
+	private static final String ENTITY_DEFINITION_TEMPLATE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+			+
+			"<hibernate-mapping schema=\"%1$s\" catalog=\"%2$s\">\n"
+			+
+			"    <class name=\""
+			+ CLASS_NAME
+			+ "\" entity-name=\""
+			+ ENTITY_NAME
+			+ "\" table=\"%3$s\">\n"
+			+
+			"        <id name=\"id\" type=\"%5$s\">\n"
+			+
+			"            <generator class=\"org.hibernate.id.UUIDGenerator\">\n"
+			+
+			"                <param name=\"uuid_gen_strategy_class\">%4$s</param>\n"
+			+
+			"            </generator>\n"
+			+
+			"        </id>\n"
+			+
+			"        <property name=\"type\" nullable=\"false\">\n"
+			+
+			"            <type name=\"org.hibernate.type.EnumType\">\n"
+			+
+			"                <param name=\"enumClass\">"
+			+ AgentType.class.getName()
+			+ "</param>\n"
+			+
+			"            </type>\n"
+			+
+			"        </property>\n"
+			+
+			"        <property name=\"name\" nullable=\"false\" />\n"
+			+
+			"        <property name=\"expiration\" nullable=\"false\" />\n"
+			+
+			"        <property name=\"state\" nullable=\"false\">\n"
+			+
+			"            <type name=\"org.hibernate.type.EnumType\">\n"
+			+
+			"                <param name=\"enumClass\">"
+			+ AgentState.class.getName()
+			+ "</param>\n"
+			+
+			"            </type>\n"
+			+
+			"        </property>\n"
+			+
+			"        <property name=\"totalShardCount\" nullable=\"true\" />\n"
+			+
+			"        <property name=\"assignedShardIndex\" nullable=\"true\" />\n"
+			+
 			// Reserved for future use
-			"        <property name=\"payload\" nullable=\"true\" type=\"materialized_blob\">\n" +
+			"        <property name=\"payload\" nullable=\"true\" type=\"materialized_blob\">\n"
+			+
 			// HSEARCH-4727: this column length will be ignored in most dialects, since the blob type is normally unbounded,
 			// but it will force Hibernate ORM to simulate an unbounded BLOB type with DB2.
 			// Using 2147483647 as it's the documented maximum length of BLOBs in DB2:
 			// https://www.ibm.com/docs/en/db2-for-zos/11?topic=types-large-objects-lobs
 			// TODO HSEARCH-4395/HSEARCH-4532 drop this length definition with ORM 6, because ORM 6 will ignore it.
-			"                <column length=\"2147483647\" />\n" +
-			"        </property>\n" +
-			"    </class>\n" +
+			"                <column length=\"2147483647\" />\n"
+			+
+			"        </property>\n"
+			+
+			"    </class>\n"
+			+
 			"</hibernate-mapping>\n";
 
 	public static final String ENTITY_DEFINITION = String.format(
@@ -91,37 +125,37 @@ public class OutboxPollingAgentAdditionalJaxbMappingProducer
 
 	private static final OptionalConfigurationProperty<String> AGENT_ENTITY_MAPPING =
 			ConfigurationProperty.forKey(
-							HibernateOrmMapperOutboxPollingSpiSettings.CoordinationRadicals.AGENT_ENTITY_MAPPING )
+					HibernateOrmMapperOutboxPollingSpiSettings.CoordinationRadicals.AGENT_ENTITY_MAPPING )
 					.asString()
 					.build();
 
 	private static final OptionalConfigurationProperty<String> ENTITY_MAPPING_AGENT_SCHEMA =
 			ConfigurationProperty.forKey(
-							HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.ENTITY_MAPPING_AGENT_SCHEMA )
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.ENTITY_MAPPING_AGENT_SCHEMA )
 					.asString()
 					.build();
 
 	private static final OptionalConfigurationProperty<String> ENTITY_MAPPING_AGENT_CATALOG =
 			ConfigurationProperty.forKey(
-							HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.ENTITY_MAPPING_AGENT_CATALOG )
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.ENTITY_MAPPING_AGENT_CATALOG )
 					.asString()
 					.build();
 
 	private static final OptionalConfigurationProperty<String> ENTITY_MAPPING_AGENT_TABLE =
 			ConfigurationProperty.forKey(
-							HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.ENTITY_MAPPING_AGENT_TABLE )
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.ENTITY_MAPPING_AGENT_TABLE )
 					.asString()
 					.build();
 
 	private static final OptionalConfigurationProperty<UuidGenerationStrategy> ENTITY_MAPPING_AGENT_UUID_GEN_STRATEGY =
 			ConfigurationProperty.forKey(
-							HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.ENTITY_MAPPING_AGENT_UUID_GEN_STRATEGY )
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.ENTITY_MAPPING_AGENT_UUID_GEN_STRATEGY )
 					.as( UuidGenerationStrategy.class, UuidGenerationStrategy::of )
 					.build();
 
 	private static final OptionalConfigurationProperty<String> ENTITY_MAPPING_AGENT_UUID_TYPE =
 			ConfigurationProperty.forKey(
-							HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.ENTITY_MAPPING_OUTBOXEVENT_UUID_TYPE )
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.ENTITY_MAPPING_OUTBOXEVENT_UUID_TYPE )
 					.asString()
 					.build();
 
@@ -139,7 +173,10 @@ public class OutboxPollingAgentAdditionalJaxbMappingProducer
 		Optional<String> uuidType = ENTITY_MAPPING_AGENT_UUID_TYPE.get( propertySource );
 
 		// only allow configuring the entire mapping or table/catalog/schema/generator/datatype names
-		if ( mapping.isPresent() && ( schema.isPresent() || catalog.isPresent() || table.isPresent() || uuidStrategy.isPresent() || uuidType.isPresent() ) ) {
+		if ( mapping.isPresent()
+				&& ( schema.isPresent()
+						|| catalog.isPresent() || table.isPresent() || uuidStrategy.isPresent() || uuidType
+								.isPresent() ) ) {
 			throw log.agentConfigurationPropertyConflict(
 					AGENT_ENTITY_MAPPING.resolveOrRaw( propertySource ),
 					new String[] {
@@ -152,18 +189,22 @@ public class OutboxPollingAgentAdditionalJaxbMappingProducer
 			);
 		}
 
-		String resolvedUuidType = UuidDataTypeUtils.uuidType( uuidType.orElse( HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_ENTITY_MAPPING_AGENT_UUID_TYPE ), dialect );
+		String resolvedUuidType = UuidDataTypeUtils.uuidType( uuidType.orElse(
+				HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_ENTITY_MAPPING_AGENT_UUID_TYPE ),
+				dialect );
 
-		String entityDefinition = mapping.orElseGet( () ->
-				String.format(
-						Locale.ROOT,
-						ENTITY_DEFINITION_TEMPLATE,
-						schema.orElse( "" ),
-						catalog.orElse( "" ),
-						table.orElse( HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_ENTITY_MAPPING_AGENT_TABLE ),
-						uuidStrategy.orElse( HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_ENTITY_MAPPING_AGENT_UUID_GEN_STRATEGY ).strategy(),
-						resolvedUuidType
-				)
+		String entityDefinition = mapping.orElseGet( () -> String.format(
+				Locale.ROOT,
+				ENTITY_DEFINITION_TEMPLATE,
+				schema.orElse( "" ),
+				catalog.orElse( "" ),
+				table.orElse(
+						HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_ENTITY_MAPPING_AGENT_TABLE ),
+				uuidStrategy.orElse(
+						HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_ENTITY_MAPPING_AGENT_UUID_GEN_STRATEGY )
+						.strategy(),
+				resolvedUuidType
+		)
 		);
 
 		log.agentGeneratedEntityMapping( entityDefinition );

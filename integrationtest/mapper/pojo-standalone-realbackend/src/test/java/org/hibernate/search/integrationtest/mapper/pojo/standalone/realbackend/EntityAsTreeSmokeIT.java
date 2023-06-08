@@ -21,10 +21,10 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
-import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.mapper.pojo.standalone.loading.SelectionLoadingStrategy;
 import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
+import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
@@ -56,7 +56,8 @@ public class EntityAsTreeSmokeIT {
 				.withAnnotatedTypes( ContainedNonEntity.class, IndexedEntity.class, ContainedEntity.class )
 				.withConfiguration( b -> b
 						.addEntityType( IndexedEntity.class, c -> c
-								.selectionLoadingStrategy( SelectionLoadingStrategy.fromMap( simulatedIndexedEntityDatastore ) ) )
+								.selectionLoadingStrategy( SelectionLoadingStrategy.fromMap(
+										simulatedIndexedEntityDatastore ) ) )
 						.addEntityType( ContainedEntity.class ) )
 				.withConfiguration( b -> b.defaultReindexOnUpdate( ReindexOnUpdate.SHALLOW ) )
 				.setup();

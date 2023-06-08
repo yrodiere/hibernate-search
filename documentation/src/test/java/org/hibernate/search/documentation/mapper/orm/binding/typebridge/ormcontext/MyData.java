@@ -8,7 +8,6 @@ package org.hibernate.search.documentation.mapper.orm.binding.typebridge.ormcont
 
 public enum MyData {
 
-	INDEXED,
-	PROJECTED;
+	INDEXED, PROJECTED;
 
 }

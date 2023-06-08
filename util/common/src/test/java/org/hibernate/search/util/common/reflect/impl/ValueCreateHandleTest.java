@@ -152,7 +152,8 @@ public class ValueCreateHandleTest {
 
 	@Test
 	public void failure_runtimeException() throws Exception {
-		Constructor<?> constructor = RuntimeExceptionConstructorClass.class.getDeclaredConstructor( Object.class, int.class );
+		Constructor<?> constructor = RuntimeExceptionConstructorClass.class.getDeclaredConstructor( Object.class,
+				int.class );
 
 		ValueCreateHandle<?> valueCreateHandle = factory.createForConstructor( constructor );
 
@@ -182,7 +183,8 @@ public class ValueCreateHandleTest {
 				factory.getClass().getSimpleName().contains( "MethodHandle" )
 		);
 
-		Constructor<?> constructor = IllegalAccessExceptionConstructorClass.class.getDeclaredConstructor( String.class );
+		Constructor<?> constructor = IllegalAccessExceptionConstructorClass.class.getDeclaredConstructor(
+				String.class );
 
 		ValueCreateHandle<?> valueCreateHandle = factory.createForConstructor( constructor );
 
@@ -202,7 +204,8 @@ public class ValueCreateHandleTest {
 
 	@Test
 	public void failure_instantiationException() throws Exception {
-		Constructor<?> constructor = InstantiationExceptionConstructorClass.class.getDeclaredConstructor( String.class );
+		Constructor<?> constructor = InstantiationExceptionConstructorClass.class.getDeclaredConstructor(
+				String.class );
 
 		ValueCreateHandle<?> valueCreateHandle = factory.createForConstructor( constructor );
 
@@ -222,7 +225,8 @@ public class ValueCreateHandleTest {
 
 	@Test
 	public void failure_secondFailureInToString_runtimeException() throws Exception {
-		Constructor<?> constructor = RuntimeExceptionConstructorClass.class.getDeclaredConstructor( Object.class, int.class );
+		Constructor<?> constructor = RuntimeExceptionConstructorClass.class.getDeclaredConstructor( Object.class,
+				int.class );
 
 		ValueCreateHandle<?> valueCreateHandle = factory.createForConstructor( constructor );
 
@@ -234,7 +238,8 @@ public class ValueCreateHandleTest {
 		assertThatThrownBy( () -> valueCreateHandle.create( objectWhoseToStringFails, 42 ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Exception while invoking '" + constructor
+						"Exception while invoking '"
+								+ constructor
 								+ "' with arguments [<CustomToStringType#toString() threw SimulatedRuntimeException>, 42]",
 						"runtimeExceptionThrowingConstructor"
 				)
@@ -244,8 +249,8 @@ public class ValueCreateHandleTest {
 				.hasSuppressedException( toStringRuntimeException );
 	}
 
-	private <T> void testValueCreateHandleSuccess(Class<T> clazz, Function<T, String> getter)
-			throws IllegalAccessException, NoSuchMethodException {
+	private <T> void testValueCreateHandleSuccess(Class<T> clazz, Function<T,
+			String> getter) throws IllegalAccessException, NoSuchMethodException {
 		Constructor<T> constructor = clazz.getDeclaredConstructor( String.class );
 		setAccessible( constructor );
 		Constructor<T> otherConstructor = clazz.getDeclaredConstructor( Integer.class );

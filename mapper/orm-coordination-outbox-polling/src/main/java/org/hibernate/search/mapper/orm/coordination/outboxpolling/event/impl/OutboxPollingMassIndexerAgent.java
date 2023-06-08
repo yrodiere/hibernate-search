@@ -27,8 +27,8 @@ import org.hibernate.search.mapper.orm.coordination.outboxpolling.logging.impl.L
 import org.hibernate.search.mapper.pojo.massindexing.spi.PojoMassIndexerAgent;
 import org.hibernate.search.mapper.pojo.massindexing.spi.PojoMassIndexerAgentStartContext;
 import org.hibernate.search.util.common.impl.Closer;
-import org.hibernate.search.util.common.spi.ToStringTreeAppendable;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
+import org.hibernate.search.util.common.spi.ToStringTreeAppendable;
 import org.hibernate.search.util.common.spi.ToStringTreeAppender;
 
 public final class OutboxPollingMassIndexerAgent implements PojoMassIndexerAgent, ToStringTreeAppendable {
@@ -44,21 +44,27 @@ public final class OutboxPollingMassIndexerAgent implements PojoMassIndexerAgent
 	}
 
 	private static final ConfigurationProperty<Integer> POLLING_INTERVAL =
-			ConfigurationProperty.forKey( HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.MASS_INDEXER_POLLING_INTERVAL )
+			ConfigurationProperty.forKey(
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.MASS_INDEXER_POLLING_INTERVAL )
 					.asIntegerStrictlyPositive()
-					.withDefault( HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_MASS_INDEXER_POLLING_INTERVAL )
+					.withDefault(
+							HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_MASS_INDEXER_POLLING_INTERVAL )
 					.build();
 
 	private static final ConfigurationProperty<Integer> PULSE_INTERVAL =
-			ConfigurationProperty.forKey( HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.MASS_INDEXER_PULSE_INTERVAL )
+			ConfigurationProperty.forKey(
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.MASS_INDEXER_PULSE_INTERVAL )
 					.asIntegerStrictlyPositive()
-					.withDefault( HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_MASS_INDEXER_PULSE_INTERVAL )
+					.withDefault(
+							HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_MASS_INDEXER_PULSE_INTERVAL )
 					.build();
 
 	private static final ConfigurationProperty<Integer> PULSE_EXPIRATION =
-			ConfigurationProperty.forKey( HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.MASS_INDEXER_PULSE_EXPIRATION )
+			ConfigurationProperty.forKey(
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.MASS_INDEXER_PULSE_EXPIRATION )
 					.asIntegerStrictlyPositive()
-					.withDefault( HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_MASS_INDEXER_PULSE_EXPIRATION )
+					.withDefault(
+							HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_MASS_INDEXER_PULSE_EXPIRATION )
 					.build();
 
 	public static Factory factory(AutomaticIndexingMappingContext mapping, Clock clock, String tenantId,
@@ -102,8 +108,7 @@ public final class OutboxPollingMassIndexerAgent implements PojoMassIndexerAgent
 
 
 	private enum Status {
-		STOPPED,
-		STARTED
+		STOPPED, STARTED
 	}
 
 	private final String name;
@@ -244,7 +249,8 @@ public final class OutboxPollingMassIndexerAgent implements PojoMassIndexerAgent
 				// between when they are issued and when they expire,
 				// i.e. at least the polling interval,
 				// to avoid polling the database continuously.
-				return delegate.schedule( runnable, instructions.timeInMillisecondsToExpiration(), TimeUnit.MILLISECONDS );
+				return delegate.schedule( runnable, instructions.timeInMillisecondsToExpiration(),
+						TimeUnit.MILLISECONDS );
 			}
 		}
 	}

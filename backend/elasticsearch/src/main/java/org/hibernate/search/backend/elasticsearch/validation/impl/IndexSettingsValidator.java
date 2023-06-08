@@ -21,10 +21,14 @@ public class IndexSettingsValidator implements Validator<IndexSettings> {
 
 	private final Validator<AnalyzerDefinition> analyzerDefinitionValidator = new AnalyzerDefinitionValidator();
 	private final Validator<NormalizerDefinition> normalizerDefinitionValidator = new NormalizerDefinitionValidator();
-	private final Validator<CharFilterDefinition> charFilterDefinitionValidator = AnalysisComponentDefinitionValidators.charFilterDefinitionValidator();
-	private final Validator<TokenizerDefinition> tokenizerDefinitionValidator = AnalysisComponentDefinitionValidators.tokenizerDefinitionValidator();
-	private final Validator<TokenFilterDefinition> tokenFilterDefinitionValidator = AnalysisComponentDefinitionValidators.tokenFilterDefinitionValidator();
-	private final Validator<JsonElement> extraAttributeValidator = new JsonElementValidator( new JsonElementEquivalence() );
+	private final Validator<CharFilterDefinition> charFilterDefinitionValidator = AnalysisComponentDefinitionValidators
+			.charFilterDefinitionValidator();
+	private final Validator<TokenizerDefinition> tokenizerDefinitionValidator = AnalysisComponentDefinitionValidators
+			.tokenizerDefinitionValidator();
+	private final Validator<TokenFilterDefinition> tokenFilterDefinitionValidator =
+			AnalysisComponentDefinitionValidators.tokenFilterDefinitionValidator();
+	private final Validator<JsonElement> extraAttributeValidator = new JsonElementValidator(
+			new JsonElementEquivalence() );
 
 	@Override
 	public void validate(ValidationErrorCollector errorCollector, IndexSettings expected, IndexSettings actual) {

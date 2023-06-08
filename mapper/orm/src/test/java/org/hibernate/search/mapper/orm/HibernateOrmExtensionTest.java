@@ -53,7 +53,8 @@ public class HibernateOrmExtensionTest {
 				new IdentifierBridgeToDocumentIdentifierContextImpl( mappingContext );
 		assertThat( toDocumentContext.extension( HibernateOrmExtension.get() ) ).isSameAs( mappingContext );
 
-		IdentifierBridgeFromDocumentIdentifierContext fromDocumentContext = new SessionBasedBridgeOperationContext( sessionContext );
+		IdentifierBridgeFromDocumentIdentifierContext fromDocumentContext = new SessionBasedBridgeOperationContext(
+				sessionContext );
 		assertThat( fromDocumentContext.extension( HibernateOrmExtension.get() ) ).isSameAs( sessionContext );
 	}
 
@@ -77,10 +78,12 @@ public class HibernateOrmExtensionTest {
 
 	@Test
 	public void valueBridge() {
-		ValueBridgeToIndexedValueContext toIndexedValueContext = new ValueBridgeToIndexedValueContextImpl( mappingContext );
+		ValueBridgeToIndexedValueContext toIndexedValueContext = new ValueBridgeToIndexedValueContextImpl(
+				mappingContext );
 		assertThat( toIndexedValueContext.extension( HibernateOrmExtension.get() ) ).isSameAs( mappingContext );
 
-		ValueBridgeFromIndexedValueContext fromIndexedValueContext = new SessionBasedBridgeOperationContext( sessionContext );
+		ValueBridgeFromIndexedValueContext fromIndexedValueContext = new SessionBasedBridgeOperationContext(
+				sessionContext );
 		assertThat( fromIndexedValueContext.extension( HibernateOrmExtension.get() ) ).isSameAs( sessionContext );
 	}
 
@@ -115,8 +118,7 @@ public class HibernateOrmExtensionTest {
 	}
 
 	private interface HibernateOrmMappingContextMock
-			extends HibernateOrmMappingContext, BridgeMappingContext, BackendMappingContext {
-	}
+			extends HibernateOrmMappingContext, BridgeMappingContext, BackendMappingContext {}
 
 	private interface HibernateOrmSessionContextMock
 			extends HibernateOrmSessionContext, BridgeSessionContext, BackendSessionContext {

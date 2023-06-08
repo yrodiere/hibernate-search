@@ -15,7 +15,8 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 public class PrimitiveCharacterPropertyTypeDescriptor extends PropertyTypeDescriptor<Character, String> {
 
-	public static final PrimitiveCharacterPropertyTypeDescriptor INSTANCE = new PrimitiveCharacterPropertyTypeDescriptor();
+	public static final PrimitiveCharacterPropertyTypeDescriptor INSTANCE =
+			new PrimitiveCharacterPropertyTypeDescriptor();
 
 	private PrimitiveCharacterPropertyTypeDescriptor() {
 		super( char.class, Character.class );

@@ -81,7 +81,8 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 		for ( AggregationDescriptor aggregationDescriptor : AggregationDescriptor.getAll() ) {
 			for ( FieldTypeDescriptor<?> fieldTypeDescriptor : FieldTypeDescriptor.getAll() ) {
 				Optional<? extends SupportedSingleFieldAggregationExpectations<?>> expectations =
-						aggregationDescriptor.getSingleFieldAggregationExpectations( fieldTypeDescriptor ).getSupported();
+						aggregationDescriptor.getSingleFieldAggregationExpectations( fieldTypeDescriptor )
+								.getSupported();
 				if ( expectations.isPresent() ) {
 					supportedFieldTypes.add( fieldTypeDescriptor );
 					DataSet<?> dataSet = new DataSet<>( expectations.get() );
@@ -125,7 +126,8 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 	private final FieldTypeDescriptor<F> fieldType;
 	private final DataSet<F> dataSet;
 
-	public SingleFieldAggregationTypeCheckingAndConversionIT(SupportedSingleFieldAggregationExpectations<F> expectations,
+	public SingleFieldAggregationTypeCheckingAndConversionIT(SupportedSingleFieldAggregationExpectations<
+			F> expectations,
 			DataSet<F> dataSet) {
 		this.expectations = expectations;
 		this.fieldType = expectations.fieldType();
@@ -201,12 +203,11 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 				.toAggregation();
 
 		// reuse the aggregation instance on a different scope targeting a different index
-		assertThatThrownBy( () ->
-				compatibleIndex.createScope().query()
-						.where( f -> f.matchAll() )
-						.aggregation( aggregationKey, aggregation )
-						.routing( dataSet.name )
-						.toQuery()
+		assertThatThrownBy( () -> compatibleIndex.createScope().query()
+				.where( f -> f.matchAll() )
+				.aggregation( aggregationKey, aggregation )
+				.routing( dataSet.name )
+				.toQuery()
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid search aggregation",
@@ -214,12 +215,11 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 						"the given aggregation was built from a scope targeting indexes ", mainIndex.name() );
 
 		// reuse the aggregation instance on a different scope targeting a superset of the original indexes
-		assertThatThrownBy( () ->
-				mainIndex.createScope( compatibleIndex ).query()
-						.where( f -> f.matchAll() )
-						.aggregation( aggregationKey, aggregation )
-						.routing( dataSet.name )
-						.toQuery()
+		assertThatThrownBy( () -> mainIndex.createScope( compatibleIndex ).query()
+				.where( f -> f.matchAll() )
+				.aggregation( aggregationKey, aggregation )
+				.routing( dataSet.name )
+				.toQuery()
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid search aggregation",
@@ -328,10 +328,9 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 	private <A> void doTestDuplicatedSameKey(String fieldPath, AggregationScenario<A> scenario) {
 		AggregationKey<A> key1 = AggregationKey.of( "aggregationName1" );
 
-		assertThatThrownBy( () ->
-				mainIndex.createScope().query().where( f -> f.matchAll() )
-						.aggregation( key1, f -> scenario.setup( f, fieldPath ) )
-						.aggregation( key1, f -> scenario.setup( f, fieldPath ) )
+		assertThatThrownBy( () -> mainIndex.createScope().query().where( f -> f.matchAll() )
+				.aggregation( key1, f -> scenario.setup( f, fieldPath ) )
+				.aggregation( key1, f -> scenario.setup( f, fieldPath ) )
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContaining( "Duplicate aggregation definitions for key: 'aggregationName1'" );
@@ -339,7 +338,8 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-1748")
-	@PortedFromSearch5(original = "org.hibernate.search.test.query.facet.FacetUnknownFieldFailureTest.testKnownFieldNameNotConfiguredForFacetingThrowsException")
+	@PortedFromSearch5(
+			original = "org.hibernate.search.test.query.facet.FacetUnknownFieldFailureTest.testKnownFieldNameNotConfiguredForFacetingThrowsException")
 	public void aggregationsDisabled() {
 		String fieldPath = mainIndex.binding().fieldWithAggregationDisabledModels.get( fieldType ).relativeFieldName;
 
@@ -429,7 +429,9 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 		assertThatThrownBy( () -> scenario.setup( scope.aggregation(), fieldPath ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Attribute '", "Converter' differs:", " vs. "
 				);
 	}
@@ -457,7 +459,9 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 		assertThatThrownBy( () -> scenario.setup( scope.aggregation(), fieldPath ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Inconsistent support for 'aggregation:" + expectations.aggregationName() + "'"
 				);
 	}
@@ -475,7 +479,9 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 		) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Inconsistent support for 'aggregation:" + expectations.aggregationName() + "'"
 				);
 	}
@@ -500,7 +506,9 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 
 	private <A> void testValidAggregation(AggregationScenario<A> scenario, StubMappingScope scope,
 			Function<SearchPredicateFactory, ? extends PredicateFinalStep> predicateContributor,
-			BiFunction<SearchAggregationFactory, AggregationScenario<A>, AggregationFinalStep<A>> aggregationContributor) {
+			BiFunction<SearchAggregationFactory,
+					AggregationScenario<A>,
+					AggregationFinalStep<A>> aggregationContributor) {
 		AggregationKey<A> aggregationKey = AggregationKey.of( AGGREGATION_NAME );
 		assertThatQuery(
 				scope.query()
@@ -540,20 +548,22 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 					document.addValue( mainIndex.binding().fieldWithConverterModels.get( fieldType ).reference, value );
 				} );
 			}
-			mainIndexer.add( name + "_document_empty", name, document -> { } );
+			mainIndexer.add( name + "_document_empty", name, document -> {} );
 			BulkIndexer compatibleIndexer = compatibleIndex.bulkIndexer();
 			for ( int i = 0; i < otherIndexDocumentFieldValues.size(); i++ ) {
 				F value = otherIndexDocumentFieldValues.get( i );
 				compatibleIndexer.add( name + "_compatibleindex_document_" + i, name, document -> {
 					document.addValue( compatibleIndex.binding().fieldModels.get( fieldType ).reference, value );
-					document.addValue( compatibleIndex.binding().fieldWithConverterModels.get( fieldType ).reference, value );
+					document.addValue( compatibleIndex.binding().fieldWithConverterModels.get( fieldType ).reference,
+							value );
 				} );
 			}
 			BulkIndexer rawFieldCompatibleIndexer = rawFieldCompatibleIndex.bulkIndexer();
 			for ( int i = 0; i < otherIndexDocumentFieldValues.size(); i++ ) {
 				F value = otherIndexDocumentFieldValues.get( i );
 				rawFieldCompatibleIndexer.add( name + "_rawcompatibleindex_document_" + i, name, document -> {
-					document.addValue( rawFieldCompatibleIndex.binding().fieldWithConverterModels.get( fieldType ).reference, value );
+					document.addValue( rawFieldCompatibleIndex.binding().fieldWithConverterModels.get(
+							fieldType ).reference, value );
 				} );
 			}
 			mainIndexer.join( compatibleIndexer, rawFieldCompatibleIndexer );
@@ -614,7 +624,8 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 		}
 
 		// See HSEARCH-3307: this checks that irrelevant options are ignored when checking cross-index field compatibility
-		protected void addIrrelevantOptions(FieldTypeDescriptor<?> fieldType, StandardIndexFieldTypeOptionsStep<?, ?> c) {
+		protected void addIrrelevantOptions(FieldTypeDescriptor<?> fieldType, StandardIndexFieldTypeOptionsStep<?,
+				?> c) {
 			c.searchable( Searchable.NO );
 			c.projectable( Projectable.YES );
 			if ( fieldType.isFieldSortSupported() ) {
@@ -666,10 +677,10 @@ public class SingleFieldAggregationTypeCheckingAndConversionIT<F> {
 		}
 
 		private static void mapFieldsWithIncompatibleType(IndexSchemaElement parent) {
-			supportedFieldTypes.forEach( typeDescriptor ->
-					SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible( typeDescriptor ),
-							o -> o.aggregable( Aggregable.YES ) )
-							.map( parent, "" + typeDescriptor.getUniqueName() )
+			supportedFieldTypes.forEach( typeDescriptor -> SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible(
+					typeDescriptor ),
+					o -> o.aggregable( Aggregable.YES ) )
+					.map( parent, "" + typeDescriptor.getUniqueName() )
 			);
 		}
 	}

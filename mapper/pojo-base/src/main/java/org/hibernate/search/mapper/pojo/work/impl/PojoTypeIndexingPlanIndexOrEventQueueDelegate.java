@@ -41,11 +41,13 @@ final class PojoTypeIndexingPlanIndexOrEventQueueDelegate<I, E> implements PojoT
 		this.typeContext = typeContext;
 		this.indexDelegate = new PojoTypeIndexingPlanIndexDelegate<>( typeContext, sessionContext, processorRootContext,
 				indexPlan );
-		this.eventQueueDelegate = new PojoTypeIndexingPlanEventQueueDelegate<>( typeContext, sessionContext, sendingPlan );
+		this.eventQueueDelegate = new PojoTypeIndexingPlanEventQueueDelegate<>( typeContext, sessionContext,
+				sendingPlan );
 	}
 
 	@Override
-	public boolean isDirtyForAddOrUpdate(boolean forceSelfDirty, boolean forceContainingDirty, BitSet dirtyPathsOrNull) {
+	public boolean isDirtyForAddOrUpdate(boolean forceSelfDirty, boolean forceContainingDirty,
+			BitSet dirtyPathsOrNull) {
 		// We will execute the addOrUpdate below
 		// if the dirty paths require the entity itself to be reindexed,
 		// but not if they only require reindexing some containing entities.
@@ -92,7 +94,8 @@ final class PojoTypeIndexingPlanIndexOrEventQueueDelegate<I, E> implements PojoT
 	}
 
 	@Override
-	public CompletableFuture<MultiEntityOperationExecutionReport> executeAndReport(OperationSubmitter operationSubmitter) {
+	public CompletableFuture<MultiEntityOperationExecutionReport> executeAndReport(
+			OperationSubmitter operationSubmitter) {
 		return indexDelegate.executeAndReport( operationSubmitter );
 	}
 

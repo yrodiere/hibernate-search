@@ -8,6 +8,7 @@ package org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl;
 
 import java.time.Instant;
 import java.util.UUID;
+
 import javax.persistence.Transient;
 
 public class Agent {
@@ -35,14 +36,30 @@ public class Agent {
 
 	@Override
 	public String toString() {
-		return "Agent{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", expiration=" + expiration +
-				", type=" + type +
-				", currentState=" + state +
-				", totalShardCount=" + totalShardCount +
-				", assignedShardIndex=" + assignedShardIndex +
+		return "Agent{"
+				+
+				"id="
+				+ id
+				+
+				", name='"
+				+ name
+				+ '\''
+				+
+				", expiration="
+				+ expiration
+				+
+				", type="
+				+ type
+				+
+				", currentState="
+				+ state
+				+
+				", totalShardCount="
+				+ totalShardCount
+				+
+				", assignedShardIndex="
+				+ assignedShardIndex
+				+
 				'}';
 	}
 
@@ -118,7 +135,7 @@ public class Agent {
 
 	@Transient
 	public ShardAssignmentDescriptor getShardAssignment() {
-		return ( totalShardCount == null || assignedShardIndex == null ) ? null
-				: new ShardAssignmentDescriptor( totalShardCount, assignedShardIndex );
+		return ( totalShardCount == null || assignedShardIndex == null ) ?
+				null : new ShardAssignmentDescriptor( totalShardCount, assignedShardIndex );
 	}
 }

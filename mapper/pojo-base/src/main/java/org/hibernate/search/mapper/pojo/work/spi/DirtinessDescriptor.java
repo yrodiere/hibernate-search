@@ -26,11 +26,20 @@ public final class DirtinessDescriptor implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UpdateCauseDescriptor{" +
-				"forceSelfDirty=" + forceSelfDirty +
-				", forceContainingDirty=" + forceContainingDirty +
-				", dirtyPaths=" + dirtyPaths +
-				", updatedBecauseOfContained=" + updateBecauseOfContained +
+		return "UpdateCauseDescriptor{"
+				+
+				"forceSelfDirty="
+				+ forceSelfDirty
+				+
+				", forceContainingDirty="
+				+ forceContainingDirty
+				+
+				", dirtyPaths="
+				+ dirtyPaths
+				+
+				", updatedBecauseOfContained="
+				+ updateBecauseOfContained
+				+
 				'}';
 	}
 

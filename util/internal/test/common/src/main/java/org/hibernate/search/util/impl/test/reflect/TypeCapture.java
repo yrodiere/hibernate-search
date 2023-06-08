@@ -36,7 +36,9 @@ public abstract class TypeCapture<T> {
 			}
 		}
 		if ( captureParameterizedType == null ) {
-			throw new IllegalArgumentException( clazz + " doesn't extend or implement " + superType
+			throw new IllegalArgumentException( clazz
+					+ " doesn't extend or implement "
+					+ superType
 					+ " directly with a type argument" );
 		}
 		return captureParameterizedType.getActualTypeArguments()[0];

@@ -53,7 +53,8 @@ public abstract class AbstractElasticsearchBucketAggregation<K, V>
 			JsonObject rootDocCountSubAggregationOuterObject = new JsonObject();
 			JsonObject rootDocCountSubAggregationInnerObject = new JsonObject();
 
-			REQUEST_REVERSE_NESTED_ACCESSOR.set( rootDocCountSubAggregationOuterObject, rootDocCountSubAggregationInnerObject );
+			REQUEST_REVERSE_NESTED_ACCESSOR.set( rootDocCountSubAggregationOuterObject,
+					rootDocCountSubAggregationInnerObject );
 			REQUEST_AGGREGATIONS_ROOT_DOC_COUNT_ACCESSOR.set( outerObject, rootDocCountSubAggregationOuterObject );
 		}
 
@@ -87,7 +88,8 @@ public abstract class AbstractElasticsearchBucketAggregation<K, V>
 	public abstract static class AbstractBuilder<K, V>
 			extends AbstractElasticsearchNestableAggregation.AbstractBuilder<Map<K, V>> {
 
-		public AbstractBuilder(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<?> field) {
+		public AbstractBuilder(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<
+				?> field) {
 			super( scope, field );
 		}
 

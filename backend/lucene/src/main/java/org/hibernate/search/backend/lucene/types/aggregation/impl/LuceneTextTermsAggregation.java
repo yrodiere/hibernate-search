@@ -55,8 +55,7 @@ public class LuceneTextTermsAggregation<K>
 	}
 
 	@Override
-	Set<String> collectFirstTerms(IndexReader reader, boolean descending, int limit)
-			throws IOException {
+	Set<String> collectFirstTerms(IndexReader reader, boolean descending, int limit) throws IOException {
 		TreeSet<String> collectedTerms = new TreeSet<>( descending ? STRING_COMPARATOR.reversed() : STRING_COMPARATOR );
 		for ( LeafReaderContext leaf : reader.leaves() ) {
 			final LeafReader atomicReader = leaf.reader();

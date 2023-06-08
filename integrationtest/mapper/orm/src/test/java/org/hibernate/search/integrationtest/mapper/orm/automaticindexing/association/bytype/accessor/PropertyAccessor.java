@@ -27,11 +27,13 @@ public interface PropertyAccessor<R, V> {
 
 	void clear(R root);
 
-	default <U> PropertyAccessor<R, U> andThen(Supplier<V> defaultInstanceSupplier, PropertyAccessor<? super V, U> leaf) {
+	default <U> PropertyAccessor<R, U> andThen(Supplier<V> defaultInstanceSupplier, PropertyAccessor<? super V,
+			U> leaf) {
 		return new ComposedPropertyAccessor<>( this, defaultInstanceSupplier, leaf );
 	}
 
-	default <U, C> MultiValuedPropertyAccessor<R, U, C> andThen(Supplier<V> defaultInstanceSupplier, MultiValuedPropertyAccessor<? super V, U, C> leaf) {
+	default <U, C> MultiValuedPropertyAccessor<R, U, C> andThen(Supplier<V> defaultInstanceSupplier,
+			MultiValuedPropertyAccessor<? super V, U, C> leaf) {
 		return new ComposedMultiValuedPropertyAccessor<>( this, defaultInstanceSupplier, leaf );
 	}
 }

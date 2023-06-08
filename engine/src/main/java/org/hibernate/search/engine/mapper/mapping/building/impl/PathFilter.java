@@ -46,8 +46,10 @@ class PathFilter {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "includedPaths=" + includedPaths
+		return getClass().getSimpleName()
+				+ "["
+				+ "includedPaths="
+				+ includedPaths
 				+ "]";
 	}
 

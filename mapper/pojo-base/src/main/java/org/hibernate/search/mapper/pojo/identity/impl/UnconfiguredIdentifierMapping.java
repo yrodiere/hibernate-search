@@ -15,7 +15,6 @@ import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeIdentifier;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
-
 public final class UnconfiguredIdentifierMapping<E> implements IdentifierMappingImplementor<Object, E> {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -37,7 +36,7 @@ public final class UnconfiguredIdentifierMapping<E> implements IdentifierMapping
 	}
 
 	@Override
-	@SuppressWarnings( "unchecked" ) // We can only cast to the raw type, if I is generic we need an unchecked cast
+	@SuppressWarnings("unchecked") // We can only cast to the raw type, if I is generic we need an unchecked cast
 	public Object getIdentifier(Object providedId, Supplier<? extends E> entitySupplierOrNull) {
 		if ( providedId != null ) {
 			return providedId;

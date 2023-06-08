@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.Properties;
+
 import javax.batch.api.partition.PartitionPlan;
 import javax.batch.runtime.context.JobContext;
 import javax.persistence.EntityManagerFactory;
@@ -107,7 +108,7 @@ public class HibernateSearchPartitionMapperComponentIT {
 		jobData.setEntityTypeDescriptors( Arrays.asList(
 				JobTestUtil.createSimpleEntityTypeDescriptor( emf, Company.class ),
 				JobTestUtil.createSimpleEntityTypeDescriptor( emf, Person.class )
-				) );
+		) );
 		when( mockedJobContext.getTransientUserData() ).thenReturn( jobData );
 
 		PartitionPlan partitionPlan = partitionMapper.mapPartitions();

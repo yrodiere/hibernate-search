@@ -17,6 +17,9 @@ import org.hibernate.search.backend.lucene.analysis.impl.LuceneAnalysisComponent
 import org.hibernate.search.backend.lucene.analysis.model.dsl.impl.LuceneAnalysisConfigurationContextImpl;
 import org.hibernate.search.backend.lucene.analysis.model.impl.LuceneAnalysisDefinitionRegistry;
 import org.hibernate.search.backend.lucene.analysis.model.impl.LuceneDefaultAnalysisConfigurer;
+import org.hibernate.search.backend.lucene.cache.QueryCachingConfigurationContext;
+import org.hibernate.search.backend.lucene.cache.QueryCachingConfigurer;
+import org.hibernate.search.backend.lucene.cache.impl.LuceneQueryCachingContext;
 import org.hibernate.search.backend.lucene.cfg.LuceneBackendSettings;
 import org.hibernate.search.backend.lucene.logging.impl.Log;
 import org.hibernate.search.backend.lucene.multitenancy.MultiTenancyStrategyName;
@@ -28,8 +31,8 @@ import org.hibernate.search.backend.lucene.work.impl.LuceneWorkFactory;
 import org.hibernate.search.engine.backend.spi.BackendBuildContext;
 import org.hibernate.search.engine.backend.spi.BackendFactory;
 import org.hibernate.search.engine.backend.spi.BackendImplementor;
-import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
+import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.spi.OptionalConfigurationProperty;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanReference;
@@ -40,9 +43,6 @@ import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 import org.hibernate.search.util.common.reporting.EventContext;
 
 import org.apache.lucene.util.Version;
-import org.hibernate.search.backend.lucene.cache.QueryCachingConfigurationContext;
-import org.hibernate.search.backend.lucene.cache.QueryCachingConfigurer;
-import org.hibernate.search.backend.lucene.cache.impl.LuceneQueryCachingContext;
 
 public class LuceneBackendFactory implements BackendFactory {
 
@@ -58,17 +58,19 @@ public class LuceneBackendFactory implements BackendFactory {
 					.as( MultiTenancyStrategyName.class, MultiTenancyStrategyName::of )
 					.build();
 
-	private static final OptionalConfigurationProperty<List<BeanReference<? extends LuceneAnalysisConfigurer>>> ANALYSIS_CONFIGURER =
-			ConfigurationProperty.forKey( LuceneBackendSettings.ANALYSIS_CONFIGURER )
-					.asBeanReference( LuceneAnalysisConfigurer.class )
-					.multivalued()
-					.build();
+	private static final OptionalConfigurationProperty<List<BeanReference<
+			? extends LuceneAnalysisConfigurer>>> ANALYSIS_CONFIGURER =
+					ConfigurationProperty.forKey( LuceneBackendSettings.ANALYSIS_CONFIGURER )
+							.asBeanReference( LuceneAnalysisConfigurer.class )
+							.multivalued()
+							.build();
 
-	private static final OptionalConfigurationProperty<List<BeanReference<? extends QueryCachingConfigurer>>> QUERY_CACHING_CONFIGURER =
-			ConfigurationProperty.forKey( LuceneBackendSettings.QUERY_CACHING_CONFIGURER )
-					.asBeanReference( QueryCachingConfigurer.class )
-					.multivalued()
-					.build();
+	private static final OptionalConfigurationProperty<List<BeanReference<
+			? extends QueryCachingConfigurer>>> QUERY_CACHING_CONFIGURER =
+					ConfigurationProperty.forKey( LuceneBackendSettings.QUERY_CACHING_CONFIGURER )
+							.asBeanReference( QueryCachingConfigurer.class )
+							.multivalued()
+							.build();
 
 	@Override
 	public BackendImplementor create(EventContext eventContext, BackendBuildContext buildContext,
@@ -86,8 +88,7 @@ public class LuceneBackendFactory implements BackendFactory {
 					buildContext, propertySource, luceneVersion
 			);
 
-			LuceneQueryCachingContext cachingContext
-					= new LuceneQueryCachingContext( luceneVersion );
+			LuceneQueryCachingContext cachingContext = new LuceneQueryCachingContext( luceneVersion );
 
 			configureQueryCache( buildContext, propertySource, cachingContext );
 
@@ -145,11 +146,11 @@ public class LuceneBackendFactory implements BackendFactory {
 					}
 					return optionalName;
 				} ).orElseGet( () -> {
-			// set dynamic default
-			return ( buildContext.multiTenancyEnabled() ) ?
-					MultiTenancyStrategyName.DISCRIMINATOR :
-					MultiTenancyStrategyName.NONE;
-		} );
+					// set dynamic default
+					return ( buildContext.multiTenancyEnabled() ) ?
+							MultiTenancyStrategyName.DISCRIMINATOR :
+							MultiTenancyStrategyName.NONE;
+				} );
 
 		switch ( multiTenancyStrategy ) {
 			case NONE:

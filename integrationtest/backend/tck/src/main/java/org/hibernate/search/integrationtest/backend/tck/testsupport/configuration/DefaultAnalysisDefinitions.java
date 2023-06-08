@@ -32,8 +32,7 @@ public enum DefaultAnalysisDefinitions {
 	/**
 	 * A normalizer that lowercases the input.
 	 */
-	NORMALIZER_LOWERCASE("lowercase")
-	;
+	NORMALIZER_LOWERCASE("lowercase");
 
 	public final String name;
 

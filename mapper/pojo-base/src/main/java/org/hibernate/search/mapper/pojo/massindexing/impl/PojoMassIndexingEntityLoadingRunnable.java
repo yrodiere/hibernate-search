@@ -72,8 +72,7 @@ public class PojoMassIndexingEntityLoadingRunnable<E, I>
 						getNotifier().reportEntitiesLoadingFailure( typeGroup, idList, e );
 					}
 				}
-			}
-			while ( idList != null );
+			} while ( idList != null );
 			context.waitForLastBatches();
 		}
 		log.trace( "finished" );
@@ -256,6 +255,5 @@ public class PojoMassIndexingEntityLoadingRunnable<E, I>
 		}
 	}
 
-	private static final class EntityLoadingContextImpl implements MassIndexingEnvironment.EntityLoadingContext {
-	}
+	private static final class EntityLoadingContextImpl implements MassIndexingEnvironment.EntityLoadingContext {}
 }

@@ -14,7 +14,8 @@ import org.hibernate.search.backend.elasticsearch.types.codec.impl.Elasticsearch
 
 class ElasticsearchLocalTimeIndexFieldTypeOptionsStep
 		extends
-		AbstractElasticsearchTemporalIndexFieldTypeOptionsStep<ElasticsearchLocalTimeIndexFieldTypeOptionsStep, LocalTime> {
+		AbstractElasticsearchTemporalIndexFieldTypeOptionsStep<ElasticsearchLocalTimeIndexFieldTypeOptionsStep,
+				LocalTime> {
 
 	ElasticsearchLocalTimeIndexFieldTypeOptionsStep(ElasticsearchIndexFieldTypeBuildContext buildContext) {
 		super( buildContext, LocalTime.class );

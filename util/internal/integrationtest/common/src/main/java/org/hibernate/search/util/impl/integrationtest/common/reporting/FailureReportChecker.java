@@ -52,8 +52,10 @@ public class FailureReportChecker implements Consumer<Throwable> {
 		return contextLiteral( "backend '" + exactBackendName + "'" );
 	}
 
-	public FailureReportChecker constructorContext(Class<?> ... parameterTypes) {
-		return contextLiteral( "constructor with parameter types [" + CommaSeparatedClassesFormatter.format( parameterTypes ) + "]" );
+	public FailureReportChecker constructorContext(Class<?>... parameterTypes) {
+		return contextLiteral( "constructor with parameter types ["
+				+ CommaSeparatedClassesFormatter.format( parameterTypes )
+				+ "]" );
 	}
 
 	public FailureReportChecker methodParameterContext(int index) {
@@ -215,7 +217,8 @@ public class FailureReportChecker implements Consumer<Throwable> {
 								+ "\n\nFull actual message:\n\t%s",
 						fullMessage.substring( Math.max( 0, currentIndex - 200 ), currentIndex ),
 						pattern.pattern(),
-						fullMessage.substring( currentIndex, Math.min( fullMessage.length(), currentIndex + 100 + pattern.pattern().length() ) ),
+						fullMessage.substring( currentIndex, Math.min( fullMessage.length(), currentIndex + 100
+								+ pattern.pattern().length() ) ),
 						fullMessage
 				);
 			}

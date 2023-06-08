@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Properties;
+
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchRuntime;
 import javax.batch.runtime.BatchStatus;
@@ -58,7 +59,8 @@ public final class JobTestUtil {
 		return operator;
 	}
 
-	public static void startJobAndWait(String jobName, Properties jobParams, int timeoutInMs) throws InterruptedException {
+	public static void startJobAndWait(String jobName, Properties jobParams,
+			int timeoutInMs) throws InterruptedException {
 		JobOperator jobOperator = getAndCheckRuntime();
 		long execId = jobOperator.start( jobName, jobParams );
 		JobExecution jobExec = jobOperator.getJobExecution( execId );
@@ -66,8 +68,8 @@ public final class JobTestUtil {
 		assertThat( jobExec.getBatchStatus() ).isEqualTo( BatchStatus.COMPLETED );
 	}
 
-	public static JobExecution waitForTermination(JobOperator jobOperator, JobExecution jobExecution, int timeoutInMs)
-			throws InterruptedException {
+	public static JobExecution waitForTermination(JobOperator jobOperator, JobExecution jobExecution,
+			int timeoutInMs) throws InterruptedException {
 		long endTime = System.nanoTime() + timeoutInMs * 1_000_000L;
 
 		while ( !jobExecution.getBatchStatus().equals( BatchStatus.COMPLETED )
@@ -105,7 +107,8 @@ public final class JobTestUtil {
 		}
 	}
 
-	public static <T> List<T> findIndexedResultsInTenant(EntityManagerFactory emf, Class<T> clazz, String key, String value, String tenantId) {
+	public static <T> List<T> findIndexedResultsInTenant(EntityManagerFactory emf, Class<T> clazz, String key,
+			String value, String tenantId) {
 		SessionFactory sessionFactory = emf.unwrap( SessionFactory.class );
 		try ( Session session = sessionFactory.withOptions().tenantIdentifier( tenantId ).openSession() ) {
 			return find( session, clazz, key, value );

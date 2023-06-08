@@ -14,7 +14,6 @@ import java.util.function.Consumer;
 import org.hibernate.search.engine.common.execution.spi.SimpleScheduledExecutor;
 import org.hibernate.search.util.common.annotation.Incubating;
 
-
 /**
  * Interface defining how operation should be submitted to the queue or executor.
  * <p>
@@ -33,7 +32,8 @@ import org.hibernate.search.util.common.annotation.Incubating;
 public abstract class OperationSubmitter {
 
 	private static final OperationSubmitter BLOCKING = new BlockingOperationSubmitter();
-	private static final OperationSubmitter REJECTED_EXECUTION_EXCEPTION = new RejectedExecutionExceptionOperationSubmitter();
+	private static final OperationSubmitter REJECTED_EXECUTION_EXCEPTION =
+			new RejectedExecutionExceptionOperationSubmitter();
 
 	private OperationSubmitter() {
 	}
@@ -43,14 +43,16 @@ public abstract class OperationSubmitter {
 	 * Depending on the implementation might throw {@link RejectedExecutionException} or offload the submit operation to a provided executor.
 	 */
 	public abstract <T> void submitToQueue(BlockingQueue<? super T> queue, T element,
-			Consumer<? super T> blockingRetryProducer, BiConsumer<? super T, Throwable> asyncFailureReporter) throws InterruptedException;
+			Consumer<? super T> blockingRetryProducer, BiConsumer<? super T,
+					Throwable> asyncFailureReporter) throws InterruptedException;
 
 	/**
 	 * Defines how an element will be submitted to the executor.
 	 * Depending on the implementation might throw {@link RejectedExecutionException} or offload the submit operation to an offload executor.
 	 */
 	public abstract <T extends Runnable> void submitToExecutor(SimpleScheduledExecutor executor, T element,
-			Consumer<? super T> blockingRetryProducer, BiConsumer<? super T, Throwable> asyncFailureReporter) throws InterruptedException;
+			Consumer<? super T> blockingRetryProducer, BiConsumer<? super T,
+					Throwable> asyncFailureReporter) throws InterruptedException;
 
 	/**
 	 * When using this submitter, dding a new element will block the thread when the underlying
@@ -83,8 +85,8 @@ public abstract class OperationSubmitter {
 	private static final class BlockingOperationSubmitter extends OperationSubmitter {
 		@Override
 		public <T> void submitToQueue(BlockingQueue<? super T> queue, T element,
-				Consumer<? super T> blockingRetryProducer, BiConsumer<? super T, Throwable> asyncFailureReporter)
-				throws InterruptedException {
+				Consumer<? super T> blockingRetryProducer, BiConsumer<? super T,
+						Throwable> asyncFailureReporter) throws InterruptedException {
 			queue.put( element );
 		}
 
@@ -119,7 +121,8 @@ public abstract class OperationSubmitter {
 		}
 
 		@Override
-		public <T> void submitToQueue(BlockingQueue<? super T> queue, T element, Consumer<? super T> blockingRetryProducer,
+		public <T> void submitToQueue(BlockingQueue<? super T> queue, T element, Consumer<
+				? super T> blockingRetryProducer,
 				BiConsumer<? super T, Throwable> asyncFailureReporter) {
 			if ( !queue.offer( element ) ) {
 				this.executor.accept( new RetryAction<>( element, blockingRetryProducer, asyncFailureReporter ) );
@@ -142,7 +145,8 @@ public abstract class OperationSubmitter {
 			private final Consumer<? super T> blockingRetryProducer;
 			private final BiConsumer<? super T, Throwable> asyncFailureReporter;
 
-			private RetryAction(T element, Consumer<? super T> blockingRetryProducer, BiConsumer<? super T, Throwable> asyncFailureReporter) {
+			private RetryAction(T element, Consumer<? super T> blockingRetryProducer, BiConsumer<? super T,
+					Throwable> asyncFailureReporter) {
 				this.element = element;
 				this.blockingRetryProducer = blockingRetryProducer;
 				this.asyncFailureReporter = asyncFailureReporter;

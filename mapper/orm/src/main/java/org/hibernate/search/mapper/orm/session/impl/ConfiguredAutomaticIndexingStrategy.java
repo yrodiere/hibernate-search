@@ -8,6 +8,7 @@ package org.hibernate.search.mapper.orm.session.impl;
 
 import java.lang.invoke.MethodHandles;
 import java.util.function.Function;
+
 import javax.transaction.Synchronization;
 
 import org.hibernate.Transaction;
@@ -44,20 +45,27 @@ public final class ConfiguredAutomaticIndexingStrategy {
 	@SuppressWarnings("deprecation")
 	private static final OptionalConfigurationProperty<Boolean> AUTOMATIC_INDEXING_ENABLED_LEGACY_STRATEGY =
 			ConfigurationProperty.forKey( HibernateOrmMapperSettings.Radicals.AUTOMATIC_INDEXING_STRATEGY )
-					.as( Boolean.class, v -> !org.hibernate.search.mapper.orm.automaticindexing.AutomaticIndexingStrategyName.NONE
-							.equals( org.hibernate.search.mapper.orm.automaticindexing.AutomaticIndexingStrategyName.of( v ) ) )
+					.as( Boolean.class,
+							v -> !org.hibernate.search.mapper.orm.automaticindexing.AutomaticIndexingStrategyName.NONE
+									.equals( org.hibernate.search.mapper.orm.automaticindexing.AutomaticIndexingStrategyName
+											.of( v ) ) )
 					.build();
 
 	@SuppressWarnings("deprecation")
-	private static final OptionalConfigurationProperty<BeanReference<? extends org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationStrategy>> AUTOMATIC_INDEXING_SYNCHRONIZATION_STRATEGY =
-			ConfigurationProperty.forKey( HibernateOrmMapperSettings.Radicals.AUTOMATIC_INDEXING_SYNCHRONIZATION_STRATEGY )
-					.asBeanReference( org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationStrategy.class )
-					.build();
+	private static final OptionalConfigurationProperty<BeanReference<
+			? extends org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationStrategy>> AUTOMATIC_INDEXING_SYNCHRONIZATION_STRATEGY =
+					ConfigurationProperty.forKey(
+							HibernateOrmMapperSettings.Radicals.AUTOMATIC_INDEXING_SYNCHRONIZATION_STRATEGY )
+							.asBeanReference(
+									org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationStrategy.class )
+							.build();
 
-	private static final OptionalConfigurationProperty<BeanReference<? extends IndexingPlanSynchronizationStrategy>> INDEXING_PLAN_SYNCHRONIZATION_STRATEGY =
-			ConfigurationProperty.forKey( HibernateOrmMapperSettings.Radicals.INDEXING_PLAN_SYNCHRONIZATION_STRATEGY )
-					.asBeanReference( IndexingPlanSynchronizationStrategy.class )
-					.build();
+	private static final OptionalConfigurationProperty<BeanReference<
+			? extends IndexingPlanSynchronizationStrategy>> INDEXING_PLAN_SYNCHRONIZATION_STRATEGY =
+					ConfigurationProperty.forKey(
+							HibernateOrmMapperSettings.Radicals.INDEXING_PLAN_SYNCHRONIZATION_STRATEGY )
+							.asBeanReference( IndexingPlanSynchronizationStrategy.class )
+							.build();
 
 	private static final ConfigurationProperty<Boolean> AUTOMATIC_INDEXING_ENABLE_DIRTY_CHECK =
 			ConfigurationProperty.forKey( HibernateOrmMapperSettings.Radicals.AUTOMATIC_INDEXING_ENABLE_DIRTY_CHECK )
@@ -65,7 +73,8 @@ public final class ConfiguredAutomaticIndexingStrategy {
 					.withDefault( HibernateOrmMapperSettings.Defaults.AUTOMATIC_INDEXING_ENABLE_DIRTY_CHECK )
 					.build();
 
-	private final Function<AutomaticIndexingEventSendingSessionContext, AutomaticIndexingQueueEventSendingPlan> senderFactory;
+	private final Function<AutomaticIndexingEventSendingSessionContext,
+			AutomaticIndexingQueueEventSendingPlan> senderFactory;
 	private final boolean enlistsInTransaction;
 
 	private HibernateOrmSearchSessionMappingContext mappingContext;
@@ -95,14 +104,16 @@ public final class ConfiguredAutomaticIndexingStrategy {
 		defaultSynchronizationStrategy = configure( defaultSynchronizationStrategyHolder.get() );
 		if ( AUTOMATIC_INDEXING_ENABLED.get( configurationSource )
 				&& AUTOMATIC_INDEXING_ENABLED_LEGACY_STRATEGY.getAndMap( configurationSource, enabled -> {
-					log.automaticIndexingStrategyIsDeprecated( AUTOMATIC_INDEXING_ENABLED_LEGACY_STRATEGY.resolveOrRaw( configurationSource ),
+					log.automaticIndexingStrategyIsDeprecated( AUTOMATIC_INDEXING_ENABLED_LEGACY_STRATEGY.resolveOrRaw(
+							configurationSource ),
 							AUTOMATIC_INDEXING_ENABLED.resolveOrRaw( configurationSource ) );
 					return enabled;
 				} )
-				.orElse( true ) ) {
+						.orElse( true ) ) {
 			log.debug( "Hibernate Search event listeners activated" );
 			HibernateSearchEventListener hibernateSearchEventListener = new HibernateSearchEventListener(
-					contextProvider, AUTOMATIC_INDEXING_ENABLE_DIRTY_CHECK.get( startContext.configurationPropertySource() ) );
+					contextProvider, AUTOMATIC_INDEXING_ENABLE_DIRTY_CHECK.get( startContext
+							.configurationPropertySource() ) );
 			hibernateSearchEventListener.registerTo( mappingContext.sessionFactory() );
 		}
 		else {
@@ -138,14 +149,16 @@ public final class ConfiguredAutomaticIndexingStrategy {
 		}
 		else if ( legacyStrategySet ) {
 			@SuppressWarnings("deprecation")
-			BeanHolder<? extends org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationStrategy> holder =
-					// Going through the config property source again in order to get context if an error occurs.
-					AUTOMATIC_INDEXING_SYNCHRONIZATION_STRATEGY.getAndMap( configurationSource, reference -> {
-						log.automaticIndexingSynchronizationStrategyIsDeprecated( AUTOMATIC_INDEXING_SYNCHRONIZATION_STRATEGY.resolveOrRaw( configurationSource ),
-								INDEXING_PLAN_SYNCHRONIZATION_STRATEGY.resolveOrRaw( configurationSource ) );
-						return startContext.beanResolver().resolve( reference );
-					} )
-					.get(); // We know this optional is not empty
+			BeanHolder<
+					? extends org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationStrategy> holder =
+							// Going through the config property source again in order to get context if an error occurs.
+							AUTOMATIC_INDEXING_SYNCHRONIZATION_STRATEGY.getAndMap( configurationSource, reference -> {
+								log.automaticIndexingSynchronizationStrategyIsDeprecated(
+										AUTOMATIC_INDEXING_SYNCHRONIZATION_STRATEGY.resolveOrRaw( configurationSource ),
+										INDEXING_PLAN_SYNCHRONIZATION_STRATEGY.resolveOrRaw( configurationSource ) );
+								return startContext.beanResolver().resolve( reference );
+							} )
+									.get(); // We know this optional is not empty
 			defaultSynchronizationStrategyHolder = BeanHolder.of(
 					new HibernateOrmIndexingPlanSynchronizationStrategyAdapter( holder.get() )
 			).withDependencyAutoClosing( holder );
@@ -186,7 +199,8 @@ public final class ConfiguredAutomaticIndexingStrategy {
 			ConfiguredIndexingPlanSynchronizationStrategy synchronizationStrategy) {
 		if ( usesAsyncProcessing() ) {
 			AutomaticIndexingQueueEventSendingPlan delegate = senderFactory.apply( context );
-			return mappingContext.createIndexingPlan( context, new HibernateOrmIndexingQueueEventSendingPlan( delegate ) );
+			return mappingContext.createIndexingPlan( context, new HibernateOrmIndexingQueueEventSendingPlan(
+					delegate ) );
 		}
 		else {
 			return mappingContext.createIndexingPlan( context,
@@ -209,7 +223,8 @@ public final class ConfiguredAutomaticIndexingStrategy {
 		}
 	}
 
-	public PojoIndexingQueueEventProcessingPlan createIndexingQueueEventProcessingPlan(HibernateOrmSearchSession context,
+	public PojoIndexingQueueEventProcessingPlan createIndexingQueueEventProcessingPlan(
+			HibernateOrmSearchSession context,
 			ConfiguredIndexingPlanSynchronizationStrategy synchronizationStrategy) {
 		AutomaticIndexingQueueEventSendingPlan delegate = senderFactory.apply( context );
 		return mappingContext.createIndexingQueueEventProcessingPlan( context,

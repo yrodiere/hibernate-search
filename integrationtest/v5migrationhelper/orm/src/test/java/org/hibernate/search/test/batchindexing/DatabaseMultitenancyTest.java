@@ -22,6 +22,7 @@ import org.hibernate.search.test.SearchTestBase;
 import org.hibernate.search.util.common.impl.CollectionHelper;
 
 import org.hibernate.testing.RequiresDialect;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,9 +44,9 @@ import org.apache.lucene.search.Query;
  * @since 5.2
  */
 @RequiresDialect(
-	comment = "The connection provider for this test ignores configuration and requires H2",
-	strictMatching = true,
-	value = org.hibernate.dialect.H2Dialect.class
+		comment = "The connection provider for this test ignores configuration and requires H2",
+		strictMatching = true,
+		value = org.hibernate.dialect.H2Dialect.class
 )
 public class DatabaseMultitenancyTest extends SearchTestBase {
 

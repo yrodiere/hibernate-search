@@ -60,8 +60,8 @@ public class LuceneDistanceToFieldProjection<P> extends AbstractLuceneProjection
 		super( builder );
 		this.absoluteFieldPath = builder.field.absolutePath();
 		this.nestedDocumentPath = builder.field.nestedDocumentPath();
-		this.requiredContextAbsoluteFieldPath = accumulatorProvider.isSingleValued()
-				? builder.field.closestMultiValuedParentAbsolutePath() : null;
+		this.requiredContextAbsoluteFieldPath = accumulatorProvider.isSingleValued() ?
+				builder.field.closestMultiValuedParentAbsolutePath() : null;
 		this.codec = builder.codec;
 		this.center = builder.center;
 		this.unit = builder.unit;
@@ -81,10 +81,14 @@ public class LuceneDistanceToFieldProjection<P> extends AbstractLuceneProjection
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "absoluteFieldPath=" + absoluteFieldPath
-				+ ", center=" + center
-				+ ", accumulatorProvider=" + accumulatorProvider
+		return getClass().getSimpleName()
+				+ "["
+				+ "absoluteFieldPath="
+				+ absoluteFieldPath
+				+ ", center="
+				+ center
+				+ ", accumulatorProvider="
+				+ accumulatorProvider
 				+ "]";
 	}
 
@@ -120,10 +124,14 @@ public class LuceneDistanceToFieldProjection<P> extends AbstractLuceneProjection
 
 		@Override
 		public String toString() {
-			return getClass().getSimpleName() + "["
-					+ "absoluteFieldPath=" + absoluteFieldPath
-					+ ", center=" + center
-					+ ", accumulator=" + accumulator
+			return getClass().getSimpleName()
+					+ "["
+					+ "absoluteFieldPath="
+					+ absoluteFieldPath
+					+ ", center="
+					+ center
+					+ ", accumulator="
+					+ accumulator
 					+ "]";
 		}
 
@@ -185,7 +193,9 @@ public class LuceneDistanceToFieldProjection<P> extends AbstractLuceneProjection
 
 	public static class Factory
 			extends
-			AbstractLuceneCodecAwareSearchQueryElementFactory<DistanceToFieldProjectionBuilder, GeoPoint, LuceneFieldCodec<GeoPoint>> {
+			AbstractLuceneCodecAwareSearchQueryElementFactory<DistanceToFieldProjectionBuilder,
+					GeoPoint,
+					LuceneFieldCodec<GeoPoint>> {
 		public Factory(LuceneFieldCodec<GeoPoint> codec) {
 			super( codec );
 		}

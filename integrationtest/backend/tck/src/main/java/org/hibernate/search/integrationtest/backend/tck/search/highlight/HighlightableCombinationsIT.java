@@ -53,7 +53,8 @@ public class HighlightableCombinationsIT {
 
 			IndexNoUnifiedFastVectorBinding(IndexSchemaElement root) {
 				stringField = root.field( "string", f -> f.asString()
-						.highlightable( Arrays.asList( Highlightable.NO, Highlightable.UNIFIED, Highlightable.FAST_VECTOR ) )
+						.highlightable( Arrays.asList( Highlightable.NO, Highlightable.UNIFIED,
+								Highlightable.FAST_VECTOR ) )
 						.analyzer( DefaultAnalysisDefinitions.ANALYZER_STANDARD_ENGLISH.name )
 				).toReference();
 			}

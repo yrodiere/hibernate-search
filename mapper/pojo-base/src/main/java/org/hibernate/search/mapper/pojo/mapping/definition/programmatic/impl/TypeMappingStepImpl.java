@@ -34,7 +34,8 @@ public class TypeMappingStepImpl
 
 	private final PojoRawTypeModel<?> typeModel;
 
-	private final ErrorCollectingPojoTypeMetadataContributor children = new ErrorCollectingPojoTypeMetadataContributor();
+	private final ErrorCollectingPojoTypeMetadataContributor children =
+			new ErrorCollectingPojoTypeMetadataContributor();
 
 	private Map<List<Class<?>>, InitialConstructorMappingStep> constructors;
 

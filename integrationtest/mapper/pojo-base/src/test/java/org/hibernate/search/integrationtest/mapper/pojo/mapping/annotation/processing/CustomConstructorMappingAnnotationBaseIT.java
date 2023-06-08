@@ -19,23 +19,23 @@ import java.util.Collections;
 
 import org.hibernate.search.engine.search.projection.dsl.ProjectionFinalStep;
 import org.hibernate.search.engine.search.projection.dsl.SearchProjectionFactory;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.MappingAnnotatedElement;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.ConstructorMapping;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.ConstructorMappingAnnotationProcessor;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.ConstructorMappingAnnotationProcessorContext;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.ConstructorMappingAnnotationProcessorRef;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.MappingAnnotatedElement;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.ConstructorMappingStep;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.common.reporting.EventContext;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.StubSearchWorkBehavior;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 import org.hibernate.search.util.impl.test.rule.StaticCounters;
 
@@ -55,7 +55,8 @@ public class CustomConstructorMappingAnnotationBaseIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Rule
 	public StaticCounters counters = new StaticCounters();
@@ -78,6 +79,7 @@ public class CustomConstructorMappingAnnotationBaseIT {
 		}
 		class MyProjection {
 			public final String text;
+
 			@WorkingAnnotation
 			public MyProjection(String text) {
 				this.text = text;
@@ -128,9 +130,12 @@ public class CustomConstructorMappingAnnotationBaseIT {
 	@Target(ElementType.CONSTRUCTOR)
 	@ConstructorMapping(processor = @ConstructorMappingAnnotationProcessorRef(type = WorkingAnnotation.Processor.class))
 	private @interface WorkingAnnotation {
-		class Processor implements ConstructorMappingAnnotationProcessor<CustomConstructorMappingAnnotationBaseIT.WorkingAnnotation> {
+		class Processor
+				implements ConstructorMappingAnnotationProcessor<
+						CustomConstructorMappingAnnotationBaseIT.WorkingAnnotation> {
 			@Override
-			public void process(ConstructorMappingStep mapping, CustomConstructorMappingAnnotationBaseIT.WorkingAnnotation annotation,
+			public void process(ConstructorMappingStep mapping,
+					CustomConstructorMappingAnnotationBaseIT.WorkingAnnotation annotation,
 					ConstructorMappingAnnotationProcessorContext context) {
 				mapping.projectionConstructor();
 			}
@@ -143,6 +148,7 @@ public class CustomConstructorMappingAnnotationBaseIT {
 		class IndexedEntity {
 			@DocumentId
 			Integer id;
+
 			@AnnotationWithEmptyProcessorRef
 			public IndexedEntity() {
 			}
@@ -154,7 +160,8 @@ public class CustomConstructorMappingAnnotationBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.annotationTypeContext( AnnotationWithEmptyProcessorRef.class )
 						.failure( "Empty annotation processor reference in meta-annotation '"
-								+ ConstructorMapping.class.getName() + "'" ) );
+								+ ConstructorMapping.class.getName()
+								+ "'" ) );
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
@@ -169,6 +176,7 @@ public class CustomConstructorMappingAnnotationBaseIT {
 		class IndexedEntity {
 			@DocumentId
 			Long id;
+
 			@AnnotationWithProcessorWithDifferentAnnotationType
 			public IndexedEntity() {
 			}
@@ -179,23 +187,28 @@ public class CustomConstructorMappingAnnotationBaseIT {
 						.annotationTypeContext( AnnotationWithProcessorWithDifferentAnnotationType.class )
 						.failure( "Invalid annotation processor: '" + DifferentAnnotationType.Processor.TO_STRING + "'",
 								"This processor expects annotations of a different type: '"
-										+ DifferentAnnotationType.class.getName() + "'" ) );
+										+ DifferentAnnotationType.class.getName()
+										+ "'" ) );
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.CONSTRUCTOR)
-	@ConstructorMapping(processor = @ConstructorMappingAnnotationProcessorRef(type = DifferentAnnotationType.Processor.class))
+	@ConstructorMapping(processor = @ConstructorMappingAnnotationProcessorRef(
+			type = DifferentAnnotationType.Processor.class))
 	private @interface AnnotationWithProcessorWithDifferentAnnotationType {
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.CONSTRUCTOR)
 	private @interface DifferentAnnotationType {
-		class Processor implements ConstructorMappingAnnotationProcessor<CustomConstructorMappingAnnotationBaseIT.DifferentAnnotationType> {
+		class Processor
+				implements ConstructorMappingAnnotationProcessor<
+						CustomConstructorMappingAnnotationBaseIT.DifferentAnnotationType> {
 			public static final String TO_STRING = "DifferentAnnotationType.Processor";
 
 			@Override
-			public void process(ConstructorMappingStep mapping, CustomConstructorMappingAnnotationBaseIT.DifferentAnnotationType annotation,
+			public void process(ConstructorMappingStep mapping,
+					CustomConstructorMappingAnnotationBaseIT.DifferentAnnotationType annotation,
 					ConstructorMappingAnnotationProcessorContext context) {
 				throw new UnsupportedOperationException( "This should not be called" );
 			}
@@ -248,48 +261,62 @@ public class CustomConstructorMappingAnnotationBaseIT {
 
 		assertThat( counters.get( AnnotatedElementAwareAnnotation.CONSTRUCTOR_WITH_OTHER_ANNOTATION ) )
 				.isEqualTo( 1 );
-		assertThat( counters.get( AnnotatedElementAwareAnnotation.CONSTRUCTOR_WITH_EXPLICIT_REPEATABLE_OTHER_ANNOTATION ) )
+		assertThat( counters.get(
+				AnnotatedElementAwareAnnotation.CONSTRUCTOR_WITH_EXPLICIT_REPEATABLE_OTHER_ANNOTATION ) )
 				.isEqualTo( 1 );
-		assertThat( counters.get( AnnotatedElementAwareAnnotation.CONSTRUCTOR_WITH_IMPLICIT_REPEATABLE_OTHER_ANNOTATION ) )
+		assertThat( counters.get(
+				AnnotatedElementAwareAnnotation.CONSTRUCTOR_WITH_IMPLICIT_REPEATABLE_OTHER_ANNOTATION ) )
 				.isEqualTo( 1 );
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.CONSTRUCTOR)
-	@ConstructorMapping(processor = @ConstructorMappingAnnotationProcessorRef(type = AnnotatedElementAwareAnnotation.Processor.class))
+	@ConstructorMapping(processor = @ConstructorMappingAnnotationProcessorRef(
+			type = AnnotatedElementAwareAnnotation.Processor.class))
 	private @interface AnnotatedElementAwareAnnotation {
 		StaticCounters.Key CONSTRUCTOR_WITH_OTHER_ANNOTATION = StaticCounters.createKey();
 		StaticCounters.Key CONSTRUCTOR_WITH_EXPLICIT_REPEATABLE_OTHER_ANNOTATION = StaticCounters.createKey();
 		StaticCounters.Key CONSTRUCTOR_WITH_IMPLICIT_REPEATABLE_OTHER_ANNOTATION = StaticCounters.createKey();
-		class Processor implements ConstructorMappingAnnotationProcessor<CustomConstructorMappingAnnotationBaseIT.AnnotatedElementAwareAnnotation> {
+
+		class Processor
+				implements ConstructorMappingAnnotationProcessor<
+						CustomConstructorMappingAnnotationBaseIT.AnnotatedElementAwareAnnotation> {
 			@Override
-			public void process(ConstructorMappingStep mapping, CustomConstructorMappingAnnotationBaseIT.AnnotatedElementAwareAnnotation annotation,
+			public void process(ConstructorMappingStep mapping,
+					CustomConstructorMappingAnnotationBaseIT.AnnotatedElementAwareAnnotation annotation,
 					ConstructorMappingAnnotationProcessorContext context) {
 				MappingAnnotatedElement annotatedElement = context.annotatedElement();
 				if ( annotatedElement.javaClass().getSimpleName().equals( "EntityWithOtherAnnotationOnConstructor" ) ) {
 					assertThat( annotatedElement.allAnnotations()
-							.filter( a -> OtherAnnotationForAnnotatedElementAwareAnnotation.class.equals( a.annotationType() ) )
+							.filter( a -> OtherAnnotationForAnnotatedElementAwareAnnotation.class.equals( a
+									.annotationType() ) )
 							.map( a -> ( (OtherAnnotationForAnnotatedElementAwareAnnotation) a ).name() )
 							.toArray() )
 							.containsExactlyInAnyOrder( "nonRepeatable" );
 					StaticCounters.get().increment( CONSTRUCTOR_WITH_OTHER_ANNOTATION );
 				}
-				else if ( annotatedElement.javaClass().getSimpleName().equals( "EntityWithExplicitRepeatableOtherAnnotationOnConstructor" ) ) {
-					assertThat( annotatedElement.allAnnotations()
-							.filter( a -> RepeatableOtherAnnotationForAnnotatedElementAwareAnnotation.class.equals( a.annotationType() ) )
-							.map( a -> ( (RepeatableOtherAnnotationForAnnotatedElementAwareAnnotation) a ).name() )
-							.toArray() )
-							.containsExactlyInAnyOrder( "explicitRepeatable1", "explicitRepeatable2" );
-					StaticCounters.get().increment( CONSTRUCTOR_WITH_EXPLICIT_REPEATABLE_OTHER_ANNOTATION );
-				}
-				else if ( annotatedElement.javaClass().getSimpleName().equals( "EntityWithImplicitRepeatableOtherAnnotationOnConstructor" ) ) {
-					assertThat( annotatedElement.allAnnotations()
-							.filter( a -> RepeatableOtherAnnotationForAnnotatedElementAwareAnnotation.class.equals( a.annotationType() ) )
-							.map( a -> ( (RepeatableOtherAnnotationForAnnotatedElementAwareAnnotation) a ).name() )
-							.toArray() )
-							.containsExactlyInAnyOrder( "implicitRepeatable1", "implicitRepeatable2" );
-					StaticCounters.get().increment( CONSTRUCTOR_WITH_IMPLICIT_REPEATABLE_OTHER_ANNOTATION );
-				}
+				else if ( annotatedElement.javaClass().getSimpleName().equals(
+						"EntityWithExplicitRepeatableOtherAnnotationOnConstructor" ) ) {
+							assertThat( annotatedElement.allAnnotations()
+									.filter( a -> RepeatableOtherAnnotationForAnnotatedElementAwareAnnotation.class
+											.equals( a.annotationType() ) )
+									.map( a -> ( (RepeatableOtherAnnotationForAnnotatedElementAwareAnnotation) a )
+											.name() )
+									.toArray() )
+									.containsExactlyInAnyOrder( "explicitRepeatable1", "explicitRepeatable2" );
+							StaticCounters.get().increment( CONSTRUCTOR_WITH_EXPLICIT_REPEATABLE_OTHER_ANNOTATION );
+						}
+				else if ( annotatedElement.javaClass().getSimpleName().equals(
+						"EntityWithImplicitRepeatableOtherAnnotationOnConstructor" ) ) {
+							assertThat( annotatedElement.allAnnotations()
+									.filter( a -> RepeatableOtherAnnotationForAnnotatedElementAwareAnnotation.class
+											.equals( a.annotationType() ) )
+									.map( a -> ( (RepeatableOtherAnnotationForAnnotatedElementAwareAnnotation) a )
+											.name() )
+									.toArray() )
+									.containsExactlyInAnyOrder( "implicitRepeatable1", "implicitRepeatable2" );
+							StaticCounters.get().increment( CONSTRUCTOR_WITH_IMPLICIT_REPEATABLE_OTHER_ANNOTATION );
+						}
 			}
 		}
 	}
@@ -324,6 +351,7 @@ public class CustomConstructorMappingAnnotationBaseIT {
 		class IndexedEntityType {
 			@DocumentId
 			Integer id;
+
 			@EventContextAwareAnnotation
 			IndexedEntityType(String text) {
 			}
@@ -339,22 +367,32 @@ public class CustomConstructorMappingAnnotationBaseIT {
 		// but the annotation can be rendered differently depending on the JDK in use...
 		// See https://bugs.openjdk.java.net/browse/JDK-8282230
 		assertThat( EventContextAwareAnnotation.Processor.lastProcessedContext.render() )
-				.matches( "\\Qtype '" + IndexedEntityType.class.getName() + "', constructor with parameter types ["
+				.matches( "\\Qtype '"
+						+ IndexedEntityType.class.getName()
+						+ "', constructor with parameter types ["
 						+ CustomConstructorMappingAnnotationBaseIT.class.getName() // Implicit parameter because we're declaring a nested class
-						+ ", " + String.class.getName() + "]" + ", annotation '@\\E.*"
-						+ EventContextAwareAnnotation.class.getSimpleName() + "\\Q()\\E'" );
+						+ ", "
+						+ String.class.getName()
+						+ "]"
+						+ ", annotation '@\\E.*"
+						+ EventContextAwareAnnotation.class.getSimpleName()
+						+ "\\Q()\\E'" );
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.CONSTRUCTOR)
-	@ConstructorMapping(processor = @ConstructorMappingAnnotationProcessorRef(type = EventContextAwareAnnotation.Processor.class))
+	@ConstructorMapping(processor = @ConstructorMappingAnnotationProcessorRef(
+			type = EventContextAwareAnnotation.Processor.class))
 	private @interface EventContextAwareAnnotation {
 
-		class Processor implements ConstructorMappingAnnotationProcessor<CustomConstructorMappingAnnotationBaseIT.EventContextAwareAnnotation> {
+		class Processor
+				implements ConstructorMappingAnnotationProcessor<
+						CustomConstructorMappingAnnotationBaseIT.EventContextAwareAnnotation> {
 			static EventContext lastProcessedContext = null;
 
 			@Override
-			public void process(ConstructorMappingStep mapping, CustomConstructorMappingAnnotationBaseIT.EventContextAwareAnnotation annotation,
+			public void process(ConstructorMappingStep mapping,
+					CustomConstructorMappingAnnotationBaseIT.EventContextAwareAnnotation annotation,
 					ConstructorMappingAnnotationProcessorContext context) {
 				lastProcessedContext = context.eventContext();
 			}

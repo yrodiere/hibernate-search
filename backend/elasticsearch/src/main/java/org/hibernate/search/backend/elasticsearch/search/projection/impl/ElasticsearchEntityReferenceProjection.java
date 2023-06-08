@@ -20,7 +20,8 @@ public class ElasticsearchEntityReferenceProjection<R> extends AbstractElasticse
 
 	private final DocumentReferenceExtractionHelper helper;
 
-	ElasticsearchEntityReferenceProjection(ElasticsearchSearchIndexScope<?> scope, DocumentReferenceExtractionHelper helper) {
+	ElasticsearchEntityReferenceProjection(ElasticsearchSearchIndexScope<?> scope,
+			DocumentReferenceExtractionHelper helper) {
 		super( scope );
 		this.helper = helper;
 	}

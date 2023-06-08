@@ -36,7 +36,8 @@ class Month {
 		this.monthValue = monthValue;
 	}
 
-	public Month(String name, int monthValue, String mythology, String history, Date estimatedCreation, double raindropInMm,
+	public Month(String name, int monthValue, String mythology, String history, Date estimatedCreation,
+			double raindropInMm,
 			String htmlDescription) {
 		this( name, monthValue, mythology, history, estimatedCreation );
 		this.raindropInMm = raindropInMm;
@@ -84,7 +85,8 @@ class Month {
 	@Fields({
 			@Field,
 			@Field(name = "mythology_stem",
-					analyzer = @Analyzer(definition = AnalysisNames.ANALYZER_STANDARD_STANDARD_LOWERCASE_STOP_STEMMER_ENGLISH)),
+					analyzer = @Analyzer(
+							definition = AnalysisNames.ANALYZER_STANDARD_STANDARD_LOWERCASE_STOP_STEMMER_ENGLISH)),
 			@Field(name = "mythology_ngram",
 					analyzer = @Analyzer(definition = AnalysisNames.ANALYZER_STANDARD_STANDARD_LOWERCASE_STOP_NGRAM_3)),
 			// This field must exist in order for tests to pass with the Elasticsearch integration... See HSEARCH-2534

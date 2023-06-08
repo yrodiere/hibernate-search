@@ -71,8 +71,10 @@ public class NestedRunner extends Suite {
 		}
 		else {
 			throw new InitializationError( "Unsupported runner for @Nested, non-static test class: "
-					+ testClass + "."
-					+ " Improve the implementation of " + getClass().getName()
+					+ testClass
+					+ "."
+					+ " Improve the implementation of "
+					+ getClass().getName()
 					+ " if you want it to support more runners for @Nested, non-static test classes." );
 		}
 	}

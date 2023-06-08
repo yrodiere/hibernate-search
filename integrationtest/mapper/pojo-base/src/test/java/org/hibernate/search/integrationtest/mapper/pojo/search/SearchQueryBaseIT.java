@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.AssociationInverseSide;
@@ -25,7 +26,6 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ObjectPath;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyValue;
-import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
@@ -75,7 +75,7 @@ public class SearchQueryBaseIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( Book.NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							3L,
 							reference( Book.NAME, "1" ),
@@ -102,7 +102,7 @@ public class SearchQueryBaseIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( Book.NAME, Author.NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							2L,
 							reference( Book.NAME, "1" ),
@@ -123,11 +123,15 @@ public class SearchQueryBaseIT {
 			Class<?> invalidClass = String.class;
 
 			assertThatThrownBy( () -> searchSession.scope( invalidClass ) )
-					.hasMessageContainingAll( "No matching indexed entity types for types: [" + invalidClass.getName() + "]",
+					.hasMessageContainingAll( "No matching indexed entity types for types: ["
+							+ invalidClass.getName()
+							+ "]",
 							"These types are not indexed entity types, nor is any of their subtypes",
 							"Valid indexed entity classes, superclasses and superinterfaces are: ["
-									+ Object.class.getName() + ", "
-									+ Book.class.getName() + ", "
+									+ Object.class.getName()
+									+ ", "
+									+ Book.class.getName()
+									+ ", "
 									+ Author.class.getName()
 									+ "]" );
 		}
@@ -240,7 +244,7 @@ public class SearchQueryBaseIT {
 
 		@Override
 		public boolean equals(Object obj) {
-			if ( !(obj instanceof Book_Author) ) {
+			if ( !( obj instanceof Book_Author ) ) {
 				return false;
 			}
 			Book_Author other = (Book_Author) obj;
@@ -272,7 +276,7 @@ public class SearchQueryBaseIT {
 
 		@Override
 		public boolean equals(Object obj) {
-			if ( !(obj instanceof Book_Author_Score) ) {
+			if ( !( obj instanceof Book_Author_Score ) ) {
 				return false;
 			}
 			Book_Author_Score other = (Book_Author_Score) obj;

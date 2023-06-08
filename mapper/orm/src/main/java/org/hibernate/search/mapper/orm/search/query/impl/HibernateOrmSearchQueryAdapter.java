@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.Parameter;
@@ -37,9 +38,9 @@ import org.hibernate.query.spi.QueryParameterBindings;
 import org.hibernate.query.spi.ScrollableResultsImplementor;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.engine.search.query.spi.SearchQueryImplementor;
-import org.hibernate.search.mapper.orm.logging.impl.Log;
 import org.hibernate.search.mapper.orm.loading.impl.EntityGraphHint;
 import org.hibernate.search.mapper.orm.loading.impl.MutableEntityLoadingOptions;
+import org.hibernate.search.mapper.orm.logging.impl.Log;
 import org.hibernate.search.mapper.orm.search.query.spi.HibernateOrmSearchQueryHints;
 import org.hibernate.search.mapper.orm.search.query.spi.HibernateOrmSearchScrollableResultsAdapter;
 import org.hibernate.search.mapper.orm.search.query.spi.HibernateOrmSearchScrollableResultsAdapter.ScrollHitExtractor;
@@ -242,7 +243,8 @@ public final class HibernateOrmSearchQueryAdapter<R> extends AbstractProducedQue
 	 */
 	@Override
 	public Iterator<R> iterate() {
-		throw new UnsupportedOperationException( "iterate() is not implemented in Hibernate Search queries. Use scroll() instead." );
+		throw new UnsupportedOperationException(
+				"iterate() is not implemented in Hibernate Search queries. Use scroll() instead." );
 	}
 
 	@Override
@@ -256,12 +258,14 @@ public final class HibernateOrmSearchQueryAdapter<R> extends AbstractProducedQue
 	}
 
 	@Override
-	public HibernateOrmSearchQueryAdapter<R> setParameter(Parameter<Calendar> calendarParameter, Calendar calendar, TemporalType temporalType) {
+	public HibernateOrmSearchQueryAdapter<R> setParameter(Parameter<Calendar> calendarParameter, Calendar calendar,
+			TemporalType temporalType) {
 		throw parametersNoSupported();
 	}
 
 	@Override
-	public HibernateOrmSearchQueryAdapter<R> setParameter(Parameter<Date> dateParameter, Date date, TemporalType temporalType) {
+	public HibernateOrmSearchQueryAdapter<R> setParameter(Parameter<Date> dateParameter, Date date,
+			TemporalType temporalType) {
 		throw parametersNoSupported();
 	}
 
@@ -415,13 +419,15 @@ public final class HibernateOrmSearchQueryAdapter<R> extends AbstractProducedQue
 	@Deprecated
 	@Override
 	public HibernateOrmSearchQueryAdapter<R> setEntity(int position, Object val) {
-		throw new UnsupportedOperationException( "setEntity(int,Object) is not implemented in Hibernate Search queries" );
+		throw new UnsupportedOperationException(
+				"setEntity(int,Object) is not implemented in Hibernate Search queries" );
 	}
 
 	@Deprecated
 	@Override
 	public HibernateOrmSearchQueryAdapter<R> setEntity(String name, Object val) {
-		throw new UnsupportedOperationException( "setEntity(String,Object) is not implemented in Hibernate Search queries" );
+		throw new UnsupportedOperationException(
+				"setEntity(String,Object) is not implemented in Hibernate Search queries" );
 	}
 
 	private static long hintValueToLong(Object value) {

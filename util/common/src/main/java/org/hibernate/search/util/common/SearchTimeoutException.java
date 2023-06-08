@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.util.common;
 
-
 import org.hibernate.search.util.common.annotation.impl.SuppressForbiddenApis;
 
 /**
@@ -24,5 +23,4 @@ public class SearchTimeoutException extends SearchException {
 	}
 
 }
-
 

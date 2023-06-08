@@ -9,6 +9,7 @@ package org.hibernate.search.documentation.mapper.orm.binding.dependencies.conta
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -53,7 +54,7 @@ public class Book {
 	@OrderBy("edition_id asc")
 	@AssociationInverseSide(
 			extraction = @ContainerExtraction(BuiltinContainerExtractors.MAP_KEY),
-			inversePath = @ObjectPath( @PropertyValue( propertyName = "book" ) )
+			inversePath = @ObjectPath(@PropertyValue(propertyName = "book"))
 	)
 	private Map<BookEdition, BigDecimal> priceByEdition = new LinkedHashMap<>(); // <2>
 

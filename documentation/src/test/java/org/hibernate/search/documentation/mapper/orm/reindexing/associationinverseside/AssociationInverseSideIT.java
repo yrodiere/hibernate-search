@@ -11,6 +11,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 
 import java.math.BigDecimal;
 import java.util.List;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.documentation.testsupport.BackendConfigurations;
@@ -40,9 +41,9 @@ public class AssociationInverseSideIT {
 					bookMapping.indexed();
 					bookMapping.property( "priceByEdition" )
 							.indexedEmbedded( "editionsForSale" )
-									.extractor( BuiltinContainerExtractors.MAP_KEY )
+							.extractor( BuiltinContainerExtractors.MAP_KEY )
 							.associationInverseSide( PojoModelPath.parse( "book" ) )
-									.extractor( BuiltinContainerExtractors.MAP_KEY );
+							.extractor( BuiltinContainerExtractors.MAP_KEY );
 					TypeMappingStep bookEditionMapping = mapping.type( BookEdition.class );
 					bookEditionMapping.property( "label" )
 							.fullTextField().analyzer( "english" );

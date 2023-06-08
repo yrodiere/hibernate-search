@@ -46,7 +46,8 @@ public class LuceneExistsPredicate extends AbstractLuceneLeafSingleFieldPredicat
 	public static class NormsBasedFactory
 			extends AbstractLuceneValueFieldSearchQueryElementFactory<ExistsPredicateBuilder, String> {
 		@Override
-		public NormsBasedBuilder create(LuceneSearchIndexScope<?> scope, LuceneSearchIndexValueFieldContext<String> field) {
+		public NormsBasedBuilder create(LuceneSearchIndexScope<?> scope, LuceneSearchIndexValueFieldContext<
+				String> field) {
 			return new NormsBasedBuilder( scope, field );
 		}
 	}
@@ -65,7 +66,8 @@ public class LuceneExistsPredicate extends AbstractLuceneLeafSingleFieldPredicat
 	public static class DocValuesBasedFactory<F>
 			extends AbstractLuceneValueFieldSearchQueryElementFactory<ExistsPredicateBuilder, F> {
 		@Override
-		public DocValuesBasedBuilder<F> create(LuceneSearchIndexScope<?> scope, LuceneSearchIndexValueFieldContext<F> field) {
+		public DocValuesBasedBuilder<F> create(LuceneSearchIndexScope<?> scope, LuceneSearchIndexValueFieldContext<
+				F> field) {
 			return new DocValuesBasedBuilder<>( scope, field );
 		}
 	}

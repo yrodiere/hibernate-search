@@ -34,9 +34,9 @@ public class ElasticsearchIndexSchemaManagerDropIfExistingIT {
 	@Rule
 	public TestElasticsearchClient elasticSearchClient = new TestElasticsearchClient();
 
-	private final StubMappedIndex index = StubMappedIndex.ofNonRetrievable( root ->
-		root.field( "field", f -> f.asString() )
-				.toReference()
+	private final StubMappedIndex index = StubMappedIndex.ofNonRetrievable( root -> root.field( "field", f -> f
+			.asString() )
+			.toReference()
 	);
 
 	@Test
@@ -47,10 +47,10 @@ public class ElasticsearchIndexSchemaManagerDropIfExistingIT {
 				simpleMappingForInitialization(
 						"'field': {"
 								+ "'type': 'keyword'"
-						+ "},"
-						+ "'NOTmyField': {"
+								+ "},"
+								+ "'NOTmyField': {"
 								+ "'type': 'date'"
-						+ "}"
+								+ "}"
 				)
 		);
 

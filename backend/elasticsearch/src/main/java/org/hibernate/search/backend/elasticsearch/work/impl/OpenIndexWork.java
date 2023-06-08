@@ -11,7 +11,6 @@ import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchReques
 import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchResponse;
 import org.hibernate.search.backend.elasticsearch.util.spi.URLEncodedString;
 
-
 public class OpenIndexWork extends AbstractNonBulkableWork<Void> {
 
 	protected OpenIndexWork(Builder builder) {
@@ -36,8 +35,8 @@ public class OpenIndexWork extends AbstractNonBulkableWork<Void> {
 		protected ElasticsearchRequest buildRequest() {
 			ElasticsearchRequest.Builder builder =
 					ElasticsearchRequest.post()
-					.pathComponent( indexName )
-					.pathComponent( Paths._OPEN );
+							.pathComponent( indexName )
+							.pathComponent( Paths._OPEN );
 
 			return builder.build();
 		}

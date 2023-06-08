@@ -44,8 +44,8 @@ import org.hibernate.search.engine.backend.mapping.spi.BackendMapperContext;
 import org.hibernate.search.engine.backend.spi.BackendBuildContext;
 import org.hibernate.search.engine.backend.spi.BackendImplementor;
 import org.hibernate.search.engine.backend.spi.BackendStartContext;
-import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
+import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.spi.OptionalConfigurationProperty;
 import org.hibernate.search.engine.common.timing.spi.TimingSource;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
@@ -60,17 +60,18 @@ import org.hibernate.search.util.common.reporting.EventContext;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-
-class ElasticsearchBackendImpl implements BackendImplementor,
+class ElasticsearchBackendImpl
+		implements BackendImplementor,
 		ElasticsearchBackend {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
-	private static final OptionalConfigurationProperty<List<BeanReference<? extends ElasticsearchAnalysisConfigurer>>> ANALYSIS_CONFIGURER =
-			ConfigurationProperty.forKey( ElasticsearchIndexSettings.ANALYSIS_CONFIGURER )
-					.asBeanReference( ElasticsearchAnalysisConfigurer.class )
-					.multivalued()
-					.build();
+	private static final OptionalConfigurationProperty<List<BeanReference<
+			? extends ElasticsearchAnalysisConfigurer>>> ANALYSIS_CONFIGURER =
+					ConfigurationProperty.forKey( ElasticsearchIndexSettings.ANALYSIS_CONFIGURER )
+							.asBeanReference( ElasticsearchAnalysisConfigurer.class )
+							.multivalued()
+							.build();
 
 	private static final ConfigurationProperty<DynamicMapping> DYNAMIC_MAPPING =
 			ConfigurationProperty.forKey( ElasticsearchIndexSettings.DYNAMIC_MAPPING )
@@ -218,10 +219,13 @@ class ElasticsearchBackendImpl implements BackendImplementor,
 		);
 	}
 
-	private IndexNames createIndexNames(EventContext indexEventContext, String hibernateSearchIndexName, String mappedTypeName) {
+	private IndexNames createIndexNames(EventContext indexEventContext, String hibernateSearchIndexName,
+			String mappedTypeName) {
 		IndexLayoutStrategy indexLayoutStrategy = indexLayoutStrategyHolder.get();
-		URLEncodedString writeAlias = IndexNames.encodeName( indexLayoutStrategy.createWriteAlias( hibernateSearchIndexName ) );
-		URLEncodedString readAlias = IndexNames.encodeName( indexLayoutStrategy.createReadAlias( hibernateSearchIndexName ) );
+		URLEncodedString writeAlias = IndexNames.encodeName( indexLayoutStrategy.createWriteAlias(
+				hibernateSearchIndexName ) );
+		URLEncodedString readAlias = IndexNames.encodeName( indexLayoutStrategy.createReadAlias(
+				hibernateSearchIndexName ) );
 
 		URLEncodedString primaryName = null;
 		if ( writeAlias == null || readAlias == null ) {

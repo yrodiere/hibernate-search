@@ -11,12 +11,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.lang.invoke.MethodHandles;
 
 import org.hibernate.search.engine.reporting.spi.EventContexts;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.ExceptionMatcherBuilder;
 import org.hibernate.search.util.impl.test.rule.ExpectedLog4jLog;
 
@@ -31,10 +31,11 @@ public class FailureReportIT {
 			+ " continuing for now to list all problems,"
 			+ " but the process will ultimately be aborted.\n"
 			+ "Context: ";
-	private static final String FAILURE_REPORT_INTRODUCTION = "HSEARCH000520: Hibernate Search encountered failures during bootstrap."
-			+ " Failures:\n"
-			+ "\n"
-			+ "    Standalone POJO mapping: \n";
+	private static final String FAILURE_REPORT_INTRODUCTION =
+			"HSEARCH000520: Hibernate Search encountered failures during bootstrap."
+					+ " Failures:\n"
+					+ "\n"
+					+ "    Standalone POJO mapping: \n";
 
 	@Rule
 	public BackendMock backendMock = new BackendMock();
@@ -43,7 +44,8 @@ public class FailureReportIT {
 	public ExpectedLog4jLog logged = ExpectedLog4jLog.create();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	/**
 	 * Test mapping with failures in the same context
@@ -77,14 +79,18 @@ public class FailureReportIT {
 				ExceptionMatcherBuilder.isException( SearchException.class )
 						.withMessage( field1FailureMessage ).build(),
 				FAILURE_LOG_INTRODUCTION
-						+ "Standalone POJO mapping, type '" + IndexedEntity.class.getName() + "', path '.myProperty'\n"
+						+ "Standalone POJO mapping, type '"
+						+ IndexedEntity.class.getName()
+						+ "', path '.myProperty'\n"
 		);
 		logged.expectEvent(
 				Level.ERROR,
 				ExceptionMatcherBuilder.isException( SearchException.class )
 						.withMessage( field2FailureMessage ).build(),
 				FAILURE_LOG_INTRODUCTION
-						+ "Standalone POJO mapping, type '" + IndexedEntity.class.getName() + "', path '.myProperty'\n"
+						+ "Standalone POJO mapping, type '"
+						+ IndexedEntity.class.getName()
+						+ "', path '.myProperty'\n"
 		);
 
 		assertThatThrownBy(
@@ -93,11 +99,16 @@ public class FailureReportIT {
 				.isInstanceOf( SearchException.class )
 				.hasMessage(
 						FAILURE_REPORT_INTRODUCTION
-								+ "        type '" + IndexedEntity.class.getName() + "': \n"
+								+ "        type '"
+								+ IndexedEntity.class.getName()
+								+ "': \n"
 								+ "            path '.myProperty': \n"
 								+ "                failures: \n"
-								+ "                  - " + field1FailureMessage + "\n"
-								+ "                  - " + field2FailureMessage
+								+ "                  - "
+								+ field1FailureMessage
+								+ "\n"
+								+ "                  - "
+								+ field2FailureMessage
 				);
 	}
 
@@ -134,14 +145,18 @@ public class FailureReportIT {
 				ExceptionMatcherBuilder.isException( SearchException.class )
 						.withMessage( field1FailureMessage ).build(),
 				FAILURE_LOG_INTRODUCTION
-						+ "Standalone POJO mapping, type '" + IndexedEntity.class.getName() + "', path '.myProperty1'\n"
+						+ "Standalone POJO mapping, type '"
+						+ IndexedEntity.class.getName()
+						+ "', path '.myProperty1'\n"
 		);
 		logged.expectEvent(
 				Level.ERROR,
 				ExceptionMatcherBuilder.isException( SearchException.class )
 						.withMessage( field2FailureMessage ).build(),
 				FAILURE_LOG_INTRODUCTION
-						+ "Standalone POJO mapping, type '" + IndexedEntity.class.getName() + "', path '.myProperty2'\n"
+						+ "Standalone POJO mapping, type '"
+						+ IndexedEntity.class.getName()
+						+ "', path '.myProperty2'\n"
 		);
 
 		assertThatThrownBy(
@@ -150,13 +165,18 @@ public class FailureReportIT {
 				.isInstanceOf( SearchException.class )
 				.hasMessage(
 						FAILURE_REPORT_INTRODUCTION
-								+ "        type '" + IndexedEntity.class.getName() + "': \n"
+								+ "        type '"
+								+ IndexedEntity.class.getName()
+								+ "': \n"
 								+ "            path '.myProperty1': \n"
 								+ "                failures: \n"
-								+ "                  - " + field1FailureMessage + "\n"
+								+ "                  - "
+								+ field1FailureMessage
+								+ "\n"
 								+ "            path '.myProperty2': \n"
 								+ "                failures: \n"
-								+ "                  - " + field2FailureMessage
+								+ "                  - "
+								+ field2FailureMessage
 				);
 	}
 
@@ -199,14 +219,18 @@ public class FailureReportIT {
 				ExceptionMatcherBuilder.isException( SearchException.class )
 						.withMessage( field1FailureMessage ).build(),
 				FAILURE_LOG_INTRODUCTION
-						+ "Standalone POJO mapping, type '" + IndexedEntity1.class.getName() + "', path '.myProperty1'\n"
+						+ "Standalone POJO mapping, type '"
+						+ IndexedEntity1.class.getName()
+						+ "', path '.myProperty1'\n"
 		);
 		logged.expectEvent(
 				Level.ERROR,
 				ExceptionMatcherBuilder.isException( SearchException.class )
 						.withMessage( field2FailureMessage ).build(),
 				FAILURE_LOG_INTRODUCTION
-						+ "Standalone POJO mapping, type '" + IndexedEntity2.class.getName() + "', path '.myProperty2'\n"
+						+ "Standalone POJO mapping, type '"
+						+ IndexedEntity2.class.getName()
+						+ "', path '.myProperty2'\n"
 		);
 
 		assertThatThrownBy(
@@ -215,14 +239,21 @@ public class FailureReportIT {
 				.isInstanceOf( SearchException.class )
 				.hasMessage(
 						FAILURE_REPORT_INTRODUCTION
-								+ "        type '" + IndexedEntity1.class.getName() + "': \n"
+								+ "        type '"
+								+ IndexedEntity1.class.getName()
+								+ "': \n"
 								+ "            path '.myProperty1': \n"
 								+ "                failures: \n"
-								+ "                  - " + field1FailureMessage + "\n"
-								+ "        type '" + IndexedEntity2.class.getName() + "': \n"
+								+ "                  - "
+								+ field1FailureMessage
+								+ "\n"
+								+ "        type '"
+								+ IndexedEntity2.class.getName()
+								+ "': \n"
 								+ "            path '.myProperty2': \n"
 								+ "                failures: \n"
-								+ "                  - " + field2FailureMessage
+								+ "                  - "
+								+ field2FailureMessage
 				);
 	}
 
@@ -261,16 +292,24 @@ public class FailureReportIT {
 				ExceptionMatcherBuilder.isException( SearchException.class )
 						.withMessage( field1FailureMessage ).build(),
 				FAILURE_LOG_INTRODUCTION
-						+ "Standalone POJO mapping, type '" + IndexedEntity.class.getName() + "', path '.myProperty',"
-						+ " index '" + indexName + "', field 'failingField1'\n"
+						+ "Standalone POJO mapping, type '"
+						+ IndexedEntity.class.getName()
+						+ "', path '.myProperty',"
+						+ " index '"
+						+ indexName
+						+ "', field 'failingField1'\n"
 		);
 		logged.expectEvent(
 				Level.ERROR,
 				ExceptionMatcherBuilder.isException( SearchException.class )
 						.withMessage( field2FailureMessage ).build(),
 				FAILURE_LOG_INTRODUCTION
-						+ "Standalone POJO mapping, type '" + IndexedEntity.class.getName() + "', path '.myProperty',"
-						+ " index '" + indexName + "', field 'failingField2'\n"
+						+ "Standalone POJO mapping, type '"
+						+ IndexedEntity.class.getName()
+						+ "', path '.myProperty',"
+						+ " index '"
+						+ indexName
+						+ "', field 'failingField2'\n"
 		);
 
 		assertThatThrownBy(
@@ -279,15 +318,22 @@ public class FailureReportIT {
 				.isInstanceOf( SearchException.class )
 				.hasMessage(
 						FAILURE_REPORT_INTRODUCTION
-								+ "        type '" + IndexedEntity.class.getName() + "': \n"
+								+ "        type '"
+								+ IndexedEntity.class.getName()
+								+ "': \n"
 								+ "            path '.myProperty': \n"
-								+ "                index '" + indexName + "': \n"
+								+ "                index '"
+								+ indexName
+								+ "': \n"
 								+ "                    field 'failingField1': \n"
 								+ "                        failures: \n"
-								+ "                          - " + field1FailureMessage + "\n"
+								+ "                          - "
+								+ field1FailureMessage
+								+ "\n"
 								+ "                    field 'failingField2': \n"
 								+ "                        failures: \n"
-								+ "                          - " + field2FailureMessage
+								+ "                          - "
+								+ field2FailureMessage
 				);
 	}
 

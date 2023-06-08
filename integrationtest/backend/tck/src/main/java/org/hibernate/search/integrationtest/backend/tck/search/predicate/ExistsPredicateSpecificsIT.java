@@ -117,7 +117,8 @@ public class ExistsPredicateSpecificsIT<F> {
 	public void inFlattenedObject_withDocValues() {
 		assumeDocValuesAllowed();
 
-		String fieldPath = mainIndex.binding().flattenedObject.relativeFieldName + "."
+		String fieldPath = mainIndex.binding().flattenedObject.relativeFieldName
+				+ "."
 				+ mainIndex.binding().flattenedObject.fieldWithDocValues.get( dataSet.fieldType ).relativeFieldName;
 
 		assertThatQuery( mainIndex.query()
@@ -130,7 +131,8 @@ public class ExistsPredicateSpecificsIT<F> {
 	public void inNestedObject_withDocValues() {
 		assumeDocValuesAllowed();
 
-		String fieldPath = mainIndex.binding().nestedObject.relativeFieldName + "."
+		String fieldPath = mainIndex.binding().nestedObject.relativeFieldName
+				+ "."
 				+ mainIndex.binding().nestedObject.fieldWithDocValues.get( dataSet.fieldType ).relativeFieldName;
 
 		assertThatQuery( mainIndex.query()
@@ -145,7 +147,8 @@ public class ExistsPredicateSpecificsIT<F> {
 	 */
 	@Test
 	public void inNestedPredicate_missing() {
-		String fieldPath = mainIndex.binding().nestedObject.relativeFieldName + "."
+		String fieldPath = mainIndex.binding().nestedObject.relativeFieldName
+				+ "."
 				+ mainIndex.binding().nestedObject.fieldWithDefaults.get( dataSet.fieldType ).relativeFieldName;
 
 		assertThatQuery( mainIndex.query()
@@ -215,7 +218,8 @@ public class ExistsPredicateSpecificsIT<F> {
 
 		IndexBinding(IndexSchemaElement root) {
 			fieldWithDefaults = SimpleFieldModelsByType.mapAll( supportedFieldTypes, root, "fieldWithDefaults_" );
-			fieldWithDocValues = SimpleFieldModelsByType.mapAll( supportedFieldTypesWithDocValues, root, "fieldWithDocValues_",
+			fieldWithDocValues = SimpleFieldModelsByType.mapAll( supportedFieldTypesWithDocValues, root,
+					"fieldWithDocValues_",
 					c -> c.sortable( Sortable.YES ) );
 			flattenedObject = new ObjectMapping( root, "flattenedObject", ObjectStructure.FLATTENED );
 			nestedObject = new ObjectMapping( root, "nestedObject", ObjectStructure.NESTED );
@@ -233,15 +237,20 @@ public class ExistsPredicateSpecificsIT<F> {
 			IndexSchemaObjectField objectField = parent.objectField( relativeFieldName, structure )
 					.multiValued();
 			self = objectField.toReference();
-			fieldWithDefaults = SimpleFieldModelsByType.mapAll( supportedFieldTypes, objectField, "fieldWithDefaults_" );
-			fieldWithDocValues = SimpleFieldModelsByType.mapAll( supportedFieldTypesWithDocValues, objectField, "fieldWithDocValues_",
+			fieldWithDefaults = SimpleFieldModelsByType.mapAll( supportedFieldTypes, objectField,
+					"fieldWithDefaults_" );
+			fieldWithDocValues = SimpleFieldModelsByType.mapAll( supportedFieldTypesWithDocValues, objectField,
+					"fieldWithDocValues_",
 					c -> c.sortable( Sortable.YES ) );
 		}
 	}
 
 	private static class DifferentTypeIndexBinding {
-		private final Map<FieldTypeDescriptor<?>, SimpleFieldModel<?>> fieldWithDefaultsByOriginalType = new LinkedHashMap<>();
-		private final Map<FieldTypeDescriptor<?>, SimpleFieldModel<?>> fieldWithDocValuesByOriginalType = new LinkedHashMap<>();
+		private final Map<FieldTypeDescriptor<?>, SimpleFieldModel<?>> fieldWithDefaultsByOriginalType =
+				new LinkedHashMap<>();
+		private final Map<FieldTypeDescriptor<?>, SimpleFieldModel<?>> fieldWithDocValuesByOriginalType =
+				new LinkedHashMap<>();
+
 		DifferentTypeIndexBinding(IndexSchemaElement root) {
 			supportedFieldTypes.forEach( fieldType -> {
 				FieldTypeDescriptor<?> replacingType = FieldTypeDescriptor.getIncompatible( fieldType );
@@ -281,53 +290,70 @@ public class ExistsPredicateSpecificsIT<F> {
 					.add( docId( 0 ), routingKey, document -> {
 						document.addValue( mainIndex.binding().fieldWithDefaults.get( fieldType ).reference, value1 );
 						if ( docValues ) {
-							document.addValue( mainIndex.binding().fieldWithDocValues.get( fieldType ).reference, value1 );
+							document.addValue( mainIndex.binding().fieldWithDocValues.get( fieldType ).reference,
+									value1 );
 						}
 
 						// Add one object with value1, and another with value2
-						DocumentElement flattenedObject1 = document.addObject( mainIndex.binding().flattenedObject.self );
-						flattenedObject1.addValue( mainIndex.binding().flattenedObject.fieldWithDefaults.get( fieldType ).reference, value1 );
+						DocumentElement flattenedObject1 = document.addObject( mainIndex
+								.binding().flattenedObject.self );
+						flattenedObject1.addValue( mainIndex.binding().flattenedObject.fieldWithDefaults.get(
+								fieldType ).reference, value1 );
 						if ( docValues ) {
-							flattenedObject1.addValue( mainIndex.binding().flattenedObject.fieldWithDocValues.get( fieldType ).reference, value1 );
+							flattenedObject1.addValue( mainIndex.binding().flattenedObject.fieldWithDocValues.get(
+									fieldType ).reference, value1 );
 						}
-						DocumentElement flattenedObject2 = document.addObject( mainIndex.binding().flattenedObject.self );
-						flattenedObject2.addValue( mainIndex.binding().flattenedObject.fieldWithDefaults.get( fieldType ).reference, value1 );
+						DocumentElement flattenedObject2 = document.addObject( mainIndex
+								.binding().flattenedObject.self );
+						flattenedObject2.addValue( mainIndex.binding().flattenedObject.fieldWithDefaults.get(
+								fieldType ).reference, value1 );
 						if ( docValues ) {
-							flattenedObject2.addValue( mainIndex.binding().flattenedObject.fieldWithDocValues.get( fieldType ).reference, value1 );
+							flattenedObject2.addValue( mainIndex.binding().flattenedObject.fieldWithDocValues.get(
+									fieldType ).reference, value1 );
 						}
 
 						// Same for the nested object
 						DocumentElement nestedObject1 = document.addObject( mainIndex.binding().nestedObject.self );
-						nestedObject1.addValue( mainIndex.binding().nestedObject.fieldWithDefaults.get( fieldType ).reference, value1 );
+						nestedObject1.addValue( mainIndex.binding().nestedObject.fieldWithDefaults.get(
+								fieldType ).reference, value1 );
 						if ( docValues ) {
-							nestedObject1.addValue( mainIndex.binding().nestedObject.fieldWithDocValues.get( fieldType ).reference, value1 );
+							nestedObject1.addValue( mainIndex.binding().nestedObject.fieldWithDocValues.get(
+									fieldType ).reference, value1 );
 						}
 						DocumentElement nestedObject2 = document.addObject( mainIndex.binding().nestedObject.self );
-						nestedObject2.addValue( mainIndex.binding().nestedObject.fieldWithDefaults.get( fieldType ).reference, value1 );
+						nestedObject2.addValue( mainIndex.binding().nestedObject.fieldWithDefaults.get(
+								fieldType ).reference, value1 );
 						if ( docValues ) {
-							nestedObject2.addValue( mainIndex.binding().nestedObject.fieldWithDocValues.get( fieldType ).reference, value1 );
+							nestedObject2.addValue( mainIndex.binding().nestedObject.fieldWithDocValues.get(
+									fieldType ).reference, value1 );
 						}
 					} )
 					.add( docId( 1 ), routingKey, document -> {
 						document.addValue( mainIndex.binding().fieldWithDefaults.get( fieldType ).reference, value2 );
 						if ( docValues ) {
-							document.addValue( mainIndex.binding().fieldWithDocValues.get( fieldType ).reference, value2 );
+							document.addValue( mainIndex.binding().fieldWithDocValues.get( fieldType ).reference,
+									value2 );
 						}
 
 						// Add one empty object, and another with value2
 						document.addObject( mainIndex.binding().flattenedObject.self );
-						DocumentElement flattenedObject2 = document.addObject( mainIndex.binding().flattenedObject.self );
-						flattenedObject2.addValue( mainIndex.binding().flattenedObject.fieldWithDefaults.get( fieldType ).reference, value2 );
+						DocumentElement flattenedObject2 = document.addObject( mainIndex
+								.binding().flattenedObject.self );
+						flattenedObject2.addValue( mainIndex.binding().flattenedObject.fieldWithDefaults.get(
+								fieldType ).reference, value2 );
 						if ( docValues ) {
-							flattenedObject2.addValue( mainIndex.binding().flattenedObject.fieldWithDocValues.get( fieldType ).reference, value2 );
+							flattenedObject2.addValue( mainIndex.binding().flattenedObject.fieldWithDocValues.get(
+									fieldType ).reference, value2 );
 						}
 
 						// Same for the nested object
 						document.addObject( mainIndex.binding().nestedObject.self );
 						DocumentElement nestedObject2 = document.addObject( mainIndex.binding().nestedObject.self );
-						nestedObject2.addValue( mainIndex.binding().nestedObject.fieldWithDefaults.get( fieldType ).reference, value2 );
+						nestedObject2.addValue( mainIndex.binding().nestedObject.fieldWithDefaults.get(
+								fieldType ).reference, value2 );
 						if ( docValues ) {
-							nestedObject2.addValue( mainIndex.binding().nestedObject.fieldWithDocValues.get( fieldType ).reference, value2 );
+							nestedObject2.addValue( mainIndex.binding().nestedObject.fieldWithDocValues.get(
+									fieldType ).reference, value2 );
 						}
 					} )
 					.add( docId( 2 ), routingKey, document -> {
@@ -338,7 +364,8 @@ public class ExistsPredicateSpecificsIT<F> {
 									null );
 						}
 						if ( docValues ) {
-							document.addValue( mainIndex.binding().fieldWithDocValues.get( fieldType ).reference, null );
+							document.addValue( mainIndex.binding().fieldWithDocValues.get( fieldType ).reference,
+									null );
 						}
 
 						// Add two empty objects
@@ -349,16 +376,18 @@ public class ExistsPredicateSpecificsIT<F> {
 						document.addObject( mainIndex.binding().nestedObject.self );
 						document.addObject( mainIndex.binding().nestedObject.self );
 					} )
-					.add( docId( 3 ), routingKey, document -> { } );
+					.add( docId( 3 ), routingKey, document -> {} );
 
 			differentFieldTypeIndexer
 					.add( docId( 0 ), routingKey, document -> {
-						addDifferentTypeValue( document, differentFieldTypeIndex.binding().fieldWithDefaultsByOriginalType.get( fieldType ) );
+						addDifferentTypeValue( document, differentFieldTypeIndex
+								.binding().fieldWithDefaultsByOriginalType.get( fieldType ) );
 						if ( docValues ) {
-							addDifferentTypeValue( document, differentFieldTypeIndex.binding().fieldWithDocValuesByOriginalType.get( fieldType ) );
+							addDifferentTypeValue( document, differentFieldTypeIndex
+									.binding().fieldWithDocValuesByOriginalType.get( fieldType ) );
 						}
 					} )
-					.add( docId( 1 ), routingKey, document -> { } );
+					.add( docId( 1 ), routingKey, document -> {} );
 		}
 
 		private <T> void addDifferentTypeValue(DocumentElement document, SimpleFieldModel<T> field) {

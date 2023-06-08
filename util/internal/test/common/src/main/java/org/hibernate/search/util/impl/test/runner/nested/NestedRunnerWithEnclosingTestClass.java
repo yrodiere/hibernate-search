@@ -11,8 +11,8 @@ import org.junit.runners.model.RunnerBuilder;
 final class NestedRunnerWithEnclosingTestClass extends NestedRunner {
 	private final Object enclosingTestInstance;
 
-	public NestedRunnerWithEnclosingTestClass(Class<?> testClass, RunnerBuilder builder, Object enclosingTestInstance)
-			throws Throwable {
+	public NestedRunnerWithEnclosingTestClass(Class<?> testClass, RunnerBuilder builder,
+			Object enclosingTestInstance) throws Throwable {
 		super( testClass, builder );
 		this.enclosingTestInstance = enclosingTestInstance;
 	}

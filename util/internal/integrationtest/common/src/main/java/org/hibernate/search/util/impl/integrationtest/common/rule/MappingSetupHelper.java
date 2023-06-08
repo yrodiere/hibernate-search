@@ -26,7 +26,8 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-public abstract class MappingSetupHelper<C extends MappingSetupHelper<C, B, BC, R>.AbstractSetupContext, B, BC, R> implements TestRule {
+public abstract class MappingSetupHelper<C extends MappingSetupHelper<C, B, BC, R>.AbstractSetupContext, B, BC, R>
+		implements TestRule {
 
 	private final TestConfigurationProvider configurationProvider;
 	private final BackendSetupStrategy backendSetupStrategy;
@@ -50,7 +51,8 @@ public abstract class MappingSetupHelper<C extends MappingSetupHelper<C, B, BC, 
 
 	public C start() {
 		C setupContext = createSetupContext();
-		return backendSetupStrategy.start( setupContext, configurationProvider, setupContext.backendMappingHandlePromise );
+		return backendSetupStrategy.start( setupContext, configurationProvider,
+				setupContext.backendMappingHandlePromise );
 	}
 
 	@Override
@@ -128,7 +130,8 @@ public abstract class MappingSetupHelper<C extends MappingSetupHelper<C, B, BC, 
 				return withPropertyRadical( EngineSettings.Radicals.BACKEND + "." + keyRadical, value );
 			}
 			else {
-				return withPropertyRadical( EngineSettings.Radicals.BACKENDS + "." + backendName + "." + keyRadical, value );
+				return withPropertyRadical( EngineSettings.Radicals.BACKENDS + "." + backendName + "." + keyRadical,
+						value );
 			}
 		}
 
@@ -154,7 +157,7 @@ public abstract class MappingSetupHelper<C extends MappingSetupHelper<C, B, BC, 
 		 * @return The setup context, for method chaining.
 		 */
 		public final C withConfiguration(Consumer<BC> beforeBuild) {
-			return withConfiguration( beforeBuild, ignored -> { } );
+			return withConfiguration( beforeBuild, ignored -> {} );
 		}
 
 		/**

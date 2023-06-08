@@ -117,7 +117,8 @@ public abstract class AbstractPredicateFieldScoreIT<V extends AbstractPredicateT
 	}
 
 	@Override
-	protected final PredicateFinalStep predicateWithBoost(SearchPredicateFactory f, int matchingDocOrdinal, float boost) {
+	protected final PredicateFinalStep predicateWithBoost(SearchPredicateFactory f, int matchingDocOrdinal,
+			float boost) {
 		return predicateWithPredicateLevelBoost( f, new String[] { field0Path() },
 				matchingDocOrdinal, boost );
 	}

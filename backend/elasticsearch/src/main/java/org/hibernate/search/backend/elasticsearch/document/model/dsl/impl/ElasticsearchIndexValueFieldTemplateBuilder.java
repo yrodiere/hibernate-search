@@ -6,8 +6,8 @@
  */
 package org.hibernate.search.backend.elasticsearch.document.model.dsl.impl;
 
-import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexValueFieldTemplate;
 import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexCompositeNode;
+import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexValueFieldTemplate;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.mapping.impl.DynamicTemplate;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.mapping.impl.NamedDynamicTemplate;
 import org.hibernate.search.backend.elasticsearch.types.impl.ElasticsearchIndexValueFieldType;
@@ -16,13 +16,14 @@ import org.hibernate.search.util.common.pattern.spi.SimpleGlobPattern;
 
 class ElasticsearchIndexValueFieldTemplateBuilder
 		extends AbstractElasticsearchIndexFieldTemplateBuilder<
-						ElasticsearchIndexValueFieldTemplateBuilder, ElasticsearchIndexValueFieldTemplate
-				> {
+				ElasticsearchIndexValueFieldTemplateBuilder,
+				ElasticsearchIndexValueFieldTemplate> {
 
 	private final ElasticsearchIndexValueFieldType<?> type;
 
 	ElasticsearchIndexValueFieldTemplateBuilder(AbstractElasticsearchIndexCompositeNodeBuilder parent,
-			String templateName, IndexFieldInclusion inclusion, ElasticsearchIndexValueFieldType<?> type, String prefix) {
+			String templateName, IndexFieldInclusion inclusion, ElasticsearchIndexValueFieldType<?> type,
+			String prefix) {
 		super( parent, templateName, inclusion, prefix );
 		this.type = type;
 	}

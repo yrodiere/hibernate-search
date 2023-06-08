@@ -8,7 +8,6 @@ package org.hibernate.search.documentation.mapper.orm.binding.routingbridge.cond
 
 public enum Status {
 
-	PUBLISHED,
-	ARCHIVED
+	PUBLISHED, ARCHIVED
 
 }

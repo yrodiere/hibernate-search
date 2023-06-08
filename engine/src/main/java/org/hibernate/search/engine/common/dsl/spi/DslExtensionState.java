@@ -76,7 +76,8 @@ public final class DslExtensionState<R> {
 	public R orElseFail() {
 		if ( !appliedAtLeastOneExtension ) {
 			appliedOrElse = true;
-			throw log.dslExtensionNoMatch( unsupportedExtensions == null ? Collections.emptyList() : unsupportedExtensions );
+			throw log.dslExtensionNoMatch( unsupportedExtensions == null ?
+					Collections.emptyList() : unsupportedExtensions );
 		}
 		return result;
 	}

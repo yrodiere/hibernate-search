@@ -9,11 +9,11 @@ package org.hibernate.search.backend.elasticsearch.document.impl;
 import java.lang.invoke.MethodHandles;
 import java.util.Objects;
 
+import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexCompositeNode;
 import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexField;
 import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexModel;
 import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexObjectField;
 import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexValueField;
-import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexCompositeNode;
 import org.hibernate.search.backend.elasticsearch.gson.impl.GsonUtils;
 import org.hibernate.search.backend.elasticsearch.logging.impl.Log;
 import org.hibernate.search.backend.elasticsearch.types.impl.ElasticsearchIndexValueFieldType;
@@ -27,7 +27,6 @@ import org.hibernate.search.engine.backend.document.spi.NoOpDocumentElement;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
 import com.google.gson.JsonObject;
-
 
 public class ElasticsearchDocumentObjectBuilder implements DocumentElement {
 
@@ -50,7 +49,8 @@ public class ElasticsearchDocumentObjectBuilder implements DocumentElement {
 
 	@Override
 	public <F> void addValue(IndexFieldReference<F> fieldReference, F value) {
-		ElasticsearchIndexFieldReference<F> elasticsearchFieldReference = (ElasticsearchIndexFieldReference<F>) fieldReference;
+		ElasticsearchIndexFieldReference<F> elasticsearchFieldReference = (ElasticsearchIndexFieldReference<
+				F>) fieldReference;
 
 		ElasticsearchIndexValueField<F> fieldSchemaNode = elasticsearchFieldReference.getSchemaNode();
 		addValue( fieldSchemaNode, value );
@@ -58,7 +58,8 @@ public class ElasticsearchDocumentObjectBuilder implements DocumentElement {
 
 	@Override
 	public DocumentElement addObject(IndexObjectFieldReference fieldReference) {
-		ElasticsearchIndexObjectFieldReference elasticsearchFieldReference = (ElasticsearchIndexObjectFieldReference) fieldReference;
+		ElasticsearchIndexObjectFieldReference elasticsearchFieldReference =
+				(ElasticsearchIndexObjectFieldReference) fieldReference;
 
 		ElasticsearchIndexObjectField fieldSchemaNode = elasticsearchFieldReference.getSchemaNode();
 
@@ -68,7 +69,8 @@ public class ElasticsearchDocumentObjectBuilder implements DocumentElement {
 
 	@Override
 	public void addNullObject(IndexObjectFieldReference fieldReference) {
-		ElasticsearchIndexObjectFieldReference elasticsearchFieldReference = (ElasticsearchIndexObjectFieldReference) fieldReference;
+		ElasticsearchIndexObjectFieldReference elasticsearchFieldReference =
+				(ElasticsearchIndexObjectFieldReference) fieldReference;
 
 		ElasticsearchIndexObjectField fieldSchemaNode = elasticsearchFieldReference.getSchemaNode();
 

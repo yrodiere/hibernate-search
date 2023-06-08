@@ -6,11 +6,11 @@
  */
 package org.hibernate.search.documentation.mapper.orm.directfieldmapping;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.List;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.documentation.testsupport.BackendConfigurations;
@@ -51,9 +51,9 @@ public class HibernateOrmSimpleMappingIT {
 					bookMapping.indexed();
 					bookMapping.property( "title" )
 							.fullTextField()
-									.analyzer( "english" ).projectable( Projectable.YES )
+							.analyzer( "english" ).projectable( Projectable.YES )
 							.keywordField( "title_sort" )
-									.normalizer( "english" ).sortable( Sortable.YES );
+							.normalizer( "english" ).sortable( Sortable.YES );
 					bookMapping.property( "pageCount" )
 							.genericField().projectable( Projectable.YES ).sortable( Sortable.YES );
 					//end::programmatic[]

@@ -28,7 +28,7 @@ public class SingleFieldIndexBinding extends AbstractObjectBinding {
 	public static final String DISCRIMINATOR_VALUE_INCLUDED = "included";
 	public static final String DISCRIMINATOR_VALUE_EXCLUDED = "excluded";
 
-	public static final Consumer<StandardIndexFieldTypeOptionsStep<?, ?>> NO_ADDITIONAL_CONFIGURATION = c -> { };
+	public static final Consumer<StandardIndexFieldTypeOptionsStep<?, ?>> NO_ADDITIONAL_CONFIGURATION = c -> {};
 
 	public static SingleFieldIndexBinding create(IndexSchemaElement root,
 			Collection<? extends FieldTypeDescriptor<?>> supportedFieldTypes,
@@ -47,7 +47,8 @@ public class SingleFieldIndexBinding extends AbstractObjectBinding {
 	public final FirstLevelObjectBinding flattenedObject;
 	public final FirstLevelObjectBinding nestedObject;
 
-	private SingleFieldIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<?>> supportedFieldTypes,
+	private SingleFieldIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<
+			?>> supportedFieldTypes,
 			Consumer<StandardIndexFieldTypeOptionsStep<?, ?>> additionalConfiguration,
 			IndexObjectFieldCardinality nestedFieldCardinality) {
 		super( null, null, root, supportedFieldTypes, additionalConfiguration );
@@ -126,15 +127,18 @@ public class SingleFieldIndexBinding extends AbstractObjectBinding {
 			case IN_NESTED_TWICE:
 				// Same as for IN_NESTED, but one level deeper
 				DocumentElement nestedObjectFirstLevel = document.addObject( nestedObject.self );
-				DocumentElement nestedNestedObject0 = nestedObjectFirstLevel.addObject( nestedObject.nestedObject.self );
+				DocumentElement nestedNestedObject0 = nestedObjectFirstLevel.addObject(
+						nestedObject.nestedObject.self );
 				nestedNestedObject0.addValue( nestedObject.nestedObject.discriminator, DISCRIMINATOR_VALUE_INCLUDED );
 				nestedNestedObject0.addValue(
 						nestedObject.nestedObject.fieldWithSingleValueModels.get( fieldType ).reference,
 						value
 				);
 				if ( includeGarbageValueInNested ) {
-					DocumentElement nestedNestedObject1 = nestedObjectFirstLevel.addObject( nestedObject.nestedObject.self );
-					nestedNestedObject1.addValue( nestedObject.nestedObject.discriminator, DISCRIMINATOR_VALUE_EXCLUDED );
+					DocumentElement nestedNestedObject1 = nestedObjectFirstLevel.addObject(
+							nestedObject.nestedObject.self );
+					nestedNestedObject1.addValue( nestedObject.nestedObject.discriminator,
+							DISCRIMINATOR_VALUE_EXCLUDED );
 					nestedNestedObject1.addValue(
 							nestedObject.nestedObject.fieldWithSingleValueModels.get( fieldType ).reference,
 							garbageValue
@@ -213,7 +217,8 @@ public class SingleFieldIndexBinding extends AbstractObjectBinding {
 				// Same as for IN_NESTED, but one level deeper
 				DocumentElement nestedObjectFirstLevel0 = document.addObject( nestedObject.self );
 				DocumentElement nestedObjectFirstLevel1 = document.addObject( nestedObject.self );
-				DocumentElement nestedNestedObject0 = nestedObjectFirstLevel0.addObject( nestedObject.nestedObject.self );
+				DocumentElement nestedNestedObject0 = nestedObjectFirstLevel0.addObject(
+						nestedObject.nestedObject.self );
 				nestedNestedObject0.addValue( nestedObject.nestedObject.discriminator, DISCRIMINATOR_VALUE_INCLUDED );
 				if ( !values.isEmpty() ) {
 					nestedNestedObject0.addValue(
@@ -221,7 +226,8 @@ public class SingleFieldIndexBinding extends AbstractObjectBinding {
 							values.get( 0 )
 					);
 				}
-				DocumentElement nestedNestedObject1 = nestedObjectFirstLevel1.addObject( nestedObject.nestedObject.self );
+				DocumentElement nestedNestedObject1 = nestedObjectFirstLevel1.addObject(
+						nestedObject.nestedObject.self );
 				nestedNestedObject1.addValue( nestedObject.nestedObject.discriminator, DISCRIMINATOR_VALUE_INCLUDED );
 				if ( values.size() > 1 ) {
 					for ( F value : values.subList( 1, values.size() ) ) {
@@ -233,16 +239,20 @@ public class SingleFieldIndexBinding extends AbstractObjectBinding {
 				}
 				// This condition is necessary to avoid triggering https://github.com/elastic/elasticsearch/issues/92814
 				if ( !garbageValues.isEmpty() ) {
-					DocumentElement nestedNestedObject2 = nestedObjectFirstLevel0.addObject( nestedObject.nestedObject.self );
-					nestedNestedObject2.addValue( nestedObject.nestedObject.discriminator, DISCRIMINATOR_VALUE_EXCLUDED );
+					DocumentElement nestedNestedObject2 = nestedObjectFirstLevel0.addObject(
+							nestedObject.nestedObject.self );
+					nestedNestedObject2.addValue( nestedObject.nestedObject.discriminator,
+							DISCRIMINATOR_VALUE_EXCLUDED );
 					for ( F value : garbageValues ) {
 						nestedNestedObject2.addValue(
 								nestedObject.nestedObject.fieldWithMultipleValuesModels.get( fieldType ).reference,
 								value
 						);
 					}
-					DocumentElement nestedNestedObject3 = nestedObjectFirstLevel1.addObject( nestedObject.nestedObject.self );
-					nestedNestedObject3.addValue( nestedObject.nestedObject.discriminator, DISCRIMINATOR_VALUE_EXCLUDED );
+					DocumentElement nestedNestedObject3 = nestedObjectFirstLevel1.addObject(
+							nestedObject.nestedObject.self );
+					nestedNestedObject3.addValue( nestedObject.nestedObject.discriminator,
+							DISCRIMINATOR_VALUE_EXCLUDED );
 					for ( F value : garbageValues ) {
 						nestedNestedObject3.addValue(
 								nestedObject.nestedObject.fieldWithMultipleValuesModels.get( fieldType ).reference,

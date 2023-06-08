@@ -7,6 +7,7 @@
 package org.hibernate.search.batch.jsr352.jberet.context.jpa.impl;
 
 import java.lang.invoke.MethodHandles;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.Instance;
@@ -124,7 +125,8 @@ public class JBeretEntityManagerFactoryRegistry implements EntityManagerFactoryR
 
 		switch ( namespace ) {
 			case CDI_NAMESPACE_NAME:
-				Instance<EntityManagerFactory> instance = entityManagerFactoryInstance.select( new NamedQualifier( reference ) );
+				Instance<EntityManagerFactory> instance = entityManagerFactoryInstance.select( new NamedQualifier(
+						reference ) );
 				if ( instance.isUnsatisfied() ) {
 					throw log.noAvailableEntityManagerFactoryInCDI( reference );
 				}

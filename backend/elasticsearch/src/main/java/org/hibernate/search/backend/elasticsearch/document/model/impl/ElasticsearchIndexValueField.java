@@ -21,12 +21,11 @@ import org.hibernate.search.util.common.reporting.EventContext;
 
 public final class ElasticsearchIndexValueField<F>
 		extends AbstractIndexValueField<
-						ElasticsearchIndexValueField<F>,
-						ElasticsearchSearchIndexScope<?>,
-						ElasticsearchIndexValueFieldType<F>,
-						ElasticsearchIndexCompositeNode,
-						F
-				>
+				ElasticsearchIndexValueField<F>,
+				ElasticsearchSearchIndexScope<?>,
+				ElasticsearchIndexValueFieldType<F>,
+				ElasticsearchIndexCompositeNode,
+				F>
 		implements ElasticsearchIndexField, ElasticsearchSearchIndexValueFieldContext<F> {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -47,7 +46,8 @@ public final class ElasticsearchIndexValueField<F>
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> ElasticsearchIndexValueField<? super T> withValueType(Class<T> expectedSubType, EventContext eventContext) {
+	public <T> ElasticsearchIndexValueField<? super T> withValueType(Class<T> expectedSubType,
+			EventContext eventContext) {
 		if ( !type.valueClass().isAssignableFrom( expectedSubType ) ) {
 			throw log.invalidFieldValueType( type.valueClass(), expectedSubType,
 					eventContext.append( EventContexts.fromIndexFieldAbsolutePath( absolutePath ) ) );

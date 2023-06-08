@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -68,7 +69,7 @@ public class ToHibernateOrmSessionIT {
 	}
 
 	@Test
-	@TestForIssue( jiraKey = "HSEARCH-1857" )
+	@TestForIssue(jiraKey = "HSEARCH-1857")
 	public void reuseSearchSessionAfterOrmSessionIsClosed_noMatching() {
 		Session session = setupHolder.sessionFactory().openSession();
 		SearchSession searchSession = Search.session( session );
@@ -104,7 +105,7 @@ public class ToHibernateOrmSessionIT {
 
 		backendMock.expectSearchObjects(
 				Arrays.asList( IndexedEntity.NAME ),
-				b -> { },
+				b -> {},
 				// The call will fail, this doesn't matter
 				StubSearchWorkBehavior.empty()
 		);

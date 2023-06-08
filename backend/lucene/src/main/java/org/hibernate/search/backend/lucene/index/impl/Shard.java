@@ -24,9 +24,9 @@ import org.hibernate.search.backend.lucene.orchestration.impl.LuceneParallelWork
 import org.hibernate.search.backend.lucene.orchestration.impl.LuceneParallelWorkOrchestratorImpl;
 import org.hibernate.search.backend.lucene.orchestration.impl.LuceneSerialWorkOrchestrator;
 import org.hibernate.search.backend.lucene.orchestration.impl.LuceneSerialWorkOrchestratorImpl;
+import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
 import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.common.resources.spi.SavedState;
-import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanReference;
 import org.hibernate.search.engine.environment.bean.BeanResolver;
@@ -42,7 +42,8 @@ public final class Shard {
 	private static final ConfigurationProperty<BeanReference<? extends DirectoryProvider>> DIRECTORY_TYPE =
 			ConfigurationProperty.forKey( LuceneIndexSettings.DIRECTORY_TYPE )
 					.asBeanReference( DirectoryProvider.class )
-					.withDefault( BeanReference.of( DirectoryProvider.class, LuceneIndexSettings.Defaults.DIRECTORY_TYPE ) )
+					.withDefault( BeanReference.of( DirectoryProvider.class,
+							LuceneIndexSettings.Defaults.DIRECTORY_TYPE ) )
 					.build();
 
 	private static final SavedState.Key<DirectoryHolder> DIRECTORY_HOLDER_KEY = SavedState.key( "directory_holder" );
@@ -87,7 +88,8 @@ public final class Shard {
 				try ( BeanHolder<? extends DirectoryProvider> directoryProviderHolder =
 						DIRECTORY_TYPE.getAndTransform( propertySource, beanResolver::resolve ) ) {
 					String indexName = model.hibernateSearchName();
-					EventContext indexAndShardEventContext = EventContexts.fromIndexNameAndShardId( indexName, shardId );
+					EventContext indexAndShardEventContext = EventContexts.fromIndexNameAndShardId( indexName,
+							shardId );
 					DirectoryCreationContext context = new DirectoryCreationContextImpl( indexAndShardEventContext,
 							indexName, shardId, beanResolver,
 							propertySource.withMask( "directory" ) );

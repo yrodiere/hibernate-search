@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,6 +39,7 @@ import org.hibernate.search.util.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
 import org.hibernate.testing.TestForIssue;
+
 import org.junit.Test;
 
 import org.apache.lucene.search.Sort;
@@ -113,8 +115,8 @@ public class SpatialSearchSortByDistanceAndPagingTest extends SearchTestBase {
 		int firstResult = 0;
 		List result;
 
-		while ( (result = distanceSearch( CENTER_LAT, CENTER_LON, distance, firstResult, pageSize, sortByDistance ))
-				!= null && !result.isEmpty() ) {
+		while ( ( result = distanceSearch( CENTER_LAT, CENTER_LON, distance, firstResult, pageSize,
+				sortByDistance ) ) != null && !result.isEmpty() ) {
 
 			printResults( result );
 
@@ -132,8 +134,8 @@ public class SpatialSearchSortByDistanceAndPagingTest extends SearchTestBase {
 					String.format( Locale.ROOT,
 							"%d %f %d%s",
 							idx, entity.getDistance(), entity.getId(),
-							entitiesIdsSet.containsKey( entity.getId() )
-									? " was at index " + entitiesIdsSet.get( entity.getId() ) : ""
+							entitiesIdsSet.containsKey( entity.getId() ) ?
+									" was at index " + entitiesIdsSet.get( entity.getId() ) : ""
 					)
 			);
 			if ( !entitiesIdsSet.containsKey( entity.getId() ) ) {

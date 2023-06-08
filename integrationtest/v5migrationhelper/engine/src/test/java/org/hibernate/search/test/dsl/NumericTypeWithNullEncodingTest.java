@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.test.dsl;
 
-import org.apache.lucene.search.Query;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -16,9 +15,12 @@ import org.hibernate.search.testsupport.TestForIssue;
 import org.hibernate.search.testsupport.junit.SearchFactoryHolder;
 import org.hibernate.search.testsupport.junit.SearchITHelper;
 import org.hibernate.search.testsupport.junit.SearchITHelper.AssertBuildingHSQueryContext;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.apache.lucene.search.Query;
 
 /**
  * A query targeting a numeric-encoded property needs to be a NumericQuery even if it's using 'indexNullAs' markers.
@@ -43,11 +45,11 @@ public class NumericTypeWithNullEncodingTest {
 	@Test
 	public void verifyExplicitRangeQuery() {
 		Query query = getQueryBuilder()
-					.range()
-						.onField( "nullableAge" )
-						.from( 1 ).excludeLimit()
-						.to( 3 ).excludeLimit()
-						.createQuery();
+				.range()
+				.onField( "nullableAge" )
+				.from( 1 ).excludeLimit()
+				.to( 3 ).excludeLimit()
+				.createQuery();
 
 		assertProjection( query, "title" ).matchesExactlySingleProjections( "title-two" );
 	}
@@ -55,10 +57,10 @@ public class NumericTypeWithNullEncodingTest {
 	@Test
 	public void verifyExplicitKeywordQuery() {
 		Query query = getQueryBuilder()
-					.keyword()
-					.onField( "nullableAge" )
-					.matching( 2 )
-					.createQuery();
+				.keyword()
+				.onField( "nullableAge" )
+				.matching( 2 )
+				.createQuery();
 
 		assertProjection( query, "title" ).matchesExactlySingleProjections( "title-two" );
 	}

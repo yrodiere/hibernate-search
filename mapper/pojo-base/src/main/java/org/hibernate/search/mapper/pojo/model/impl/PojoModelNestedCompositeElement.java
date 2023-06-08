@@ -8,9 +8,9 @@ package org.hibernate.search.mapper.pojo.model.impl;
 
 import java.util.Collection;
 
+import org.hibernate.search.mapper.pojo.automaticindexing.building.impl.AbstractPojoIndexingDependencyCollectorDirectValueNode;
 import org.hibernate.search.mapper.pojo.automaticindexing.building.impl.PojoIndexingDependencyCollectorPropertyNode;
 import org.hibernate.search.mapper.pojo.automaticindexing.building.impl.PojoIndexingDependencyCollectorTypeNode;
-import org.hibernate.search.mapper.pojo.automaticindexing.building.impl.AbstractPojoIndexingDependencyCollectorDirectValueNode;
 import org.hibernate.search.mapper.pojo.model.PojoElementAccessor;
 import org.hibernate.search.mapper.pojo.model.PojoModelProperty;
 import org.hibernate.search.mapper.pojo.model.additionalmetadata.impl.PojoPropertyAdditionalMetadata;
@@ -50,7 +50,7 @@ class PojoModelNestedCompositeElement<T, P> extends AbstractPojoModelCompositeEl
 
 	public void contributeDependencies(PojoIndexingDependencyCollectorTypeNode<T> dependencyCollector) {
 		if ( hasAccessor() ) {
-			@SuppressWarnings( "unchecked" ) // We used the same property as in modelPath, on the same type. The result must have the same type.
+			@SuppressWarnings("unchecked") // We used the same property as in modelPath, on the same type. The result must have the same type.
 			PojoIndexingDependencyCollectorPropertyNode<T, P> collectorPropertyNode =
 					(PojoIndexingDependencyCollectorPropertyNode<T, P>) dependencyCollector.property( name() );
 			AbstractPojoIndexingDependencyCollectorDirectValueNode<P, P> collectorValueNode =

@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -65,7 +66,7 @@ public class ReindexOnUpdateShallowIT {
 			category.setName( "Science-fiction" );
 			entityManager.persist( category );
 
-			for ( int i = 0 ; i < 100 ; ++i ) {
+			for ( int i = 0; i < 100; ++i ) {
 				Book book = new Book();
 				book.setId( i );
 				book.setTitle( "Book " + i );

@@ -75,14 +75,16 @@ public class HibernateOrmNonEntityIdPropertyEntityLoadingStrategy<E, I>
 	}
 
 	@Override
-	public <E2> PojoSelectionEntityLoader<E2> createLoader(Set<LoadingTypeContext<? extends E2>> targetEntityTypeContexts,
+	public <E2> PojoSelectionEntityLoader<E2> createLoader(Set<LoadingTypeContext<
+			? extends E2>> targetEntityTypeContexts,
 			LoadingSessionContext sessionContext,
 			EntityLoadingCacheLookupStrategy cacheLookupStrategy, MutableEntityLoadingOptions loadingOptions) {
 		if ( targetEntityTypeContexts.size() != 1 ) {
 			throw multipleTypesException( targetEntityTypeContexts );
 		}
 
-		return doCreate( targetEntityTypeContexts.iterator().next(), sessionContext, cacheLookupStrategy, loadingOptions );
+		return doCreate( targetEntityTypeContexts.iterator().next(), sessionContext, cacheLookupStrategy,
+				loadingOptions );
 	}
 
 	private <E2> PojoSelectionEntityLoader<E2> doCreate(LoadingTypeContext<?> targetEntityTypeContext,
@@ -124,20 +126,23 @@ public class HibernateOrmNonEntityIdPropertyEntityLoadingStrategy<E, I>
 	private AssertionFailure invalidTypeException(EntityPersister otherEntityPersister) {
 		throw new AssertionFailure(
 				"Attempt to use a criteria-based entity loader with an unexpected target entity type."
-						+ " Expected entity name: " + entityPersister.getEntityName()
-						+ " Targeted entity name: " + otherEntityPersister
+						+ " Expected entity name: "
+						+ entityPersister.getEntityName()
+						+ " Targeted entity name: "
+						+ otherEntityPersister
 		);
 	}
 
 	private AssertionFailure multipleTypesException(Set<? extends LoadingTypeContext<?>> targetEntityTypeContexts) {
 		return new AssertionFailure(
 				"Attempt to use a criteria-based entity loader with multiple target entity types."
-						+ " Expected entity name: " + entityPersister.getEntityName()
+						+ " Expected entity name: "
+						+ entityPersister.getEntityName()
 						+ " Targeted entity names: "
 						+ targetEntityTypeContexts.stream()
-						.map( LoadingTypeContext::entityPersister )
-						.map( EntityPersister::getEntityName )
-						.collect( Collectors.toList() )
+								.map( LoadingTypeContext::entityPersister )
+								.map( EntityPersister::getEntityName )
+								.collect( Collectors.toList() )
 		);
 	}
 }

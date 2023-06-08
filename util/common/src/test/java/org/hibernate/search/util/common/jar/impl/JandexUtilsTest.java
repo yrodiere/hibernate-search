@@ -134,14 +134,21 @@ public class JandexUtilsTest {
 
 	private void checkJarPreconditions(Path path, boolean expectedIndexPresent) {
 		if ( !Files.isRegularFile( path ) ) {
-			throw new AssertionFailure( "Code source at path " + path + " is not a JAR file as expected."
+			throw new AssertionFailure( "Code source at path "
+					+ path
+					+ " is not a JAR file as expected."
 					+ " There is a bug in the tests." );
 		}
 		try ( JarFile jarFile = new JarFile( path.toFile() ) ) {
 			boolean actualIndexPresent = jarFile.getEntry( META_INF_JANDEX_INDEX ) != null;
 			if ( actualIndexPresent != expectedIndexPresent ) {
-				throw new IllegalStateException( "Code source at path " + path + " index content is unexpected."
-						+ " Expected index present: " + expectedIndexPresent + "; actual index present: " + actualIndexPresent
+				throw new IllegalStateException( "Code source at path "
+						+ path
+						+ " index content is unexpected."
+						+ " Expected index present: "
+						+ expectedIndexPresent
+						+ "; actual index present: "
+						+ actualIndexPresent
 						+ ". This might be caused by IDE limitations;"
 						+ " try running this test from Maven instead." );
 			}
@@ -153,13 +160,20 @@ public class JandexUtilsTest {
 
 	private void checkDirectoryPreconditions(Path path, boolean expectedIndexPresent) {
 		if ( !Files.isDirectory( path ) ) {
-			throw new AssertionFailure( "Code source at path " + path + " is not a directory as expected."
+			throw new AssertionFailure( "Code source at path "
+					+ path
+					+ " is not a directory as expected."
 					+ " There is a bug in the tests." );
 		}
 		boolean actualIndexPresent = Files.exists( path.resolve( META_INF_JANDEX_INDEX ) );
 		if ( actualIndexPresent != expectedIndexPresent ) {
-			throw new IllegalStateException( "Code source at path " + path + " index content is unexpected."
-					+ " Expected index present: " + expectedIndexPresent + "; actual index present: " + actualIndexPresent
+			throw new IllegalStateException( "Code source at path "
+					+ path
+					+ " index content is unexpected."
+					+ " Expected index present: "
+					+ expectedIndexPresent
+					+ "; actual index present: "
+					+ actualIndexPresent
 					+ ". This might be caused by IDE limitations;"
 					+ " try running this test from Maven instead." );
 		}

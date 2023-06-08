@@ -18,8 +18,10 @@ import com.google.gson.stream.JsonWriter;
 
 public class NamedDynamicTemplateJsonAdapterFactory implements TypeAdapterFactory {
 
-	private static final TypeToken<NamedDynamicTemplate> NAMED_DYNAMIC_TEMPLATE_TYPE_TOKEN = TypeToken.get( NamedDynamicTemplate.class );
-	private static final TypeToken<DynamicTemplate> DYNAMIC_TEMPLATE_TYPE_TOKEN = TypeToken.get( DynamicTemplate.class );
+	private static final TypeToken<NamedDynamicTemplate> NAMED_DYNAMIC_TEMPLATE_TYPE_TOKEN = TypeToken.get(
+			NamedDynamicTemplate.class );
+	private static final TypeToken<DynamicTemplate> DYNAMIC_TEMPLATE_TYPE_TOKEN = TypeToken.get(
+			DynamicTemplate.class );
 
 	@Override
 	@SuppressWarnings("unchecked")

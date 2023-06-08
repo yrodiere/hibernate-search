@@ -46,12 +46,23 @@ public final class IndexNames {
 
 	@Override
 	public String toString() {
-		return "IndexNames[" +
-				"hibernateSearch=" + hibernateSearch +
-				", read=" + read +
-				", write=" + write +
-				", readIsAlias=" + readIsAlias +
-				", writeIsAlias=" + writeIsAlias +
+		return "IndexNames["
+				+
+				"hibernateSearch="
+				+ hibernateSearch
+				+
+				", read="
+				+ read
+				+
+				", write="
+				+ write
+				+
+				", readIsAlias="
+				+ readIsAlias
+				+
+				", writeIsAlias="
+				+ writeIsAlias
+				+
 				"]";
 	}
 

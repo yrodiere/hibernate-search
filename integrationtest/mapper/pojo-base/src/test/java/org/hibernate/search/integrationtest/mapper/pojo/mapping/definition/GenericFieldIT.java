@@ -17,25 +17,25 @@ import java.util.Optional;
 import org.hibernate.search.engine.backend.types.Aggregable;
 import org.hibernate.search.engine.backend.types.Searchable;
 import org.hibernate.search.engine.backend.types.dsl.StandardIndexFieldTypeOptionsStep;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
-import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexingPlan;
 import org.hibernate.search.mapper.pojo.bridge.ValueBridge;
 import org.hibernate.search.mapper.pojo.bridge.binding.ValueBindingContext;
-import org.hibernate.search.mapper.pojo.common.annotation.Param;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.ValueBinderRef;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.ValueBridgeRef;
 import org.hibernate.search.mapper.pojo.bridge.mapping.programmatic.ValueBinder;
 import org.hibernate.search.mapper.pojo.bridge.runtime.ValueBridgeToIndexedValueContext;
+import org.hibernate.search.mapper.pojo.common.annotation.Param;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.TypeMappingStep;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
+import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexingPlan;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.StubBackendExtension;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -49,12 +49,13 @@ public class GenericFieldIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Test
 	public void defaultAttributes() {
 		@Indexed(index = INDEX_NAME)
-		class IndexedEntity	{
+		class IndexedEntity {
 			@DocumentId
 			Integer id;
 			@GenericField
@@ -71,7 +72,7 @@ public class GenericFieldIT {
 	@Test
 	public void name() {
 		@Indexed(index = INDEX_NAME)
-		class IndexedEntity	{
+		class IndexedEntity {
 			@DocumentId
 			Integer id;
 			@GenericField(name = "explicitName")
@@ -88,7 +89,7 @@ public class GenericFieldIT {
 	@Test
 	public void name_invalid_dot() {
 		@Indexed(index = INDEX_NAME)
-		class IndexedEntity	{
+		class IndexedEntity {
 			@DocumentId
 			Integer id;
 			@GenericField(name = "invalid.withdot")
@@ -103,13 +104,14 @@ public class GenericFieldIT {
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".value" )
 						.annotationContextAnyParameters( GenericField.class )
-						.failure( "Invalid index field name 'invalid.withdot': field names cannot contain a dot ('.')" ) );
+						.failure(
+								"Invalid index field name 'invalid.withdot': field names cannot contain a dot ('.')" ) );
 	}
 
 	@Test
 	public void searchable() {
 		@Indexed(index = INDEX_NAME)
-		class IndexedEntity	{
+		class IndexedEntity {
 			@DocumentId
 			Integer id;
 			@GenericField(searchable = Searchable.YES)
@@ -135,7 +137,7 @@ public class GenericFieldIT {
 	@Test
 	public void aggregable() {
 		@Indexed(index = INDEX_NAME)
-		class IndexedEntity	{
+		class IndexedEntity {
 			@DocumentId
 			Integer id;
 			@GenericField(aggregable = Aggregable.YES)
@@ -204,6 +206,7 @@ public class GenericFieldIT {
 
 			IndexedEntity() {
 			}
+
 			IndexedEntity(Integer id, Integer value) {
 				this.id = id;
 				this.value = value;
@@ -277,7 +280,8 @@ public class GenericFieldIT {
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".value" )
 						.annotationContextAnyParameters( GenericField.class )
-						.failure( "Conflicting usage of @Param annotation for parameter name: 'stringBase'. " +
+						.failure( "Conflicting usage of @Param annotation for parameter name: 'stringBase'. "
+								+
 								"Can't assign both value '4' and '4'" )
 				);
 	}
@@ -290,6 +294,7 @@ public class GenericFieldIT {
 
 			IndexedEntity() {
 			}
+
 			IndexedEntity(Integer id, Integer value) {
 				this.id = id;
 				this.value = value;
@@ -367,7 +372,8 @@ public class GenericFieldIT {
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".property" )
 						.failure( "Unable to infer index field type for value bridge '"
-								+ GenericTypeBridge.TOSTRING + "':"
+								+ GenericTypeBridge.TOSTRING
+								+ "':"
 								+ " this bridge implements ValueBridge<V, F>,"
 								+ " but sets the generic type parameter F to 'T'."
 								+ " The index field type can only be inferred automatically"

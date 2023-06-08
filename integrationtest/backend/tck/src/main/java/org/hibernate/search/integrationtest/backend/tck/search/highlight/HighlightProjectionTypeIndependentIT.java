@@ -47,8 +47,8 @@ public class HighlightProjectionTypeIndependentIT {
 	public void unknownField() {
 		StubMappingScope scope = index.createScope();
 
-		assertThatThrownBy( () ->
-				scope.query().select( f -> f.highlight( "unknownField" ) ).where( f -> f.matchAll() ).toQuery()
+		assertThatThrownBy( () -> scope.query().select( f -> f.highlight( "unknownField" ) ).where( f -> f.matchAll() )
+				.toQuery()
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
@@ -63,8 +63,8 @@ public class HighlightProjectionTypeIndependentIT {
 		String fieldPath = index.binding().nestedObject.relativeFieldName;
 		StubMappingScope scope = index.createScope();
 
-		assertThatThrownBy( () ->
-				scope.query().select( f -> f.highlight( fieldPath ) ).where( f -> f.matchAll() ).toQuery()
+		assertThatThrownBy( () -> scope.query().select( f -> f.highlight( fieldPath ) ).where( f -> f.matchAll() )
+				.toQuery()
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContaining( "Cannot use 'projection:highlight' on field '" + fieldPath + "'" );
@@ -75,8 +75,8 @@ public class HighlightProjectionTypeIndependentIT {
 		String fieldPath = index.binding().flattenedObject.relativeFieldName;
 		StubMappingScope scope = index.createScope();
 
-		assertThatThrownBy( () ->
-				scope.query().select( f -> f.highlight( fieldPath ) ).where( f -> f.matchAll() ).toQuery()
+		assertThatThrownBy( () -> scope.query().select( f -> f.highlight( fieldPath ) ).where( f -> f.matchAll() )
+				.toQuery()
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContaining( "Cannot use 'projection:highlight' on field '" + fieldPath + "'" );
@@ -85,12 +85,12 @@ public class HighlightProjectionTypeIndependentIT {
 	@Test
 	public void highlighterNullName() {
 		AssertionsForClassTypes.assertThatThrownBy(
-						() -> index.createScope().query().select(
-										f -> f.highlight( "string1" )
-								).where( f -> f.matchAll() )
-								.highlighter( null, h -> h.plain() )
-								.toQuery()
-				).isInstanceOf( SearchException.class )
+				() -> index.createScope().query().select(
+						f -> f.highlight( "string1" )
+				).where( f -> f.matchAll() )
+						.highlighter( null, h -> h.plain() )
+						.toQuery()
+		).isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
 						"Named highlighters cannot use a blank string as name."
 				);
@@ -99,12 +99,12 @@ public class HighlightProjectionTypeIndependentIT {
 	@Test
 	public void highlighterEmptyName() {
 		AssertionsForClassTypes.assertThatThrownBy(
-						() -> index.createScope().query().select(
-										f -> f.highlight( "string1" )
-								).where( f -> f.matchAll() )
-								.highlighter( "", h -> h.plain() )
-								.toQuery()
-				).isInstanceOf( SearchException.class )
+				() -> index.createScope().query().select(
+						f -> f.highlight( "string1" )
+				).where( f -> f.matchAll() )
+						.highlighter( "", h -> h.plain() )
+						.toQuery()
+		).isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
 						"Named highlighters cannot use a blank string as name."
 				);
@@ -113,13 +113,13 @@ public class HighlightProjectionTypeIndependentIT {
 	@Test
 	public void highlighterSameName() {
 		AssertionsForClassTypes.assertThatThrownBy(
-						() -> index.createScope().query().select(
-										f -> f.highlight( "string1" )
-								).where( f -> f.matchAll() )
-								.highlighter( "same-name", h -> h.plain() )
-								.highlighter( "same-name", h -> h.plain() )
-								.toQuery()
-				).isInstanceOf( SearchException.class )
+				() -> index.createScope().query().select(
+						f -> f.highlight( "string1" )
+				).where( f -> f.matchAll() )
+						.highlighter( "same-name", h -> h.plain() )
+						.highlighter( "same-name", h -> h.plain() )
+						.toQuery()
+		).isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
 						"Highlighter with name 'same-name' is already defined. Use a different name to add another highlighter."
 				);
@@ -128,9 +128,9 @@ public class HighlightProjectionTypeIndependentIT {
 	@Test
 	public void cannotHighlightNestedObjectStructureFields() {
 		AssertionsForClassTypes.assertThatThrownBy( () -> nestedIndex.createScope().query().select(
-								f -> f.highlight( "nested.nestedString" )
-						).where( f -> f.matchAll() )
-						.toQuery() ).isInstanceOf( SearchException.class )
+				f -> f.highlight( "nested.nestedString" )
+		).where( f -> f.matchAll() )
+				.toQuery() ).isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
 						"Cannot use 'projection:highlight' on field 'nested.nestedString'",
 						"The highlight projection cannot be applied to a field from an object using `ObjectStructure.NESTED` structure",

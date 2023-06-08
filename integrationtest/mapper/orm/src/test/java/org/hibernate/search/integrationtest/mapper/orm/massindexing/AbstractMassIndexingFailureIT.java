@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -77,18 +78,18 @@ public abstract class AbstractMassIndexingFailureIT {
 	}
 
 	@Test
-	@TestForIssue(jiraKey = {"HSEARCH-4218", "HSEARCH-4236"})
+	@TestForIssue(jiraKey = { "HSEARCH-4218", "HSEARCH-4236" })
 	public void identifierLoading() {
-		SessionFactory sessionFactory = setup( builder ->
-				builder.setProperty(
-						AvailableSettings.AUTO_SESSION_EVENTS_LISTENER,
-						JdbcStatementFailureOnIdLoadingThreadListener.class.getName()
-				)
+		SessionFactory sessionFactory = setup( builder -> builder.setProperty(
+				AvailableSettings.AUTO_SESSION_EVENTS_LISTENER,
+				JdbcStatementFailureOnIdLoadingThreadListener.class.getName()
+		)
 		);
 
 		String exceptionMessage = JdbcStatementFailureOnIdLoadingThreadListener.MESSAGE;
 		String failingOperationAsString = "Fetching identifiers of entities to index for entity '"
-				+ Book.NAME + "' during mass indexing";
+				+ Book.NAME
+				+ "' during mass indexing";
 
 		expectMassIndexerOperationFailureHandling( SimulatedFailure.class, exceptionMessage, failingOperationAsString );
 
@@ -124,11 +125,10 @@ public abstract class AbstractMassIndexingFailureIT {
 	}
 
 	public void entityLoading(Optional<Integer> failureFloodingThreshold) {
-		SessionFactory sessionFactory = setup( builder ->
-				builder.setProperty(
-						AvailableSettings.AUTO_SESSION_EVENTS_LISTENER,
-						JdbcStatementFailureOnEntityLoadingThreadListener.class.getName()
-				)
+		SessionFactory sessionFactory = setup( builder -> builder.setProperty(
+				AvailableSettings.AUTO_SESSION_EVENTS_LISTENER,
+				JdbcStatementFailureOnEntityLoadingThreadListener.class.getName()
+		)
 		);
 
 		// We need more than 1000 batches in order to reproduce HSEARCH-4236.
@@ -142,7 +142,8 @@ public abstract class AbstractMassIndexingFailureIT {
 
 		String exceptionMessage = JdbcStatementFailureOnEntityLoadingThreadListener.MESSAGE;
 		String failingOperationAsString = "Loading and extracting entity data for entity '"
-				+ Book.NAME + "' during mass indexing";
+				+ Book.NAME
+				+ "' during mass indexing";
 
 		// in case of using default handlers we will get a failure flooding threshold of 100 coming from PojoMassIndexingDelegatingFailureHandler
 		Integer actualThreshold = failureFloodingThreshold.orElseGet( this::getDefaultFailureFloodingThreshold );
@@ -483,7 +484,9 @@ public abstract class AbstractMassIndexingFailureIT {
 		String entityName = Book.NAME;
 		EntityReference entityReference = PojoEntityReference.withName( Book.class, Book.NAME, 2 );
 		String failingEntityIndexingExceptionMessage = "Indexing failure";
-		String failingEntityIndexingOperationAsString = "Indexing instance of entity '" + entityName + "' during mass indexing";
+		String failingEntityIndexingOperationAsString = "Indexing instance of entity '"
+				+ entityName
+				+ "' during mass indexing";
 		String failingMassIndexerOperationExceptionMessage = "FLUSH failure";
 		String failingMassIndexerOperationAsString = "MassIndexer operation";
 
@@ -507,7 +510,8 @@ public abstract class AbstractMassIndexingFailureIT {
 						// The mass indexer operation failure should also be mentioned as a suppressed exception
 						.extracting( Throwable::getCause )
 						.extracting( Throwable::getSuppressed ).asInstanceOf( InstanceOfAssertFactories.ARRAY )
-						.anySatisfy( suppressed -> assertThat( suppressed ).asInstanceOf( InstanceOfAssertFactories.THROWABLE )
+						.anySatisfy( suppressed -> assertThat( suppressed ).asInstanceOf(
+								InstanceOfAssertFactories.THROWABLE )
 								.isInstanceOf( SimulatedFailure.class )
 								.hasMessageContaining( failingMassIndexerOperationExceptionMessage )
 						),
@@ -531,7 +535,9 @@ public abstract class AbstractMassIndexingFailureIT {
 		String entityName = Book.NAME;
 		EntityReference entityReference = PojoEntityReference.withName( Book.class, Book.NAME, 2 );
 		String failingEntityIndexingExceptionMessage = "Indexing failure";
-		String failingEntityIndexingOperationAsString = "Indexing instance of entity '" + entityName + "' during mass indexing";
+		String failingEntityIndexingOperationAsString = "Indexing instance of entity '"
+				+ entityName
+				+ "' during mass indexing";
 		String failingMassIndexerOperationExceptionMessage = "REFRESH failure";
 		String failingMassIndexerOperationAsString = "MassIndexer operation";
 
@@ -555,7 +561,8 @@ public abstract class AbstractMassIndexingFailureIT {
 						// The mass indexer operation failure should also be mentioned as a suppressed exception
 						.extracting( Throwable::getCause )
 						.extracting( Throwable::getSuppressed ).asInstanceOf( InstanceOfAssertFactories.ARRAY )
-						.anySatisfy( suppressed -> assertThat( suppressed ).asInstanceOf( InstanceOfAssertFactories.THROWABLE )
+						.anySatisfy( suppressed -> assertThat( suppressed ).asInstanceOf(
+								InstanceOfAssertFactories.THROWABLE )
 								.isInstanceOf( SimulatedFailure.class )
 								.hasMessageContaining( failingMassIndexerOperationExceptionMessage )
 						),
@@ -631,7 +638,7 @@ public abstract class AbstractMassIndexingFailureIT {
 	private void doMassIndexingWithFailure(MassIndexer massIndexer,
 			ThreadExpectation threadExpectation,
 			Consumer<Throwable> thrownExpectation,
-			Runnable ... expectationSetters) {
+			Runnable... expectationSetters) {
 		doMassIndexingWithFailure(
 				massIndexer,
 				threadExpectation,
@@ -645,7 +652,7 @@ public abstract class AbstractMassIndexingFailureIT {
 			ThreadExpectation threadExpectation,
 			Consumer<Throwable> thrownExpectation,
 			ExecutionExpectation book2GetIdExpectation, ExecutionExpectation book2GetTitleExpectation,
-			Runnable ... expectationSetters) {
+			Runnable... expectationSetters) {
 		Book.failOnBook2GetId.set( ExecutionExpectation.FAIL.equals( book2GetIdExpectation ) );
 		Book.failOnBook2GetTitle.set( ExecutionExpectation.FAIL.equals( book2GetTitleExpectation ) );
 		try {
@@ -781,7 +788,7 @@ public abstract class AbstractMassIndexingFailureIT {
 	}
 
 	private SessionFactory setup() {
-		return setup( ignored -> { } );
+		return setup( ignored -> {} );
 	}
 
 	private SessionFactory setup(Consumer<SimpleSessionFactoryBuilder> configuration) {
@@ -791,7 +798,8 @@ public abstract class AbstractMassIndexingFailureIT {
 
 		SessionFactory sessionFactory = ormSetupHelper.start()
 				.withPropertyRadical( HibernateOrmMapperSettings.Radicals.AUTOMATIC_INDEXING_ENABLED, false )
-				.withPropertyRadical( EngineSettings.Radicals.BACKGROUND_FAILURE_HANDLER, getBackgroundFailureHandlerReference() )
+				.withPropertyRadical( EngineSettings.Radicals.BACKGROUND_FAILURE_HANDLER,
+						getBackgroundFailureHandlerReference() )
 				.withPropertyRadical( EngineSpiSettings.Radicals.THREAD_PROVIDER, threadSpy.getThreadProvider() )
 				.withConfiguration( configuration )
 				.setup( Book.class );
@@ -810,14 +818,11 @@ public abstract class AbstractMassIndexingFailureIT {
 	}
 
 	private enum ExecutionExpectation {
-		SUCCEED,
-		FAIL,
-		SKIP;
+		SUCCEED, FAIL, SKIP;
 	}
 
 	private enum ThreadExpectation {
-		CREATED_AND_TERMINATED,
-		NOT_CREATED;
+		CREATED_AND_TERMINATED, NOT_CREATED;
 	}
 
 	@Entity(name = Book.NAME)

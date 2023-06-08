@@ -8,10 +8,9 @@ package org.hibernate.search.engine.search.predicate.dsl.impl;
 
 import java.util.Arrays;
 
-import org.hibernate.search.engine.search.predicate.dsl.WildcardPredicateFieldStep;
 import org.hibernate.search.engine.search.predicate.dsl.WildcardPredicateFieldMoreStep;
+import org.hibernate.search.engine.search.predicate.dsl.WildcardPredicateFieldStep;
 import org.hibernate.search.engine.search.predicate.dsl.spi.SearchPredicateDslContext;
-
 
 public final class WildcardPredicateFieldStepImpl
 		implements WildcardPredicateFieldStep<WildcardPredicateFieldMoreStep<?, ?>> {
@@ -23,7 +22,7 @@ public final class WildcardPredicateFieldStepImpl
 	}
 
 	@Override
-	public WildcardPredicateFieldMoreStep<?, ?> fields(String ... fieldPaths) {
+	public WildcardPredicateFieldMoreStep<?, ?> fields(String... fieldPaths) {
 		return new WildcardPredicateFieldMoreStepImpl( commonState, Arrays.asList( fieldPaths ) );
 	}
 }

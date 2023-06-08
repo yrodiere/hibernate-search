@@ -6,9 +6,9 @@
  */
 package org.hibernate.search.mapper.pojo.model.path.impl;
 
-import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.ContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.extractor.impl.BoundContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.extractor.impl.ContainerExtractorBinder;
+import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.ContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathPropertyNode;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
@@ -78,11 +78,12 @@ public abstract class BoundPojoModelPath {
 		appendSelfPath( builder );
 	}
 
-	public static class Walker implements PojoModelPathWalker<
-			Void, BoundPojoModelPathTypeNode<?>,
-			BoundPojoModelPathPropertyNode<?, ?>,
-			BoundPojoModelPathValueNode<?, ?, ?>
-			> {
+	public static class Walker
+			implements PojoModelPathWalker<
+					Void,
+					BoundPojoModelPathTypeNode<?>,
+					BoundPojoModelPathPropertyNode<?, ?>,
+					BoundPojoModelPathValueNode<?, ?, ?>> {
 
 		private final ContainerExtractorBinder containerExtractorBinder;
 
@@ -97,7 +98,8 @@ public abstract class BoundPojoModelPath {
 		}
 
 		@Override
-		public BoundPojoModelPathValueNode<?, ?, ?> value(Void context, BoundPojoModelPathPropertyNode<?, ?> propertyNode,
+		public BoundPojoModelPathValueNode<?, ?, ?> value(Void context, BoundPojoModelPathPropertyNode<?,
+				?> propertyNode,
 				PojoModelPathValueNode pathNode) {
 			return value( propertyNode, pathNode.extractorPath() );
 		}

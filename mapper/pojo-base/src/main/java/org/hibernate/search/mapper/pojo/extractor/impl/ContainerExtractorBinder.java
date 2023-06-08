@@ -17,19 +17,19 @@ import java.util.Optional;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanResolver;
 import org.hibernate.search.mapper.pojo.extractor.ContainerExtractor;
-import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.ContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.CollectionElementExtractor;
+import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.ContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.extractor.spi.ContainerExtractorDefinition;
 import org.hibernate.search.mapper.pojo.extractor.spi.ContainerExtractorRegistry;
 import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.model.spi.PojoTypeModel;
 import org.hibernate.search.mapper.pojo.model.typepattern.impl.ExtractingTypePatternMatcher;
 import org.hibernate.search.mapper.pojo.model.typepattern.impl.TypePatternMatcherFactory;
-import org.hibernate.search.util.common.reflect.impl.GenericTypeContext;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.SearchException;
-import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 import org.hibernate.search.util.common.impl.SuppressingCloser;
+import org.hibernate.search.util.common.logging.impl.LoggerFactory;
+import org.hibernate.search.util.common.reflect.impl.GenericTypeContext;
 
 /**
  * Binds {@link ContainerExtractorPath}s to a given input type,
@@ -149,7 +149,7 @@ public class ContainerExtractorBinder {
 	 * @throws AssertionFailure if the bound path was empty
 	 */
 	// Checks are performed using reflection when building the resolved path
-	@SuppressWarnings( {"rawtypes", "unchecked"} )
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public <C, V> ContainerExtractorHolder<C, V> create(BoundContainerExtractorPath<C, V> boundPath) {
 		if ( boundPath.getExtractorPath().isEmpty() ) {
 			throw new AssertionFailure(
@@ -195,9 +195,10 @@ public class ContainerExtractorBinder {
 						sourceType,
 						ContainerExtractorPath.defaultExtractors()
 				);
-		return boundDefaultExtractorPathOptional.isPresent() && extractorPath.equals(
-				boundDefaultExtractorPathOptional.get().getExtractorPath()
-		);
+		return boundDefaultExtractorPathOptional.isPresent()
+				&& extractorPath.equals(
+						boundDefaultExtractorPathOptional.get().getExtractorPath()
+				);
 	}
 
 	private void addDefaultExtractor(String extractorName) {
@@ -209,7 +210,7 @@ public class ContainerExtractorBinder {
 		return extractorContributorCache.computeIfAbsent( extractorName, this::createExtractorContributorForName );
 	}
 
-	@SuppressWarnings( "rawtypes" ) // Checks are implemented using reflection
+	@SuppressWarnings("rawtypes") // Checks are implemented using reflection
 	private SingleExtractorContributor createExtractorContributorForName(String extractorName) {
 		Class<? extends ContainerExtractor> extractorClass = containerExtractorRegistry.forName( extractorName ).type();
 		GenericTypeContext typeContext = new GenericTypeContext( extractorClass );
@@ -238,7 +239,7 @@ public class ContainerExtractorBinder {
 
 	}
 
-	@SuppressWarnings( "rawtypes" ) // Checks are implemented using reflection
+	@SuppressWarnings("rawtypes") // Checks are implemented using reflection
 	private static class SingleExtractorContributor implements ExtractorContributor {
 		private final ExtractingTypePatternMatcher typePatternMatcher;
 		private final String extractorName;
@@ -292,7 +293,7 @@ public class ContainerExtractorBinder {
 		}
 	}
 
-	@SuppressWarnings({"rawtypes"}) // Checks are implemented using reflection
+	@SuppressWarnings({ "rawtypes" }) // Checks are implemented using reflection
 	private static class ExtractorResolutionState<C> {
 
 		private final List<String> extractorNames = new ArrayList<>();

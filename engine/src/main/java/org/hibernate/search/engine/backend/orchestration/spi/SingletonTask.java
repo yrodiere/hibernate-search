@@ -45,10 +45,14 @@ public final class SingletonTask {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "status=" + status
-				+ ", needsRun=" + needsRun
-				+ ", nextExecutionFuture=" + nextExecutionFuture
+		return getClass().getSimpleName()
+				+ "["
+				+ "status="
+				+ status
+				+ ", needsRun="
+				+ needsRun
+				+ ", nextExecutionFuture="
+				+ nextExecutionFuture
 				+ "]";
 	}
 
@@ -169,8 +173,7 @@ public final class SingletonTask {
 	}
 
 	private enum Status {
-		IDLE,
-		SCHEDULED
+		IDLE, SCHEDULED
 	}
 
 	/**
@@ -182,7 +185,8 @@ public final class SingletonTask {
 	 */
 	private class RunnableWrapper implements Runnable {
 		private final Worker worker;
-		private final BiFunction<Object, Throwable, Object> workFinishedHandler = Futures.handler( this::onWorkFinished );
+		private final BiFunction<Object, Throwable, Object> workFinishedHandler = Futures.handler(
+				this::onWorkFinished );
 
 		public RunnableWrapper(Worker worker) {
 			this.worker = worker;

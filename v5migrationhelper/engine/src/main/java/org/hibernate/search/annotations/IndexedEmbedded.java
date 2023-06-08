@@ -28,7 +28,8 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing
 @Target({ ElementType.FIELD, ElementType.METHOD })
 @Documented
 @Deprecated
-@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(type = IndexedEmbeddedAnnotationProcessor.class, retrieval = BeanRetrieval.CONSTRUCTOR))
+@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(type = IndexedEmbeddedAnnotationProcessor.class,
+		retrieval = BeanRetrieval.CONSTRUCTOR))
 public @interface IndexedEmbedded {
 
 	/**
@@ -50,7 +51,7 @@ public @interface IndexedEmbedded {
 	 *
 	 * @return the paths to include. Default to empty array
 	 */
-	String[] includePaths() default { };
+	String[] includePaths() default {};
 
 	/**
 	 * Stop indexing embedded elements when {@code depth} is reached.

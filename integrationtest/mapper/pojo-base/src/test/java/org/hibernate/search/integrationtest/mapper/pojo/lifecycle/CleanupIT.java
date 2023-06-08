@@ -14,8 +14,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
+import org.hibernate.search.integrationtest.mapper.pojo.testsupport.util.StartupStubBridge;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.util.StartupStubContainerExtractor;
-import org.hibernate.search.mapper.pojo.standalone.mapping.CloseableSearchMapping;
 import org.hibernate.search.mapper.pojo.bridge.binding.IdentifierBindingContext;
 import org.hibernate.search.mapper.pojo.bridge.binding.PropertyBindingContext;
 import org.hibernate.search.mapper.pojo.bridge.binding.RoutingBindingContext;
@@ -34,12 +34,12 @@ import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.Container
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.ProgrammaticMappingConfigurationContext;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.TypeMappingStep;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPath;
-import org.hibernate.search.integrationtest.mapper.pojo.testsupport.util.StartupStubBridge;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
+import org.hibernate.search.mapper.pojo.standalone.mapping.CloseableSearchMapping;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.index.impl.StubIndexManager;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.index.impl.StubIndexManagerBuilder;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.rule.StaticCounters;
 
 import org.junit.Rule;
@@ -61,7 +61,8 @@ public class CleanupIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Rule
 	public StaticCounters counters = new StaticCounters();
@@ -80,13 +81,13 @@ public class CleanupIT {
 			otherIndexedEntityMapping.binder( StartupStubBridge.binder( TYPE_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "id" )
 					.documentId()
-							.identifierBinder( StartupStubBridge.binder( Integer.class, IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
+					.identifierBinder( StartupStubBridge.binder( Integer.class, IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "text" )
 					.binder( StartupStubBridge.binder( PROPERTY_BRIDGE_COUNTER_KEYS ) )
 					.genericField( "otherText" )
-							// The extractor returns type Object, not String
-							.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
-							.extractor( StartupStubContainerExtractor.NAME );
+					// The extractor returns type Object, not String
+					.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
+					.extractor( StartupStubContainerExtractor.NAME );
 		} );
 
 		backendMock.verifyExpectationsMet();
@@ -128,13 +129,13 @@ public class CleanupIT {
 			otherIndexedEntityMapping.binder( StartupStubBridge.binder( TYPE_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "id" )
 					.documentId()
-							.identifierBinder( StartupStubBridge.binder( Integer.class, IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
+					.identifierBinder( StartupStubBridge.binder( Integer.class, IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "text" )
 					.binder( StartupStubBridge.binder( PROPERTY_BRIDGE_COUNTER_KEYS ) )
 					.genericField( "otherText" )
-							// The extractor returns type Object, not String
-							.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
-							.extractor( StartupStubContainerExtractor.NAME );
+					// The extractor returns type Object, not String
+					.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
+					.extractor( StartupStubContainerExtractor.NAME );
 			otherIndexedEntityMapping.indexed().routingBinder( new FailingBinder() );
 		} );
 
@@ -163,13 +164,13 @@ public class CleanupIT {
 					.routingBinder( StartupStubBridge.binder( ROUTING_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "id" )
 					.documentId()
-							.identifierBinder( StartupStubBridge.binder( Integer.class, IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
+					.identifierBinder( StartupStubBridge.binder( Integer.class, IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "text" )
 					.binder( StartupStubBridge.binder( PROPERTY_BRIDGE_COUNTER_KEYS ) )
 					.genericField( "otherText" )
-							// The extractor returns type Object, not String
-							.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
-							.extractor( StartupStubContainerExtractor.NAME );
+					// The extractor returns type Object, not String
+					.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
+					.extractor( StartupStubContainerExtractor.NAME );
 			otherIndexedEntityMapping.binder( new FailingBinder() );
 		} );
 
@@ -200,12 +201,12 @@ public class CleanupIT {
 			otherIndexedEntityMapping.property( "text" )
 					.binder( StartupStubBridge.binder( PROPERTY_BRIDGE_COUNTER_KEYS ) )
 					.genericField( "otherText" )
-							// The extractor returns type Object, not String
-							.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
-							.extractor( StartupStubContainerExtractor.NAME );
+					// The extractor returns type Object, not String
+					.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
+					.extractor( StartupStubContainerExtractor.NAME );
 			otherIndexedEntityMapping.property( "id" )
 					.documentId()
-							.identifierBinder( new FailingBinder() );
+					.identifierBinder( new FailingBinder() );
 		} );
 
 		// We must have instantiated objects...
@@ -234,12 +235,12 @@ public class CleanupIT {
 			otherIndexedEntityMapping.binder( StartupStubBridge.binder( TYPE_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "id" )
 					.documentId()
-							.identifierBinder( StartupStubBridge.binder( Integer.class, IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
+					.identifierBinder( StartupStubBridge.binder( Integer.class, IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "text" )
 					.genericField( "otherText" )
-							// The extractor returns type Object, not String
-							.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
-							.extractor( StartupStubContainerExtractor.NAME )
+					// The extractor returns type Object, not String
+					.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
+					.extractor( StartupStubContainerExtractor.NAME )
 					.binder( new FailingBinder() );
 		} );
 
@@ -268,16 +269,17 @@ public class CleanupIT {
 					.routingBinder( StartupStubBridge.binder( ROUTING_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.binder( StartupStubBridge.binder( TYPE_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "id" )
-					.documentId().identifierBinder( StartupStubBridge.binder( Integer.class, IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
+					.documentId().identifierBinder( StartupStubBridge.binder( Integer.class,
+							IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "text" )
 					.binder( StartupStubBridge.binder( PROPERTY_BRIDGE_COUNTER_KEYS ) )
 					.genericField( "otherText" )
-							// The extractor returns type Object, not String
-							.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
-							.extractor( StartupStubContainerExtractor.NAME )
+					// The extractor returns type Object, not String
+					.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
+					.extractor( StartupStubContainerExtractor.NAME )
 					.genericField( "yetAnotherText" )
-							.valueBinder( new FailingBinder() )
-							.extractor( StartupStubContainerExtractor.NAME );
+					.valueBinder( new FailingBinder() )
+					.extractor( StartupStubContainerExtractor.NAME );
 		} );
 
 
@@ -306,20 +308,21 @@ public class CleanupIT {
 					.routingBinder( StartupStubBridge.binder( ROUTING_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.binder( StartupStubBridge.binder( TYPE_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "id" )
-					.documentId().identifierBinder( StartupStubBridge.binder( Integer.class, IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
+					.documentId().identifierBinder( StartupStubBridge.binder( Integer.class,
+							IDENTIFIER_BRIDGE_COUNTER_KEYS ) );
 			otherIndexedEntityMapping.property( "text" )
 					.binder( StartupStubBridge.binder( PROPERTY_BRIDGE_COUNTER_KEYS ) )
 					.genericField( "otherText" )
-							// The extractor returns type Object, not String
-							.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
-							.extractor( StartupStubContainerExtractor.NAME )
+					// The extractor returns type Object, not String
+					.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
+					.extractor( StartupStubContainerExtractor.NAME )
 					.genericField( "yetAnotherText" )
-							// The extractor returns type Object, not String
-							.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
-							.extractors( ContainerExtractorPath.explicitExtractors( Arrays.asList(
-									StartupStubContainerExtractor.NAME, // The first one succeeds, but...
-									FailingContainerExtractor.NAME // This one fails.
-							) ) );
+					// The extractor returns type Object, not String
+					.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
+					.extractors( ContainerExtractorPath.explicitExtractors( Arrays.asList(
+							StartupStubContainerExtractor.NAME, // The first one succeeds, but...
+							FailingContainerExtractor.NAME // This one fails.
+					) ) );
 		} );
 
 
@@ -355,7 +358,8 @@ public class CleanupIT {
 							builder.addEntityType( IndexedEntity.class );
 							builder.addEntityType( OtherIndexedEntity.class );
 
-							ContainerExtractorConfigurationContext containerExtractorDefinition = builder.containerExtractors();
+							ContainerExtractorConfigurationContext containerExtractorDefinition = builder
+									.containerExtractors();
 							containerExtractorDefinition.define( StartupStubContainerExtractor.NAME,
 									StartupStubContainerExtractor.class,
 									/*
@@ -363,8 +367,10 @@ public class CleanupIT {
 									 * and closing of its bean holder,
 									 * so that we can check the bean holders are properly closed.
 									 */
-									ignored -> StartupStubContainerExtractor.create( CONTAINER_VALUE_EXTRACTOR_COUNTER_KEYS ) );
-							containerExtractorDefinition.define( FailingContainerExtractor.NAME, FailingContainerExtractor.class );
+									ignored -> StartupStubContainerExtractor.create(
+											CONTAINER_VALUE_EXTRACTOR_COUNTER_KEYS ) );
+							containerExtractorDefinition.define( FailingContainerExtractor.NAME,
+									FailingContainerExtractor.class );
 
 							ProgrammaticMappingConfigurationContext mappingDefinition = builder.programmaticMapping();
 							TypeMappingStep indexedEntityMapping = mappingDefinition.type( IndexedEntity.class );
@@ -377,9 +383,9 @@ public class CleanupIT {
 									);
 							indexedEntityMapping.property( "text" )
 									.genericField()
-											// The extractor returns type Object, not String
-											.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
-											.extractor( StartupStubContainerExtractor.NAME );
+									// The extractor returns type Object, not String
+									.valueBinder( StartupStubBridge.binder( Object.class, VALUE_BRIDGE_COUNTER_KEYS ) )
+									.extractor( StartupStubContainerExtractor.NAME );
 							indexedEntityMapping.property( "embedded" )
 									.associationInverseSide(
 											PojoModelPath.builder().property( "embedding" )
@@ -393,7 +399,7 @@ public class CleanupIT {
 									 * and we test that they are properly closed.
 									 */
 									.indexedEmbedded()
-											.includePaths( "text" );
+									.includePaths( "text" );
 							indexedEntityMapping.property( "otherEmbedded" )
 									.associationInverseSide(
 											PojoModelPath.builder().property( "otherEmbedding" )
@@ -462,12 +468,14 @@ public class CleanupIT {
 
 	private static class SimulatedFailure extends RuntimeException {
 		public static final String MESSAGE = "Simulated failure";
+
 		SimulatedFailure() {
 			super( MESSAGE );
 		}
 	}
 
-	private static class FailingBinder implements TypeBinder, PropertyBinder,
+	private static class FailingBinder
+			implements TypeBinder, PropertyBinder,
 			IdentifierBinder, ValueBinder, RoutingBinder {
 		@Override
 		public void bind(TypeBindingContext context) {

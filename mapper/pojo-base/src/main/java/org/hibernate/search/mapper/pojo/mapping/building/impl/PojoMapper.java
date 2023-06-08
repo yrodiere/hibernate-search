@@ -42,17 +42,16 @@ import org.hibernate.search.mapper.pojo.bridge.mapping.impl.BridgeResolver;
 import org.hibernate.search.mapper.pojo.bridge.mapping.programmatic.RoutingBinder;
 import org.hibernate.search.mapper.pojo.extractor.impl.ContainerExtractorBinder;
 import org.hibernate.search.mapper.pojo.identity.impl.IdentifierMappingImplementor;
-import org.hibernate.search.mapper.pojo.identity.impl.PojoRootIdentityMappingCollector;
 import org.hibernate.search.mapper.pojo.identity.impl.IdentityMappingMode;
+import org.hibernate.search.mapper.pojo.identity.impl.PojoRootIdentityMappingCollector;
 import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.mapping.building.spi.PojoContainedTypeExtendedMappingCollector;
-import org.hibernate.search.mapper.pojo.mapping.building.spi.PojoMapperDelegate;
 import org.hibernate.search.mapper.pojo.mapping.building.spi.PojoIndexMappingCollectorTypeNode;
+import org.hibernate.search.mapper.pojo.mapping.building.spi.PojoMapperDelegate;
 import org.hibernate.search.mapper.pojo.mapping.building.spi.PojoTypeMetadataContributor;
 import org.hibernate.search.mapper.pojo.mapping.impl.PojoContainedTypeManager;
 import org.hibernate.search.mapper.pojo.mapping.impl.PojoMappingDelegateImpl;
 import org.hibernate.search.mapper.pojo.mapping.impl.PojoTypeManagerContainer;
-import org.hibernate.search.mapper.pojo.search.definition.impl.PojoSearchQueryElementRegistry;
 import org.hibernate.search.mapper.pojo.mapping.spi.PojoMappingDelegate;
 import org.hibernate.search.mapper.pojo.model.additionalmetadata.building.impl.PojoTypeAdditionalMetadataProvider;
 import org.hibernate.search.mapper.pojo.model.additionalmetadata.impl.PojoEntityTypeAdditionalMetadata;
@@ -64,13 +63,15 @@ import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPath;
 import org.hibernate.search.mapper.pojo.model.spi.PojoBootstrapIntrospector;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 import org.hibernate.search.mapper.pojo.reporting.spi.PojoEventContexts;
+import org.hibernate.search.mapper.pojo.search.definition.impl.PojoSearchQueryElementRegistry;
 import org.hibernate.search.mapper.pojo.search.definition.impl.PojoSearchQueryElementRegistryBuilder;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.impl.Closer;
 import org.hibernate.search.util.common.impl.SuppressingCloser;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
-public class PojoMapper<MPBS extends MappingPartialBuildState> implements Mapper<MPBS>,
+public class PojoMapper<MPBS extends MappingPartialBuildState>
+		implements Mapper<MPBS>,
 		IndexedEntityBindingMapperContext {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -95,7 +96,7 @@ public class PojoMapper<MPBS extends MappingPartialBuildState> implements Mapper
 	private final Set<PojoRawTypeModel<?>> indexedEntityTypes = new LinkedHashSet<>();
 	private final Set<PojoRawTypeModel<?>> initialMappedTypes = new LinkedHashSet<>();
 	// Use a LinkedHashMap for deterministic iteration
-	private final Map<PojoRawTypeModel<?>,PojoIndexedTypeManagerBuilder<?>> indexedTypeManagerBuilders =
+	private final Map<PojoRawTypeModel<?>, PojoIndexedTypeManagerBuilder<?>> indexedTypeManagerBuilders =
 			new LinkedHashMap<>();
 	// Use a LinkedHashMap for deterministic iteration
 	private final Map<IndexedEmbeddedDefinition, IndexedEmbeddedPathTracker> pathTrackers = new LinkedHashMap<>();
@@ -157,8 +158,11 @@ public class PojoMapper<MPBS extends MappingPartialBuildState> implements Mapper
 			try {
 				if ( !( mappableTypeModel instanceof PojoRawTypeModel ) ) {
 					throw new AssertionFailure(
-							"Expected the mappable type model to be an instance of " + PojoRawTypeModel.class
-									+ ", got " + mappableTypeModel + " instead."
+							"Expected the mappable type model to be an instance of "
+									+ PojoRawTypeModel.class
+									+ ", got "
+									+ mappableTypeModel
+									+ " instead."
 					);
 				}
 
@@ -273,7 +277,8 @@ public class PojoMapper<MPBS extends MappingPartialBuildState> implements Mapper
 		PojoMappingDelegate mappingDelegate;
 		try {
 			// First step: build the processors and contribute to the reindexing resolvers
-			for ( PojoIndexedTypeManagerBuilder<?> pojoIndexedTypeManagerBuilder : indexedTypeManagerBuilders.values() ) {
+			for ( PojoIndexedTypeManagerBuilder<?> pojoIndexedTypeManagerBuilder : indexedTypeManagerBuilders
+					.values() ) {
 				pojoIndexedTypeManagerBuilder.preBuild( reindexingResolverBuildingHelper );
 			}
 			if ( failureCollector.hasFailure() ) {
@@ -281,8 +286,8 @@ public class PojoMapper<MPBS extends MappingPartialBuildState> implements Mapper
 			}
 
 			// Second step: build the indexed type managers and their reindexing resolvers
-			for ( Map.Entry<PojoRawTypeModel<?>, PojoIndexedTypeManagerBuilder<?>> entry
-					: indexedTypeManagerBuilders.entrySet() ) {
+			for ( Map.Entry<PojoRawTypeModel<?>, PojoIndexedTypeManagerBuilder<?>> entry : indexedTypeManagerBuilders
+					.entrySet() ) {
 				PojoRawTypeModel<?> typeModel = entry.getKey();
 				PojoIndexedTypeManagerBuilder<?> pojoIndexedTypeManagerBuilder = entry.getValue();
 				try {

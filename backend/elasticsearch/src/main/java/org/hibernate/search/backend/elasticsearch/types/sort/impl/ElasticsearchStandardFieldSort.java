@@ -83,7 +83,8 @@ public class ElasticsearchStandardFieldSort extends AbstractElasticsearchDocumen
 		}
 
 		@Override
-		public Builder<F> create(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<F> field) {
+		public Builder<F> create(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<
+				F> field) {
 			return new Builder<>( codec, scope, field );
 		}
 	}
@@ -123,7 +124,8 @@ public class ElasticsearchStandardFieldSort extends AbstractElasticsearchDocumen
 		public void missingAs(Object value, ValueConvert convert) {
 			DslConverter<?, ? extends F> dslToIndexConverter = field.type().dslConverter( convert );
 			try {
-				F converted = dslToIndexConverter.unknownTypeToDocumentValue( value, scope.toDocumentValueConvertContext() );
+				F converted = dslToIndexConverter.unknownTypeToDocumentValue( value, scope
+						.toDocumentValueConvertContext() );
 				this.missing = codec.encodeForMissing( converted );
 			}
 			catch (RuntimeException e) {

@@ -11,6 +11,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 
 import java.util.List;
 import java.util.function.Consumer;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.backend.lucene.LuceneExtension;
@@ -37,7 +38,8 @@ public class LucenePredicateDslIT {
 	private static final int BOOK4_ID = 4;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 

@@ -25,16 +25,23 @@ public class MassIndexingEntityFailureContext extends MassIndexingFailureContext
 
 	private MassIndexingEntityFailureContext(Builder builder) {
 		super( builder );
-		this.failingEntityReferences = builder.failingEntityReferences == null
-				? Collections.emptyList() : Collections.unmodifiableList( builder.failingEntityReferences );
+		this.failingEntityReferences = builder.failingEntityReferences == null ?
+				Collections.emptyList() : Collections.unmodifiableList( builder.failingEntityReferences );
 	}
 
 	@Override
 	public String toString() {
-		return "MassIndexingEntityFailureContext{" +
-				"failingEntityReferences=" + failingEntityReferences +
-				", throwable=" + throwable +
-				", failingOperation=" + failingOperation +
+		return "MassIndexingEntityFailureContext{"
+				+
+				"failingEntityReferences="
+				+ failingEntityReferences
+				+
+				", throwable="
+				+ throwable
+				+
+				", failingOperation="
+				+ failingOperation
+				+
 				'}';
 	}
 

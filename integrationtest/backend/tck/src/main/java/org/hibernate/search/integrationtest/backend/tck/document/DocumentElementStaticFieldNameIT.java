@@ -257,7 +257,8 @@ public class DocumentElementStaticFieldNameIT<F> {
 		IndexBinding(IndexedEntityBindingContext ctx) {
 			super( ctx.schemaElement() );
 			IndexSchemaElement root = ctx.schemaElement();
-			IndexSchemaObjectField flattenedObjectField = root.objectField( "flattenedObject", ObjectStructure.FLATTENED )
+			IndexSchemaObjectField flattenedObjectField = root.objectField( "flattenedObject",
+					ObjectStructure.FLATTENED )
 					.multiValued();
 			flattenedObject = new FirstLevelObjectBinding( flattenedObjectField );
 			IndexSchemaObjectField nestedObjectField = root.objectField( "nestedObject", ObjectStructure.NESTED )
@@ -292,7 +293,8 @@ public class DocumentElementStaticFieldNameIT<F> {
 		FirstLevelObjectBinding(IndexSchemaElement objectField, IndexObjectFieldReference objectFieldReference) {
 			super( objectField );
 			self = objectFieldReference;
-			IndexSchemaObjectField flattenedObjectField = objectField.objectField( "flattenedObject", ObjectStructure.FLATTENED )
+			IndexSchemaObjectField flattenedObjectField = objectField.objectField( "flattenedObject",
+					ObjectStructure.FLATTENED )
 					.multiValued();
 			flattenedObject = new SecondLevelObjectBinding( flattenedObjectField );
 			IndexSchemaObjectField nestedObjectField = objectField.objectField( "nestedObject", ObjectStructure.NESTED )

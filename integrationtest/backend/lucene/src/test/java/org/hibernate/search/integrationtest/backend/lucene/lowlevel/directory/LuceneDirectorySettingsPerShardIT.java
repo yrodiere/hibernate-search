@@ -26,7 +26,8 @@ import org.apache.lucene.store.FSDirectory;
 @TestForIssue(jiraKey = "HSEARCH-3636")
 public class LuceneDirectorySettingsPerShardIT extends AbstractSettingsPerShardIT {
 
-	public LuceneDirectorySettingsPerShardIT(String ignoredLabel, SearchSetupHelper setupHelper, List<String> shardIds) {
+	public LuceneDirectorySettingsPerShardIT(String ignoredLabel, SearchSetupHelper setupHelper, List<
+			String> shardIds) {
 		super( ignoredLabel, setupHelper, shardIds );
 	}
 
@@ -45,7 +46,8 @@ public class LuceneDirectorySettingsPerShardIT extends AbstractSettingsPerShardI
 		setupHelper.start().withIndex( index )
 				.withIndexProperty( index.name(), "directory.type", "local-filesystem" )
 				.withIndexProperty( index.name(), "directory.root", root1Directory.toString() )
-				.withIndexProperty( index.name(), "shards." + shardIds.get( 2 ) + ".directory.root", root2Directory.toString() )
+				.withIndexProperty( index.name(), "shards." + shardIds.get( 2 ) + ".directory.root", root2Directory
+						.toString() )
 				.withIndexProperty( index.name(), "shards." + shardIds.get( 3 ) + ".directory.type", "local-heap" )
 				.setup();
 

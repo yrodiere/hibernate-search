@@ -12,12 +12,11 @@ import java.lang.invoke.MethodHandles;
 import java.util.Collection;
 import java.util.function.Consumer;
 
+import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.search.query.dsl.SearchQuerySelectStep;
-import org.hibernate.search.mapper.pojo.work.spi.ConfiguredSearchIndexingPlanFilter;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoSelectionLoadingContext;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRuntimeIntrospector;
 import org.hibernate.search.mapper.pojo.session.spi.AbstractPojoSearchSession;
-import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.mapper.pojo.standalone.loading.dsl.SelectionLoadingOptionsStep;
 import org.hibernate.search.mapper.pojo.standalone.loading.impl.StandalonePojoLoadingContext;
 import org.hibernate.search.mapper.pojo.standalone.loading.impl.StandalonePojoLoadingSessionContext;
@@ -38,6 +37,7 @@ import org.hibernate.search.mapper.pojo.standalone.work.impl.SearchIndexerImpl;
 import org.hibernate.search.mapper.pojo.standalone.work.impl.SearchIndexingPlanImpl;
 import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.mapper.pojo.work.spi.ConfiguredIndexingPlanSynchronizationStrategy;
+import org.hibernate.search.mapper.pojo.work.spi.ConfiguredSearchIndexingPlanFilter;
 import org.hibernate.search.mapper.pojo.work.spi.PojoIndexer;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
@@ -69,8 +69,9 @@ public class StandalonePojoSearchSession extends AbstractPojoSearchSession
 		this.loadingOptionsContributor = builder.loadingOptionsContributor;
 		this.synchronizationStrategyHolder = builder.synchronizationStrategyHolder;
 
-		this.indexingPlanSynchronizationStrategy = this.synchronizationStrategyHolder.configureOverriddenSynchronizationStrategy(
-				builder.synchronizationStrategy );
+		this.indexingPlanSynchronizationStrategy = this.synchronizationStrategyHolder
+				.configureOverriddenSynchronizationStrategy(
+						builder.synchronizationStrategy );
 		this.configuredIndexingPlanFilter = ACCEPT_ALL;
 	}
 
@@ -108,8 +109,9 @@ public class StandalonePojoSearchSession extends AbstractPojoSearchSession
 	}
 
 	@Override
-	public void indexingPlanSynchronizationStrategy( IndexingPlanSynchronizationStrategy synchronizationStrategy) {
-		this.indexingPlanSynchronizationStrategy = synchronizationStrategyHolder.configureOverriddenSynchronizationStrategy( synchronizationStrategy );
+	public void indexingPlanSynchronizationStrategy(IndexingPlanSynchronizationStrategy synchronizationStrategy) {
+		this.indexingPlanSynchronizationStrategy = synchronizationStrategyHolder
+				.configureOverriddenSynchronizationStrategy( synchronizationStrategy );
 	}
 
 	@Override
@@ -123,7 +125,8 @@ public class StandalonePojoSearchSession extends AbstractPojoSearchSession
 	}
 
 	@Override
-	public <T> SearchQuerySelectStep<?, EntityReference, T, ?, ?, ?> search(Collection<? extends Class<? extends T>> types) {
+	public <T> SearchQuerySelectStep<?, EntityReference, T, ?, ?, ?> search(Collection<? extends Class<
+			? extends T>> types) {
 		return search( scope( types ) );
 	}
 
@@ -227,7 +230,8 @@ public class StandalonePojoSearchSession extends AbstractPojoSearchSession
 		}
 
 		@Override
-		public SearchSessionBuilder indexingPlanSynchronizationStrategy(IndexingPlanSynchronizationStrategy synchronizationStrategy) {
+		public SearchSessionBuilder indexingPlanSynchronizationStrategy(
+				IndexingPlanSynchronizationStrategy synchronizationStrategy) {
 			this.synchronizationStrategy = synchronizationStrategy;
 			return this;
 		}

@@ -8,9 +8,9 @@ package org.hibernate.search.util.impl.integrationtest.common.stub.backend.searc
 
 import java.util.Iterator;
 
-import org.hibernate.search.engine.search.projection.SearchProjection;
 import org.hibernate.search.engine.search.loading.spi.LoadingResult;
 import org.hibernate.search.engine.search.loading.spi.ProjectionHitMapper;
+import org.hibernate.search.engine.search.projection.SearchProjection;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.spi.ToStringTreeAppendable;
 import org.hibernate.search.util.common.spi.ToStringTreeAppender;
@@ -30,7 +30,8 @@ public abstract class StubSearchProjection<P> implements SearchProjection<P>, To
 	public abstract Object extract(ProjectionHitMapper<?> projectionHitMapper, Iterator<?> projectionFromIndex,
 			StubSearchProjectionContext context);
 
-	public abstract P transform(LoadingResult<?> loadingResult, Object extractedData, StubSearchProjectionContext context);
+	public abstract P transform(LoadingResult<?> loadingResult, Object extractedData,
+			StubSearchProjectionContext context);
 
 	public final StubProjectionNode toRootNode() {
 		StubProjectionNode.Builder nodeBuilder = StubProjectionNode.root( typeName() );
@@ -42,7 +43,8 @@ public abstract class StubSearchProjection<P> implements SearchProjection<P>, To
 
 	protected abstract void toNode(StubProjectionNode.Builder self);
 
-	protected final void appendInnerNode(StubProjectionNode.Builder self, String innerKey, StubSearchProjection<?> inner) {
+	protected final void appendInnerNode(StubProjectionNode.Builder self, String innerKey, StubSearchProjection<
+			?> inner) {
 		self.inner( innerKey, inner.typeName(), inner::toNode );
 	}
 

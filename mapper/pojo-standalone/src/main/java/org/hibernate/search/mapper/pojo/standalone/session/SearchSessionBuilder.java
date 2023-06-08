@@ -8,8 +8,8 @@ package org.hibernate.search.mapper.pojo.standalone.session;
 
 import java.util.function.Consumer;
 
-import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.mapper.pojo.standalone.loading.dsl.SelectionLoadingOptionsStep;
+import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.util.common.annotation.Incubating;
 
 @Incubating
@@ -29,7 +29,8 @@ public interface SearchSessionBuilder {
 	 * @see IndexingPlanSynchronizationStrategy
 	 * @see IndexingPlanSynchronizationStrategy
 	 */
-	SearchSessionBuilder indexingPlanSynchronizationStrategy(IndexingPlanSynchronizationStrategy synchronizationStrategy);
+	SearchSessionBuilder indexingPlanSynchronizationStrategy(
+			IndexingPlanSynchronizationStrategy synchronizationStrategy);
 
 	/**
 	 * @param loadingOptionsContributor The default loading options.

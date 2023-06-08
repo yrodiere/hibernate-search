@@ -31,7 +31,8 @@ public class ReindexOnUpdateShallowIncorrectIT {
 						.pathContext( ".category<no value extractors>.name<no value extractors>" )
 						.failure(
 								"Unable to find the inverse side of the association on type '"
-										+ Book.class.getName() + "' at path '.category<no value extractors>'",
+										+ Book.class.getName()
+										+ "' at path '.category<no value extractors>'",
 								"Hibernate Search needs this information",
 								"you can disable automatic reindexing with"
 										+ " @IndexingDependency(reindexOnUpdate = ReindexOnUpdate.SHALLOW)"

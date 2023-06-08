@@ -55,14 +55,29 @@ public class EventProcessorClusterLinkPulseExpectations {
 
 	@Override
 	public String toString() {
-		return "ClusterLinkPulseExpectations{" +
-				"expectedLinkShardAssignment=" + expectedLinkShardAssignment +
-				", expectedInstructionsExpiration=" + expectedInstructionsExpiration +
-				", expectedInstructionsEventFinder=" + expectedInstructionsEventFinder +
-				", expectedSelfAgentId=" + expectedSelfAgentId +
-				", expectedSelfAgentExpiration=" + expectedSelfAgentExpiration +
-				", expectedSelfAgentCurrentState=" + expectedSelfAgentCurrentState +
-				", expectedSelfAgentShardAssignment=" + expectedSelfAgentShardAssignment +
+		return "ClusterLinkPulseExpectations{"
+				+
+				"expectedLinkShardAssignment="
+				+ expectedLinkShardAssignment
+				+
+				", expectedInstructionsExpiration="
+				+ expectedInstructionsExpiration
+				+
+				", expectedInstructionsEventFinder="
+				+ expectedInstructionsEventFinder
+				+
+				", expectedSelfAgentId="
+				+ expectedSelfAgentId
+				+
+				", expectedSelfAgentExpiration="
+				+ expectedSelfAgentExpiration
+				+
+				", expectedSelfAgentCurrentState="
+				+ expectedSelfAgentCurrentState
+				+
+				", expectedSelfAgentShardAssignment="
+				+ expectedSelfAgentShardAssignment
+				+
 				'}';
 	}
 

@@ -15,7 +15,8 @@ import org.hibernate.search.backend.lucene.types.codec.impl.LuceneLocalDateTimeF
 import org.hibernate.search.backend.lucene.types.codec.impl.Storage;
 
 class LuceneLocalDateTimeIndexFieldTypeOptionsStep
-		extends AbstractLuceneTemporalIndexFieldTypeOptionsStep<LuceneLocalDateTimeIndexFieldTypeOptionsStep, LocalDateTime> {
+		extends AbstractLuceneTemporalIndexFieldTypeOptionsStep<LuceneLocalDateTimeIndexFieldTypeOptionsStep,
+				LocalDateTime> {
 
 	LuceneLocalDateTimeIndexFieldTypeOptionsStep(LuceneIndexFieldTypeBuildContext buildContext) {
 		super( buildContext, LocalDateTime.class );

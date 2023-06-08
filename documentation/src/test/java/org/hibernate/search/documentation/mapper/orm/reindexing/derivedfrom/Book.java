@@ -8,6 +8,7 @@ package org.hibernate.search.documentation.mapper.orm.reindexing.derivedfrom;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -70,7 +71,7 @@ public class Book {
 	@Transient // <2>
 	@FullTextField(analyzer = "name") // <3>
 	@IndexingDependency(derivedFrom = @ObjectPath( // <4>
-			@PropertyValue(propertyName = "authors")
+	@PropertyValue(propertyName = "authors")
 	))
 	public String getMainAuthor() {
 		return authors.isEmpty() ? null : authors.get( 0 );

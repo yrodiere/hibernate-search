@@ -42,7 +42,8 @@ abstract class AbstractSimpleDefaultBridge<V, F> implements ValueBridge<V, F>, I
 	}
 
 	@Override
-	public final V fromDocumentIdentifier(String documentIdentifier, IdentifierBridgeFromDocumentIdentifierContext context) {
+	public final V fromDocumentIdentifier(String documentIdentifier,
+			IdentifierBridgeFromDocumentIdentifierContext context) {
 		return fromString( documentIdentifier );
 	}
 

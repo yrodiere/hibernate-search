@@ -16,14 +16,14 @@ import com.google.gson.JsonPrimitive;
 
 public class ElasticsearchMultiIndexSearchIndexValueFieldContext<F>
 		extends AbstractMultiIndexSearchIndexValueFieldContext<
-						ElasticsearchSearchIndexValueFieldContext<F>,
-						ElasticsearchSearchIndexScope<?>,
-						ElasticsearchSearchIndexValueFieldTypeContext<F>,
-						F
-				>
+				ElasticsearchSearchIndexValueFieldContext<F>,
+				ElasticsearchSearchIndexScope<?>,
+				ElasticsearchSearchIndexValueFieldTypeContext<F>,
+				F>
 		implements ElasticsearchSearchIndexValueFieldContext<F>, ElasticsearchSearchIndexValueFieldTypeContext<F> {
 
-	public ElasticsearchMultiIndexSearchIndexValueFieldContext(ElasticsearchSearchIndexScope<?> scope, String absolutePath,
+	public ElasticsearchMultiIndexSearchIndexValueFieldContext(ElasticsearchSearchIndexScope<?> scope,
+			String absolutePath,
 			List<? extends ElasticsearchSearchIndexValueFieldContext<F>> fieldForEachIndex) {
 		super( scope, absolutePath, fieldForEachIndex );
 	}
@@ -56,7 +56,8 @@ public class ElasticsearchMultiIndexSearchIndexValueFieldContext<F>
 
 	@Override
 	public JsonPrimitive elasticsearchTypeAsJson() {
-		return fromTypeIfCompatible( ElasticsearchSearchIndexValueFieldTypeContext::elasticsearchTypeAsJson, Object::equals,
+		return fromTypeIfCompatible( ElasticsearchSearchIndexValueFieldTypeContext::elasticsearchTypeAsJson,
+				Object::equals,
 				"elasticsearchType" );
 	}
 

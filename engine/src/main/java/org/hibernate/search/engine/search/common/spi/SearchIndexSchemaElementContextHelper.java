@@ -18,19 +18,23 @@ import org.hibernate.search.util.common.reporting.EventContext;
 public abstract class SearchIndexSchemaElementContextHelper {
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
-	public static <T extends SearchIndexCompositeNodeContext<?>> T throwingToComposite(SearchIndexNodeContext<?> element) {
+	public static <T extends SearchIndexCompositeNodeContext<?>> T throwingToComposite(SearchIndexNodeContext<
+			?> element) {
 		throw log.invalidIndexNodeTypeNotComposite( element.relativeEventContext() );
 	}
 
-	public static <T extends SearchIndexCompositeNodeContext<?>> T throwingToObjectField(SearchIndexNodeContext<?> element) {
+	public static <T extends SearchIndexCompositeNodeContext<?>> T throwingToObjectField(SearchIndexNodeContext<
+			?> element) {
 		throw log.invalidIndexNodeTypeNotObjectField( element.relativeEventContext() );
 	}
 
-	public static <T extends SearchIndexValueFieldContext<?>> T throwingToValueField(SearchIndexNodeContext<?> element) {
+	public static <T extends SearchIndexValueFieldContext<?>> T throwingToValueField(SearchIndexNodeContext<
+			?> element) {
 		throw log.invalidIndexNodeTypeNotValueField( element.relativeEventContext() );
 	}
 
-	public static void checkNestedDocumentPathCompatibility(SearchIndexNodeContext<?> left, SearchIndexNodeContext<?> right) {
+	public static void checkNestedDocumentPathCompatibility(SearchIndexNodeContext<?> left, SearchIndexNodeContext<
+			?> right) {
 		String leftNestedDocumentPathHierarchy = left.nestedDocumentPath();
 		String rightNestedDocumentPathHierarchy = right.nestedDocumentPath();
 
@@ -48,18 +52,19 @@ public abstract class SearchIndexSchemaElementContextHelper {
 	private SearchIndexSchemaElementContextHelper() {
 	}
 
-	public static final SearchIndexSchemaElementContextHelper VALUE_FIELD = new SearchIndexSchemaElementContextHelper() {
-		@Override
-		protected String missingSupportHint(SearchQueryElementTypeKey<?> key) {
-			return log.missingSupportHintForValueField( key );
-		}
+	public static final SearchIndexSchemaElementContextHelper VALUE_FIELD =
+			new SearchIndexSchemaElementContextHelper() {
+				@Override
+				protected String missingSupportHint(SearchQueryElementTypeKey<?> key) {
+					return log.missingSupportHintForValueField( key );
+				}
 
-		@Override
-		public String partialSupportHint() {
-			return log.partialSupportHintForValueField();
-		}
+				@Override
+				public String partialSupportHint() {
+					return log.partialSupportHintForValueField();
+				}
 
-	};
+			};
 
 	public static final SearchIndexSchemaElementContextHelper COMPOSITE = new SearchIndexSchemaElementContextHelper() {
 		@Override
@@ -73,9 +78,9 @@ public abstract class SearchIndexSchemaElementContextHelper {
 		}
 	};
 
-	public <T, SC extends SearchIndexScope<?>, N extends SearchIndexNodeContext<SC>>
-			T queryElement(SearchQueryElementTypeKey<T> key,
-					SearchQueryElementFactory<? extends T, ? super SC, ? super N> factory, SC scope, N node) {
+	public <T, SC extends SearchIndexScope<?>, N extends SearchIndexNodeContext<SC>> T queryElement(
+			SearchQueryElementTypeKey<T> key,
+			SearchQueryElementFactory<? extends T, ? super SC, ? super N> factory, SC scope, N node) {
 		if ( factory == null ) {
 			throw cannotUseQueryElement( key, node, missingSupportHint( key ), null );
 		}
@@ -87,9 +92,12 @@ public abstract class SearchIndexSchemaElementContextHelper {
 		}
 	}
 
-	public <T, SC extends SearchIndexScope<?>, N extends SearchIndexNodeContext<SC>>
-	SearchException cannotUseQueryElement(SearchQueryElementTypeKey<T> key, N node, String hint,
-			Exception causeOrNull) {
+	public <
+			T,
+			SC extends SearchIndexScope<?>,
+			N extends SearchIndexNodeContext<SC>> SearchException cannotUseQueryElement(SearchQueryElementTypeKey<
+					T> key, N node, String hint,
+					Exception causeOrNull) {
 		throw log.cannotUseQueryElementForIndexNode( node.relativeEventContext(), key,
 				hint, node.eventContext(), causeOrNull );
 	}

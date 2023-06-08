@@ -28,6 +28,7 @@ public interface MethodParameterMappingAnnotationProcessor<A extends Annotation>
 	 * @param annotation The annotation to process.
 	 * @param context A context providing various information and helpers.
 	 */
-	void process(MethodParameterMappingStep mapping, A annotation, MethodParameterMappingAnnotationProcessorContext context);
+	void process(MethodParameterMappingStep mapping, A annotation,
+			MethodParameterMappingAnnotationProcessorContext context);
 
 }

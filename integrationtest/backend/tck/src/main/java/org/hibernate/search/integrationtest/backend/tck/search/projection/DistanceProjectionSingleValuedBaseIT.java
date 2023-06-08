@@ -80,25 +80,25 @@ public class DistanceProjectionSingleValuedBaseIT {
 
 	private static final SimpleMappedIndex<SingleFieldIndexBinding> mainIndex =
 			SimpleMappedIndex.of(
-							root -> SingleFieldIndexBinding.createWithSingleValuedNestedFields(
-									root,
-									supportedFieldTypes,
-									TckConfiguration.get().getBackendFeatures().fieldsProjectableByDefault() ?
-											NO_ADDITIONAL_CONFIGURATION :
-											c -> c.projectable( Projectable.YES )
-							)
+					root -> SingleFieldIndexBinding.createWithSingleValuedNestedFields(
+							root,
+							supportedFieldTypes,
+							TckConfiguration.get().getBackendFeatures().fieldsProjectableByDefault() ?
+									NO_ADDITIONAL_CONFIGURATION :
+									c -> c.projectable( Projectable.YES )
 					)
+			)
 					.name( "main" );
 	private static final SimpleMappedIndex<SingleFieldIndexBinding> sortableIndex =
 			SimpleMappedIndex.of(
-							root -> SingleFieldIndexBinding.createWithSingleValuedNestedFields(
-									root,
-									supportedFieldTypes,
-									TckConfiguration.get().getBackendFeatures().fieldsProjectableByDefault() ?
-											NO_ADDITIONAL_CONFIGURATION :
-											c -> c.projectable( Projectable.YES ).sortable( Sortable.YES )
-							)
+					root -> SingleFieldIndexBinding.createWithSingleValuedNestedFields(
+							root,
+							supportedFieldTypes,
+							TckConfiguration.get().getBackendFeatures().fieldsProjectableByDefault() ?
+									NO_ADDITIONAL_CONFIGURATION :
+									c -> c.projectable( Projectable.YES ).sortable( Sortable.YES )
 					)
+			)
 					.name( "sortable" );
 
 	@BeforeClass
@@ -165,9 +165,8 @@ public class DistanceProjectionSingleValuedBaseIT {
 						Collections.singletonList( dataSet.getFieldDistanceFromCenter1( 2 ) ),
 						Collections.singletonList( dataSet.getFieldDistanceFromCenter1( 3 ) ),
 						// Empty document
-						TckConfiguration.get().getBackendFeatures().projectionPreservesNulls()
-								? Collections.singletonList( null )
-								: Collections.emptyList()
+						TckConfiguration.get().getBackendFeatures().projectionPreservesNulls() ?
+								Collections.singletonList( null ) : Collections.emptyList()
 				);
 	}
 
@@ -348,7 +347,8 @@ public class DistanceProjectionSingleValuedBaseIT {
 
 		assertThatQuery( mainIndex.query()
 				.select( f -> f.withRoot( parentObjectBinding.absolutePath )
-						.distance( parentObjectBinding.getRelativeFieldName( fieldStructure, fieldType ), CENTER_POINT_1 ) )
+						.distance( parentObjectBinding.getRelativeFieldName( fieldStructure, fieldType ),
+								CENTER_POINT_1 ) )
 				.where( f -> f.matchAll() )
 				.routing( dataSet.routingKey )
 				.toQuery() )

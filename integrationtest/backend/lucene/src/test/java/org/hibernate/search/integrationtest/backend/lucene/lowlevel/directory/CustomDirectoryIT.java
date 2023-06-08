@@ -66,9 +66,12 @@ public class CustomDirectoryIT extends AbstractDirectoryIT {
 						.indexContext( index.name() )
 						.failure(
 								"Invalid value for configuration property 'hibernate.search.backend.directory.type': '"
-										+ invalidDirectoryType + "'",
-								"No beans defined for type '" + DirectoryProvider.class.getName()
-										+ "' and name '" + invalidDirectoryType
+										+ invalidDirectoryType
+										+ "'",
+								"No beans defined for type '"
+										+ DirectoryProvider.class.getName()
+										+ "' and name '"
+										+ invalidDirectoryType
 										+ "' in Hibernate Search's internal registry",
 								"Unable to load class '" + invalidDirectoryType + "'"
 						) );
@@ -101,6 +104,7 @@ public class CustomDirectoryIT extends AbstractDirectoryIT {
 					.contains( CONFIGURATION_PROPERTY_EXPECTED_VALUE );
 			return new DirectoryHolder() {
 				Directory directory;
+
 				@Override
 				public void start() {
 					StaticCounters.get().increment( DIRECTORY_HOLDER_START_COUNTER_KEY );

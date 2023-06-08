@@ -15,15 +15,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.MultiReader;
-
 import org.hibernate.search.backend.lucene.logging.impl.Log;
 import org.hibernate.search.engine.reporting.spi.EventContexts;
 import org.hibernate.search.util.common.impl.Closer;
 import org.hibernate.search.util.common.impl.SuppressingCloser;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
+
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.MultiReader;
 
 /**
  * A {@link MultiReader} keeping references to {@link DirectoryReader}s to eventually close them,
@@ -65,7 +65,8 @@ public class HibernateSearchMultiReader extends MultiReader {
 	private final List<DirectoryReader> directoryReaders;
 	private final IndexReaderMetadataResolver metadataResolver;
 
-	HibernateSearchMultiReader(List<DirectoryReader> directoryReaders, IndexReaderMetadataResolver metadataResolver) throws IOException {
+	HibernateSearchMultiReader(List<DirectoryReader> directoryReaders,
+			IndexReaderMetadataResolver metadataResolver) throws IOException {
 		// If this flag isn't set to true, the MultiReader will increase the usage counter!
 		super( toReaderArray( directoryReaders ), true );
 		this.directoryReaders = directoryReaders;

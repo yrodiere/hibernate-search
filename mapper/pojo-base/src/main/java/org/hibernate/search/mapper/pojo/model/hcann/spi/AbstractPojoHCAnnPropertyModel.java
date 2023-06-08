@@ -37,7 +37,7 @@ public abstract class AbstractPojoHCAnnPropertyModel<T, I extends AbstractPojoHC
 	 * The declared XProperties for this property in the holder type.
 	 * May be empty if this property is declared in a supertype of the holder type
 	 * and not overridden in the holder type.
- 	 */
+	 */
 	protected final List<XProperty> declaredXProperties;
 	private final List<Member> members;
 
@@ -70,7 +70,7 @@ public abstract class AbstractPojoHCAnnPropertyModel<T, I extends AbstractPojoHC
 	 * The cast is safe as long as both type parameter T and getterGenericReturnType
 	 * match the actual type for this property.
 	 */
-	@SuppressWarnings( "unchecked" )
+	@SuppressWarnings("unchecked")
 	public final PojoTypeModel<T> typeModel() {
 		if ( typeModelCache == null ) {
 			try {
@@ -101,7 +101,8 @@ public abstract class AbstractPojoHCAnnPropertyModel<T, I extends AbstractPojoHC
 		if ( memberCache == null ) {
 			memberCache = members.get( 0 );
 			if ( members.size() > 1 ) {
-				log.arbitraryMemberSelection( holderTypeModel, name, memberCache, members.subList( 1, members.size() ) );
+				log.arbitraryMemberSelection( holderTypeModel, name, memberCache, members.subList( 1, members
+						.size() ) );
 			}
 		}
 		return memberCache;
@@ -120,8 +121,12 @@ public abstract class AbstractPojoHCAnnPropertyModel<T, I extends AbstractPojoHC
 		}
 		else {
 			throw new AssertionFailure(
-					"Unexpected type for a " + Member.class.getName() + ": " + member
-					+ " has type " + ( member == null ? null : member.getClass() )
+					"Unexpected type for a "
+							+ Member.class.getName()
+							+ ": "
+							+ member
+							+ " has type "
+							+ ( member == null ? null : member.getClass() )
 			);
 		}
 	}

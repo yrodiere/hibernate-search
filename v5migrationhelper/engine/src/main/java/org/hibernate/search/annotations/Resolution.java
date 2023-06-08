@@ -15,11 +15,5 @@ package org.hibernate.search.annotations;
  */
 @Deprecated
 public enum Resolution {
-	YEAR,
-	MONTH,
-	DAY,
-	HOUR,
-	MINUTE,
-	SECOND,
-	MILLISECOND
+	YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, MILLISECOND
 }

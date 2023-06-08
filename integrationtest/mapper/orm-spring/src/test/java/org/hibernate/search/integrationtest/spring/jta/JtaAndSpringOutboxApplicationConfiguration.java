@@ -14,7 +14,8 @@ public class JtaAndSpringOutboxApplicationConfiguration extends JtaAndSpringAppl
 	@Override
 	public BackendMock backendMock() {
 		BackendMock backendMock = super.backendMock();
-		backendMock.indexingWorkExpectations( CoordinationStrategyExpectations.outboxPolling().indexingWorkExpectations );
+		backendMock.indexingWorkExpectations( CoordinationStrategyExpectations
+				.outboxPolling().indexingWorkExpectations );
 		return backendMock;
 	}
 }

@@ -24,7 +24,7 @@ public class LuceneClassesAnalysisConfigurer implements LuceneAnalysisConfigurer
 				.charFilter( HTMLStripCharFilterFactory.class )
 				.tokenFilter( LowerCaseFilterFactory.class )
 				.tokenFilter( SnowballPorterFilterFactory.class )
-						.param( "language", "English" )
+				.param( "language", "English" )
 				.tokenFilter( ASCIIFoldingFilterFactory.class );
 
 		context.normalizer( "lowercase" ).custom()

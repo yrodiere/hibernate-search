@@ -10,6 +10,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -46,7 +47,8 @@ public class AutomaticIndexingGenericPolymorphicAssociationIT {
 	public MethodRule setupHolderMethodRule = setupHolder.methodRule();
 
 	@ReusableOrmSetupHolder.Setup
-	public void setup(OrmSetupHelper.SetupContext setupContext, ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
+	public void setup(OrmSetupHelper.SetupContext setupContext,
+			ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
 		backendMock.expectSchema( IndexedEntity.INDEX, b -> b
 				.objectField( "child", b3 -> b3
 						.objectField( "containedSingle", b2 -> b2

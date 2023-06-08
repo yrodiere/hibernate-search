@@ -11,5 +11,4 @@ import org.hibernate.search.integrationtest.showcase.library.repository.indexsea
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface LibraryRepository extends CrudRepository<Library, Integer>, IndexSearchLibraryRepository {
-}
+public interface LibraryRepository extends CrudRepository<Library, Integer>, IndexSearchLibraryRepository {}

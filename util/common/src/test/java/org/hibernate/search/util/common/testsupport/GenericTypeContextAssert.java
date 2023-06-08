@@ -79,8 +79,16 @@ public abstract class GenericTypeContextAssert {
 	public GenericTypeContextAssert noTypeParameter(Class<?> rawSuperClass, int typeArgumentIndex) {
 		try {
 			getTypeContext().resolveTypeArgument( rawSuperClass, typeArgumentIndex );
-			fail( "Expected resolveTypeArgument(" + rawSuperClass + ", " + typeArgumentIndex + ")"
-					+ " for type " + getTypeContext() + " to fail because " + rawSuperClass + " doesn't have any type parameter" );
+			fail( "Expected resolveTypeArgument("
+					+ rawSuperClass
+					+ ", "
+					+ typeArgumentIndex
+					+ ")"
+					+ " for type "
+					+ getTypeContext()
+					+ " to fail because "
+					+ rawSuperClass
+					+ " doesn't have any type parameter" );
 		}
 		catch (IllegalArgumentException e) {
 			assertThat( e.getMessage() )
@@ -93,8 +101,14 @@ public abstract class GenericTypeContextAssert {
 	public GenericTypeContextAssert typeParameterIndexTooLow(Class<?> rawSuperClass, int typeArgumentIndex) {
 		try {
 			getTypeContext().resolveTypeArgument( rawSuperClass, typeArgumentIndex );
-			fail( "Expected resolveTypeArgument(" + rawSuperClass + ", " + typeArgumentIndex + ")"
-					+ " for type " + getTypeContext() + " to fail because of the invalid index" );
+			fail( "Expected resolveTypeArgument("
+					+ rawSuperClass
+					+ ", "
+					+ typeArgumentIndex
+					+ ")"
+					+ " for type "
+					+ getTypeContext()
+					+ " to fail because of the invalid index" );
 		}
 		catch (IllegalArgumentException e) {
 			assertThat( e.getMessage() )
@@ -107,8 +121,14 @@ public abstract class GenericTypeContextAssert {
 	public GenericTypeContextAssert typeParameterIndexTooHigh(Class<?> rawSuperClass, int typeArgumentIndex) {
 		try {
 			getTypeContext().resolveTypeArgument( rawSuperClass, typeArgumentIndex );
-			fail( "Expected resolveTypeArgument(" + rawSuperClass + ", " + typeArgumentIndex + ")"
-					+ " for type " + getTypeContext() + " to fail because of the invalid index" );
+			fail( "Expected resolveTypeArgument("
+					+ rawSuperClass
+					+ ", "
+					+ typeArgumentIndex
+					+ ")"
+					+ " for type "
+					+ getTypeContext()
+					+ " to fail because of the invalid index" );
 		}
 		catch (IllegalArgumentException e) {
 			assertThat( e.getMessage() )
@@ -158,7 +178,8 @@ public abstract class GenericTypeContextAssert {
 	 * @see WildcardTypeCapture
 	 */
 	@SuppressWarnings("unused")
-	public abstract static class AssertWithWildcardType<T extends WildcardTypeCapture.Of<?>> extends GenericTypeContextAssert {
+	public abstract static class AssertWithWildcardType<T extends WildcardTypeCapture.Of<?>>
+			extends GenericTypeContextAssert {
 		private final GenericTypeContext typeContext;
 
 		public AssertWithWildcardType() {

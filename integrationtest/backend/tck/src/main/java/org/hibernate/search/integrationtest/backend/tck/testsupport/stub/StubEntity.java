@@ -23,8 +23,10 @@ public class StubEntity {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "documentReference=" + documentReference
+		return getClass().getSimpleName()
+				+ "["
+				+ "documentReference="
+				+ documentReference
 				+ "]";
 	}
 }

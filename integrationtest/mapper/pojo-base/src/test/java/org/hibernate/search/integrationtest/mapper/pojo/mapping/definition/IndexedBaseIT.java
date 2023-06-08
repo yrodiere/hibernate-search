@@ -13,8 +13,6 @@ import java.lang.invoke.MethodHandles;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.bridge.RoutingBridge;
 import org.hibernate.search.mapper.pojo.bridge.binding.RoutingBindingContext;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.RoutingBinderRef;
@@ -24,10 +22,12 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.route.DocumentRoutes;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 import org.hibernate.search.util.impl.test.rule.StaticCounters;
 
@@ -180,6 +180,7 @@ public class IndexedBaseIT {
 			public Integer getId() {
 				throw new UnsupportedOperationException( "Should not be called" );
 			}
+
 			@GenericField
 			public String getText() {
 				throw new UnsupportedOperationException( "Should not be called" );
@@ -213,6 +214,7 @@ public class IndexedBaseIT {
 			public Integer getId() {
 				throw new UnsupportedOperationException( "Should not be called" );
 			}
+
 			@GenericField
 			public String getText() {
 				throw new UnsupportedOperationException( "Should not be called" );
@@ -255,6 +257,7 @@ public class IndexedBaseIT {
 			public Integer getId() {
 				throw new UnsupportedOperationException( "Should not be called" );
 			}
+
 			@GenericField
 			public String getText() {
 				throw new UnsupportedOperationException( "Should not be called" );
@@ -308,6 +311,7 @@ public class IndexedBaseIT {
 			public Integer getId() {
 				throw new UnsupportedOperationException( "Should not be called" );
 			}
+
 			@GenericField
 			public String getText() {
 				throw new UnsupportedOperationException( "Should not be called" );
@@ -338,6 +342,7 @@ public class IndexedBaseIT {
 			public Integer getId() {
 				throw new UnsupportedOperationException( "Should not be called" );
 			}
+
 			@GenericField
 			public String getText() {
 				throw new UnsupportedOperationException( "Should not be called" );
@@ -372,6 +377,7 @@ public class IndexedBaseIT {
 			public Integer getId() {
 				throw new UnsupportedOperationException( "Should not be called" );
 			}
+
 			@GenericField
 			public String getText() {
 				throw new UnsupportedOperationException( "Should not be called" );
@@ -406,6 +412,7 @@ public class IndexedBaseIT {
 			public Integer getId() {
 				throw new UnsupportedOperationException( "Should not be called" );
 			}
+
 			@GenericField
 			public String getText() {
 				throw new UnsupportedOperationException( "Should not be called" );
@@ -449,7 +456,8 @@ public class IndexedBaseIT {
 				.isInstanceOf( SearchException.class )
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedWithoutEntityMetadata.class.getName() )
-						.failure( "Unable to index type '" + IndexedWithoutEntityMetadata.class.getName()
+						.failure( "Unable to index type '"
+								+ IndexedWithoutEntityMetadata.class.getName()
 								+ "': this type is not an entity type."
 								+ " If you only expect subtypes to be instantiated, make this type abstract."
 								+ " If you expect this exact type to be instantiated and want it to be indexed, make it an entity type."
@@ -466,7 +474,7 @@ public class IndexedBaseIT {
 			Integer id;
 		}
 
-		defaultBackendMock.expectSchema( IndexedEntity.class.getSimpleName(), b -> { } );
+		defaultBackendMock.expectSchema( IndexedEntity.class.getSimpleName(), b -> {} );
 
 		SearchMapping mapping = setupHelper.start().expectCustomBeans().setup( IndexedEntity.class );
 		defaultBackendMock.verifyExpectationsMet();

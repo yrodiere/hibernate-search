@@ -13,10 +13,10 @@ import java.util.Set;
 
 import org.hibernate.search.mapper.pojo.loading.spi.PojoMassIdentifierLoader;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoMassIdentifierSink;
+import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.massindexing.MassIndexingEnvironment;
 import org.hibernate.search.mapper.pojo.massindexing.spi.PojoMassIndexingIdentifierLoadingContext;
 import org.hibernate.search.mapper.pojo.massindexing.spi.PojoMassIndexingLoadingStrategy;
-import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeIdentifier;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
@@ -53,8 +53,7 @@ public class PojoMassIndexingEntityIdentifierLoadingRunnable<E, I>
 			getNotifier().reportAddedTotalCount( totalCount );
 			do {
 				loader.loadNext();
-			}
-			while ( !context.done );
+			} while ( !context.done );
 			// Only do this when stopping normally,
 			// because this operation will block if the queue is full,
 			// resuming the thread only if the queue gets consumed (consumer still working)
@@ -120,6 +119,6 @@ public class PojoMassIndexingEntityIdentifierLoadingRunnable<E, I>
 		}
 	}
 
-	private static final class EntityIdentifierLoadingContextImpl implements MassIndexingEnvironment.EntityIdentifierLoadingContext {
-	}
+	private static final class EntityIdentifierLoadingContextImpl
+			implements MassIndexingEnvironment.EntityIdentifierLoadingContext {}
 }

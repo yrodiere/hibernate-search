@@ -95,7 +95,8 @@ public class HibernateOrmClassRawTypeModel<T>
 		}
 	}
 
-	private List<Member> findPropertyMember(String propertyName, HibernateOrmBasicClassPropertyMetadata ormPropertyMetadata) {
+	private List<Member> findPropertyMember(String propertyName,
+			HibernateOrmBasicClassPropertyMetadata ormPropertyMetadata) {
 		if ( ormPropertyMetadata != null ) {
 			/*
 			 * Hibernate ORM has metadata for this property,

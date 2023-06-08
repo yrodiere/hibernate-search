@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.Session;
@@ -31,9 +32,9 @@ import org.hibernate.search.engine.search.query.SearchResult;
 import org.hibernate.search.engine.spatial.DistanceUnit;
 import org.hibernate.search.engine.spatial.GeoPoint;
 import org.hibernate.search.mapper.orm.Search;
-import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
 import org.hibernate.search.mapper.orm.scope.SearchScope;
 import org.hibernate.search.mapper.orm.session.SearchSession;
+import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
 import org.hibernate.search.util.impl.integrationtest.common.assertion.TestComparators;
 
 import org.junit.Before;
@@ -55,7 +56,8 @@ public class ProjectionDslIT {
 	private static final int BOOK4_ID = 4;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -202,9 +204,9 @@ public class ProjectionDslIT {
 		withinSearchSession( searchSession -> {
 			List<Book> hits = searchSession.search( Book.class )
 					.select( f ->
-							// tag::entity-requested-type[]
-							f.entity( Book.class )
-							// end::entity-requested-type[]
+			// tag::entity-requested-type[]
+			f.entity( Book.class )
+			// end::entity-requested-type[]
 					)
 					.where( f -> f.matchAll() )
 					.fetchHits( 20 );
@@ -404,8 +406,8 @@ public class ProjectionDslIT {
 									f.field( "pageCount", Integer.class ), // <4>
 									f.field( "description", String.class ) ) // <5>
 							.asList( list -> // <6>
-								new MyTuple4<>( (String) list.get( 0 ), (Genre) list.get( 1 ),
-										(Integer) list.get( 2 ), (String) list.get( 3 ) ) ) )
+			new MyTuple4<>( (String) list.get( 0 ), (Genre) list.get( 1 ),
+					(Integer) list.get( 2 ), (String) list.get( 3 ) ) ) )
 					.where( f -> f.matchAll() )
 					.fetchHits( 20 ); // <7>
 			// end::composite-customObject-asList[]
@@ -584,31 +586,39 @@ public class ProjectionDslIT {
 			Session session = searchSession.toOrmSession();
 			assertThat( hits ).usingRecursiveFieldByFieldElementComparator()
 					.containsExactlyInAnyOrder(
-					Collections.singletonList(
-							new MyAuthorName(
-									session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 ).getFirstName(),
-									session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 ).getLastName()
+							Collections.singletonList(
+									new MyAuthorName(
+											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 )
+													.getLastName()
+									)
+							),
+							Collections.singletonList(
+									new MyAuthorName(
+											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 )
+													.getLastName()
+									)
+							),
+							Collections.singletonList(
+									new MyAuthorName(
+											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 )
+													.getLastName()
+									)
+							),
+							Collections.singletonList(
+									new MyAuthorName(
+											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 )
+													.getLastName()
+									)
 							)
-					),
-					Collections.singletonList(
-							new MyAuthorName(
-									session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 ).getFirstName(),
-									session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 ).getLastName()
-							)
-					),
-					Collections.singletonList(
-							new MyAuthorName(
-									session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 ).getFirstName(),
-									session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 ).getLastName()
-							)
-					),
-					Collections.singletonList(
-							new MyAuthorName(
-									session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 ).getFirstName(),
-									session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 ).getLastName()
-							)
-					)
-			);
+					);
 		} );
 
 		withinSearchSession( searchSession -> {
@@ -623,9 +633,9 @@ public class ProjectionDslIT {
 									f.distance( "authors.placeOfBirth", center ) // <5>
 											.unit( DistanceUnit.KILOMETERS ) )
 							.asList( list -> // <6>
-									new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
-											(String) list.get( 0 ), (String) list.get( 1 ),
-											(LocalDate) list.get( 2 ), (Double) list.get( 3 ) ) )
+			new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
+					(String) list.get( 0 ), (String) list.get( 1 ),
+					(LocalDate) list.get( 2 ), (Double) list.get( 3 ) ) )
 							.multi() ) // <7>
 					.where( f -> f.matchAll() )
 					.fetchHits( 20 ); // <8>
@@ -638,33 +648,45 @@ public class ProjectionDslIT {
 					.containsExactlyInAnyOrder(
 							Collections.singletonList(
 									new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
-											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 ).getFirstName(),
-											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 ).getLastName(),
-											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 ).getBirthDate(),
+											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 )
+													.getLastName(),
+											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 )
+													.getBirthDate(),
 											0.888
 									)
 							),
 							Collections.singletonList(
 									new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
-											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 ).getFirstName(),
-											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 ).getLastName(),
-											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 ).getBirthDate(),
+											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 )
+													.getLastName(),
+											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 )
+													.getBirthDate(),
 											0.888
 									)
 							),
 							Collections.singletonList(
 									new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
-											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 ).getFirstName(),
-											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 ).getLastName(),
-											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 ).getBirthDate(),
+											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 )
+													.getLastName(),
+											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 )
+													.getBirthDate(),
 											0.888
 									)
 							),
 							Collections.singletonList(
 									new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
-											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 ).getFirstName(),
-											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 ).getLastName(),
-											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 ).getBirthDate(),
+											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 )
+													.getLastName(),
+											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 )
+													.getBirthDate(),
 											9680.93
 									)
 							)
@@ -683,9 +705,9 @@ public class ProjectionDslIT {
 									f.distance( "authors.placeOfBirth", center ) // <5>
 											.unit( DistanceUnit.KILOMETERS ) )
 							.asArray( array -> // <6>
-									new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
-											(String) array[0], (String) array[1],
-											(LocalDate) array[2], (Double) array[3] ) )
+			new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
+					(String) array[0], (String) array[1],
+					(LocalDate) array[2], (Double) array[3] ) )
 							.multi() ) // <7>
 					.where( f -> f.matchAll() )
 					.fetchHits( 20 ); // <8>
@@ -698,33 +720,45 @@ public class ProjectionDslIT {
 					.containsExactlyInAnyOrder(
 							Collections.singletonList(
 									new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
-											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 ).getFirstName(),
-											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 ).getLastName(),
-											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 ).getBirthDate(),
+											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 )
+													.getLastName(),
+											session.getReference( Book.class, BOOK1_ID ).getAuthors().get( 0 )
+													.getBirthDate(),
 											0.888
 									)
 							),
 							Collections.singletonList(
 									new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
-											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 ).getFirstName(),
-											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 ).getLastName(),
-											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 ).getBirthDate(),
+											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 )
+													.getLastName(),
+											session.getReference( Book.class, BOOK2_ID ).getAuthors().get( 0 )
+													.getBirthDate(),
 											0.888
 									)
 							),
 							Collections.singletonList(
 									new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
-											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 ).getFirstName(),
-											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 ).getLastName(),
-											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 ).getBirthDate(),
+											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 )
+													.getLastName(),
+											session.getReference( Book.class, BOOK3_ID ).getAuthors().get( 0 )
+													.getBirthDate(),
 											0.888
 									)
 							),
 							Collections.singletonList(
 									new MyAuthorNameAndBirthDateAndPlaceOfBirthDistance(
-											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 ).getFirstName(),
-											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 ).getLastName(),
-											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 ).getBirthDate(),
+											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 )
+													.getFirstName(),
+											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 )
+													.getLastName(),
+											session.getReference( Book.class, BOOK4_ID ).getAuthors().get( 0 )
+													.getBirthDate(),
 											9680.93
 									)
 							)
@@ -895,7 +929,8 @@ public class ProjectionDslIT {
 			// end::highlighter-named[]
 			Session session = searchSession.toOrmSession();
 			assertThat( hits ).containsExactlyInAnyOrder(
-					Arrays.asList( Collections.singletonList( "The Automatic <b>Detective</b>" ), Collections.emptyList() )
+					Arrays.asList( Collections.singletonList( "The Automatic <b>Detective</b>" ), Collections
+							.emptyList() )
 			);
 		} );
 	}
@@ -1007,7 +1042,8 @@ public class ProjectionDslIT {
 				return false;
 			}
 			MyTuple4<?, ?, ?, ?> other = (MyTuple4<?, ?, ?, ?>) obj;
-			return Objects.equals( first, other.first ) && Objects.equals( second, other.second )
+			return Objects.equals( first, other.first )
+					&& Objects.equals( second, other.second )
 					&& Objects.equals( third, other.third ) && Objects.equals( fourth, other.fourth );
 		}
 
@@ -1028,9 +1064,16 @@ public class ProjectionDslIT {
 
 		@Override
 		public String toString() {
-			return "MyAuthorName{" +
-					"firstName='" + firstName + '\'' +
-					", lastName='" + lastName + '\'' +
+			return "MyAuthorName{"
+					+
+					"firstName='"
+					+ firstName
+					+ '\''
+					+
+					", lastName='"
+					+ lastName
+					+ '\''
+					+
 					'}';
 		}
 	}
@@ -1051,11 +1094,22 @@ public class ProjectionDslIT {
 
 		@Override
 		public String toString() {
-			return "MyAuthorNameAndBirthDateAndPlaceOfBirthDistance{" +
-					"firstName='" + firstName + '\'' +
-					", lastName='" + lastName + '\'' +
-					", birthDate=" + birthDate +
-					", placeOfBirthDistance=" + placeOfBirthDistance +
+			return "MyAuthorNameAndBirthDateAndPlaceOfBirthDistance{"
+					+
+					"firstName='"
+					+ firstName
+					+ '\''
+					+
+					", lastName='"
+					+ lastName
+					+ '\''
+					+
+					", birthDate="
+					+ birthDate
+					+
+					", placeOfBirthDistance="
+					+ placeOfBirthDistance
+					+
 					'}';
 		}
 	}

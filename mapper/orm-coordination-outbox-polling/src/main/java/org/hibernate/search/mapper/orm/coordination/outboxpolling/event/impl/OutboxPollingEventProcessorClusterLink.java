@@ -18,9 +18,9 @@ import org.hibernate.search.engine.reporting.FailureContext;
 import org.hibernate.search.engine.reporting.FailureHandler;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.Agent;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentPersister;
+import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentState;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentType;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.ClusterDescriptor;
-import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentState;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.ShardAssignmentDescriptor;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.logging.impl.Log;
 import org.hibernate.search.util.common.AssertionFailure;
@@ -46,8 +46,9 @@ public final class OutboxPollingEventProcessorClusterLink
 			ShardAssignmentDescriptor staticShardAssignment) {
 		super(
 				new AgentPersister(
-						staticShardAssignment == null ? AgentType.EVENT_PROCESSING_DYNAMIC_SHARDING
-								: AgentType.EVENT_PROCESSING_STATIC_SHARDING,
+						staticShardAssignment == null ?
+								AgentType.EVENT_PROCESSING_DYNAMIC_SHARDING :
+								AgentType.EVENT_PROCESSING_STATIC_SHARDING,
 						agentName, staticShardAssignment
 				),
 				failureHandler, clock,
@@ -73,7 +74,8 @@ public final class OutboxPollingEventProcessorClusterLink
 	}
 
 	@Override
-	protected WriteAction<OutboxPollingEventProcessingInstructions> doPulse(List<Agent> allAgentsInIdOrder, Agent currentSelf) {
+	protected WriteAction<OutboxPollingEventProcessingInstructions> doPulse(List<Agent> allAgentsInIdOrder,
+			Agent currentSelf) {
 		for ( Agent agent : allAgentsInIdOrder ) {
 			if ( AgentType.MASS_INDEXING.equals( agent.getType() ) ) {
 				log.logf( currentSelf.getState() != AgentState.SUSPENDED ? Logger.Level.INFO : Logger.Level.TRACE,
@@ -106,7 +108,8 @@ public final class OutboxPollingEventProcessorClusterLink
 		}
 
 		Optional<ShardAssignmentDescriptor> shardAssignmentOptional =
-				ShardAssignmentDescriptor.fromClusterMemberList( clusterTarget.descriptor.memberIdsInShardOrder, selfReference().id );
+				ShardAssignmentDescriptor.fromClusterMemberList( clusterTarget.descriptor.memberIdsInShardOrder,
+						selfReference().id );
 		if ( !shardAssignmentOptional.isPresent() ) {
 			log.logf( currentSelf.getState() != AgentState.SUSPENDED ? Logger.Level.INFO : Logger.Level.TRACE,
 					"Agent '%s': this agent is superfluous and will not perform event processing,"
@@ -136,8 +139,8 @@ public final class OutboxPollingEventProcessorClusterLink
 
 		if ( !targetShardAssignment.equals( persistedShardAssignment ) ) {
 			log.infof( "Agent '%s': the persisted shard assignment (%s) does not match the target."
-							+ " Target assignment: %s."
-							+ " Cluster: %s.",
+					+ " Target assignment: %s."
+					+ " Cluster: %s.",
 					selfReference(), persistedShardAssignment, targetShardAssignment,
 					clusterTarget.descriptor );
 			return (now, self, agentPersister) -> {
@@ -174,11 +177,17 @@ public final class OutboxPollingEventProcessorClusterLink
 		// If all the conditions above are satisfied, then we can start processing.
 		if ( lastShardAssignment == null || !targetShardAssignment.equals( lastShardAssignment.descriptor ) ) {
 			if ( shardAssignmentIsStatic ) {
-				throw new AssertionFailure( "Agent '" + selfReference() + "' has a static shard assignment,"
+				throw new AssertionFailure( "Agent '"
+						+ selfReference()
+						+ "' has a static shard assignment,"
 						+ " but the target shard assignment"
-						+ " (" + targetShardAssignment + ")"
+						+ " ("
+						+ targetShardAssignment
+						+ ")"
 						+ " does not match the static shard assignment"
-						+ " (" + lastShardAssignment + ")" );
+						+ " ("
+						+ lastShardAssignment
+						+ ")" );
 			}
 			log.infof( "Agent '%s': assigning to %s", selfReference(), targetShardAssignment );
 			this.lastShardAssignment = shardAssignmentProvider.create( targetShardAssignment );
@@ -228,7 +237,8 @@ public final class OutboxPollingEventProcessorClusterLink
 			}
 			Integer assignedShardIndex = agent.getAssignedShardIndex();
 			if ( assignedShardIndex == null || expectedAssignedShardIndex != assignedShardIndex ) {
-				log.tracef( "Agent '%s': waiting for agent '%s', whose assigned shard index %s is not the expected %s yet",
+				log.tracef(
+						"Agent '%s': waiting for agent '%s', whose assigned shard index %s is not the expected %s yet",
 						selfReference(), agent.getReference(), assignedShardIndex, expectedAssignedShardIndex );
 				return false;
 			}
@@ -241,7 +251,8 @@ public final class OutboxPollingEventProcessorClusterLink
 	}
 
 	@Override
-	protected OutboxPollingEventProcessingInstructions instructCommitAndRetryPulseAfterDelay(Instant now, Duration delay) {
+	protected OutboxPollingEventProcessingInstructions instructCommitAndRetryPulseAfterDelay(Instant now,
+			Duration delay) {
 		Instant expiration = now.plus( delay );
 		log.tracef( "Agent '%s': instructions are to not process events and to retry a pulse in %s, around %s",
 				selfReference(), delay, expiration );
@@ -252,7 +263,8 @@ public final class OutboxPollingEventProcessorClusterLink
 		Instant expiration = now.plus( pulseInterval );
 		log.tracef( "Agent '%s': instructions are to process events and to retry a pulse in %s, around %s",
 				selfReference(), pulseInterval, expiration );
-		return new OutboxPollingEventProcessingInstructions( clock, expiration, Optional.of( lastShardAssignment.eventFinder ) );
+		return new OutboxPollingEventProcessingInstructions( clock, expiration, Optional.of(
+				lastShardAssignment.eventFinder ) );
 	}
 
 }

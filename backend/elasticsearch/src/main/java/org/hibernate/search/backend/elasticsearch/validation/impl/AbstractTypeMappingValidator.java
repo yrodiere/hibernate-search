@@ -17,7 +17,8 @@ abstract class AbstractTypeMappingValidator<T extends AbstractTypeMapping> imple
 
 	protected abstract Validator<PropertyMapping> getPropertyMappingValidator();
 
-	private final Validator<JsonElement> extraAttributeValidator = new JsonElementValidator( new JsonElementEquivalence() );
+	private final Validator<JsonElement> extraAttributeValidator = new JsonElementValidator(
+			new JsonElementEquivalence() );
 
 	@Override
 	public void validate(ValidationErrorCollector errorCollector, T expectedMapping, T actualMapping) {

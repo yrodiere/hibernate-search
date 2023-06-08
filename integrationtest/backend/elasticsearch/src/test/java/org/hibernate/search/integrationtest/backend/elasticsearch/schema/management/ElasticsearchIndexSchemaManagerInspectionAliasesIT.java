@@ -72,10 +72,15 @@ public class ElasticsearchIndexSchemaManagerInspectionAliasesIT {
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid Elasticsearch index layout",
-						"index names [" + defaultWriteAlias( index.name() ) + ", " + defaultReadAlias( index.name() )
+						"index names ["
+								+ defaultWriteAlias( index.name() )
+								+ ", "
+								+ defaultReadAlias( index.name() )
 								+ "] resolve to multiple distinct indexes ["
-								+ defaultPrimaryName( index.name() ) + ", "
-								+ defaultPrimaryName( "otherIndex" ) + "]",
+								+ defaultPrimaryName( index.name() )
+								+ ", "
+								+ defaultPrimaryName( "otherIndex" )
+								+ "]",
 						"These names must resolve to a single index" );
 	}
 
@@ -93,10 +98,15 @@ public class ElasticsearchIndexSchemaManagerInspectionAliasesIT {
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid Elasticsearch index layout",
-						"index names [" + defaultWriteAlias( index.name() ) + ", " + defaultReadAlias( index.name() )
+						"index names ["
+								+ defaultWriteAlias( index.name() )
+								+ ", "
+								+ defaultReadAlias( index.name() )
 								+ "] resolve to multiple distinct indexes ["
-								+ defaultPrimaryName( index.name() ) + ", "
-								+ defaultPrimaryName( "otherIndex" ) + "]",
+								+ defaultPrimaryName( index.name() )
+								+ ", "
+								+ defaultPrimaryName( "otherIndex" )
+								+ "]",
 						"These names must resolve to a single index" );
 	}
 
@@ -114,10 +124,15 @@ public class ElasticsearchIndexSchemaManagerInspectionAliasesIT {
 		assertThatThrownBy( this::setupAndInspectIndex )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid Elasticsearch index layout",
-						"index names [" + defaultWriteAlias( index.name() ) + ", " + defaultReadAlias( index.name() )
+						"index names ["
+								+ defaultWriteAlias( index.name() )
+								+ ", "
+								+ defaultReadAlias( index.name() )
 								+ "] resolve to multiple distinct indexes ["
-								+ defaultPrimaryName( index.name() ) + ", "
-								+ defaultPrimaryName( "otherIndex" ) + "]",
+								+ defaultPrimaryName( index.name() )
+								+ ", "
+								+ defaultPrimaryName( "otherIndex" )
+								+ "]",
 						"These names must resolve to a single index" );
 	}
 

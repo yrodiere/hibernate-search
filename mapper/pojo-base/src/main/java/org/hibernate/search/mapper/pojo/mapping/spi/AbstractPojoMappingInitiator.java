@@ -11,11 +11,11 @@ import java.util.List;
 
 import org.hibernate.search.engine.environment.bean.BeanReference;
 import org.hibernate.search.engine.mapper.mapping.building.spi.Mapper;
+import org.hibernate.search.engine.mapper.mapping.building.spi.MappingBuildContext;
 import org.hibernate.search.engine.mapper.mapping.building.spi.MappingConfigurationCollector;
 import org.hibernate.search.engine.mapper.mapping.building.spi.MappingInitiator;
-import org.hibernate.search.engine.mapper.model.spi.TypeMetadataContributorProvider;
-import org.hibernate.search.engine.mapper.mapping.building.spi.MappingBuildContext;
 import org.hibernate.search.engine.mapper.mapping.building.spi.MappingPartialBuildState;
+import org.hibernate.search.engine.mapper.model.spi.TypeMetadataContributorProvider;
 import org.hibernate.search.engine.tenancy.spi.TenancyMode;
 import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
 import org.hibernate.search.mapper.pojo.bridge.IdentifierBridge;
@@ -75,7 +75,8 @@ public abstract class AbstractPojoMappingInitiator<MPBS extends MappingPartialBu
 	}
 
 	public ProgrammaticMappingConfigurationContext programmaticMapping() {
-		ProgrammaticMappingConfigurationContextImpl context = new ProgrammaticMappingConfigurationContextImpl( introspector );
+		ProgrammaticMappingConfigurationContextImpl context = new ProgrammaticMappingConfigurationContextImpl(
+				introspector );
 		addConfigurationContributor( context );
 		return context;
 	}
@@ -97,7 +98,8 @@ public abstract class AbstractPojoMappingInitiator<MPBS extends MappingPartialBu
 	}
 
 	public void containedEntityIdentityMappingRequired(boolean required) {
-		this.containedEntityIdentityMappingMode = required ? IdentityMappingMode.REQUIRED : IdentityMappingMode.OPTIONAL;
+		this.containedEntityIdentityMappingMode = required ?
+				IdentityMappingMode.REQUIRED : IdentityMappingMode.OPTIONAL;
 	}
 
 	public void tenancyMode(TenancyMode tenancyMode) {
@@ -128,7 +130,8 @@ public abstract class AbstractPojoMappingInitiator<MPBS extends MappingPartialBu
 				containerExtractorRegistry, typePatternMatcherFactory );
 		bridgeResolver = bridgeResolverBuilder.build();
 
-		PojoMappingConfigurationContext configurationContext = new PojoMappingConfigurationContextImpl( extractorBinder );
+		PojoMappingConfigurationContext configurationContext = new PojoMappingConfigurationContextImpl(
+				extractorBinder );
 
 		for ( PojoMappingConfigurationContributor delegate : delegates ) {
 			delegate.configure( buildContext, configurationContext, configurationCollector );

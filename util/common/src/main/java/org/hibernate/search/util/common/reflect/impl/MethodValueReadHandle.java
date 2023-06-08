@@ -45,7 +45,8 @@ public final class MethodValueReadHandle<T> implements ValueReadHandle<T> {
 				throw (Error) thrown;
 			}
 			else {
-				throw log.errorInvokingMember( method, Throwables.safeToString( thrown, thiz ), thrown, thrown.getMessage() );
+				throw log.errorInvokingMember( method, Throwables.safeToString( thrown, thiz ), thrown, thrown
+						.getMessage() );
 			}
 		}
 	}

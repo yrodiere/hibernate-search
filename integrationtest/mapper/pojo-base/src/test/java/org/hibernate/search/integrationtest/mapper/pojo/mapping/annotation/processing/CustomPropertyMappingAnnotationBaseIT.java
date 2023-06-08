@@ -20,8 +20,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.extractor.builtin.BuiltinContainerExtractors;
 import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.ContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
@@ -32,10 +30,12 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.PropertyMappingAnnotationProcessorContext;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.PropertyMappingAnnotationProcessorRef;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.PropertyMappingStep;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.common.reporting.EventContext;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -54,7 +54,8 @@ public class CustomPropertyMappingAnnotationBaseIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	/**
 	 * Basic test checking that a simple property mapping will be applied as expected.
@@ -69,8 +70,7 @@ public class CustomPropertyMappingAnnotationBaseIT {
 			String text;
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.field( "myText", String.class )
+		backendMock.expectSchema( INDEX_NAME, b -> b.field( "myText", String.class )
 		);
 
 		SearchMapping mapping = setupHelper.start()
@@ -80,7 +80,7 @@ public class CustomPropertyMappingAnnotationBaseIT {
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.FIELD, ElementType.METHOD})
+	@Target({ ElementType.FIELD, ElementType.METHOD })
 	@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(type = WorkingAnnotation.Processor.class))
 	private @interface WorkingAnnotation {
 		class Processor implements PropertyMappingAnnotationProcessor<WorkingAnnotation> {
@@ -107,11 +107,12 @@ public class CustomPropertyMappingAnnotationBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.annotationTypeContext( AnnotationWithEmptyProcessorRef.class )
 						.failure( "Empty annotation processor reference in meta-annotation '"
-								+ PropertyMapping.class.getName() + "'" ) );
+								+ PropertyMapping.class.getName()
+								+ "'" ) );
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.FIELD, ElementType.METHOD})
+	@Target({ ElementType.FIELD, ElementType.METHOD })
 	@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef())
 	private @interface AnnotationWithEmptyProcessorRef {
 	}
@@ -130,23 +131,27 @@ public class CustomPropertyMappingAnnotationBaseIT {
 						.annotationTypeContext( AnnotationWithProcessorWithDifferentAnnotationType.class )
 						.failure( "Invalid annotation processor: '" + DifferentAnnotationType.Processor.TO_STRING + "'",
 								"This processor expects annotations of a different type: '"
-										+ DifferentAnnotationType.class.getName() + "'" ) );
+										+ DifferentAnnotationType.class.getName()
+										+ "'" ) );
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.FIELD, ElementType.METHOD})
+	@Target({ ElementType.FIELD, ElementType.METHOD })
 	@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(type = DifferentAnnotationType.Processor.class))
 	private @interface AnnotationWithProcessorWithDifferentAnnotationType {
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.FIELD, ElementType.METHOD})
+	@Target({ ElementType.FIELD, ElementType.METHOD })
 	private @interface DifferentAnnotationType {
-		class Processor implements PropertyMappingAnnotationProcessor<CustomPropertyMappingAnnotationBaseIT.DifferentAnnotationType> {
+		class Processor
+				implements PropertyMappingAnnotationProcessor<
+						CustomPropertyMappingAnnotationBaseIT.DifferentAnnotationType> {
 			public static final String TO_STRING = "DifferentAnnotationType.Processor";
 
 			@Override
-			public void process(PropertyMappingStep mapping, CustomPropertyMappingAnnotationBaseIT.DifferentAnnotationType annotation,
+			public void process(PropertyMappingStep mapping,
+					CustomPropertyMappingAnnotationBaseIT.DifferentAnnotationType annotation,
 					PropertyMappingAnnotationProcessorContext context) {
 				throw new UnsupportedOperationException( "This should not be called" );
 			}
@@ -206,8 +211,9 @@ public class CustomPropertyMappingAnnotationBaseIT {
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.FIELD, ElementType.METHOD})
-	@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(type = AnnotatedElementAwareAnnotation.Processor.class))
+	@Target({ ElementType.FIELD, ElementType.METHOD })
+	@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(
+			type = AnnotatedElementAwareAnnotation.Processor.class))
 	private @interface AnnotatedElementAwareAnnotation {
 		class Processor implements PropertyMappingAnnotationProcessor<AnnotatedElementAwareAnnotation> {
 			@Override
@@ -237,29 +243,29 @@ public class CustomPropertyMappingAnnotationBaseIT {
 				else if ( annotatedElement.javaClass(
 						ContainerExtractorPath.explicitExtractor( BuiltinContainerExtractors.MAP_KEY ) )
 						.filter( Predicate.isEqual( String.class ) ).isPresent() ) {
-					assertThat( annotatedElement.name() ).isEqualTo( "textToIntMap" );
-					Optional<String> analyzer = annotatedElement.allAnnotations()
-							.filter( a -> AnalyzerAnnotation.class.equals( a.annotationType() ) )
-							.map( a -> ( (AnalyzerAnnotation) a ).name() )
-							.reduce( (a, b) -> {
-								throw new IllegalStateException( "should not happen" );
-							} );
-					mapping.fullTextField( "myTextMapKeys" )
-							.extractor( BuiltinContainerExtractors.MAP_KEY )
-							.analyzer( analyzer.get() );
-				}
+							assertThat( annotatedElement.name() ).isEqualTo( "textToIntMap" );
+							Optional<String> analyzer = annotatedElement.allAnnotations()
+									.filter( a -> AnalyzerAnnotation.class.equals( a.annotationType() ) )
+									.map( a -> ( (AnalyzerAnnotation) a ).name() )
+									.reduce( (a, b) -> {
+										throw new IllegalStateException( "should not happen" );
+									} );
+							mapping.fullTextField( "myTextMapKeys" )
+									.extractor( BuiltinContainerExtractors.MAP_KEY )
+									.analyzer( analyzer.get() );
+						}
 				else if ( annotatedElement.javaClass( ContainerExtractorPath.defaultExtractors() )
 						.filter( Predicate.isEqual( String.class ) ).isPresent() ) {
-					assertThat( annotatedElement.name() ).isEqualTo( "textCollection" );
-					Optional<String> analyzer = annotatedElement.allAnnotations()
-							.filter( a -> AnalyzerAnnotation.class.equals( a.annotationType() ) )
-							.map( a -> ( (AnalyzerAnnotation) a ).name() )
-							.reduce( (a, b) -> {
-								throw new IllegalStateException( "should not happen" );
-							} );
-					mapping.fullTextField( "myTextCollection" )
-							.analyzer( analyzer.get() );
-				}
+							assertThat( annotatedElement.name() ).isEqualTo( "textCollection" );
+							Optional<String> analyzer = annotatedElement.allAnnotations()
+									.filter( a -> AnalyzerAnnotation.class.equals( a.annotationType() ) )
+									.map( a -> ( (AnalyzerAnnotation) a ).name() )
+									.reduce( (a, b) -> {
+										throw new IllegalStateException( "should not happen" );
+									} );
+							mapping.fullTextField( "myTextCollection" )
+									.analyzer( analyzer.get() );
+						}
 				else if ( Long.class.equals( annotatedElement.javaClass() ) ) {
 					assertThat( annotatedElement.name() ).startsWith( "longWith" );
 					annotatedElement.allAnnotations()
@@ -272,7 +278,7 @@ public class CustomPropertyMappingAnnotationBaseIT {
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.FIELD, ElementType.METHOD})
+	@Target({ ElementType.FIELD, ElementType.METHOD })
 	private @interface AnalyzerAnnotation {
 
 		String name();
@@ -280,7 +286,7 @@ public class CustomPropertyMappingAnnotationBaseIT {
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.FIELD, ElementType.METHOD})
+	@Target({ ElementType.FIELD, ElementType.METHOD })
 	@Repeatable(MultiFieldAnnotation.List.class)
 	// Must be public in order for Hibernate Search to be able to access List#value
 	public @interface MultiFieldAnnotation {
@@ -288,7 +294,7 @@ public class CustomPropertyMappingAnnotationBaseIT {
 		String name();
 
 		@Retention(RetentionPolicy.RUNTIME)
-		@Target({ElementType.FIELD, ElementType.METHOD})
+		@Target({ ElementType.FIELD, ElementType.METHOD })
 		@interface List {
 			MultiFieldAnnotation[] value();
 		}
@@ -301,10 +307,12 @@ public class CustomPropertyMappingAnnotationBaseIT {
 		class IndexedEntityType {
 			Integer id;
 			String text;
+
 			@DocumentId
 			public Integer getId() {
 				return id;
 			}
+
 			@EventContextAwareAnnotation
 			public String getText() {
 				return text;
@@ -323,13 +331,17 @@ public class CustomPropertyMappingAnnotationBaseIT {
 		// but the annotation can be rendered differently depending on the JDK in use...
 		// See https://bugs.openjdk.java.net/browse/JDK-8282230
 		assertThat( EventContextAwareAnnotation.Processor.lastProcessedContext.render() )
-				.matches( "\\Qtype '" + IndexedEntityType.class.getName() + "', path '.text', annotation '@\\E.*"
-						+ EventContextAwareAnnotation.class.getSimpleName() + "\\Q()\\E'" );
+				.matches( "\\Qtype '"
+						+ IndexedEntityType.class.getName()
+						+ "', path '.text', annotation '@\\E.*"
+						+ EventContextAwareAnnotation.class.getSimpleName()
+						+ "\\Q()\\E'" );
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.FIELD, ElementType.METHOD})
-	@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(type = EventContextAwareAnnotation.Processor.class))
+	@Target({ ElementType.FIELD, ElementType.METHOD })
+	@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(
+			type = EventContextAwareAnnotation.Processor.class))
 	private @interface EventContextAwareAnnotation {
 
 		class Processor implements PropertyMappingAnnotationProcessor<EventContextAwareAnnotation> {

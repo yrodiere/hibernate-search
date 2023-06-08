@@ -11,6 +11,7 @@ import static org.hibernate.search.util.impl.test.JsonHelper.assertJsonEquals;
 
 import java.sql.Date;
 import java.util.function.Consumer;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.backend.elasticsearch.ElasticsearchExtension;
@@ -36,7 +37,8 @@ public class ElasticsearchAggregationDslIT {
 	private static final int BOOK4_ID = 4;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -55,14 +57,14 @@ public class ElasticsearchAggregationDslIT {
 					new Gson().fromJson(
 							"{"
 									+ "\"histogram\": {"
-											+ "\"field\": \"price\","
-											+ "\"interval\": 10"
+									+ "\"field\": \"price\","
+									+ "\"interval\": 10"
 									+ "}"
-							+ "}",
+									+ "}",
 							JsonObject.class
 					)
-					// tag::elasticsearch-fromJson-jsonObject[]
-					/* ... */;
+			// tag::elasticsearch-fromJson-jsonObject[]
+			/* ... */;
 			AggregationKey<JsonObject> countsByPriceHistogramKey = AggregationKey.of( "countsByPriceHistogram" );
 			SearchResult<Book> result = searchSession.search( Book.class )
 					.extension( ElasticsearchExtension.get() )
@@ -74,20 +76,20 @@ public class ElasticsearchAggregationDslIT {
 			assertJsonEquals(
 					"{"
 							+ "\"buckets\": ["
-									+ "{"
-											+ "\"key\": 0.0,"
-											+ "\"doc_count\": 1"
-									+ "},"
-									+ "{"
-											+ "\"key\": 10.0,"
-											+ "\"doc_count\": 2"
-									+ "},"
-									+ "{"
-											+ "\"key\": 20.0,"
-											+ "\"doc_count\": 1"
-									+ "}"
+							+ "{"
+							+ "\"key\": 0.0,"
+							+ "\"doc_count\": 1"
+							+ "},"
+							+ "{"
+							+ "\"key\": 10.0,"
+							+ "\"doc_count\": 2"
+							+ "},"
+							+ "{"
+							+ "\"key\": 20.0,"
+							+ "\"doc_count\": 1"
+							+ "}"
 							+ "]"
-					+ "}",
+							+ "}",
 					countsByPriceHistogram.toString()
 			);
 		} );
@@ -99,10 +101,10 @@ public class ElasticsearchAggregationDslIT {
 					.extension( ElasticsearchExtension.get() )
 					.where( f -> f.matchAll() )
 					.aggregation( countsByPriceHistogramKey, f -> f.fromJson( "{"
-									+ "\"histogram\": {"
-											+ "\"field\": \"price\","
-											+ "\"interval\": 10"
-									+ "}"
+							+ "\"histogram\": {"
+							+ "\"field\": \"price\","
+							+ "\"interval\": 10"
+							+ "}"
 							+ "}" ) )
 					.fetch( 20 );
 			JsonObject countsByPriceHistogram = result.aggregation( countsByPriceHistogramKey ); // <1>
@@ -110,20 +112,20 @@ public class ElasticsearchAggregationDslIT {
 			assertJsonEquals(
 					"{"
 							+ "\"buckets\": ["
-									+ "{"
-											+ "\"key\": 0.0,"
-											+ "\"doc_count\": 1"
-									+ "},"
-									+ "{"
-											+ "\"key\": 10.0,"
-											+ "\"doc_count\": 2"
-									+ "},"
-									+ "{"
-											+ "\"key\": 20.0,"
-											+ "\"doc_count\": 1"
-									+ "}"
+							+ "{"
+							+ "\"key\": 0.0,"
+							+ "\"doc_count\": 1"
+							+ "},"
+							+ "{"
+							+ "\"key\": 10.0,"
+							+ "\"doc_count\": 2"
+							+ "},"
+							+ "{"
+							+ "\"key\": 20.0,"
+							+ "\"doc_count\": 1"
+							+ "}"
 							+ "]"
-					+ "}",
+							+ "}",
 					countsByPriceHistogram.toString()
 			);
 		} );

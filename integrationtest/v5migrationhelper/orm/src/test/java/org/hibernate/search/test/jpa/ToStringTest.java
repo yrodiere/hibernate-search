@@ -12,8 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.apache.lucene.search.Query;
-import org.hamcrest.CoreMatchers;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.annotations.Field;
@@ -22,8 +20,12 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.testsupport.TestForIssue;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import org.apache.lucene.search.Query;
+import org.hamcrest.CoreMatchers;
 
 /**
  * @author Hardy Ferentschik
@@ -71,7 +73,8 @@ public class ToStringTest extends JPATestCase {
 	}
 
 	private void assertToStringContainsLuceneQueryInformation(String fullTextQueryToString) {
-		assertThat( "Unexpected toString implementation. The string should contain a string representation of the internal query.",
+		assertThat(
+				"Unexpected toString implementation. The string should contain a string representation of the internal query.",
 				fullTextQueryToString, CoreMatchers.containsString( luceneQuery.toString() ) );
 	}
 

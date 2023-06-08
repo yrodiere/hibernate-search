@@ -6,11 +6,11 @@
  */
 package org.hibernate.search.test.envers;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.util.List;
 
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
 import org.hibernate.Transaction;
 import org.hibernate.dialect.PostgreSQL81Dialect;
 import org.hibernate.envers.AuditReader;
@@ -24,11 +24,13 @@ import org.hibernate.search.testsupport.TestForIssue;
 import org.hibernate.search.testsupport.junit.PortedToSearch6;
 
 import org.hibernate.testing.SkipForDialect;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 
 /**
  * Unit test covering proper behavior and integration between Hibernate Search and Envers.
@@ -156,7 +158,8 @@ public class SearchAndEnversIntegrationTest extends SearchTestBase {
 				assertEquals( 1, houseNumberAddressChangedAtRevision2.size() );
 
 				//Let's assert that Hibernate Search has indexed everything correctly
-				List<Person> peopleLivingInPrivetDriveFromHibSearch = findPeopleFromIndexByStreetName( session, "privet" );
+				List<Person> peopleLivingInPrivetDriveFromHibSearch = findPeopleFromIndexByStreetName( session,
+						"privet" );
 				assertEquals( 1, peopleLivingInPrivetDriveFromHibSearch.size() );
 				//Let's compare that entities from Hibernate Search and last revision entities from Hibernate Envers are equals
 				Person harryFromHibSearch = peopleLivingInPrivetDriveFromHibSearch.get( 0 );
@@ -200,7 +203,8 @@ public class SearchAndEnversIntegrationTest extends SearchTestBase {
 				//Let's assert that Hibernate Envers has audited everything correctly
 				@SuppressWarnings("unchecked")
 				List<Person> peopleWhoHasMovedHouseAtRevision3 = auditReader.createQuery()
-						.forEntitiesModifiedAtRevision( Person.class, 3 ).add( AuditEntity.property( "address" ).hasChanged() )
+						.forEntitiesModifiedAtRevision( Person.class, 3 ).add( AuditEntity.property( "address" )
+								.hasChanged() )
 						.getResultList();
 				assertEquals( 1, peopleWhoHasMovedHouseAtRevision3.size() );
 				assertEquals( 3, findLastRevisionForEntity( auditReader, Person.class ) );
@@ -210,7 +214,8 @@ public class SearchAndEnversIntegrationTest extends SearchTestBase {
 				assertEquals( 3, howManyAuditedObjectsSoFar( auditReader, Person.class ) );
 				assertEquals( 5, howManyAuditedObjectsSoFar( auditReader, Address.class ) );
 				//Let's assert that Hibernate Search has indexed everything correctly
-				List<Person> peopleLivingInPrivetDriveFromHibSearch = findPeopleFromIndexByStreetName( session, "privet" );
+				List<Person> peopleLivingInPrivetDriveFromHibSearch = findPeopleFromIndexByStreetName( session,
+						"privet" );
 				assertEquals( 2, peopleLivingInPrivetDriveFromHibSearch.size() );
 
 				tx.commit();

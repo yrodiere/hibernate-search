@@ -14,21 +14,21 @@ import java.util.Collections;
 import org.hibernate.search.engine.backend.types.converter.runtime.ToDocumentValueConvertContext;
 import org.hibernate.search.engine.backend.types.converter.runtime.spi.ToDocumentValueConvertContextImpl;
 import org.hibernate.search.engine.backend.types.converter.spi.DslConverter;
+import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.types.PropertyTypeDescriptor;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.types.expectations.DefaultIdentifierBridgeExpectations;
-import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.engine.common.EntityReference;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.bridge.IdentifierBridge;
 import org.hibernate.search.mapper.pojo.bridge.runtime.IdentifierBridgeFromDocumentIdentifierContext;
 import org.hibernate.search.mapper.pojo.bridge.runtime.IdentifierBridgeToDocumentIdentifierContext;
+import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.StubSearchWorkBehavior;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.StubBackendUtils;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.document.model.impl.StubIndexModel;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Before;
@@ -56,7 +56,8 @@ public class DocumentIdDefaultBridgeOverridingIT<I> {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private final PropertyTypeDescriptor<I, ?> typeDescriptor;
 	private final DefaultIdentifierBridgeExpectations<I> expectations;
@@ -73,7 +74,7 @@ public class DocumentIdDefaultBridgeOverridingIT<I> {
 	public void setup() {
 		backendMock.expectSchema(
 				DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_1_NAME,
-				b -> { },
+				b -> {},
 				indexModel -> this.indexModel = indexModel
 		);
 		mapping = setupHelper.start()
@@ -93,7 +94,7 @@ public class DocumentIdDefaultBridgeOverridingIT<I> {
 			session.indexingPlan().add( entity );
 
 			backendMock.expectWorks( DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_1_NAME )
-					.add( getDocumentIdentifierValue(), b -> { } );
+					.add( getDocumentIdentifierValue(), b -> {} );
 		}
 		backendMock.verifyExpectationsMet();
 	}
@@ -132,7 +133,7 @@ public class DocumentIdDefaultBridgeOverridingIT<I> {
 		try ( SearchSession session = mapping.createSession() ) {
 			backendMock.expectSearchIds(
 					Collections.singletonList( DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_1_NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							1L,
 							getDocumentIdentifierValue()

@@ -18,13 +18,13 @@ import org.hibernate.search.engine.search.projection.dsl.CompositeProjectionInne
 import org.hibernate.search.engine.search.projection.dsl.CompositeProjectionValueStep;
 import org.hibernate.search.engine.search.projection.dsl.SearchProjectionFactory;
 import org.hibernate.search.mapper.pojo.logging.impl.Log;
-import org.hibernate.search.mapper.pojo.model.spi.PojoConstructorIdentifier;
 import org.hibernate.search.mapper.pojo.model.path.spi.ProjectionConstructorPath;
+import org.hibernate.search.mapper.pojo.model.spi.PojoConstructorIdentifier;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.common.impl.Closer;
-import org.hibernate.search.util.common.spi.ToStringTreeAppendable;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 import org.hibernate.search.util.common.reflect.spi.ValueCreateHandle;
+import org.hibernate.search.util.common.spi.ToStringTreeAppendable;
 import org.hibernate.search.util.common.spi.ToStringTreeAppender;
 
 public final class PojoConstructorProjectionDefinition<T>
@@ -47,7 +47,8 @@ public final class PojoConstructorProjectionDefinition<T>
 	@Override
 	public String toString() {
 		return "PojoConstructorProjectionDefinition["
-				+ "constructor=" + constructor
+				+ "constructor="
+				+ constructor
 				+ ']';
 	}
 
@@ -82,7 +83,8 @@ public final class PojoConstructorProjectionDefinition<T>
 		catch (ConstructorProjectionApplicationException e) {
 			// We already know what prevented from applying a projection constructor correctly,
 			// just add a parent constructor and re-throw:
-			ProjectionConstructorPath path = new ProjectionConstructorPath( constructor, e.projectionConstructorPath(), i );
+			ProjectionConstructorPath path = new ProjectionConstructorPath( constructor, e.projectionConstructorPath(),
+					i );
 			throw log.errorApplyingProjectionConstructor(
 					e.getCause().getMessage(), e, path
 			);

@@ -129,17 +129,19 @@ public class ConfiguredIndexSchemaManagerNestingContextTest {
 		checkFooBarIncluded( "prefix1_", level1Context );
 
 		assertThatThrownBy( () -> {
-				IndexedEmbeddedDefinition level1Definition = new IndexedEmbeddedDefinition(
-						typeModel1Mock, "level1.prefix1_", ObjectStructure.DEFAULT,
-						null, null
-				);
-				level1Context.addIndexedEmbeddedIfIncluded(
-						level1Definition, new IndexedEmbeddedPathTracker( level1Definition ),
-						nestedContextBuilderMock
-				);
+			IndexedEmbeddedDefinition level1Definition = new IndexedEmbeddedDefinition(
+					typeModel1Mock, "level1.prefix1_", ObjectStructure.DEFAULT,
+					null, null
+			);
+			level1Context.addIndexedEmbeddedIfIncluded(
+					level1Definition, new IndexedEmbeddedPathTracker( level1Definition ),
+					nestedContextBuilderMock
+			);
 		} )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Cyclic @IndexedEmbedded recursion starting from type '" + typeModel1Mock.toString() + "'",
+				.hasMessageContainingAll( "Cyclic @IndexedEmbedded recursion starting from type '"
+						+ typeModel1Mock.toString()
+						+ "'",
 						"Path starting from that type and ending with a cycle: 'level1.prefix1_level1.prefix1_'"
 				);
 		verifyNoOtherInteractionsAndReset();
@@ -170,7 +172,9 @@ public class ConfiguredIndexSchemaManagerNestingContextTest {
 			);
 		} )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Cyclic @IndexedEmbedded recursion starting from type '" + typeModel1Mock.toString() + "'",
+				.hasMessageContainingAll( "Cyclic @IndexedEmbedded recursion starting from type '"
+						+ typeModel1Mock.toString()
+						+ "'",
 						"Path starting from that type and ending with a cycle: 'level1.prefix1_level2.prefix2_level1.prefix1_'"
 				);
 		verifyNoOtherInteractionsAndReset();
@@ -459,7 +463,7 @@ public class ConfiguredIndexSchemaManagerNestingContextTest {
 				.containsOnly(
 						// "included" removed
 						"notEncountered"
-						// "excludedBecauseOfLevel1" removed
+				// "excludedBecauseOfLevel1" removed
 				);
 		assertThat( level1PathTracker.uselessIncludePaths() )
 				.containsOnly(
@@ -1043,7 +1047,8 @@ public class ConfiguredIndexSchemaManagerNestingContextTest {
 		return nestedContextCapture.getValue();
 	}
 
-	private void checkSimpleIndexedEmbeddedExcluded(ConfiguredIndexSchemaNestingContext context, MappableTypeModel typeModel,
+	private void checkSimpleIndexedEmbeddedExcluded(ConfiguredIndexSchemaNestingContext context,
+			MappableTypeModel typeModel,
 			String relativePrefix, Integer depth, Set<String> includePaths) {
 		IndexedEmbeddedDefinition definition = new IndexedEmbeddedDefinition(
 				typeModel, relativePrefix, ObjectStructure.DEFAULT,
@@ -1093,7 +1098,8 @@ public class ConfiguredIndexSchemaManagerNestingContextTest {
 		checkCompositeExcluded( expectedPrefix + "foo.bar", context, "foo.bar", recurse );
 	}
 
-	private void checkFooBarIndexedEmbeddedExcluded(ConfiguredIndexSchemaNestingContext context, MappableTypeModel typeModel) {
+	private void checkFooBarIndexedEmbeddedExcluded(ConfiguredIndexSchemaNestingContext context,
+			MappableTypeModel typeModel) {
 		checkSimpleIndexedEmbeddedExcluded(
 				context, typeModel, "foo.", null, null
 		);
@@ -1115,7 +1121,8 @@ public class ConfiguredIndexSchemaManagerNestingContextTest {
 	}
 
 	private void verifyNoOtherInteractionsAndReset() {
-		verifyNoMoreInteractions( leafFactoryMock, compositeFactoryMock, unfilteredFactoryMock, nestedContextBuilderMock );
+		verifyNoMoreInteractions( leafFactoryMock, compositeFactoryMock, unfilteredFactoryMock,
+				nestedContextBuilderMock );
 		reset( leafFactoryMock, compositeFactoryMock, unfilteredFactoryMock, nestedContextBuilderMock );
 	}
 }

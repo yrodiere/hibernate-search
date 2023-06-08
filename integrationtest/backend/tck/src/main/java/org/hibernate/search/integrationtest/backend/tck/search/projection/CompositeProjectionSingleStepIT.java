@@ -17,14 +17,15 @@ import java.util.function.Function;
 import org.hibernate.search.engine.backend.document.DocumentElement;
 import org.hibernate.search.engine.backend.document.IndexFieldReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
-import org.hibernate.search.engine.backend.types.dsl.IndexFieldTypeFactory;
 import org.hibernate.search.engine.backend.types.Projectable;
+import org.hibernate.search.engine.backend.types.dsl.IndexFieldTypeFactory;
 import org.hibernate.search.engine.backend.types.dsl.StandardIndexFieldTypeOptionsStep;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.StandardFieldMapper;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMappingScope;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -72,19 +73,21 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<?>> query = scope.query()
-				.select( f ->
-						f.composite(
-								f.field( index.binding().author.relativeFieldName, String.class ).toProjection(),
-								f.field( index.binding().title.relativeFieldName, String.class ).toProjection()
-						)
+				.select( f -> f.composite(
+						f.field( index.binding().author.relativeFieldName, String.class ).toProjection(),
+						f.field( index.binding().title.relativeFieldName, String.class ).toProjection()
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
 
 		assertThatQuery( query ).hasHitsAnyOrder(
-				Arrays.asList( index.binding().author.document1Value.indexedValue, index.binding().title.document1Value.indexedValue ),
-				Arrays.asList( index.binding().author.document2Value.indexedValue, index.binding().title.document2Value.indexedValue ),
-				Arrays.asList( index.binding().author.document3Value.indexedValue, index.binding().title.document3Value.indexedValue )
+				Arrays.asList( index.binding().author.document1Value.indexedValue, index
+						.binding().title.document1Value.indexedValue ),
+				Arrays.asList( index.binding().author.document2Value.indexedValue, index
+						.binding().title.document2Value.indexedValue ),
+				Arrays.asList( index.binding().author.document3Value.indexedValue, index
+						.binding().title.document3Value.indexedValue )
 		);
 	}
 
@@ -93,19 +96,21 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<?>> query = scope.query()
-				.select( f ->
-						f.composite(
-								f.field( index.binding().author.relativeFieldName, String.class ),
-								f.field( index.binding().title.relativeFieldName, String.class )
-						)
+				.select( f -> f.composite(
+						f.field( index.binding().author.relativeFieldName, String.class ),
+						f.field( index.binding().title.relativeFieldName, String.class )
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
 
 		assertThatQuery( query ).hasHitsAnyOrder(
-				Arrays.asList( index.binding().author.document1Value.indexedValue, index.binding().title.document1Value.indexedValue ),
-				Arrays.asList( index.binding().author.document2Value.indexedValue, index.binding().title.document2Value.indexedValue ),
-				Arrays.asList( index.binding().author.document3Value.indexedValue, index.binding().title.document3Value.indexedValue )
+				Arrays.asList( index.binding().author.document1Value.indexedValue, index
+						.binding().title.document1Value.indexedValue ),
+				Arrays.asList( index.binding().author.document2Value.indexedValue, index
+						.binding().title.document2Value.indexedValue ),
+				Arrays.asList( index.binding().author.document3Value.indexedValue, index
+						.binding().title.document3Value.indexedValue )
 		);
 	}
 
@@ -114,20 +119,22 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<Book_Bi> query = scope.query()
-				.select( f ->
-						f.composite(
-								this::listToBook_Bi,
-								f.field( index.binding().author.relativeFieldName, String.class ).toProjection(),
-								f.field( index.binding().title.relativeFieldName, String.class ).toProjection()
-						)
+				.select( f -> f.composite(
+						this::listToBook_Bi,
+						f.field( index.binding().author.relativeFieldName, String.class ).toProjection(),
+						f.field( index.binding().title.relativeFieldName, String.class ).toProjection()
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
 
 		assertThatQuery( query ).hasHitsAnyOrder(
-				new Book_Bi( index.binding().author.document1Value.indexedValue, index.binding().title.document1Value.indexedValue ),
-				new Book_Bi( index.binding().author.document2Value.indexedValue, index.binding().title.document2Value.indexedValue ),
-				new Book_Bi( index.binding().author.document3Value.indexedValue, index.binding().title.document3Value.indexedValue )
+				new Book_Bi( index.binding().author.document1Value.indexedValue, index
+						.binding().title.document1Value.indexedValue ),
+				new Book_Bi( index.binding().author.document2Value.indexedValue, index
+						.binding().title.document2Value.indexedValue ),
+				new Book_Bi( index.binding().author.document3Value.indexedValue, index
+						.binding().title.document3Value.indexedValue )
 		);
 	}
 
@@ -136,20 +143,22 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<Book_Bi> query = scope.query()
-				.select( f ->
-						f.composite(
-								this::listToBook_Bi,
-								f.field( index.binding().author.relativeFieldName, String.class ),
-								f.field( index.binding().title.relativeFieldName, String.class )
-						)
+				.select( f -> f.composite(
+						this::listToBook_Bi,
+						f.field( index.binding().author.relativeFieldName, String.class ),
+						f.field( index.binding().title.relativeFieldName, String.class )
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
 
 		assertThatQuery( query ).hasHitsAnyOrder(
-				new Book_Bi( index.binding().author.document1Value.indexedValue, index.binding().title.document1Value.indexedValue ),
-				new Book_Bi( index.binding().author.document2Value.indexedValue, index.binding().title.document2Value.indexedValue ),
-				new Book_Bi( index.binding().author.document3Value.indexedValue, index.binding().title.document3Value.indexedValue )
+				new Book_Bi( index.binding().author.document1Value.indexedValue, index
+						.binding().title.document1Value.indexedValue ),
+				new Book_Bi( index.binding().author.document2Value.indexedValue, index
+						.binding().title.document2Value.indexedValue ),
+				new Book_Bi( index.binding().author.document3Value.indexedValue, index
+						.binding().title.document3Value.indexedValue )
 		);
 	}
 
@@ -158,11 +167,10 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<Book> query = scope.query()
-				.select( f ->
-						f.composite(
-								Book::new,
-								f.field( index.binding().title.relativeFieldName, String.class ).toProjection()
-						)
+				.select( f -> f.composite(
+						Book::new,
+						f.field( index.binding().title.relativeFieldName, String.class ).toProjection()
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
@@ -179,11 +187,10 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<Book> query = scope.query()
-				.select( f ->
-						f.composite(
-								Book::new,
-								f.field( index.binding().title.relativeFieldName, String.class )
-						)
+				.select( f -> f.composite(
+						Book::new,
+						f.field( index.binding().title.relativeFieldName, String.class )
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
@@ -200,20 +207,22 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<Book_Bi> query = scope.query()
-				.select( f ->
-						f.composite(
-								Book_Bi::new,
-								f.field( index.binding().author.relativeFieldName, String.class ).toProjection(),
-								f.field( index.binding().title.relativeFieldName, String.class ).toProjection()
-						)
+				.select( f -> f.composite(
+						Book_Bi::new,
+						f.field( index.binding().author.relativeFieldName, String.class ).toProjection(),
+						f.field( index.binding().title.relativeFieldName, String.class ).toProjection()
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
 
 		assertThatQuery( query ).hasHitsAnyOrder(
-				new Book_Bi( index.binding().author.document1Value.indexedValue, index.binding().title.document1Value.indexedValue ),
-				new Book_Bi( index.binding().author.document2Value.indexedValue, index.binding().title.document2Value.indexedValue ),
-				new Book_Bi( index.binding().author.document3Value.indexedValue, index.binding().title.document3Value.indexedValue )
+				new Book_Bi( index.binding().author.document1Value.indexedValue, index
+						.binding().title.document1Value.indexedValue ),
+				new Book_Bi( index.binding().author.document2Value.indexedValue, index
+						.binding().title.document2Value.indexedValue ),
+				new Book_Bi( index.binding().author.document3Value.indexedValue, index
+						.binding().title.document3Value.indexedValue )
 		);
 	}
 
@@ -222,20 +231,22 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<Book_Bi> query = scope.query()
-				.select( f ->
-						f.composite(
-								Book_Bi::new,
-								f.field( index.binding().author.relativeFieldName, String.class ),
-								f.field( index.binding().title.relativeFieldName, String.class )
-						)
+				.select( f -> f.composite(
+						Book_Bi::new,
+						f.field( index.binding().author.relativeFieldName, String.class ),
+						f.field( index.binding().title.relativeFieldName, String.class )
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
 
 		assertThatQuery( query ).hasHitsAnyOrder(
-				new Book_Bi( index.binding().author.document1Value.indexedValue, index.binding().title.document1Value.indexedValue ),
-				new Book_Bi( index.binding().author.document2Value.indexedValue, index.binding().title.document2Value.indexedValue ),
-				new Book_Bi( index.binding().author.document3Value.indexedValue, index.binding().title.document3Value.indexedValue )
+				new Book_Bi( index.binding().author.document1Value.indexedValue, index
+						.binding().title.document1Value.indexedValue ),
+				new Book_Bi( index.binding().author.document2Value.indexedValue, index
+						.binding().title.document2Value.indexedValue ),
+				new Book_Bi( index.binding().author.document3Value.indexedValue, index
+						.binding().title.document3Value.indexedValue )
 		);
 	}
 
@@ -244,23 +255,25 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<Book_Tri> query = scope.query()
-				.select( f ->
-						f.composite(
-								Book_Tri::new,
-								f.field( index.binding().author.relativeFieldName, String.class ).toProjection(),
-								f.field( index.binding().title.relativeFieldName, String.class ).toProjection(),
-								f.field( index.binding().releaseDate.relativeFieldName, LocalDate.class ).toProjection()
-						)
+				.select( f -> f.composite(
+						Book_Tri::new,
+						f.field( index.binding().author.relativeFieldName, String.class ).toProjection(),
+						f.field( index.binding().title.relativeFieldName, String.class ).toProjection(),
+						f.field( index.binding().releaseDate.relativeFieldName, LocalDate.class ).toProjection()
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
 
 		assertThatQuery( query ).hasHitsAnyOrder(
-				new Book_Tri( index.binding().author.document1Value.indexedValue, index.binding().title.document1Value.indexedValue,
+				new Book_Tri( index.binding().author.document1Value.indexedValue, index
+						.binding().title.document1Value.indexedValue,
 						index.binding().releaseDate.document1Value.indexedValue ),
-				new Book_Tri( index.binding().author.document2Value.indexedValue, index.binding().title.document2Value.indexedValue,
+				new Book_Tri( index.binding().author.document2Value.indexedValue, index
+						.binding().title.document2Value.indexedValue,
 						index.binding().releaseDate.document2Value.indexedValue ),
-				new Book_Tri( index.binding().author.document3Value.indexedValue, index.binding().title.document3Value.indexedValue,
+				new Book_Tri( index.binding().author.document3Value.indexedValue, index
+						.binding().title.document3Value.indexedValue,
 						index.binding().releaseDate.document3Value.indexedValue )
 		);
 	}
@@ -270,23 +283,25 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<Book_Tri> query = scope.query()
-				.select( f ->
-						f.composite(
-								Book_Tri::new,
-								f.field( index.binding().author.relativeFieldName, String.class ),
-								f.field( index.binding().title.relativeFieldName, String.class ),
-								f.field( index.binding().releaseDate.relativeFieldName, LocalDate.class )
-						)
+				.select( f -> f.composite(
+						Book_Tri::new,
+						f.field( index.binding().author.relativeFieldName, String.class ),
+						f.field( index.binding().title.relativeFieldName, String.class ),
+						f.field( index.binding().releaseDate.relativeFieldName, LocalDate.class )
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
 
 		assertThatQuery( query ).hasHitsAnyOrder(
-				new Book_Tri( index.binding().author.document1Value.indexedValue, index.binding().title.document1Value.indexedValue,
+				new Book_Tri( index.binding().author.document1Value.indexedValue, index
+						.binding().title.document1Value.indexedValue,
 						index.binding().releaseDate.document1Value.indexedValue ),
-				new Book_Tri( index.binding().author.document2Value.indexedValue, index.binding().title.document2Value.indexedValue,
+				new Book_Tri( index.binding().author.document2Value.indexedValue, index
+						.binding().title.document2Value.indexedValue,
 						index.binding().releaseDate.document2Value.indexedValue ),
-				new Book_Tri( index.binding().author.document3Value.indexedValue, index.binding().title.document3Value.indexedValue,
+				new Book_Tri( index.binding().author.document3Value.indexedValue, index
+						.binding().title.document3Value.indexedValue,
 						index.binding().releaseDate.document3Value.indexedValue )
 		);
 	}
@@ -296,24 +311,26 @@ public class CompositeProjectionSingleStepIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<Book_Bi_Score> query = scope.query()
-				.select( f ->
+				.select( f -> f.composite(
+						Book_Bi_Score::new,
 						f.composite(
-								Book_Bi_Score::new,
-								f.composite(
-										Book_Bi::new,
-										f.field( index.binding().author.relativeFieldName, String.class ),
-										f.field( index.binding().title.relativeFieldName, String.class )
-								),
-								f.score()
-						)
+								Book_Bi::new,
+								f.field( index.binding().author.relativeFieldName, String.class ),
+								f.field( index.binding().title.relativeFieldName, String.class )
+						),
+						f.score()
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
 
 		assertThatQuery( query ).hasHitsAnyOrder(
-				new Book_Bi_Score( new Book_Bi( index.binding().author.document1Value.indexedValue, index.binding().title.document1Value.indexedValue ), 1.0F ),
-				new Book_Bi_Score( new Book_Bi( index.binding().author.document2Value.indexedValue, index.binding().title.document2Value.indexedValue ), 1.0F ),
-				new Book_Bi_Score( new Book_Bi( index.binding().author.document3Value.indexedValue, index.binding().title.document3Value.indexedValue ), 1.0F )
+				new Book_Bi_Score( new Book_Bi( index.binding().author.document1Value.indexedValue, index
+						.binding().title.document1Value.indexedValue ), 1.0F ),
+				new Book_Bi_Score( new Book_Bi( index.binding().author.document2Value.indexedValue, index
+						.binding().title.document2Value.indexedValue ), 1.0F ),
+				new Book_Bi_Score( new Book_Bi( index.binding().author.document3Value.indexedValue, index
+						.binding().title.document3Value.indexedValue ), 1.0F )
 		);
 	}
 
@@ -347,7 +364,8 @@ public class CompositeProjectionSingleStepIT {
 					.map( root, "author" );
 			title = FieldModel.mapper( String.class, TITLE_4_3_2_1, TITLE_CIDER_HOUSE, TITLE_AVENUE_OF_MYSTERIES )
 					.map( root, "title" );
-			releaseDate = FieldModel.mapper( LocalDate.class, RELEASE_DATE_4_3_2_1, RELEASE_DATE_CIDER_HOUSE, RELEASE_DATE_AVENUE_OF_MYSTERIES )
+			releaseDate = FieldModel.mapper( LocalDate.class, RELEASE_DATE_4_3_2_1, RELEASE_DATE_CIDER_HOUSE,
+					RELEASE_DATE_AVENUE_OF_MYSTERIES )
 					.map( root, "releaseDate" );
 		}
 	}
@@ -381,7 +399,8 @@ public class CompositeProjectionSingleStepIT {
 			return StandardFieldMapper.of(
 					configuration,
 					c -> c.projectable( Projectable.YES ),
-					(reference, name) -> new FieldModel<>( reference, name, document1Value, document2Value, document3Value )
+					(reference, name) -> new FieldModel<>( reference, name, document1Value, document2Value,
+							document3Value )
 			);
 		}
 
@@ -414,7 +433,7 @@ public class CompositeProjectionSingleStepIT {
 
 		@Override
 		public boolean equals(Object obj) {
-			if ( !(obj instanceof Book) ) {
+			if ( !( obj instanceof Book ) ) {
 				return false;
 			}
 			Book other = (Book) obj;
@@ -445,7 +464,7 @@ public class CompositeProjectionSingleStepIT {
 
 		@Override
 		public boolean equals(Object obj) {
-			if ( !(obj instanceof Book_Bi) ) {
+			if ( !( obj instanceof Book_Bi ) ) {
 				return false;
 			}
 			Book_Bi other = (Book_Bi) obj;
@@ -480,7 +499,7 @@ public class CompositeProjectionSingleStepIT {
 
 		@Override
 		public boolean equals(Object obj) {
-			if ( !(obj instanceof Book_Tri) ) {
+			if ( !( obj instanceof Book_Tri ) ) {
 				return false;
 			}
 			Book_Tri other = (Book_Tri) obj;
@@ -513,7 +532,7 @@ public class CompositeProjectionSingleStepIT {
 
 		@Override
 		public boolean equals(Object obj) {
-			if ( !(obj instanceof Book_Bi_Score) ) {
+			if ( !( obj instanceof Book_Bi_Score ) ) {
 				return false;
 			}
 			Book_Bi_Score other = (Book_Bi_Score) obj;

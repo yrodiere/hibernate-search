@@ -36,7 +36,8 @@ public class OutboxEventUpdater {
 	private final Set<UUID> failedEventIds;
 
 	public OutboxEventUpdater(FailureHandler failureHandler, OutboxEventLoader loader,
-			OutboxEventProcessingPlan processingPlan, SessionImplementor session, String processorName, int retryAfter) {
+			OutboxEventProcessingPlan processingPlan, SessionImplementor session, String processorName,
+			int retryAfter) {
 		this.failureHandler = failureHandler;
 		this.loader = loader;
 		this.processingPlan = processingPlan;

@@ -70,14 +70,16 @@ public interface Log extends BasicLogger {
 	void version(String versionString);
 
 	@LogMessage(level = WARN)
-	@Message(id = ID_OFFSET_LEGACY_ENGINE + 36, value = "Unable to guess the transaction status: not starting a JTA transaction.")
+	@Message(id = ID_OFFSET_LEGACY_ENGINE + 36,
+			value = "Unable to guess the transaction status: not starting a JTA transaction.")
 	void cannotGuessTransactionStatus(@Cause Exception e);
 
 	@LogMessage(level = WARN)
 	@Message(id = ID_OFFSET_LEGACY_ENGINE + 39, value = "Unable to properly close scroll in ScrollableResults.")
 	void unableToCloseSearcherInScrollableResult(@Cause Exception e);
 
-	@Message(id = ID_OFFSET_LEGACY_ENGINE + 276, value = "No transaction active. Consider increasing the connection time-out.")
+	@Message(id = ID_OFFSET_LEGACY_ENGINE + 276,
+			value = "No transaction active. Consider increasing the connection time-out.")
 	SearchException transactionNotActiveWhileProducingIdsForBatchIndexing();
 
 	// -----------------------------------
@@ -153,13 +155,16 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 21, value = "Unable to access Hibernate ORM session factory: %1$s")
 	SearchException hibernateSessionFactoryAccessError(String causeMessage, @Cause IllegalStateException cause);
 
-	@Message(id = ID_OFFSET + 22, value = "Indexing failure: %1$s.\nThe following entities may not have been updated correctly in the index: %2$s.")
+	@Message(id = ID_OFFSET + 22,
+			value = "Indexing failure: %1$s.\nThe following entities may not have been updated correctly in the index: %2$s.")
 	SearchException indexingFailure(String causeMessage, List<?> failingEntities, @Cause Throwable cause);
 
-	@Message(id = ID_OFFSET + 23, value = "Unable to process entities for automatic indexing before transaction completion: %1$s")
+	@Message(id = ID_OFFSET + 23,
+			value = "Unable to process entities for automatic indexing before transaction completion: %1$s")
 	SearchException synchronizationBeforeTransactionFailure(String causeMessage, @Cause Throwable cause);
 
-	@Message(id = ID_OFFSET + 24, value = "Unable to index documents for automatic indexing after transaction completion: %1$s")
+	@Message(id = ID_OFFSET + 24,
+			value = "Unable to index documents for automatic indexing after transaction completion: %1$s")
 	SearchException synchronizationAfterTransactionFailure(String causeMessage, @Cause Throwable cause);
 
 	@Message(id = ID_OFFSET + 25, value = "Unable to handle transaction: %1$s")
@@ -181,7 +186,8 @@ public interface Log extends BasicLogger {
 	SearchException unknownEntityNameForEntityType(String invalidName, Collection<String> validNames);
 
 	@Message(id = ID_OFFSET + 29,
-			value = "Invalid type for '%1$s': the entity type must extend '%2$s'," +
+			value = "Invalid type for '%1$s': the entity type must extend '%2$s',"
+					+
 					" but entity type '%3$s' does not."
 	)
 	SearchException invalidEntitySuperType(String entityName,
@@ -212,19 +218,22 @@ public interface Log extends BasicLogger {
 			+ " only ScrollMode.FORWARDS_ONLY is supported.")
 	SearchException canOnlyUseScrollWithScrollModeForwardsOnly(ScrollMode scrollMode);
 
-	@Message(id = ID_OFFSET + 37, value = "Cannot scroll backwards with Hibernate Search scrolls: they are forwards-only."
-			+ " Ensure you always increment the scroll position, and never decrement it.")
+	@Message(id = ID_OFFSET + 37,
+			value = "Cannot scroll backwards with Hibernate Search scrolls: they are forwards-only."
+					+ " Ensure you always increment the scroll position, and never decrement it.")
 	SearchException cannotScrollBackwards();
 
-	@Message(id = ID_OFFSET + 38, value = "Cannot set the scroll position relative to the end with Hibernate Search scrolls."
-			+ " Ensure you always pass a positive number to setRowNumber().")
+	@Message(id = ID_OFFSET + 38,
+			value = "Cannot set the scroll position relative to the end with Hibernate Search scrolls."
+					+ " Ensure you always pass a positive number to setRowNumber().")
 	SearchException cannotSetScrollPositionRelativeToEnd();
 
 	@Message(id = ID_OFFSET + 39, value = "Cannot use this ScrollableResults instance: it is closed.")
 	SearchException cannotUseClosedScrollableResults();
 
-	@Message(id = ID_OFFSET + 40, value = "Multiple instances of entity type '%1$s' have their property '%2$s' set to '%3$s'."
-			+ " '%2$s' is the document ID and must be assigned unique values.")
+	@Message(id = ID_OFFSET + 40,
+			value = "Multiple instances of entity type '%1$s' have their property '%2$s' set to '%3$s'."
+					+ " '%2$s' is the document ID and must be assigned unique values.")
 	SearchException foundMultipleEntitiesForDocumentId(String entityName, String documentIdSourcePropertyName,
 			Object id);
 
@@ -248,8 +257,9 @@ public interface Log extends BasicLogger {
 			+ " was not listed in the configuration provided on startup."
 			+ " To target this tenant, you must provide the tenant identifier through configuration property '%3$s',"
 			+ " which should be set to a comma-separated string containing all possible tenant identifiers."
-			+ " Currently configured tenant identifiers: %2$s." )
-	SearchException invalidTenantId(String tenantId, Set<String> allTenantIds, String tenantIdsConfigurationPropertyKey);
+			+ " Currently configured tenant identifiers: %2$s.")
+	SearchException invalidTenantId(String tenantId, Set<String> allTenantIds,
+			String tenantIdsConfigurationPropertyKey);
 
 	// NOTE: This is used in -orm6 modules
 	@SuppressWarnings("unused")
@@ -259,10 +269,11 @@ public interface Log extends BasicLogger {
 
 	// NOTE: This is used in -orm6 modules
 	@SuppressWarnings("unused")
-	@Message(id = ID_OFFSET + 57, value = "Cannot set the fetch size of Hibernate Search ScrollableResults after having created them."
-			+ " If you want to define the size of batches for entity loading, set loading options when defining the query instead,"
-			+ " for example with .loading(o -> o.fetchSize(50))."
-			+ " See the reference documentation for more information.")
+	@Message(id = ID_OFFSET + 57,
+			value = "Cannot set the fetch size of Hibernate Search ScrollableResults after having created them."
+					+ " If you want to define the size of batches for entity loading, set loading options when defining the query instead,"
+					+ " for example with .loading(o -> o.fetchSize(50))."
+					+ " See the reference documentation for more information.")
 	SearchException cannotSetFetchSize();
 
 	@Message(id = ID_OFFSET + 58, value = "No matching entity type for type identifier '%1$s'."
@@ -311,7 +322,8 @@ public interface Log extends BasicLogger {
 					+ " The exception is being ignored to preserve backwards compatibility with earlier versions of Hibernate Search."
 					+ " Failure: %3$s"
 					+ " %2$s") // Context
-	void failedToResolveStateRepresentation(String path, @FormatWith(EventContextFormatter.class) EventContext context, String causeMessage,
+	void failedToResolveStateRepresentation(String path, @FormatWith(EventContextFormatter.class) EventContext context,
+			String causeMessage,
 			@Cause Exception cause);
 
 	@Message(id = ID_OFFSET + 122,
@@ -322,7 +334,9 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 123, value = "Configuration property '%1$s' is deprecated; use '%2$s' instead.")
 	void automaticIndexingSynchronizationStrategyIsDeprecated(String deprecatedProperty, String newProperty);
 
-	@Message(id = ID_OFFSET + 124, value = "Unable to apply the given filter at the session level with the outbox polling coordination strategy. " +
-			"With this coordination strategy, applying a session-level indexing plan filter is only allowed if it excludes all types.")
+	@Message(id = ID_OFFSET + 124,
+			value = "Unable to apply the given filter at the session level with the outbox polling coordination strategy. "
+					+
+					"With this coordination strategy, applying a session-level indexing plan filter is only allowed if it excludes all types.")
 	SearchException cannotApplySessionFilterWhenAsyncProcessingIsUsed();
 }

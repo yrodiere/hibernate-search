@@ -26,8 +26,8 @@ import org.hibernate.search.mapper.orm.coordination.outboxpolling.cfg.HibernateO
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.Agent;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentReference;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentRepository;
-import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentType;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentState;
+import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentType;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.ShardAssignmentDescriptor;
 import org.hibernate.search.util.common.spi.ToStringTreeAppender;
 
@@ -131,13 +131,16 @@ abstract class AbstractEventProcessorClusterLinkTest {
 		repositoryMockHelper.defineSelfPreExisting( self );
 	}
 
-	protected final EventProcessorClusterLinkPulseExpectations.InstructionsStep expect(ShardAssignmentDescriptor selfStaticShardAssignment,
+	protected final EventProcessorClusterLinkPulseExpectations.InstructionsStep expect(
+			ShardAssignmentDescriptor selfStaticShardAssignment,
 			OutboxPollingEventProcessorClusterLink link) {
-		return EventProcessorClusterLinkPulseExpectations.expect( repositoryMockHelper, eventFinderMock, selfStaticShardAssignment, link );
+		return EventProcessorClusterLinkPulseExpectations.expect( repositoryMockHelper, eventFinderMock,
+				selfStaticShardAssignment, link );
 	}
 
 	public static UUID toUUID(long id) {
-		return UUID.fromString( String.format( Locale.ROOT, "97b5e073-0e1f-43e9-bc84-%1$12s", id ).replace( ' ', '0' ) );
+		return UUID.fromString( String.format( Locale.ROOT, "97b5e073-0e1f-43e9-bc84-%1$12s", id ).replace( ' ',
+				'0' ) );
 	}
 
 }

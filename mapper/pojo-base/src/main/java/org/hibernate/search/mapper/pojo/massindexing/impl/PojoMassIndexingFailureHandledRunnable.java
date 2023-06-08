@@ -7,8 +7,8 @@
 package org.hibernate.search.mapper.pojo.massindexing.impl;
 
 import java.lang.invoke.MethodHandles;
-import org.hibernate.search.mapper.pojo.logging.impl.Log;
 
+import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.massindexing.MassIndexingEnvironment;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
@@ -23,7 +23,8 @@ public abstract class PojoMassIndexingFailureHandledRunnable implements Runnable
 	private final PojoMassIndexingNotifier notifier;
 	private final MassIndexingEnvironment environment;
 
-	protected PojoMassIndexingFailureHandledRunnable(PojoMassIndexingNotifier notifier, MassIndexingEnvironment environment) {
+	protected PojoMassIndexingFailureHandledRunnable(PojoMassIndexingNotifier notifier,
+			MassIndexingEnvironment environment) {
 		this.notifier = notifier;
 		this.environment = environment;
 	}
@@ -130,7 +131,8 @@ public abstract class PojoMassIndexingFailureHandledRunnable implements Runnable
 	protected abstract void cleanUpOnFailure() throws InterruptedException;
 
 	protected MassIndexingEnvironment.Context createMassIndexingEnvironmentContext() {
-		throw new UnsupportedOperationException( "There's no context supported for " + this.getClass().getSimpleName() );
+		throw new UnsupportedOperationException( "There's no context supported for "
+				+ this.getClass().getSimpleName() );
 	}
 
 	protected boolean supportsThreadLifecycleHooks() {

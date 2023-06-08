@@ -42,9 +42,15 @@ public class MassIndexUsingManualFlushTest extends SearchTestBase {
 				for ( int i = 0; i < loop; i++ ) {
 					Statement statmt = connection.createStatement();
 					statmt.executeUpdate( "insert into Domain(id, name) values( + "
-							+ ( i + 1 ) + ", 'sponge" + i + "')" );
+							+ ( i + 1 )
+							+ ", 'sponge"
+							+ i
+							+ "')" );
 					statmt.executeUpdate( "insert into Email(id, title, body, header, domain_id) values( + "
-							+ ( i + 1 ) + ", 'Bob Sponge', 'Meet the guys who create the software', 'nope', " + ( i + 1 ) + ")" );
+							+ ( i + 1 )
+							+ ", 'Bob Sponge', 'Meet the guys who create the software', 'nope', "
+							+ ( i + 1 )
+							+ ")" );
 					statmt.close();
 				}
 			}

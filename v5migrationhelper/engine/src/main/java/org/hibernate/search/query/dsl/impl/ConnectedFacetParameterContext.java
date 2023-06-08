@@ -8,8 +8,8 @@
 package org.hibernate.search.query.dsl.impl;
 
 import org.hibernate.search.query.dsl.FacetParameterContext;
-import org.hibernate.search.query.facet.FacetingRequest;
 import org.hibernate.search.query.facet.FacetSortOrder;
+import org.hibernate.search.query.facet.FacetingRequest;
 
 /**
  * @author Hardy Ferentschik
@@ -44,5 +44,4 @@ public class ConnectedFacetParameterContext implements FacetParameterContext {
 		return context.getFacetingRequest();
 	}
 }
-
 

@@ -88,7 +88,8 @@ public class FieldProjectionTypeCheckingAndConversionIT<F> {
 	@BeforeClass
 	public static void setup() {
 		setupHelper.start()
-				.withIndexes( mainIndex, compatibleIndex, rawFieldCompatibleIndex, missingFieldIndex, incompatibleIndex )
+				.withIndexes( mainIndex, compatibleIndex, rawFieldCompatibleIndex, missingFieldIndex,
+						incompatibleIndex )
 				.setup();
 
 		initData();
@@ -213,7 +214,8 @@ public class FieldProjectionTypeCheckingAndConversionIT<F> {
 	@TestForIssue(jiraKey = "HSEARCH-3391")
 	public void singleValuedFieldInMultiValuedObjectField_flattened_singleValuedProjection() {
 		String fieldPath = mainIndex.binding().flattenedObjectWithMultipleValues.relativeFieldName
-				+ "." + mainIndex.binding().flattenedObjectWithMultipleValues.fieldModels.get( fieldType ).relativeFieldName;
+				+ "."
+				+ mainIndex.binding().flattenedObjectWithMultipleValues.fieldModels.get( fieldType ).relativeFieldName;
 
 		assertThatThrownBy( () -> mainIndex.query()
 				.select( f -> f.field( fieldPath, fieldType.getJavaType() ) )
@@ -231,7 +233,8 @@ public class FieldProjectionTypeCheckingAndConversionIT<F> {
 	@TestForIssue(jiraKey = "HSEARCH-3391")
 	public void singleValuedFieldInMultiValuedObjectField_nested_singleValuedProjection() {
 		String fieldPath = mainIndex.binding().nestedObjectWithMultipleValues.relativeFieldName
-				+ "." + mainIndex.binding().nestedObjectWithMultipleValues.fieldModels.get( fieldType ).relativeFieldName;
+				+ "."
+				+ mainIndex.binding().nestedObjectWithMultipleValues.fieldModels.get( fieldType ).relativeFieldName;
 
 		assertThatThrownBy( () -> mainIndex.query()
 				.select( f -> f.field( fieldPath, fieldType.getJavaType() ) )
@@ -361,7 +364,9 @@ public class FieldProjectionTypeCheckingAndConversionIT<F> {
 		assertThatThrownBy( () -> scope.projection().field( fieldPath ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Attribute 'projectionConverter' differs:", " vs. "
 				);
 	}
@@ -434,7 +439,9 @@ public class FieldProjectionTypeCheckingAndConversionIT<F> {
 		assertThatThrownBy( () -> scope.projection().field( fieldPath ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Inconsistent support for 'projection:field'"
 				);
 	}
@@ -448,7 +455,9 @@ public class FieldProjectionTypeCheckingAndConversionIT<F> {
 		assertThatThrownBy( () -> scope.projection().field( fieldPath, ValueConvert.NO ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Inconsistent support for 'projection:field'"
 				);
 	}
@@ -457,13 +466,16 @@ public class FieldProjectionTypeCheckingAndConversionIT<F> {
 	public void multiIndex_withIncompatibleIndex_inNestedObject() {
 		StubMappingScope scope = incompatibleIndex.createScope( mainIndex );
 
-		String fieldPath = mainIndex.binding().nestedObject.relativeFieldName + "."
+		String fieldPath = mainIndex.binding().nestedObject.relativeFieldName
+				+ "."
 				+ mainIndex.binding().nestedObject.fieldModels.get( fieldType ).relativeFieldName;
 
 		assertThatThrownBy( () -> scope.projection().field( fieldPath, ValueConvert.NO ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Attribute 'nested", "' differs:"
 				);
 	}
@@ -515,20 +527,20 @@ public class FieldProjectionTypeCheckingAndConversionIT<F> {
 				.add( DOCUMENT_1, document -> initDocument( mainIndex.binding(), document, 1 ) )
 				.add( DOCUMENT_2, document -> initDocument( mainIndex.binding(), document, 2 ) )
 				.add( DOCUMENT_3, document -> initDocument( mainIndex.binding(), document, 3 ) )
-				.add( EMPTY, document -> { } );
+				.add( EMPTY, document -> {} );
 		BulkIndexer compatibleIndexer = compatibleIndex.bulkIndexer()
 				.add( COMPATIBLE_INDEX_DOCUMENT_1, document -> {
 					compatibleIndex.binding().fieldModels
-								.forEach( f -> addFieldValue( document, f, 1 ) );
+							.forEach( f -> addFieldValue( document, f, 1 ) );
 					compatibleIndex.binding().fieldWithConverterModels
 							.forEach( f -> addFieldValue( document, f, 1 ) );
 				} );
 		BulkIndexer rawFieldCompatibleIndexer = rawFieldCompatibleIndex.bulkIndexer()
 				.add( RAW_FIELD_COMPATIBLE_INDEX_DOCUMENT_1,
 						document -> rawFieldCompatibleIndex.binding().fieldWithConverterModels
-							.forEach( f -> addFieldValue( document, f, 1 ) ) );
+								.forEach( f -> addFieldValue( document, f, 1 ) ) );
 		BulkIndexer missingFieldIndexer = missingFieldIndex.bulkIndexer()
-				.add( MISSING_FIELD_INDEX_DOCUMENT_1, document -> { } );
+				.add( MISSING_FIELD_INDEX_DOCUMENT_1, document -> {} );
 		mainIndexer.join( compatibleIndexer, rawFieldCompatibleIndexer, missingFieldIndexer );
 	}
 
@@ -599,15 +611,16 @@ public class FieldProjectionTypeCheckingAndConversionIT<F> {
 					} );
 			fieldWithConverterModels = SimpleFieldModelsByType.mapAll( supportedFieldTypes, root,
 					"converted_", (fieldType, c) -> {
-							c.projectable( Projectable.YES )
+						c.projectable( Projectable.YES )
 								.dslConverter( ValueWrapper.class, ValueWrapper.toDocumentValueConverter() )
 								.projectionConverter( ValueWrapper.class, ValueWrapper.fromDocumentValueConverter() );
-							addIrrelevantOptions( fieldType, c );
+						addIrrelevantOptions( fieldType, c );
 					} );
 		}
 
 		// See HSEARCH-3307: this checks that irrelevant options are ignored when checking cross-index field compatibility
-		protected void addIrrelevantOptions(FieldTypeDescriptor<?> fieldType, StandardIndexFieldTypeOptionsStep<?, ?> c) {
+		protected void addIrrelevantOptions(FieldTypeDescriptor<?> fieldType, StandardIndexFieldTypeOptionsStep<?,
+				?> c) {
 			c.searchable( Searchable.NO );
 			if ( fieldType.isFieldSortSupported() ) {
 				c.sortable( Sortable.YES );
@@ -664,9 +677,9 @@ public class FieldProjectionTypeCheckingAndConversionIT<F> {
 		}
 
 		private static void mapFieldsWithIncompatibleType(IndexSchemaElement parent) {
-			supportedFieldTypes.forEach( typeDescriptor ->
-					SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible( typeDescriptor ) )
-							.map( parent, "" + typeDescriptor.getUniqueName(), c -> c.projectable( Projectable.YES ) )
+			supportedFieldTypes.forEach( typeDescriptor -> SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible(
+					typeDescriptor ) )
+					.map( parent, "" + typeDescriptor.getUniqueName(), c -> c.projectable( Projectable.YES ) )
 			);
 		}
 	}

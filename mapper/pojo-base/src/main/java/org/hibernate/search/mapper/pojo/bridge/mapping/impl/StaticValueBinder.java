@@ -21,9 +21,12 @@ class StaticValueBinder<T> implements ValueBinder {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "expectedValueType=" + expectedValueType
-				+ "bridge=" + bridge
+		return getClass().getSimpleName()
+				+ "["
+				+ "expectedValueType="
+				+ expectedValueType
+				+ "bridge="
+				+ bridge
 				+ "]";
 	}
 

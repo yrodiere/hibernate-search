@@ -46,7 +46,8 @@ final class ImmutableGeoBoundingBox implements GeoBoundingBox {
 
 		ImmutableGeoBoundingBox that = (ImmutableGeoBoundingBox) obj;
 
-		return Objects.equals( that.topLeft, topLeft ) &&
+		return Objects.equals( that.topLeft, topLeft )
+				&&
 				Objects.equals( that.bottomRight, bottomRight );
 	}
 

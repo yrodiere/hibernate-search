@@ -19,7 +19,6 @@ import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
 import com.google.gson.JsonObject;
 
-
 public class ExplainWork extends AbstractNonBulkableWork<ExplainResult> {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -65,7 +64,8 @@ public class ExplainWork extends AbstractNonBulkableWork<ExplainResult> {
 			return new Builder( indexName, null, id, payload );
 		}
 
-		private Builder(URLEncodedString indexName, URLEncodedString typeName, URLEncodedString id, JsonObject payload) {
+		private Builder(URLEncodedString indexName, URLEncodedString typeName, URLEncodedString id,
+				JsonObject payload) {
 			super( SUCCESS_ASSESSOR );
 			this.indexName = indexName;
 			this.typeName = typeName;
@@ -82,7 +82,7 @@ public class ExplainWork extends AbstractNonBulkableWork<ExplainResult> {
 		protected ElasticsearchRequest buildRequest() {
 			ElasticsearchRequest.Builder builder =
 					ElasticsearchRequest.get()
-					.pathComponent( indexName );
+							.pathComponent( indexName );
 			if ( typeName != null ) { // ES6.x and below only
 				builder.pathComponent( typeName )
 						.pathComponent( id )

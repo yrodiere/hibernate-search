@@ -16,6 +16,7 @@ import org.hibernate.search.util.common.AssertionFailure;
 
 import com.carrotsearch.hppc.IntObjectHashMap;
 import com.carrotsearch.hppc.IntObjectMap;
+
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.LeafReader;
 import org.apache.lucene.index.LeafReaderContext;
@@ -77,15 +78,18 @@ public class StoredFieldsValuesDelegate {
 
 	@Override
 	public String toString() {
-		return "StoredFieldsValues{" +
-				"storedFieldVisitor=" + storedFieldVisitor +
+		return "StoredFieldsValues{"
+				+
+				"storedFieldVisitor="
+				+ storedFieldVisitor
+				+
 				'}';
 	}
 
 	void context(LeafReaderContext context) throws IOException {
 		this.currentLeafReader = context.reader();
-		this.currentLeafChildDocs = nestedDocsProvider == null ? null
-				: nestedDocsProvider.childDocs( childrenWeight, context, null );
+		this.currentLeafChildDocs = nestedDocsProvider == null ?
+				null : nestedDocsProvider.childDocs( childrenWeight, context, null );
 
 		this.currentRootDoc = -1;
 		this.currentRootDocValue = null;
@@ -117,8 +121,12 @@ public class StoredFieldsValuesDelegate {
 		}
 		Document doc = currentChildDocValues.get( docId );
 		if ( doc == null ) {
-			throw new AssertionFailure( "Getting value for " + docId + ", which is neither root document "
-					+ currentRootDoc + " nor children " + currentChildDocValues.keys() );
+			throw new AssertionFailure( "Getting value for "
+					+ docId
+					+ ", which is neither root document "
+					+ currentRootDoc
+					+ " nor children "
+					+ currentChildDocValues.keys() );
 		}
 		return doc;
 	}

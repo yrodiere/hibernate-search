@@ -6,8 +6,8 @@
  */
 package org.hibernate.search.integrationtest.backend.lucene.testsupport.configuration;
 
-import org.hibernate.search.backend.lucene.analysis.LuceneAnalysisConfigurer;
 import org.hibernate.search.backend.lucene.analysis.LuceneAnalysisConfigurationContext;
+import org.hibernate.search.backend.lucene.analysis.LuceneAnalysisConfigurer;
 import org.hibernate.search.integrationtest.backend.tck.analysis.AnalysisCustomIT;
 
 import org.apache.lucene.analysis.core.KeywordTokenizerFactory;
@@ -36,11 +36,11 @@ public class AnalysisCustomITAnalysisConfigurer implements LuceneAnalysisConfigu
 
 		context.analyzer( AnalysisCustomIT.AnalysisDefinitions.ANALYZER_PATTERNS_STOPWORD.name ).custom()
 				.tokenizer( PatternTokenizerFactory.class )
-						.param( "pattern", "," )
+				.param( "pattern", "," )
 				.charFilter( PatternReplaceCharFilterFactory.class )
-						.param( "pattern", "\\s+" )
-						.param( "replacement", "," )
+				.param( "pattern", "\\s+" )
+				.param( "replacement", "," )
 				.tokenFilter( StopFilterFactory.class )
-						.param( "words", "/analysis/AnalysisCustomIT/stopwords.txt" );
+				.param( "words", "/analysis/AnalysisCustomIT/stopwords.txt" );
 	}
 }

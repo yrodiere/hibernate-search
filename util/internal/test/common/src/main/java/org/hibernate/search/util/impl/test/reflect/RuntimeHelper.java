@@ -30,7 +30,8 @@ public final class RuntimeHelper {
 			try {
 				CALLER_CLASS_WALKER = new StackWalkerCallerClassWalker( stackWalkerClass );
 			}
-			catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException | RuntimeException e) {
+			catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException |
+					RuntimeException e) {
 				throw new IllegalStateException( "Unable to initialize ClassWalker based on java.lang.StackWaker", e );
 			}
 		}
@@ -126,8 +127,8 @@ public final class RuntimeHelper {
 		private final Method stackWalkerWalkMethod;
 		private final Function<Object, Class<?>> stackFrameGetDeclaringClassFunction;
 
-		private StackWalkerCallerClassWalker(Class<?> stackWalkerClass)
-				throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+		private StackWalkerCallerClassWalker(Class<
+				?> stackWalkerClass) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 			Class<?> optionClass = Class.forName( "java.lang.StackWalker$Option" );
 			this.stackWalker = stackWalkerClass.getMethod( "getInstance", optionClass )
 					.invoke( null, optionClass.getEnumConstants()[0] );

@@ -44,7 +44,6 @@ import org.hibernate.search.spatial.impl.Point;
 import org.hibernate.search.util.common.impl.StreamHelper;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
-
 public class CoordinatesBridge implements TypeBridge<Object>, PropertyBridge<Object> {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -215,7 +214,7 @@ public class CoordinatesBridge implements TypeBridge<Object>, PropertyBridge<Obj
 
 	private static class CoordinatesConverter
 			implements ToDocumentValueConverter<Coordinates, GeoPoint>,
-					FromDocumentValueConverter<GeoPoint, Coordinates> {
+			FromDocumentValueConverter<GeoPoint, Coordinates> {
 		static final CoordinatesConverter INSTANCE = new CoordinatesConverter();
 
 		private CoordinatesConverter() {

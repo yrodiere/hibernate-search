@@ -25,8 +25,8 @@ public class EntityIndexingFailureContext extends FailureContext {
 
 	private EntityIndexingFailureContext(Builder builder) {
 		super( builder );
-		this.failingEntityReferences = builder.failingEntityReferences == null
-				? Collections.emptyList() : Collections.unmodifiableList( builder.failingEntityReferences );
+		this.failingEntityReferences = builder.failingEntityReferences == null ?
+				Collections.emptyList() : Collections.unmodifiableList( builder.failingEntityReferences );
 	}
 
 	/**
@@ -53,10 +53,17 @@ public class EntityIndexingFailureContext extends FailureContext {
 
 	@Override
 	public String toString() {
-		return "EntityIndexingFailureContext{" +
-				"failingEntityReferences=" + failingEntityReferences +
-				", throwable=" + throwable +
-				", failingOperation=" + failingOperation +
+		return "EntityIndexingFailureContext{"
+				+
+				"failingEntityReferences="
+				+ failingEntityReferences
+				+
+				", throwable="
+				+ throwable
+				+
+				", failingOperation="
+				+ failingOperation
+				+
 				'}';
 	}
 

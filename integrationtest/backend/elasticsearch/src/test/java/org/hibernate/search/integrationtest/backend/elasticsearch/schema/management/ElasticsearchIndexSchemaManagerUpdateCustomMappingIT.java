@@ -42,127 +42,235 @@ public class ElasticsearchIndexSchemaManagerUpdateCustomMappingIT {
 	@Before
 	public void checkAssumption() {
 		assumeFalse(
-				"This test only is only relevant if we are allowed to open/close Elasticsearch indexes." +
+				"This test only is only relevant if we are allowed to open/close Elasticsearch indexes."
+						+
 						" These operations are not available on AWS in particular.",
 				ElasticsearchTestHostConnectionConfiguration.get().isAws()
 		);
 	}
+
 	@Test
 	public void noOverlapping() {
 		elasticsearchClient.index( index.name() ).deleteAndCreate();
 		elasticsearchClient.index( index.name() ).type().putMapping(
-				" { " +
-				"    'dynamic':'strict', " +
-				"    '_source':{ " +
-				"       'enabled':false " +
-				"    }, " +
-				"    'properties':{ " +
-				"       '_entity_type':{ " +
-				"          'type':'keyword', " +
-				"          'index':false " +
-				"       }, " +
-				"       'bothField':{ " +
-				"          'type':'keyword', " +
-				"          'doc_values':false " +
-				"       }, " +
-				"       'bothObject':{ " +
-				"          'properties':{ " +
-				"             'bothNested':{ " +
-				"                'type':'keyword', " +
-				"                'doc_values':false " +
-				"             }, " +
-				"             'bothNestedObject':{ " +
-				"                'properties':{ " +
-				"                   'bothNestedNested':{ " +
-				"                      'type':'keyword', " +
-				"                      'doc_values':false " +
-				"                   }, " +
-				"                   'searchNestedNested':{ " +
-				"                      'type':'keyword', " +
-				"                      'doc_values':false " +
-				"                   } " +
-				"                } " +
-				"             }, " +
-				"             'searchNested':{ " +
-				"                'type':'keyword', " +
-				"                'doc_values':false " +
-				"             }, " +
-				"             'searchNestedObject':{ " +
-				"                'type':'object' " +
-				"             } " +
-				"          } " +
-				"       }, " +
-				"       'searchField':{ " +
-				"          'type':'keyword', " +
-				"          'doc_values':false " +
-				"       }, " +
-				"       'searchObject':{ " +
-				"          'type':'object' " +
-				"       } " +
-				"    } " +
-				" } "
+				" { "
+						+
+						"    'dynamic':'strict', "
+						+
+						"    '_source':{ "
+						+
+						"       'enabled':false "
+						+
+						"    }, "
+						+
+						"    'properties':{ "
+						+
+						"       '_entity_type':{ "
+						+
+						"          'type':'keyword', "
+						+
+						"          'index':false "
+						+
+						"       }, "
+						+
+						"       'bothField':{ "
+						+
+						"          'type':'keyword', "
+						+
+						"          'doc_values':false "
+						+
+						"       }, "
+						+
+						"       'bothObject':{ "
+						+
+						"          'properties':{ "
+						+
+						"             'bothNested':{ "
+						+
+						"                'type':'keyword', "
+						+
+						"                'doc_values':false "
+						+
+						"             }, "
+						+
+						"             'bothNestedObject':{ "
+						+
+						"                'properties':{ "
+						+
+						"                   'bothNestedNested':{ "
+						+
+						"                      'type':'keyword', "
+						+
+						"                      'doc_values':false "
+						+
+						"                   }, "
+						+
+						"                   'searchNestedNested':{ "
+						+
+						"                      'type':'keyword', "
+						+
+						"                      'doc_values':false "
+						+
+						"                   } "
+						+
+						"                } "
+						+
+						"             }, "
+						+
+						"             'searchNested':{ "
+						+
+						"                'type':'keyword', "
+						+
+						"                'doc_values':false "
+						+
+						"             }, "
+						+
+						"             'searchNestedObject':{ "
+						+
+						"                'type':'object' "
+						+
+						"             } "
+						+
+						"          } "
+						+
+						"       }, "
+						+
+						"       'searchField':{ "
+						+
+						"          'type':'keyword', "
+						+
+						"          'doc_values':false "
+						+
+						"       }, "
+						+
+						"       'searchObject':{ "
+						+
+						"          'type':'object' "
+						+
+						"       } "
+						+
+						"    } "
+						+
+						" } "
 		);
 
 		setupAndUpdateIndex( "no-overlapping.json" );
 		assertJsonEquals(
-				" { " +
-				"    'dynamic':'strict', " +
-				"    '_source':{ " +
-				"       'enabled':false " +
-				"    }, " +
-				"    'properties':{ " +
-				"       '_entity_type':{ " +
-				"          'type':'keyword', " +
-				"          'index':false " +
-				"       }, " +
-				"       'bothField':{ " +
-				"          'type':'keyword', " +
-				"          'doc_values':false " +
-				"       }, " +
-				"       'bothObject':{ " +
-				"          'properties':{ " +
-				"             'bothNested':{ " +
-				"                'type':'keyword', " +
-				"                'doc_values':false " +
-				"             }, " +
-				"             'bothNestedObject':{ " +
-				"                'properties':{ " +
-				"                   'bothNestedNested':{ " +
-				"                      'type':'keyword', " +
-				"                      'doc_values':false " +
-				"                   }, " +
-				"                   'searchNestedNested':{ " +
-				"                      'type':'keyword', " +
-				"                      'doc_values':false " +
-				"                   } " +
-				"                } " +
-				"             }, " +
-				"             'searchNested':{ " +
-				"                'type':'keyword', " +
-				"                'doc_values':false " +
-				"             }, " +
-				"             'searchNestedObject':{ " +
-				"                'type':'object' " +
-				"             } " +
-				"          } " +
-				"       }, " +
-				"       'searchField':{ " +
-				"          'type':'keyword', " +
-				"          'doc_values':false " +
-				"       }, " +
-				"       'searchObject':{ " +
-				"          'type':'object' " +
-				"       }, " +
-				"       'userField':{ " +
-				"          'type':'keyword', " +
-				"          'norms':true " +
-				"       }, " +
-				"       'userObject':{ " +
-				"          'type':'object', " +
-				"          'dynamic':'true' " +
-				"       } " +
-				"    } " +
-				" } ",
+				" { "
+						+
+						"    'dynamic':'strict', "
+						+
+						"    '_source':{ "
+						+
+						"       'enabled':false "
+						+
+						"    }, "
+						+
+						"    'properties':{ "
+						+
+						"       '_entity_type':{ "
+						+
+						"          'type':'keyword', "
+						+
+						"          'index':false "
+						+
+						"       }, "
+						+
+						"       'bothField':{ "
+						+
+						"          'type':'keyword', "
+						+
+						"          'doc_values':false "
+						+
+						"       }, "
+						+
+						"       'bothObject':{ "
+						+
+						"          'properties':{ "
+						+
+						"             'bothNested':{ "
+						+
+						"                'type':'keyword', "
+						+
+						"                'doc_values':false "
+						+
+						"             }, "
+						+
+						"             'bothNestedObject':{ "
+						+
+						"                'properties':{ "
+						+
+						"                   'bothNestedNested':{ "
+						+
+						"                      'type':'keyword', "
+						+
+						"                      'doc_values':false "
+						+
+						"                   }, "
+						+
+						"                   'searchNestedNested':{ "
+						+
+						"                      'type':'keyword', "
+						+
+						"                      'doc_values':false "
+						+
+						"                   } "
+						+
+						"                } "
+						+
+						"             }, "
+						+
+						"             'searchNested':{ "
+						+
+						"                'type':'keyword', "
+						+
+						"                'doc_values':false "
+						+
+						"             }, "
+						+
+						"             'searchNestedObject':{ "
+						+
+						"                'type':'object' "
+						+
+						"             } "
+						+
+						"          } "
+						+
+						"       }, "
+						+
+						"       'searchField':{ "
+						+
+						"          'type':'keyword', "
+						+
+						"          'doc_values':false "
+						+
+						"       }, "
+						+
+						"       'searchObject':{ "
+						+
+						"          'type':'object' "
+						+
+						"       }, "
+						+
+						"       'userField':{ "
+						+
+						"          'type':'keyword', "
+						+
+						"          'norms':true "
+						+
+						"       }, "
+						+
+						"       'userObject':{ "
+						+
+						"          'type':'object', "
+						+
+						"          'dynamic':'true' "
+						+
+						"       } "
+						+
+						"    } "
+						+
+						" } ",
 				elasticsearchClient.index( index.name() ).type().getMapping() );
 	}
 
@@ -170,11 +278,15 @@ public class ElasticsearchIndexSchemaManagerUpdateCustomMappingIT {
 	public void illegalUpdate() {
 		elasticsearchClient.index( index.name() ).deleteAndCreate();
 		elasticsearchClient.index( index.name() ).type().putMapping(
-				" { " +
-				"    '_source':{ " +
-				"       'enabled': false " +
-				"    } " +
-				" } "
+				" { "
+						+
+						"    '_source':{ "
+						+
+						"       'enabled': false "
+						+
+						"    } "
+						+
+						" } "
 		);
 
 		assertThatThrownBy( () -> setupAndUpdateIndex( "source-enabled.json" ) )

@@ -63,7 +63,8 @@ public class RangePredicateSpecificsIT<F> {
 	@ClassRule
 	public static final SearchSetupHelper setupHelper = new SearchSetupHelper();
 
-	private static final SimpleMappedIndex<IndexBinding> index = SimpleMappedIndex.of( IndexBinding::new ).name( "main" );
+	private static final SimpleMappedIndex<IndexBinding> index = SimpleMappedIndex.of( IndexBinding::new ).name(
+			"main" );
 
 	@BeforeClass
 	public static void setup() {
@@ -312,7 +313,8 @@ public class RangePredicateSpecificsIT<F> {
 		assumeTrue(
 				"This backend doesn't support strict 'greater than' predicates on BigDecimal fields",
 				BigDecimalFieldTypeDescriptor.INSTANCE.equals( dataSet.fieldType )
-						&& !TckConfiguration.get().getBackendFeatures().worksFineWithStrictAboveRangedQueriesOnDecimalScaledField()
+						&& !TckConfiguration.get().getBackendFeatures()
+								.worksFineWithStrictAboveRangedQueriesOnDecimalScaledField()
 		);
 	}
 
@@ -324,7 +326,8 @@ public class RangePredicateSpecificsIT<F> {
 			defaultDslConverterField = SimpleFieldModelsByType.mapAll( supportedFieldTypes, root,
 					"defaultDslConverterField_" );
 			customDslConverterField = SimpleFieldModelsByType.mapAll( supportedFieldTypes, root,
-					"customDslConverterField_", c -> c.dslConverter( ValueWrapper.class, ValueWrapper.toDocumentValueConverter() ) );
+					"customDslConverterField_", c -> c.dslConverter( ValueWrapper.class, ValueWrapper
+							.toDocumentValueConverter() ) );
 		}
 	}
 

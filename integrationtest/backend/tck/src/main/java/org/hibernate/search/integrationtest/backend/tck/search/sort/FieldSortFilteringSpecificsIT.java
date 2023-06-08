@@ -75,7 +75,8 @@ public class FieldSortFilteringSpecificsIT<F> {
 
 	@Test
 	public void nonNested() {
-		String fieldPath = index.binding().flattenedObject.relativeFieldName + "."
+		String fieldPath = index.binding().flattenedObject.relativeFieldName
+				+ "."
 				+ index.binding().flattenedObject.fieldModels.get( fieldTypeDescriptor ).relativeFieldName;
 
 		assertThatThrownBy(
@@ -91,7 +92,8 @@ public class FieldSortFilteringSpecificsIT<F> {
 
 	@Test
 	public void invalidNestedPath_parent() {
-		String fieldPath = index.binding().nestedObject1.relativeFieldName + "."
+		String fieldPath = index.binding().nestedObject1.relativeFieldName
+				+ "."
 				+ index.binding().nestedObject1.fieldModels.get( fieldTypeDescriptor ).relativeFieldName;
 		String fieldInParentPath = index.binding().fieldModels.get( fieldTypeDescriptor ).relativeFieldName;
 
@@ -102,15 +104,18 @@ public class FieldSortFilteringSpecificsIT<F> {
 				.hasMessageContainingAll( "Invalid search predicate",
 						"This predicate targets fields [" + fieldInParentPath + "]",
 						"only fields that are contained in the nested object with path '"
-								+ index.binding().nestedObject1.relativeFieldName + "'"
+								+ index.binding().nestedObject1.relativeFieldName
+								+ "'"
 								+ " are allowed here." );
 	}
 
 	@Test
 	public void invalidNestedPath_sibling() {
-		String fieldPath = index.binding().nestedObject1.relativeFieldName + "."
+		String fieldPath = index.binding().nestedObject1.relativeFieldName
+				+ "."
 				+ index.binding().nestedObject1.fieldModels.get( fieldTypeDescriptor ).relativeFieldName;
-		String fieldInSiblingPath = index.binding().nestedObject2.relativeFieldName + "."
+		String fieldInSiblingPath = index.binding().nestedObject2.relativeFieldName
+				+ "."
 				+ index.binding().nestedObject2.fieldModels.get( fieldTypeDescriptor ).relativeFieldName;
 
 		assertThatThrownBy(
@@ -120,7 +125,8 @@ public class FieldSortFilteringSpecificsIT<F> {
 				.hasMessageContainingAll( "Invalid search predicate",
 						"This predicate targets fields [" + fieldInSiblingPath + "]",
 						"only fields that are contained in the nested object with path '"
-								+ index.binding().nestedObject1.relativeFieldName + "'"
+								+ index.binding().nestedObject1.relativeFieldName
+								+ "'"
 								+ " are allowed here." );
 	}
 

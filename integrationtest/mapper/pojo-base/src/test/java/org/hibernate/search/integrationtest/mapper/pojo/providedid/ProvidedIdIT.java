@@ -14,21 +14,21 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.environment.bean.BeanReference;
-import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.engine.search.query.SearchQuery;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.bridge.IdentifierBridge;
 import org.hibernate.search.mapper.pojo.bridge.runtime.IdentifierBridgeFromDocumentIdentifierContext;
 import org.hibernate.search.mapper.pojo.bridge.runtime.IdentifierBridgeToDocumentIdentifierContext;
+import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
-import org.hibernate.search.engine.common.EntityReference;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.StubSearchWorkBehavior;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.StubBackendUtils;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,17 +39,17 @@ public class ProvidedIdIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Test
 	public void indexAndSearch() {
 		final String entityAndIndexName = "indexed";
 		@Indexed
-		class IndexedEntity {
-		}
+		class IndexedEntity {}
 
 		// Schema
-		backendMock.expectSchema( entityAndIndexName, b -> { } );
+		backendMock.expectSchema( entityAndIndexName, b -> {} );
 		SearchMapping mapping = withBaseConfiguration()
 				.withAnnotatedEntityType( IndexedEntity.class, entityAndIndexName )
 				.setup();
@@ -62,7 +62,7 @@ public class ProvidedIdIT {
 			session.indexingPlan().add( "42", null, entity1 );
 
 			backendMock.expectWorks( entityAndIndexName )
-					.add( "42", b -> { } );
+					.add( "42", b -> {} );
 		}
 		backendMock.verifyExpectationsMet();
 
@@ -91,8 +91,7 @@ public class ProvidedIdIT {
 	public void error_nullProvidedId() {
 		final String entityAndIndexName = "indexed";
 		@Indexed
-		class IndexedEntity {
-		}
+		class IndexedEntity {}
 
 		backendMock.expectAnySchema( entityAndIndexName );
 		SearchMapping mapping = withBaseConfiguration()
@@ -113,7 +112,8 @@ public class ProvidedIdIT {
 
 	private StandalonePojoMappingSetupHelper.SetupContext withBaseConfiguration() {
 		return setupHelper.start()
-				.withConfiguration( b -> b.providedIdentifierBridge( BeanReference.ofInstance( new NaiveIdentifierBridge() ) ) );
+				.withConfiguration( b -> b.providedIdentifierBridge( BeanReference.ofInstance(
+						new NaiveIdentifierBridge() ) ) );
 	}
 
 	public static class NaiveIdentifierBridge implements IdentifierBridge<Object> {
@@ -127,7 +127,8 @@ public class ProvidedIdIT {
 		}
 
 		@Override
-		public Object fromDocumentIdentifier(String documentIdentifier, IdentifierBridgeFromDocumentIdentifierContext context) {
+		public Object fromDocumentIdentifier(String documentIdentifier,
+				IdentifierBridgeFromDocumentIdentifierContext context) {
 			return objectIds.get( documentIdentifier );
 		}
 	}

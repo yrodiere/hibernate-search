@@ -84,13 +84,15 @@ public class IndexValueFieldTypeDescriptorBaseIT {
 		boolean projectable = TckConfiguration.get().getBackendFeatures().fieldsProjectableByDefault();
 
 		assertThat( getTypeDescriptor( "default" ) )
-				.returns( GeoPointFieldTypeDescriptor.INSTANCE.equals( fieldType ) ? projectable : false, IndexValueFieldTypeDescriptor::sortable );
+				.returns( GeoPointFieldTypeDescriptor.INSTANCE.equals( fieldType ) ? projectable : false,
+						IndexValueFieldTypeDescriptor::sortable );
 		if ( isSortSupported() ) {
 			assertThat( getTypeDescriptor( "sortable" ) )
 					.returns( true, IndexValueFieldTypeDescriptor::sortable );
 		}
 		assertThat( getTypeDescriptor( "nonSortable" ) )
-				.returns( GeoPointFieldTypeDescriptor.INSTANCE.equals( fieldType ) ? projectable : false, IndexValueFieldTypeDescriptor::sortable );
+				.returns( GeoPointFieldTypeDescriptor.INSTANCE.equals( fieldType ) ? projectable : false,
+						IndexValueFieldTypeDescriptor::sortable );
 	}
 
 	@Test
@@ -190,11 +192,12 @@ public class IndexValueFieldTypeDescriptorBaseIT {
 
 	private class IndexBinding {
 		IndexBinding(IndexSchemaElement root) {
-			mapper( fieldType, ignored -> { } ).map( root, "default" );
+			mapper( fieldType, ignored -> {} ).map( root, "default" );
 
 			mapper( fieldType, c -> c.dslConverter( ValueWrapper.class, ValueWrapper.toDocumentValueConverter() ) )
 					.map( root, "dslConverter" );
-			mapper( fieldType, c -> c.projectionConverter( ValueWrapper.class, ValueWrapper.fromDocumentValueConverter() ) )
+			mapper( fieldType, c -> c.projectionConverter( ValueWrapper.class, ValueWrapper
+					.fromDocumentValueConverter() ) )
 					.map( root, "projectionConverter" );
 
 			mapper( fieldType, c -> c.searchable( Searchable.YES ) ).map( root, "searchable" );

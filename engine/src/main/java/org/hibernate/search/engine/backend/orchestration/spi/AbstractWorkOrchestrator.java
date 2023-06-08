@@ -148,8 +148,6 @@ public abstract class AbstractWorkOrchestrator<W> {
 	}
 
 	private enum State {
-		RUNNING,
-		PRE_STOPPING,
-		STOPPED;
+		RUNNING, PRE_STOPPING, STOPPED;
 	}
 }

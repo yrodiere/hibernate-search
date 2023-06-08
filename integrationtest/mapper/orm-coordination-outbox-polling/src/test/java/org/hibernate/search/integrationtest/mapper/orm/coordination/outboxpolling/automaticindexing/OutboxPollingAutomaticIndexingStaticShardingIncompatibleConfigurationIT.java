@@ -11,6 +11,7 @@ import static org.awaitility.Awaitility.await;
 
 import java.util.Collections;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -44,7 +45,8 @@ public class OutboxPollingAutomaticIndexingStaticShardingIncompatibleConfigurati
 	@Rule
 	public ExpectedLog4jLog logged = ExpectedLog4jLog.create();
 
-	private void setup(String hbm2ddlAction, TestFailureHandler failureHandler, int totalShardCount, List<Integer> assignedShardIndices) {
+	private void setup(String hbm2ddlAction, TestFailureHandler failureHandler, int totalShardCount, List<
+			Integer> assignedShardIndices) {
 		backendMock.expectSchema( IndexedEntity.NAME, b -> b
 				.field( "text", String.class, f -> f.analyzerName( AnalyzerNames.DEFAULT ) )
 		);

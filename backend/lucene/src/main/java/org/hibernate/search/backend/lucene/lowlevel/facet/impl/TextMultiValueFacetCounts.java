@@ -15,6 +15,7 @@ import org.hibernate.search.backend.lucene.lowlevel.docvalues.impl.TextMultiValu
 
 import com.carrotsearch.hppc.IntHashSet;
 import com.carrotsearch.hppc.procedures.IntProcedure;
+
 import org.apache.lucene.facet.FacetResult;
 import org.apache.lucene.facet.Facets;
 import org.apache.lucene.facet.FacetsCollector;
@@ -42,8 +43,8 @@ public class TextMultiValueFacetCounts extends Facets {
 	final int ordCount;
 	final int[] counts;
 
-	public TextMultiValueFacetCounts(IndexReader reader, String field, TextMultiValuesSource valuesSource, FacetsCollector hits)
-			throws IOException {
+	public TextMultiValueFacetCounts(IndexReader reader, String field, TextMultiValuesSource valuesSource,
+			FacetsCollector hits) throws IOException {
 		this.field = field;
 		dv = MultiDocValues.getSortedSetValues( reader, field );
 		if ( dv != null && dv.getValueCount() > Integer.MAX_VALUE ) {
@@ -125,8 +126,8 @@ public class TextMultiValueFacetCounts extends Facets {
 		return new FacetResult( field, new String[0], totCount, labelValues, childCount );
 	}
 
-	private void countOneSegment(OrdinalMap ordinalMap, TextMultiValues segValues, int segOrd, MatchingDocs hits)
-			throws IOException {
+	private void countOneSegment(OrdinalMap ordinalMap, TextMultiValues segValues, int segOrd,
+			MatchingDocs hits) throws IOException {
 		if ( segValues == null ) {
 			// nothing to count
 			return;
@@ -211,7 +212,8 @@ public class TextMultiValueFacetCounts extends Facets {
 	/**
 	 * Does all the "real work" of tallying up the counts.
 	 */
-	private void count(IndexReader reader, TextMultiValuesSource valuesSource, List<MatchingDocs> matchingDocs) throws IOException {
+	private void count(IndexReader reader, TextMultiValuesSource valuesSource, List<
+			MatchingDocs> matchingDocs) throws IOException {
 		OrdinalMap ordinalMap;
 
 		// TODO: is this right?  really, we need a way to

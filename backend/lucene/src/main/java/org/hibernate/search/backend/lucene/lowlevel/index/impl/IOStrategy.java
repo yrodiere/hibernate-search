@@ -30,7 +30,8 @@ public abstract class IOStrategy {
 		IndexWriterProvider indexWriterProvider = null;
 		IndexReaderProvider indexReaderProvider = null;
 		try {
-			indexWriterProvider = createIndexWriterProvider( indexName, eventContext, directoryHolder, writerConfigSource );
+			indexWriterProvider = createIndexWriterProvider( indexName, eventContext, directoryHolder,
+					writerConfigSource );
 			indexReaderProvider = createIndexReaderProvider( directoryHolder, indexWriterProvider );
 			return new IndexAccessorImpl(
 					eventContext,

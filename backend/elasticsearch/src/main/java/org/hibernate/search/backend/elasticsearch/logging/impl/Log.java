@@ -54,6 +54,7 @@ import org.jboss.logging.annotations.ValidIdRanges;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import org.apache.http.HttpHost;
 
 @MessageLogger(projectCode = MessageConstants.PROJECT_CODE)
@@ -84,7 +85,7 @@ public interface Log extends BasicLogger {
 			String causeMessage, @Cause Exception cause);
 
 	@Message(id = ID_OFFSET_LEGACY_ES + 10,
-			value = "Elasticsearch response indicates a timeout (HTTP status 408)" )
+			value = "Elasticsearch response indicates a timeout (HTTP status 408)")
 	SearchException elasticsearchStatus408RequestTimeout();
 
 	@Message(id = ID_OFFSET_LEGACY_ES + 20,
@@ -108,12 +109,12 @@ public interface Log extends BasicLogger {
 	SearchException schemaUpdateFailed(URLEncodedString indexName, String causeMessage, @Cause Exception cause);
 
 	@Message(id = ID_OFFSET_LEGACY_ES + 50,
-			value = "Missing index: index names [%1$s, %2$s] do not point to any index in the Elasticsearch cluster." )
+			value = "Missing index: index names [%1$s, %2$s] do not point to any index in the Elasticsearch cluster.")
 	SearchException indexMissing(URLEncodedString write, URLEncodedString read);
 
 	@LogMessage(level = Level.TRACE)
 	@Message(id = ID_OFFSET_LEGACY_ES + 53,
-			value = "Executing Elasticsearch query on '%s' with parameters '%s': <%s>" )
+			value = "Executing Elasticsearch query on '%s' with parameters '%s': <%s>")
 	void executingElasticsearchQuery(String path, Map<String, String> parameters,
 			String bodyParts);
 
@@ -325,7 +326,8 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 35,
 			value = "Invalid index field type: both analyzer '%1$s' and normalizer '%2$s' are assigned to this type."
 					+ " Either an analyzer or a normalizer can be assigned, but not both.")
-	SearchException cannotApplyAnalyzerAndNormalizer(String analyzerName, String normalizerName, @Param EventContext context);
+	SearchException cannotApplyAnalyzerAndNormalizer(String analyzerName, String normalizerName,
+			@Param EventContext context);
 
 	@Message(id = ID_OFFSET + 36,
 			value = "Invalid index field type: both analyzer '%1$s' and sorts are enabled."
@@ -348,7 +350,8 @@ public interface Log extends BasicLogger {
 	SearchException unableToShutdownClient(String causeMessage, @Cause Exception cause);
 
 	@Message(id = ID_OFFSET + 45, value = "No built-in index field type for class: '%1$s'.")
-	SearchException cannotGuessFieldType(@FormatWith(ClassFormatter.class) Class<?> inputType, @Param EventContext context);
+	SearchException cannotGuessFieldType(@FormatWith(ClassFormatter.class) Class<?> inputType,
+			@Param EventContext context);
 
 	@Message(id = ID_OFFSET + 53,
 			value = "Full-text features (analysis, fuzziness) are not supported for fields of this type.")
@@ -382,7 +385,8 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET + 58, value = "Invalid Elasticsearch distribution name: '%1$s'."
 			+ " Valid names are: %2$s.")
-	SearchException invalidElasticsearchDistributionName(String invalidRepresentation, List<String> validRepresentations);
+	SearchException invalidElasticsearchDistributionName(String invalidRepresentation, List<
+			String> validRepresentations);
 
 	@Message(id = ID_OFFSET + 59, value = "Unexpected Elasticsearch version running on the cluster: '%2$s'."
 			+ " Hibernate Search was configured for Elasticsearch '%1$s'.")
@@ -396,14 +400,15 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 61,
 			value = "Ambiguous Elasticsearch version: '%s'."
 					+ " This version matches multiple dialects."
-					+ " Please use a more precise version to remove the ambiguity." )
+					+ " Please use a more precise version to remove the ambiguity.")
 	SearchException ambiguousElasticsearchVersion(ElasticsearchVersion version);
 
 	@Message(id = ID_OFFSET + 62,
 			value = "Invalid index field type: both null token '%2$s' ('indexNullAs')"
 					+ " and analyzer '%1$s' are assigned to this type."
 					+ " 'indexNullAs' is not supported on analyzed fields.")
-	SearchException cannotUseIndexNullAsAndAnalyzer(String analyzerName, String indexNullAs, @Param EventContext context);
+	SearchException cannotUseIndexNullAsAndAnalyzer(String analyzerName, String indexNullAs,
+			@Param EventContext context);
 
 	@Message(id = ID_OFFSET + 63,
 			value = "Multiple values assigned to field '%1$s': this field is single-valued."
@@ -412,7 +417,7 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET + 64,
 			value = "Invalid use of explain(Object id) on a query targeting multiple types."
-					+ " Use explain(String typeName, Object id) and pass one of %1$s as the type name." )
+					+ " Use explain(String typeName, Object id) and pass one of %1$s as the type name.")
 	SearchException explainRequiresTypeName(Set<String> targetedTypeNames);
 
 	@Message(id = ID_OFFSET + 65,
@@ -436,13 +441,14 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET + 70,
 			value = "Invalid index field type: decimal scale '%1$s' is positive."
-						+ " The decimal scale of BigInteger fields must be zero or negative.")
+					+ " The decimal scale of BigInteger fields must be zero or negative.")
 	SearchException invalidDecimalScale(Integer decimalScale, @Param EventContext eventContext);
 
 	@Message(id = ID_OFFSET + 72,
 			value = "Invalid search predicate: '%1$s'. You must build the predicate from a scope targeting indexes %3$s,"
 					+ " but the given predicate was built from a scope targeting indexes %2$s.")
-	SearchException predicateDefinedOnDifferentIndexes(SearchPredicate predicate, Set<String> predicateIndexes, Set<String> scopeIndexes);
+	SearchException predicateDefinedOnDifferentIndexes(SearchPredicate predicate, Set<String> predicateIndexes, Set<
+			String> scopeIndexes);
 
 	@Message(id = ID_OFFSET + 73,
 			value = "Invalid search sort: '%1$s'. You must build the sort from a scope targeting indexes %3$s,"
@@ -452,7 +458,8 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 74,
 			value = "Invalid search projection: '%1$s'. You must build the projection from a scope targeting indexes %3$s,"
 					+ " but the given projection was built from a scope targeting indexes %2$s.")
-	SearchException projectionDefinedOnDifferentIndexes(SearchProjection<?> projection, Set<String> projectionIndexes, Set<String> scopeIndexes);
+	SearchException projectionDefinedOnDifferentIndexes(SearchProjection<?> projection, Set<String> projectionIndexes,
+			Set<String> scopeIndexes);
 
 	@Message(id = ID_OFFSET + 76,
 			value = "Invalid index field type: both analyzer '%1$s' and aggregations are enabled."
@@ -485,8 +492,8 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET + 87,
 			value = "Invalid index field type: search analyzer '%1$s' is assigned to this type,"
-				+ " but the indexing analyzer is missing."
-				+ " Assign an indexing analyzer and a search analyzer, or remove the search analyzer.")
+					+ " but the indexing analyzer is missing."
+					+ " Assign an indexing analyzer and a search analyzer, or remove the search analyzer.")
 	SearchException searchAnalyzerWithoutAnalyzer(String searchAnalyzer, @Param EventContext context);
 
 	@Message(id = ID_OFFSET + 88, value = "Call to the bulk REST API failed: %1$s")
@@ -531,7 +538,7 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 96,
 			value = "Invalid Elasticsearch index layout:"
 					+ " the write alias and read alias are set to the same value: '%1$s'."
-					+ " The write alias and read alias must be different." )
+					+ " The write alias and read alias must be different.")
 	SearchException sameWriteAndReadAliases(URLEncodedString writeAndReadAlias, @Param EventContext eventContext);
 
 	@Message(id = ID_OFFSET + 97,
@@ -655,17 +662,21 @@ public interface Log extends BasicLogger {
 	SearchException customIndexSettingsErrorOnLoading(String filePath, String causeMessage, @Cause Exception cause,
 			@Param EventContext context);
 
-	@Message(id = ID_OFFSET + 133, value = "There are some JSON syntax errors on the given custom index settings file '%1$s': %2$s")
+	@Message(id = ID_OFFSET + 133,
+			value = "There are some JSON syntax errors on the given custom index settings file '%1$s': %2$s")
 	SearchException customIndexSettingsJsonSyntaxErrors(String filePath, String causeMessage, @Cause Exception cause,
 			@Param EventContext context);
 
-	@Message(id = ID_OFFSET + 134, value = "Invalid use of 'missing().first()' for an ascending distance sort. Elasticsearch always assumes missing values have a distance of '+Infinity', and this behavior cannot be customized.")
+	@Message(id = ID_OFFSET + 134,
+			value = "Invalid use of 'missing().first()' for an ascending distance sort. Elasticsearch always assumes missing values have a distance of '+Infinity', and this behavior cannot be customized.")
 	SearchException missingFirstOnAscSortNotSupported(@Param EventContext context);
 
-	@Message(id = ID_OFFSET + 135, value = "Invalid use of 'missing().last()' for a descending distance sort. Elasticsearch always assumes missing values have a distance of '+Infinity', and this behavior cannot be customized.")
+	@Message(id = ID_OFFSET + 135,
+			value = "Invalid use of 'missing().last()' for a descending distance sort. Elasticsearch always assumes missing values have a distance of '+Infinity', and this behavior cannot be customized.")
 	SearchException missingLastOnDescSortNotSupported(@Param EventContext context);
 
-	@Message(id = ID_OFFSET + 136, value = "Invalid use of 'missing().use(...)' for a distance sort. Elasticsearch always assumes missing values have a distance of '+Infinity', and this behavior cannot be customized.")
+	@Message(id = ID_OFFSET + 136,
+			value = "Invalid use of 'missing().use(...)' for a distance sort. Elasticsearch always assumes missing values have a distance of '+Infinity', and this behavior cannot be customized.")
 	SearchException missingAsOnSortNotSupported(@Param EventContext context);
 
 	@Message(id = ID_OFFSET + 137, value = "The index schema named predicate '%1$s' was added twice.")
@@ -673,12 +684,15 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET + 138,
 			value = "Predicate definition differs: '%1$s' vs. '%2$s'.")
-	SearchException differentPredicateDefinitionForQueryElement(Object predicateDefinition1, Object predicateDefinition2);
+	SearchException differentPredicateDefinitionForQueryElement(Object predicateDefinition1,
+			Object predicateDefinition2);
 
 	@LogMessage(level = Level.WARN)
-	@Message(id = ID_OFFSET + 140, value = "A search query fetching all hits was requested," +
-			" but only '%2$s' hits were retrieved because the maximum result window size forces a limit of '%1$s'" +
-			" hits. Refer to Elasticsearch's 'max_result_window_size' setting for more information." )
+	@Message(id = ID_OFFSET + 140, value = "A search query fetching all hits was requested,"
+			+
+			" but only '%2$s' hits were retrieved because the maximum result window size forces a limit of '%1$s'"
+			+
+			" hits. Refer to Elasticsearch's 'max_result_window_size' setting for more information.")
 	void defaultedLimitedHits(Integer defaultLimit, long hitCount);
 
 	@Message(id = ID_OFFSET + 141,
@@ -711,7 +725,8 @@ public interface Log extends BasicLogger {
 	SearchException customIndexMappingErrorOnLoading(String filePath, String causeMessage, @Cause Exception cause,
 			@Param EventContext context);
 
-	@Message(id = ID_OFFSET + 153, value = "There are some JSON syntax errors on the given custom index mapping file '%1$s': %2$s")
+	@Message(id = ID_OFFSET + 153,
+			value = "There are some JSON syntax errors on the given custom index mapping file '%1$s': %2$s")
 	SearchException customIndexMappingJsonSyntaxErrors(String filePath, String causeMessage, @Cause Exception cause,
 			@Param EventContext context);
 
@@ -737,14 +752,16 @@ public interface Log extends BasicLogger {
 					+ " The document was probably indexed with a different configuration: full reindexing is necessary.")
 	SearchException unexpectedMappedTypeNameForByMappedTypeProjection(String typeName, Set<String> expectedTypeNames);
 
-	@Message(id = ID_OFFSET + 157, value = "Unable to export the schema for '%1$s' index: %2$s" )
+	@Message(id = ID_OFFSET + 157, value = "Unable to export the schema for '%1$s' index: %2$s")
 	SearchException unableToExportSchema(String indexName, String message, @Cause IOException e);
 
-	@Message(id = ID_OFFSET + 158, value = "Invalid use of 'missing().lowest()' for an ascending distance sort. " +
+	@Message(id = ID_OFFSET + 158, value = "Invalid use of 'missing().lowest()' for an ascending distance sort. "
+			+
 			"Elasticsearch always assumes missing values have a distance of '+Infinity', and this behavior cannot be customized. ")
 	SearchException missingLowestOnAscSortNotSupported(@Param EventContext context);
 
-	@Message(id = ID_OFFSET + 159, value = "Invalid use of 'missing().lowest()' for a descending distance sort. " +
+	@Message(id = ID_OFFSET + 159, value = "Invalid use of 'missing().lowest()' for a descending distance sort. "
+			+
 			"Elasticsearch always assumes missing values have a distance of '+Infinity', and this behavior cannot be customized. ")
 	SearchException missingLowestOnDescSortNotSupported(@Param EventContext context);
 
@@ -755,17 +772,21 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 161,
 			value = "Invalid highlighter: '%1$s'. You must build the highlighter from a scope targeting indexes %3$s,"
 					+ " but the given highlighter was built from a scope targeting indexes %2$s.")
-	SearchException queryHighlighterDefinedOnDifferentIndexes(SearchHighlighter highlighter, Set<String> configurationIndexes, Set<String> scopeIndexes);
+	SearchException queryHighlighterDefinedOnDifferentIndexes(SearchHighlighter highlighter, Set<
+			String> configurationIndexes, Set<String> scopeIndexes);
 
 	@LogMessage(level = Logger.Level.WARN)
 	@Message(id = ID_OFFSET + 162,
-			value = "No fields were added to be highlighted, but some query level highlighters were provided. " +
+			value = "No fields were added to be highlighted, but some query level highlighters were provided. "
+					+
 					"These highlighters will be ignored.")
 	void noFieldsToHighlight();
 
 	@Message(id = ID_OFFSET + 163,
-			value = "Cannot find a highlighter with name '%1$s'." +
-					" Available highlighters are: %2$s." +
+			value = "Cannot find a highlighter with name '%1$s'."
+					+
+					" Available highlighters are: %2$s."
+					+
 					" Was it configured with `highlighter(\"%1$s\", highlighterContributor)`?")
 	SearchException cannotFindHighlighter(String highlighterName, Set<String> highlighters);
 
@@ -777,7 +798,8 @@ public interface Log extends BasicLogger {
 	SearchException highlighterWithTheSameNameCannotBeAdded(String highlighterName);
 
 	@Message(id = ID_OFFSET + 166,
-			value = "'%1$s' highlighter type cannot be applied to '%2$s' field. " +
+			value = "'%1$s' highlighter type cannot be applied to '%2$s' field. "
+					+
 					"'%2$s' must have either 'ANY' or '%1$s' among the configured highlightable values.")
 	SearchException highlighterTypeNotSupported(SearchHighlighterType type, String field);
 
@@ -786,12 +808,14 @@ public interface Log extends BasicLogger {
 	SearchException unsupportedMixOfHighlightableValues(Set<Highlightable> highlightable);
 
 	@Message(id = ID_OFFSET + 168,
-			value = "The '%1$s' term vector storage strategy is not compatible with the fast vector highlighter. " +
+			value = "The '%1$s' term vector storage strategy is not compatible with the fast vector highlighter. "
+					+
 					"Either change the strategy to one of `WITH_POSITIONS_PAYLOADS`/`WITH_POSITIONS_OFFSETS_PAYLOADS` or remove the requirement for the fast vector highlighter support.")
 	SearchException termVectorDontAllowFastVectorHighlighter(TermVector termVector);
 
 	@Message(id = ID_OFFSET + 169,
-			value = "Setting the `highlightable` attribute to an empty array is not supported. " +
+			value = "Setting the `highlightable` attribute to an empty array is not supported. "
+					+
 					"Set the value to `NO` if the field does not require the highlight projection.")
 	SearchException noHighlightableProvided();
 
@@ -806,5 +830,6 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET + 172, value = "'%1$s' cannot be nested in an object projection. "
 			+ "%2$s")
-	SearchException cannotUseProjectionInNestedContext(String projection, String hint, @Param EventContext eventContext);
+	SearchException cannotUseProjectionInNestedContext(String projection, String hint,
+			@Param EventContext eventContext);
 }

@@ -35,7 +35,8 @@ public abstract class AbstractSettingsPerShardIT {
 		return new Object[][] {
 				{ "hash", new SearchSetupHelper( helper -> helper.createHashBasedShardingBackendSetupStrategy( 4 ) ),
 						new ArrayList<>( hashShardIds ) },
-				{ "explicit", new SearchSetupHelper( ignored -> ShardingExplicitIT.explicitShardingBackendSetupStrategy( explicitShardIds ) ),
+				{ "explicit", new SearchSetupHelper( ignored -> ShardingExplicitIT.explicitShardingBackendSetupStrategy(
+						explicitShardIds ) ),
 						new ArrayList<>( explicitShardIds ) }
 		};
 	}

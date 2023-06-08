@@ -36,7 +36,8 @@ public class FromDocumentFieldValueConverterTest {
 	@Test
 	public void fromDocumentFieldValue() {
 		BackendSessionContext sessionContextMock = Mockito.mock( BackendSessionContext.class );
-		FromDocumentValueConvertContextImpl convertContext = new FromDocumentValueConvertContextImpl( sessionContextMock );
+		FromDocumentValueConvertContextImpl convertContext = new FromDocumentValueConvertContextImpl(
+				sessionContextMock );
 
 		FromDocumentFieldValueConvertContextExtension<String> extension =
 				new FromDocumentFieldValueConvertContextExtension<String>() {

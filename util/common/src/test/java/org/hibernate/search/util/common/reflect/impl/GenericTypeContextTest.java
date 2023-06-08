@@ -28,8 +28,7 @@ public class GenericTypeContextTest {
 
 	@Test
 	public void simple() {
-		new GenericTypeContextAssert.AssertWithType<Iterable<CustomType>>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<Iterable<CustomType>>() {}
 				.resolveTypeArgumentTo( CustomType.class, Iterable.class, 0 )
 				.resolveTypeArgumentToEmpty( Collection.class, 0 )
 				.resolveTypeArgumentToEmpty( List.class, 0 )
@@ -53,8 +52,7 @@ public class GenericTypeContextTest {
 						.resolveTypeArgumentTo( CustomType.class, Collection.class, 0 )
 						.resolveTypeArgumentTo( CustomType.class, List.class, 0 )
 						.resolveTypeArgumentToEmpty( Map.class, 0 ) );
-		new GenericTypeContextAssert.AssertWithType<Collection<CustomType>>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<Collection<CustomType>>() {}
 				.resolveTypeArgumentTo( CustomType.class, Iterable.class, 0 )
 				.resolveTypeArgumentTo( CustomType.class, Collection.class, 0 )
 				.resolveTypeArgumentToEmpty( Map.class, 0 )
@@ -77,8 +75,7 @@ public class GenericTypeContextTest {
 						.resolveTypeArgumentTo( CustomType.class, Collection.class, 0 )
 						.resolveTypeArgumentTo( CustomType.class, List.class, 0 )
 						.resolveTypeArgumentToEmpty( Map.class, 0 ) );
-		new GenericTypeContextAssert.AssertWithType<List<CustomType>>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<List<CustomType>>() {}
 				.resolveTypeArgumentTo( CustomType.class, Iterable.class, 0 )
 				.resolveTypeArgumentTo( CustomType.class, Collection.class, 0 )
 				.resolveTypeArgumentTo( CustomType.class, List.class, 0 )
@@ -113,23 +110,20 @@ public class GenericTypeContextTest {
 						.resolveTypeArgumentTo( CustomType.class, List.class, 0 )
 						.resolveTypeArgumentTo( CustomType.class, ArrayList.class, 0 )
 						.resolveTypeArgumentToEmpty( Map.class, 0 ) );
-		new GenericTypeContextAssert.AssertWithType<ArrayList<CustomType>>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<ArrayList<CustomType>>() {}
 				.resolveTypeArgumentTo( CustomType.class, Iterable.class, 0 )
 				.resolveTypeArgumentTo( CustomType.class, Collection.class, 0 )
 				.resolveTypeArgumentTo( CustomType.class, List.class, 0 )
 				.resolveTypeArgumentTo( CustomType.class, ArrayList.class, 0 )
 				.resolveTypeArgumentToEmpty( Map.class, 0 )
 				.resolveTypeArgumentToEmpty( Map.class, 1 );
-		new GenericTypeContextAssert.AssertWithType<Map<String, CustomType>>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<Map<String, CustomType>>() {}
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
 				.resolveTypeArgumentToEmpty( Collection.class, 0 )
 				.resolveTypeArgumentToEmpty( List.class, 0 )
 				.resolveTypeArgumentTo( String.class, Map.class, 0 )
 				.resolveTypeArgumentTo( CustomType.class, Map.class, 1 );
-		new GenericTypeContextAssert.AssertWithType<HashMap<String, CustomType>>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<HashMap<String, CustomType>>() {}
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
 				.resolveTypeArgumentToEmpty( Collection.class, 0 )
 				.resolveTypeArgumentToEmpty( List.class, 0 )
@@ -153,9 +147,8 @@ public class GenericTypeContextTest {
 
 	@Test
 	public void genericArgument() {
-		new GenericTypeContextAssert.AssertWithType<Iterable<CustomGenericType<String, Integer>>>() {
-		}
-				.resolveTypeArgumentTo( new TypeCapture<CustomGenericType<String, Integer>>() { },
+		new GenericTypeContextAssert.AssertWithType<Iterable<CustomGenericType<String, Integer>>>() {}
+				.resolveTypeArgumentTo( new TypeCapture<CustomGenericType<String, Integer>>() {},
 						Iterable.class, 0 )
 				.resolveTypeArgumentToEmpty( Collection.class, 0 )
 				.resolveTypeArgumentToEmpty( List.class, 0 )
@@ -163,7 +156,7 @@ public class GenericTypeContextTest {
 				.resolveTypeArgumentToEmpty( Map.class, 1 )
 				.castTo( Collection.class, actual -> actual
 						.hasRawType( Collection.class )
-						.resolveTypeArgumentTo( new TypeCapture<CustomGenericType<String, Integer>>() { },
+						.resolveTypeArgumentTo( new TypeCapture<CustomGenericType<String, Integer>>() {},
 								Collection.class, 0 )
 						.resolveTypeArgumentToEmpty( List.class, 0 ) );
 	}
@@ -171,8 +164,7 @@ public class GenericTypeContextTest {
 	@Test
 	@SuppressWarnings("rawtypes")
 	public void rawType() {
-		new GenericTypeContextAssert.AssertWithType<Collection>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<Collection>() {}
 				.resolveTypeArgumentTo(
 						Collection.class.getTypeParameters()[0],
 						Iterable.class, 0
@@ -195,8 +187,7 @@ public class GenericTypeContextTest {
 	@Test
 	@SuppressWarnings("rawtypes")
 	public void boundedRawType() {
-		new GenericTypeContextAssert.AssertWithType<CustomBoundedGenericInterface>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<CustomBoundedGenericInterface>() {}
 				.resolveTypeArgumentTo(
 						CustomBoundedGenericInterface.class.getTypeParameters()[0],
 						CustomBoundedGenericInterface.class, 0
@@ -215,8 +206,7 @@ public class GenericTypeContextTest {
 
 	@Test
 	public void swappedArguments() {
-		new GenericTypeContextAssert.AssertWithType<CustomGenericType<String, Integer>>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<CustomGenericType<String, Integer>>() {}
 				.resolveTypeArgumentTo( String.class, CustomGenericType.class, 0 )
 				.resolveTypeArgumentTo( Integer.class, CustomGenericType.class, 1 )
 				.resolveTypeArgumentTo( Integer.class, CustomGenericInterface.class, 0 )
@@ -225,8 +215,7 @@ public class GenericTypeContextTest {
 
 	@Test
 	public void fixedArguments() {
-		new GenericTypeContextAssert.AssertWithType<CustomArgumentSettingType>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<CustomArgumentSettingType>() {}
 				.resolveTypeArgumentTo( String.class, CustomGenericInterface.class, 0 )
 				.resolveTypeArgumentTo( CustomType.class, CustomGenericInterface.class, 1 );
 	}
@@ -234,8 +223,7 @@ public class GenericTypeContextTest {
 	@Test
 	public <T> void unboundedTypeVariable() {
 		// Type variable as the tested type
-		new GenericTypeContextAssert.AssertWithType<T>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<T>() {}
 				.resolveTypeArgumentToEmpty( CustomGenericInterface.class, 0 )
 				.resolveTypeArgumentToEmpty( CustomGenericInterface.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
@@ -245,8 +233,7 @@ public class GenericTypeContextTest {
 				.resolveTypeArgumentToEmpty( Map.class, 1 );
 
 		// Type variable as an argument to the tested type
-		new GenericTypeContextAssert.AssertWithType<Map<T, String>>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<Map<T, String>>() {}
 				.resolveTypeArgumentTo( Object.class, Map.class, 0 )
 				.resolveTypeArgumentTo( String.class, Map.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
@@ -259,8 +246,7 @@ public class GenericTypeContextTest {
 	@Test
 	public <T extends CustomGenericInterface<Integer, String>> void singleUpperBoundTypeVariable() {
 		// Type variable as the tested type
-		new GenericTypeContextAssert.AssertWithType<T>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<T>() {}
 				.resolveTypeArgumentTo( Integer.class, CustomGenericInterface.class, 0 )
 				.resolveTypeArgumentTo( String.class, CustomGenericInterface.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
@@ -270,10 +256,8 @@ public class GenericTypeContextTest {
 				.resolveTypeArgumentToEmpty( Map.class, 1 );
 
 		// Type variable as an argument to the tested type
-		new GenericTypeContextAssert.AssertWithType<Map<T, String>>() {
-		}
-				.resolveTypeArgumentTo( new TypeCapture<CustomGenericInterface<Integer, String>>() {
-				}, Map.class, 0 )
+		new GenericTypeContextAssert.AssertWithType<Map<T, String>>() {}
+				.resolveTypeArgumentTo( new TypeCapture<CustomGenericInterface<Integer, String>>() {}, Map.class, 0 )
 				.resolveTypeArgumentTo( String.class, Map.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
 				.resolveTypeArgumentToEmpty( Collection.class, 0 )
@@ -283,10 +267,11 @@ public class GenericTypeContextTest {
 	}
 
 	@Test
-	public <T extends CustomGenericInterface<Integer, String> & Collection<Double>> void multipleUpperBoundsTypeVariable() {
+	public <
+			T extends CustomGenericInterface<Integer, String> & Collection<
+					Double>> void multipleUpperBoundsTypeVariable() {
 		// Type variable as the tested type
-		new GenericTypeContextAssert.AssertWithType<T>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<T>() {}
 				.resolveTypeArgumentTo( Integer.class, CustomGenericInterface.class, 0 )
 				.resolveTypeArgumentTo( String.class, CustomGenericInterface.class, 1 )
 				.resolveTypeArgumentTo( Double.class, Iterable.class, 0 )
@@ -296,10 +281,8 @@ public class GenericTypeContextTest {
 				.resolveTypeArgumentToEmpty( Map.class, 1 );
 
 		// Type variable as an argument to the tested type
-		new GenericTypeContextAssert.AssertWithType<Map<T, String>>() {
-		}
-				.resolveTypeArgumentTo( new TypeCapture<CustomGenericInterface<Integer, String>>() {
-				}, Map.class, 0 )
+		new GenericTypeContextAssert.AssertWithType<Map<T, String>>() {}
+				.resolveTypeArgumentTo( new TypeCapture<CustomGenericInterface<Integer, String>>() {}, Map.class, 0 )
 				.resolveTypeArgumentTo( String.class, Map.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
 				.resolveTypeArgumentToEmpty( Collection.class, 0 )
@@ -311,8 +294,7 @@ public class GenericTypeContextTest {
 	@Test
 	public void unboundedWildcard() {
 		// Wildcard as the tested type
-		new GenericTypeContextAssert.AssertWithWildcardType<Of<?>>() {
-		}
+		new GenericTypeContextAssert.AssertWithWildcardType<Of<?>>() {}
 				.resolveTypeArgumentToEmpty( CustomGenericInterface.class, 0 )
 				.resolveTypeArgumentToEmpty( CustomGenericInterface.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
@@ -322,11 +304,9 @@ public class GenericTypeContextTest {
 				.resolveTypeArgumentToEmpty( Map.class, 1 );
 
 		// Wildcard as an argument to the tested type
-		new GenericTypeContextAssert.AssertWithType<CustomGenericType<?, String>>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<CustomGenericType<?, String>>() {}
 				.resolveTypeArgumentTo( String.class, CustomGenericInterface.class, 0 )
-				.resolveTypeArgumentTo( new WildcardTypeCapture<Of<?>>() {
-				}, CustomGenericInterface.class, 1 )
+				.resolveTypeArgumentTo( new WildcardTypeCapture<Of<?>>() {}, CustomGenericInterface.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
 				.resolveTypeArgumentToEmpty( Collection.class, 0 )
 				.resolveTypeArgumentToEmpty( List.class, 0 )
@@ -337,8 +317,7 @@ public class GenericTypeContextTest {
 	@Test
 	public void singleUpperBoundWildcard() {
 		// Wildcard as the tested type
-		new GenericTypeContextAssert.AssertWithWildcardType<Of<? extends CustomGenericInterface<Integer, String>>>() {
-		}
+		new GenericTypeContextAssert.AssertWithWildcardType<Of<? extends CustomGenericInterface<Integer, String>>>() {}
 				.resolveTypeArgumentTo( Integer.class, CustomGenericInterface.class, 0 )
 				.resolveTypeArgumentTo( String.class, CustomGenericInterface.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
@@ -348,10 +327,9 @@ public class GenericTypeContextTest {
 				.resolveTypeArgumentToEmpty( Map.class, 1 );
 
 		// Wildcard as an argument to the tested type
-		new GenericTypeContextAssert.AssertWithType<Map<? extends CustomGenericInterface<Integer, String>, String>>() {
-		}
-				.resolveTypeArgumentTo( new WildcardTypeCapture<Of<? extends CustomGenericInterface<Integer, String>>>() {
-				}, Map.class, 0 )
+		new GenericTypeContextAssert.AssertWithType<Map<? extends CustomGenericInterface<Integer, String>, String>>() {}
+				.resolveTypeArgumentTo( new WildcardTypeCapture<Of<? extends CustomGenericInterface<Integer,
+						String>>>() {}, Map.class, 0 )
 				.resolveTypeArgumentTo( String.class, Map.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
 				.resolveTypeArgumentToEmpty( Collection.class, 0 )
@@ -363,8 +341,7 @@ public class GenericTypeContextTest {
 	@Test
 	public <T> void unboundedTypeVariableUpperBoundWildcard() {
 		// Wildcard as the tested type
-		new GenericTypeContextAssert.AssertWithWildcardType<Of<? extends T>>() {
-		}
+		new GenericTypeContextAssert.AssertWithWildcardType<Of<? extends T>>() {}
 				.resolveTypeArgumentToEmpty( CustomGenericInterface.class, 0 )
 				.resolveTypeArgumentToEmpty( CustomGenericInterface.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
@@ -374,10 +351,8 @@ public class GenericTypeContextTest {
 				.resolveTypeArgumentToEmpty( Map.class, 1 );
 
 		// Wildcard as an argument to the tested type
-		new GenericTypeContextAssert.AssertWithType<CustomGenericInterface<? extends T, String>>() {
-		}
-				.resolveTypeArgumentTo( new WildcardTypeCapture<Of<? extends T>>() {
-				}, CustomGenericInterface.class, 0 )
+		new GenericTypeContextAssert.AssertWithType<CustomGenericInterface<? extends T, String>>() {}
+				.resolveTypeArgumentTo( new WildcardTypeCapture<Of<? extends T>>() {}, CustomGenericInterface.class, 0 )
 				.resolveTypeArgumentTo( String.class, CustomGenericInterface.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
 				.resolveTypeArgumentToEmpty( Collection.class, 0 )
@@ -389,8 +364,7 @@ public class GenericTypeContextTest {
 	@Test
 	public <T extends CustomGenericInterface<Integer, String>> void boundedTypeVariableUpperBoundWildcard() {
 		// Wildcard as the tested type
-		new GenericTypeContextAssert.AssertWithWildcardType<Of<? extends T>>() {
-		}
+		new GenericTypeContextAssert.AssertWithWildcardType<Of<? extends T>>() {}
 				.resolveTypeArgumentTo( Integer.class, CustomGenericInterface.class, 0 )
 				.resolveTypeArgumentTo( String.class, CustomGenericInterface.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
@@ -400,10 +374,8 @@ public class GenericTypeContextTest {
 				.resolveTypeArgumentToEmpty( Map.class, 1 );
 
 		// Wildcard as an argument to the tested type
-		new GenericTypeContextAssert.AssertWithType<Map<? extends T, String>>() {
-		}
-				.resolveTypeArgumentTo( new WildcardTypeCapture<Of<? extends T>>() {
-				}, Map.class, 0 )
+		new GenericTypeContextAssert.AssertWithType<Map<? extends T, String>>() {}
+				.resolveTypeArgumentTo( new WildcardTypeCapture<Of<? extends T>>() {}, Map.class, 0 )
 				.resolveTypeArgumentTo( String.class, Map.class, 1 )
 				.resolveTypeArgumentToEmpty( Iterable.class, 0 )
 				.resolveTypeArgumentToEmpty( Collection.class, 0 )
@@ -414,8 +386,7 @@ public class GenericTypeContextTest {
 
 	@Test
 	public void badIndex() {
-		new GenericTypeContextAssert.AssertWithType<CustomGenericType<String, Integer>>() {
-		}
+		new GenericTypeContextAssert.AssertWithType<CustomGenericType<String, Integer>>() {}
 				.typeParameterIndexTooHigh( CustomGenericInterface.class, 2 )
 				.typeParameterIndexTooHigh( CustomGenericInterface.class, 42 )
 				.typeParameterIndexTooHigh( CustomGenericInterface.class, Integer.MAX_VALUE )
@@ -431,8 +402,7 @@ public class GenericTypeContextTest {
 		class GenericDeclaringClass<T> {
 			public List<T> property;
 		}
-		class TypeSettingClass extends GenericDeclaringClass<String> {
-		}
+		class TypeSettingClass extends GenericDeclaringClass<String> {}
 
 		Type propertyType = GenericDeclaringClass.class.getField( "property" ).getGenericType();
 		GenericTypeContext typeSettingClassContext = new GenericTypeContext( TypeSettingClass.class );
@@ -448,8 +418,7 @@ public class GenericTypeContextTest {
 			public T[] arrayProperty;
 			public T nonArrayProperty;
 		}
-		class TypeSettingClass extends GenericDeclaringClass<String> {
-		}
+		class TypeSettingClass extends GenericDeclaringClass<String> {}
 
 		Type arrayPropertyType = GenericDeclaringClass.class.getField( "arrayProperty" ).getGenericType();
 		Type nonArrayPropertyType = GenericDeclaringClass.class.getField( "nonArrayProperty" ).getGenericType();
@@ -459,7 +428,8 @@ public class GenericTypeContextTest {
 		assertThatTypeContext( arrayPropertyContext )
 				.resolveArrayElementTypeTo( String.class );
 
-		GenericTypeContext nonArrayPropertyContext = new GenericTypeContext( typeSettingClassContext, nonArrayPropertyType );
+		GenericTypeContext nonArrayPropertyContext = new GenericTypeContext( typeSettingClassContext,
+				nonArrayPropertyType );
 		assertThatTypeContext( nonArrayPropertyContext )
 				.resolveArrayElementTypeToEmpty();
 	}
@@ -472,8 +442,7 @@ public class GenericTypeContextTest {
 		class GenericDeclaringLevel1Class<T> {
 			public GenericDeclaringLevel2Class<List<T>> property;
 		}
-		class TypeSettingClass extends GenericDeclaringLevel1Class<String> {
-		}
+		class TypeSettingClass extends GenericDeclaringLevel1Class<String> {}
 
 		Type level1PropertyType = GenericDeclaringLevel1Class.class.getField( "property" ).getGenericType();
 		Type level2PropertyType = GenericDeclaringLevel2Class.class.getField( "property" ).getGenericType();
@@ -493,8 +462,7 @@ public class GenericTypeContextTest {
 		abstract class GenericDeclaringClass<T> {
 			public abstract <U extends T> List<U> property();
 		}
-		abstract class TypeSettingClass extends GenericDeclaringClass<String> {
-		}
+		abstract class TypeSettingClass extends GenericDeclaringClass<String> {}
 
 		Type propertyType = GenericDeclaringClass.class.getMethod( "property" ).getGenericReturnType();
 		GenericTypeContext declaringContext = new GenericTypeContext( TypeSettingClass.class );
@@ -509,10 +477,8 @@ public class GenericTypeContextTest {
 		abstract class GenericDeclaringClass<T, U extends List<T>> {
 			public abstract U property();
 		}
-		abstract class GenericSubClass<V extends List<String>> extends GenericDeclaringClass<String, V> {
-		}
-		abstract class TypeSettingClass extends GenericSubClass<ArrayList<String>> {
-		}
+		abstract class GenericSubClass<V extends List<String>> extends GenericDeclaringClass<String, V> {}
+		abstract class TypeSettingClass extends GenericSubClass<ArrayList<String>> {}
 
 		Type propertyType = GenericDeclaringClass.class.getMethod( "property" ).getGenericReturnType();
 		GenericTypeContext genericSubClassContext = new GenericTypeContext( GenericSubClass.class );

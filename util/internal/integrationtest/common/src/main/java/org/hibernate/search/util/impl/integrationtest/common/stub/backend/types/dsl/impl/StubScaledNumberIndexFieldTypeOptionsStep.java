@@ -13,7 +13,8 @@ public class StubScaledNumberIndexFieldTypeOptionsStep<F extends Number>
 		extends AbstractStubStandardIndexFieldTypeOptionsStep<StubScaledNumberIndexFieldTypeOptionsStep<F>, F>
 		implements ScaledNumberIndexFieldTypeOptionsStep<StubScaledNumberIndexFieldTypeOptionsStep<F>, F> {
 
-	public StubScaledNumberIndexFieldTypeOptionsStep(Class<F> fieldType, IndexFieldTypeDefaultsProvider defaultsProvider) {
+	public StubScaledNumberIndexFieldTypeOptionsStep(Class<F> fieldType,
+			IndexFieldTypeDefaultsProvider defaultsProvider) {
 		super( fieldType );
 		setDefaults( defaultsProvider );
 	}

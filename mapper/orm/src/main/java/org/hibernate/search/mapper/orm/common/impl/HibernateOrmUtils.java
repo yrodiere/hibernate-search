@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -94,13 +95,16 @@ public final class HibernateOrmUtils {
 		EntityPersister superTypeCandidate = type1;
 		while ( superTypeCandidate != null && !isSuperTypeOf( superTypeCandidate, type2 ) ) {
 			String superSuperTypeEntityName = superTypeCandidate.getEntityMetamodel().getSuperclass();
-			superTypeCandidate = superSuperTypeEntityName == null ? null
-					: metamodel.entityPersister( superSuperTypeEntityName ).getEntityPersister();
+			superTypeCandidate = superSuperTypeEntityName == null ?
+					null : metamodel.entityPersister( superSuperTypeEntityName ).getEntityPersister();
 		}
 		if ( superTypeCandidate == null ) {
 			throw new AssertionFailure(
-					"Cannot find a common entity supertype for " + type1.getEntityName()
-							+ " and " + type2.getEntityName() + "."
+					"Cannot find a common entity supertype for "
+							+ type1.getEntityName()
+							+ " and "
+							+ type2.getEntityName()
+							+ "."
 							+ " There is a bug in Hibernate Search, please report it."
 			);
 		}
@@ -131,7 +135,8 @@ public final class HibernateOrmUtils {
 			Class<T> serviceClass) {
 		T service = serviceRegistry.getService( serviceClass );
 		if ( service == null ) {
-			throw new org.hibernate.search.util.common.AssertionFailure( "A required service was missing. Missing service: " + serviceClass );
+			throw new org.hibernate.search.util.common.AssertionFailure(
+					"A required service was missing. Missing service: " + serviceClass );
 		}
 		return service;
 	}
@@ -142,7 +147,7 @@ public final class HibernateOrmUtils {
 		/*
 		 * First check the service binding, because if it does not exist,
 		 * a call to serviceRegistry.getService would throw an exception.
- 		 */
+		 */
 		ServiceBinding<T> binding = ( (ServiceRegistryImplementor) serviceRegistry )
 				.locateServiceBinding( serviceClass );
 		if ( binding == null ) {

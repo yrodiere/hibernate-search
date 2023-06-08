@@ -59,8 +59,8 @@ public class LuceneFieldProjection<F, V, P> extends AbstractLuceneProjection<P> 
 		super( scope );
 		this.absoluteFieldPath = field.absolutePath();
 		this.nestedDocumentPath = field.nestedDocumentPath();
-		this.requiredContextAbsoluteFieldPath = accumulatorProvider.isSingleValued()
-				? field.closestMultiValuedParentAbsolutePath() : null;
+		this.requiredContextAbsoluteFieldPath = accumulatorProvider.isSingleValued() ?
+				field.closestMultiValuedParentAbsolutePath() : null;
 		this.decodeFunction = decodeFunction;
 		this.converter = converter;
 		this.accumulatorProvider = accumulatorProvider;
@@ -68,9 +68,12 @@ public class LuceneFieldProjection<F, V, P> extends AbstractLuceneProjection<P> 
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "absoluteFieldPath=" + absoluteFieldPath
-				+ ", accumulatorProvider=" + accumulatorProvider
+		return getClass().getSimpleName()
+				+ "["
+				+ "absoluteFieldPath="
+				+ absoluteFieldPath
+				+ ", accumulatorProvider="
+				+ accumulatorProvider
 				+ "]";
 	}
 
@@ -101,9 +104,12 @@ public class LuceneFieldProjection<F, V, P> extends AbstractLuceneProjection<P> 
 
 		@Override
 		public String toString() {
-			return getClass().getSimpleName() + "["
-					+ "absoluteFieldPath=" + absoluteFieldPath
-					+ ", accumulator=" + accumulator
+			return getClass().getSimpleName()
+					+ "["
+					+ "absoluteFieldPath="
+					+ absoluteFieldPath
+					+ ", accumulator="
+					+ accumulator
 					+ "]";
 		}
 
@@ -151,7 +157,9 @@ public class LuceneFieldProjection<F, V, P> extends AbstractLuceneProjection<P> 
 
 	public static class Factory<F>
 			extends
-			AbstractLuceneCodecAwareSearchQueryElementFactory<FieldProjectionBuilder.TypeSelector, F, LuceneFieldCodec<F>> {
+			AbstractLuceneCodecAwareSearchQueryElementFactory<FieldProjectionBuilder.TypeSelector,
+					F,
+					LuceneFieldCodec<F>> {
 		public Factory(LuceneFieldCodec<F> codec) {
 			super( codec );
 		}

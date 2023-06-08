@@ -72,7 +72,8 @@ public class SingleFieldAggregationInvalidFieldIT<F> {
 	}
 
 	@Test
-	@PortedFromSearch5(original = "org.hibernate.search.test.query.facet.FacetUnknownFieldFailureTest.testUnknownFieldNameThrowsException")
+	@PortedFromSearch5(
+			original = "org.hibernate.search.test.query.facet.FacetUnknownFieldFailureTest.testUnknownFieldNameThrowsException")
 	public void unknownField() {
 		String fieldPath = "unknownField";
 
@@ -86,7 +87,8 @@ public class SingleFieldAggregationInvalidFieldIT<F> {
 	}
 
 	@Test
-	@PortedFromSearch5(original = "org.hibernate.search.test.query.facet.SimpleFacetingTest.testNullFieldNameThrowsException")
+	@PortedFromSearch5(
+			original = "org.hibernate.search.test.query.facet.SimpleFacetingTest.testNullFieldNameThrowsException")
 	public void nullFieldPath() {
 		// Try to pass a "null" field type
 		AggregationScenario<?> scenario = expectations.simple();
@@ -106,7 +108,11 @@ public class SingleFieldAggregationInvalidFieldIT<F> {
 		assertThatThrownBy( () -> scenario.setup( index.createScope().aggregation(), fieldPath ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContaining(
-						"Cannot use 'aggregation:" + expectations.aggregationName() + "' on field '" + fieldPath + "'" );
+						"Cannot use 'aggregation:"
+								+ expectations.aggregationName()
+								+ "' on field '"
+								+ fieldPath
+								+ "'" );
 	}
 
 	@Test
@@ -118,7 +124,11 @@ public class SingleFieldAggregationInvalidFieldIT<F> {
 		assertThatThrownBy( () -> scenario.setup( index.createScope().aggregation(), fieldPath ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContaining(
-						"Cannot use 'aggregation:" + expectations.aggregationName() + "' on field '" + fieldPath + "'" );
+						"Cannot use 'aggregation:"
+								+ expectations.aggregationName()
+								+ "' on field '"
+								+ fieldPath
+								+ "'" );
 	}
 
 	private static class IndexBinding {

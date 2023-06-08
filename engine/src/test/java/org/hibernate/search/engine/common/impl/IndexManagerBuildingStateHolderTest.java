@@ -27,10 +27,10 @@ import org.hibernate.search.engine.backend.reporting.spi.BackendMappingHints;
 import org.hibernate.search.engine.backend.spi.BackendFactory;
 import org.hibernate.search.engine.backend.spi.BackendImplementor;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
-import org.hibernate.search.engine.mapper.mapping.building.spi.BackendsInfo;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanResolver;
 import org.hibernate.search.engine.environment.bean.BeanRetrieval;
+import org.hibernate.search.engine.mapper.mapping.building.spi.BackendsInfo;
 import org.hibernate.search.engine.reporting.spi.ContextualFailureCollector;
 import org.hibernate.search.engine.reporting.spi.EventContexts;
 import org.hibernate.search.engine.reporting.spi.FailureCollector;
@@ -41,6 +41,7 @@ import org.hibernate.search.util.impl.test.rule.ExpectedLog4jLog;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.mockito.Answers;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -301,7 +302,8 @@ public class IndexManagerBuildingStateHolderTest {
 			result.collect( Optional.of( "backend-name" ), TenancyMode.MULTI_TENANCY );
 			result.collect( Optional.of( "backend-name" ), TenancyMode.SINGLE_TENANCY );
 		} ).hasMessageContaining(
-				"Different mappings trying to define two backends with the same name 'backend-name' " +
+				"Different mappings trying to define two backends with the same name 'backend-name' "
+						+
 						"but having different expectations on multi-tenancy." );
 	}
 
@@ -312,7 +314,8 @@ public class IndexManagerBuildingStateHolderTest {
 			result.collect( Optional.empty(), TenancyMode.SINGLE_TENANCY );
 			result.collect( Optional.empty(), TenancyMode.MULTI_TENANCY );
 		} ).hasMessageContaining(
-				"Different mappings trying to define default backends " +
+				"Different mappings trying to define default backends "
+						+
 						"having different expectations on multi-tenancy." );
 	}
 

@@ -19,7 +19,6 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.hamcrest.TypeSafeMatcher;
 
-
 public class ExceptionMatcherBuilder {
 
 	/**
@@ -82,8 +81,10 @@ public class ExceptionMatcherBuilder {
 	public Matcher<? super Throwable> build() {
 		if ( !suppressedMatchers.isEmpty() ) {
 			@SuppressWarnings("unchecked")
-			Matcher<? super Throwable>[] suppressedMatchersAsArray = castedSuppressedMatchers().toArray( new Matcher[suppressedMatchers.size()] );
-			ExceptionMatcherBuilder.this.matching( hasSuppressed( CoreMatchers.hasItems( suppressedMatchersAsArray ) ) );
+			Matcher<? super Throwable>[] suppressedMatchersAsArray = castedSuppressedMatchers().toArray(
+					new Matcher[suppressedMatchers.size()] );
+			ExceptionMatcherBuilder.this.matching( hasSuppressed( CoreMatchers.hasItems(
+					suppressedMatchersAsArray ) ) );
 			suppressedMatchers.clear();
 		}
 		if ( matchers.size() == 1 ) {

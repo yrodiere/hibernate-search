@@ -53,7 +53,8 @@ public class LuceneGeoPointSpatialWithinCirclePredicate extends AbstractLuceneLe
 
 		@Override
 		protected Query buildQuery() {
-			return LatLonPoint.newDistanceQuery( absoluteFieldPath, center.latitude(), center.longitude(), radiusInMeters );
+			return LatLonPoint.newDistanceQuery( absoluteFieldPath, center.latitude(), center.longitude(),
+					radiusInMeters );
 		}
 	}
 }

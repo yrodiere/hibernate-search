@@ -41,7 +41,8 @@ public class RootFailureCollectorTest {
 		}
 		assertThatThrownBy( rootFailureCollector::checkNoFailure )
 				// Check that we mention that some failures are not being reported
-				.hasMessageContainingAll( "Hibernate Search encountered " + ( RootFailureCollector.FAILURE_LIMIT + 10 )
+				.hasMessageContainingAll( "Hibernate Search encountered "
+						+ ( RootFailureCollector.FAILURE_LIMIT + 10 )
 						+ " failures during RootName",
 						"Only the first " + RootFailureCollector.FAILURE_LIMIT + " failures are displayed here",
 						"See the logs for extra failures" )
@@ -86,8 +87,9 @@ public class RootFailureCollectorTest {
 				.allSatisfy( task -> assertThat( task ).isDone() );
 		assertThatThrownBy( rootFailureCollector::checkNoFailure )
 				// Check that we mention that some failures are not being reported
-				.hasMessageContainingAll( "Hibernate Search encountered " + ( RootFailureCollector.FAILURE_LIMIT + 1000 )
-								+ " failures during RootName",
+				.hasMessageContainingAll( "Hibernate Search encountered "
+						+ ( RootFailureCollector.FAILURE_LIMIT + 1000 )
+						+ " failures during RootName",
 						"Only the first " + RootFailureCollector.FAILURE_LIMIT + " failures are displayed here",
 						"See the logs for extra failures" )
 				// Check that we didn't report failures after the limit was reached

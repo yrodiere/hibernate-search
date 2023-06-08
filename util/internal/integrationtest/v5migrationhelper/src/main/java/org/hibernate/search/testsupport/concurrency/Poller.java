@@ -87,11 +87,16 @@ public final class Poller {
 		void run() throws E;
 	}
 
-	private AssertionError newAssertionPollingError(AssertionError lastAssertionError, int nbOfFailedAttempts, long timeSpentNanos) {
+	private AssertionError newAssertionPollingError(AssertionError lastAssertionError, int nbOfFailedAttempts,
+			long timeSpentNanos) {
 		AssertionError error = new AssertionError(
-				"Assertion failed even after " + nbOfFailedAttempts + " attempts in " + timeSpentNanos + "ns : "
-				+ lastAssertionError.getMessage()
-				);
+				"Assertion failed even after "
+						+ nbOfFailedAttempts
+						+ " attempts in "
+						+ timeSpentNanos
+						+ "ns : "
+						+ lastAssertionError.getMessage()
+		);
 		error.initCause( lastAssertionError );
 		return error;
 	}

@@ -21,7 +21,8 @@ public class OverriddenConfigurationPropertySource implements ConfigurationPrope
 	private final ConfigurationPropertySource main;
 	private final ConfigurationPropertySource override;
 
-	public OverriddenConfigurationPropertySource(ConfigurationPropertySource main, ConfigurationPropertySource override) {
+	public OverriddenConfigurationPropertySource(ConfigurationPropertySource main,
+			ConfigurationPropertySource override) {
 		this.main = main;
 		this.override = override;
 	}

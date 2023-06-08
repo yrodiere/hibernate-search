@@ -25,5 +25,4 @@ import org.junit.runner.RunWith;
 		"!.*\\$.*", // Exclude nested tests, typically used with NestedRunner
 		".*\\.tck\\..*"
 })
-public class ElasticsearchTckTestRunner {
-}
+public class ElasticsearchTckTestRunner {}

@@ -118,7 +118,8 @@ public class PojoMassIndexingNotifier {
 		failureHandler.handle( contextBuilder.build() );
 	}
 
-	void reportEntitiesLoadingFailure(PojoMassIndexingIndexedTypeGroup<?> typeGroup, List<?> idList, Exception exception) {
+	void reportEntitiesLoadingFailure(PojoMassIndexingIndexedTypeGroup<?> typeGroup, List<?> idList,
+			Exception exception) {
 		String failingOperation = log.massIndexingLoadingAndExtractingEntityData( typeGroup.notifiedGroupName() );
 
 		// Don't record these failures as suppressed beyond the first one, because there may be hundreds of them.
@@ -147,9 +148,9 @@ public class PojoMassIndexingNotifier {
 
 	private boolean shouldNotBeReported(String operation) {
 		long failuresSoFar = failureCounts.computeIfAbsent(
-						operation,
-						s -> new AtomicLong( 0 )
-				)
+				operation,
+				s -> new AtomicLong( 0 )
+		)
 				.incrementAndGet();
 
 		return failureFloodingThreshold < failuresSoFar;

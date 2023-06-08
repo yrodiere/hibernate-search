@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.integrationtest.backend.lucene.mapping;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.integrationtest.backend.lucene.testsupport.util.DocumentAssert.containsDocument;
 
@@ -30,8 +29,10 @@ import org.apache.lucene.document.Document;
 
 public class LuceneFieldTypesIT {
 
-	private static final String TEXT_1 = "This is a text containing things. Red house with a blue carpet on the road...";
-	private static final String TEXT_2 = "This is a text containing other things. Such as move the line on the right margin...";
+	private static final String TEXT_1 =
+			"This is a text containing things. Red house with a blue carpet on the road...";
+	private static final String TEXT_2 =
+			"This is a text containing other things. Such as move the line on the right margin...";
 
 	@Rule
 	public final SearchSetupHelper setupHelper = new SearchSetupHelper();
@@ -107,7 +108,9 @@ public class LuceneFieldTypesIT {
 
 		IndexBinding(IndexSchemaElement root) {
 			string = root.field( "string", f -> f.asString().projectable( Projectable.YES ) ).toReference();
-			text = root.field( "text", f -> f.asString().analyzer( DefaultAnalysisDefinitions.ANALYZER_STANDARD_ENGLISH.name ).projectable( Projectable.YES ) ).toReference();
+			text = root.field( "text", f -> f.asString().analyzer(
+					DefaultAnalysisDefinitions.ANALYZER_STANDARD_ENGLISH.name ).projectable( Projectable.YES ) )
+					.toReference();
 			integer = root.field( "integer", f -> f.asInteger().projectable( Projectable.YES ) ).toReference();
 			longNumber = root.field( "longNumber", f -> f.asLong().projectable( Projectable.YES ) ).toReference();
 

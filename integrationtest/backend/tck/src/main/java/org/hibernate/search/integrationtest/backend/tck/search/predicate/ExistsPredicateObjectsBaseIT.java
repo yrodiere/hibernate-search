@@ -58,7 +58,8 @@ public class ExistsPredicateObjectsBaseIT {
 
 		final BulkIndexer inObjectFieldMainIndexer = InObjectFieldIT.mainIndex.bulkIndexer();
 		final BulkIndexer inObjectFieldMissingFieldIndexer = InObjectFieldIT.missingFieldIndex.bulkIndexer();
-		InObjectFieldIT.dataSets.forEach( d -> d.contribute( inObjectFieldMainIndexer, inObjectFieldMissingFieldIndexer ) );
+		InObjectFieldIT.dataSets.forEach( d -> d.contribute( inObjectFieldMainIndexer,
+				inObjectFieldMissingFieldIndexer ) );
 
 		final BulkIndexer scoreIndexer = ScoreIT.index.bulkIndexer();
 		ScoreIT.dataSets.forEach( d -> d.contribute( scoreIndexer ) );
@@ -89,7 +90,8 @@ public class ExistsPredicateObjectsBaseIT {
 						.name( "nesting" );
 
 		private static final SimpleMappedIndex<MissingFieldIndexBinding> missingFieldIndex =
-				SimpleMappedIndex.of( root -> new MissingFieldIndexBinding( root, Collections.singletonList( innerFieldType ) ) )
+				SimpleMappedIndex.of( root -> new MissingFieldIndexBinding( root, Collections.singletonList(
+						innerFieldType ) ) )
 						.name( "nesting_missingField" );
 
 		@Parameterized.Parameters(name = "{0}")
@@ -108,7 +110,8 @@ public class ExistsPredicateObjectsBaseIT {
 		@TestForIssue(jiraKey = "HSEARCH-4162")
 		public void factoryWithRoot_nested() {
 			assertThatQuery( mainIndex.query()
-					.where( f -> predicateWithRelativePath( f.withRoot( binding.nested.absolutePath ), binding.nested ) )
+					.where( f -> predicateWithRelativePath( f.withRoot( binding.nested.absolutePath ),
+							binding.nested ) )
 					.routing( dataSet.routingKey ) )
 					.hasDocRefHitsAnyOrder( mainIndex.typeName(), dataSet.docId( 0 ) );
 		}
@@ -117,7 +120,8 @@ public class ExistsPredicateObjectsBaseIT {
 		@TestForIssue(jiraKey = "HSEARCH-4162")
 		public void factoryWithRoot_flattened() {
 			assertThatQuery( mainIndex.query()
-					.where( f -> predicateWithRelativePath( f.withRoot( binding.flattened.absolutePath ), binding.flattened ) )
+					.where( f -> predicateWithRelativePath( f.withRoot( binding.flattened.absolutePath ),
+							binding.flattened ) )
 					.routing( dataSet.routingKey ) )
 					.hasDocRefHitsAnyOrder( mainIndex.typeName(), dataSet.docId( 0 ) );
 		}
@@ -131,7 +135,8 @@ public class ExistsPredicateObjectsBaseIT {
 			return f.exists().field( targetField( objectFieldBinding ).absolutePath );
 		}
 
-		protected PredicateFinalStep predicateWithRelativePath(SearchPredicateFactory f, ObjectFieldBinding objectFieldBinding) {
+		protected PredicateFinalStep predicateWithRelativePath(SearchPredicateFactory f,
+				ObjectFieldBinding objectFieldBinding) {
 			return f.exists().field( targetField( objectFieldBinding ).relativeName );
 		}
 
@@ -157,7 +162,7 @@ public class ExistsPredicateObjectsBaseIT {
 			public void contribute(BulkIndexer mainIndexer, BulkIndexer missingFieldIndexer) {
 				mainIndexer.add( docId( 0 ), routingKey, document -> mainIndex.binding()
 						.initDocument( document, innerFieldType, "irrelevant" ) );
-				mainIndexer.add( docId( 1 ), routingKey, document -> { } );
+				mainIndexer.add( docId( 1 ), routingKey, document -> {} );
 				missingFieldIndexer.add( docId( MISSING_FIELD_INDEX_DOC_ORDINAL ), routingKey,
 						document -> missingFieldIndex.binding().initDocument() );
 			}
@@ -244,7 +249,8 @@ public class ExistsPredicateObjectsBaseIT {
 			final String relativeFieldName;
 			final SimpleFieldModel<String> field;
 
-			static ObjectFieldBinding create(IndexSchemaElement parent, String relativeFieldName, ObjectStructure structure) {
+			static ObjectFieldBinding create(IndexSchemaElement parent, String relativeFieldName,
+					ObjectStructure structure) {
 				IndexSchemaObjectField objectField = parent.objectField( relativeFieldName, structure );
 				return new ObjectFieldBinding( objectField, relativeFieldName );
 			}
@@ -286,7 +292,10 @@ public class ExistsPredicateObjectsBaseIT {
 		}
 	}
 
-	static <T> Map<ObjectStructure, T> createByStructure(TriFunction<IndexSchemaElement, String, ObjectStructure, T> factory,
+	static <T> Map<ObjectStructure, T> createByStructure(TriFunction<IndexSchemaElement,
+			String,
+			ObjectStructure,
+			T> factory,
 			IndexSchemaElement parent, String relativeNamePrefix) {
 		Map<ObjectStructure, T> map = new LinkedHashMap<>();
 		for ( ObjectStructure structure : ObjectStructure.values() ) {

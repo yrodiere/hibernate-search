@@ -58,9 +58,12 @@ public class ElasticsearchFieldHighlightProjection implements ElasticsearchSearc
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "absoluteFieldPath=" + absoluteFieldPath
-				+ "highlighterName=" + highlighterName
+		return getClass().getSimpleName()
+				+ "["
+				+ "absoluteFieldPath="
+				+ absoluteFieldPath
+				+ "highlighterName="
+				+ highlighterName
 				+ "]";
 	}
 

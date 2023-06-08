@@ -13,12 +13,13 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
 import javax.inject.Scope;
 
 /**
  * Scope for partition execution, to be mapped to the scopes specific to each JSR-352 implementation.
  */
-@Target({TYPE})
+@Target({ TYPE })
 @Retention(RUNTIME)
 @Documented
 @Scope

@@ -7,6 +7,7 @@
 package org.hibernate.search.test.envers;
 
 import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -157,5 +158,4 @@ public class Address {
 		return true;
 	}
 }
-
 

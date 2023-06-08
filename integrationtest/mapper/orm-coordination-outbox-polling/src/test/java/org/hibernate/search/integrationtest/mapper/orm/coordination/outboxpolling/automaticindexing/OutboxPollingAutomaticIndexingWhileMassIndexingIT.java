@@ -9,6 +9,7 @@ package org.hibernate.search.integrationtest.mapper.orm.coordination.outboxpolli
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.concurrent.atomic.AtomicReference;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -64,7 +65,7 @@ public class OutboxPollingAutomaticIndexingWhileMassIndexingIT {
 		// Upon loading the entity for mass indexing:
 		IndexedEntity.getTextConcurrentOperation.set( () -> {
 			// 1. We make sure this operation doesn't get executed multiple times.
-			IndexedEntity.getTextConcurrentOperation.set( () -> { } );
+			IndexedEntity.getTextConcurrentOperation.set( () -> {} );
 			// 2. We simulate a concurrent transaction that updates the entity being mass-indexed.
 			with( sessionFactory ).runInTransaction( session -> {
 				IndexedEntity entity = session.get( IndexedEntity.class, 1 );
@@ -145,7 +146,7 @@ public class OutboxPollingAutomaticIndexingWhileMassIndexingIT {
 		// Upon loading the entity for mass indexing:
 		IndexedEntity.getTextConcurrentOperation.set( () -> {
 			// 1. We make sure this operation doesn't get executed multiple times.
-			IndexedEntity.getTextConcurrentOperation.set( () -> { } );
+			IndexedEntity.getTextConcurrentOperation.set( () -> {} );
 			// 2. We simulate a concurrent transaction that updates another entity in a different tenant.
 			with( sessionFactory, tenant2Id ).runInTransaction( session -> {
 				IndexedEntity entity = session.get( IndexedEntity.class, 1 );
@@ -175,7 +176,8 @@ public class OutboxPollingAutomaticIndexingWhileMassIndexingIT {
 			backendMock.verifyExpectationsMet();
 
 			// Later, we expect the mass indexer to reindex the entity it is currently loading, with the initial value...
-			backendMock.expectWorks( IndexedEntity.NAME, tenant1Id, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE )
+			backendMock.expectWorks( IndexedEntity.NAME, tenant1Id, DocumentCommitStrategy.NONE,
+					DocumentRefreshStrategy.NONE )
 					.add( String.valueOf( 1 ), b -> b
 							.field( "text", "initial value for tenant 1" ) );
 
@@ -204,7 +206,7 @@ public class OutboxPollingAutomaticIndexingWhileMassIndexingIT {
 
 		static final String NAME = "IndexedEntity";
 
-		static volatile AtomicReference<Runnable> getTextConcurrentOperation = new AtomicReference<>( () -> { } );
+		static volatile AtomicReference<Runnable> getTextConcurrentOperation = new AtomicReference<>( () -> {} );
 
 		private Integer id;
 		private String text;

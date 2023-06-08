@@ -13,7 +13,6 @@ import org.hibernate.search.engine.backend.document.model.spi.IndexFieldInclusio
 import org.hibernate.search.engine.mapper.mapping.building.spi.IndexedEmbeddedDefinition;
 import org.hibernate.search.engine.mapper.mapping.building.spi.IndexedEmbeddedPathTracker;
 
-
 class ConfiguredIndexSchemaNestingContext implements IndexSchemaNestingContext {
 
 	private static final ConfiguredIndexSchemaNestingContext ROOT =

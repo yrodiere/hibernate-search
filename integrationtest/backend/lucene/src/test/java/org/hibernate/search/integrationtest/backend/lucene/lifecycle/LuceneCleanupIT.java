@@ -17,8 +17,8 @@ import org.hibernate.search.engine.backend.types.Projectable;
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.engine.backend.work.execution.DocumentCommitStrategy;
 import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrategy;
-import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
+import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanReference;
 import org.hibernate.search.engine.environment.bean.BeanRetrieval;
@@ -106,7 +106,7 @@ public class LuceneCleanupIT {
 				.fetchAll();
 	}
 
-	private void doStore(int ... ids) {
+	private void doStore(int... ids) {
 		IndexIndexingPlan plan = index.createIndexingPlan(
 				// Let the commit/refresh intervals do their job
 				DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
@@ -131,7 +131,8 @@ public class LuceneCleanupIT {
 				.withBackendProperty( LuceneIndexSettings.IO_REFRESH_INTERVAL, refreshInterval )
 				.withBackendProperty( LuceneIndexSettings.DIRECTORY_TYPE,
 						(BeanReference<TrackingDirectoryProvider>) beanResolver -> {
-							BeanHolder<DirectoryProvider> delegateHolder = beanResolver.resolve( DirectoryProvider.class,
+							BeanHolder<DirectoryProvider> delegateHolder = beanResolver.resolve(
+									DirectoryProvider.class,
 									"local-filesystem", BeanRetrieval.ANY
 							);
 							return BeanHolder.of( new TrackingDirectoryProvider( delegateHolder.get(), tracker ) )

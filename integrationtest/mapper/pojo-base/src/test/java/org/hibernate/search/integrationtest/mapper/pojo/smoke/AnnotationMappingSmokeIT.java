@@ -20,18 +20,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.engine.search.query.SearchResult;
 import org.hibernate.search.integrationtest.mapper.pojo.smoke.bridge.CustomPropertyBinding;
 import org.hibernate.search.integrationtest.mapper.pojo.smoke.bridge.CustomTypeBinding;
 import org.hibernate.search.integrationtest.mapper.pojo.smoke.bridge.IntegerAsStringValueBridge;
-import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.engine.common.EntityReference;
-import org.hibernate.search.mapper.pojo.standalone.scope.SearchScope;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.ValueBridgeRef;
+import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
 import org.hibernate.search.mapper.pojo.extractor.builtin.BuiltinContainerExtractors;
 import org.hibernate.search.mapper.pojo.extractor.mapping.annotation.ContainerExtraction;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.AssociationInverseSide;
@@ -41,14 +37,17 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ObjectPath;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyValue;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.scope.SearchScope;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.impl.CollectionHelper;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.StubSearchWorkBehavior;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 
 public class AnnotationMappingSmokeIT {
 
@@ -56,7 +55,8 @@ public class AnnotationMappingSmokeIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private SearchMapping mapping;
 
@@ -315,7 +315,7 @@ public class AnnotationMappingSmokeIT {
 											)
 									)
 							)
-							.objectField( "myEmbeddedList", b2 -> { } )
+							.objectField( "myEmbeddedList", b2 -> {} )
 							.objectField( "embeddedArrayList", b2 -> b2
 									.objectField( "myEmbedded", b3 -> b3
 											.objectField( "customBridgeOnProperty", b4 -> b4
@@ -499,7 +499,7 @@ public class AnnotationMappingSmokeIT {
 		@CustomPropertyBinding(objectName = "customBridgeOnProperty")
 		@AssociationInverseSide(
 				inversePath = @ObjectPath(
-						@PropertyValue( propertyName = "embeddingAsSingle")
+					@PropertyValue(propertyName = "embeddingAsSingle")
 				)
 		)
 		public IndexedEntity getEmbedded() {
@@ -645,7 +645,7 @@ public class AnnotationMappingSmokeIT {
 		@IndexedEmbedded(includePaths = "myEmbedded.myTextField")
 		@AssociationInverseSide(
 				inversePath = @ObjectPath(
-						@PropertyValue( propertyName = "embeddingAsIterable")
+					@PropertyValue(propertyName = "embeddingAsIterable")
 				)
 		)
 		public Iterable<IndexedEntity> getEmbeddedIterable() {
@@ -659,7 +659,7 @@ public class AnnotationMappingSmokeIT {
 		@IndexedEmbedded(name = "myEmbeddedList", includePaths = "myEmbedded.customBridgeOnClass.text")
 		@AssociationInverseSide(
 				inversePath = @ObjectPath(
-						@PropertyValue( propertyName = "embeddingAsList")
+					@PropertyValue(propertyName = "embeddingAsList")
 				)
 		)
 		public List<IndexedEntity> getEmbeddedList() {
@@ -673,7 +673,7 @@ public class AnnotationMappingSmokeIT {
 		@IndexedEmbedded(includePaths = "myEmbedded.customBridgeOnProperty.text")
 		@AssociationInverseSide(
 				inversePath = @ObjectPath(
-						@PropertyValue( propertyName = "embeddingAsArrayList")
+					@PropertyValue(propertyName = "embeddingAsArrayList")
 				)
 		)
 		public ArrayList<IndexedEntity> getEmbeddedArrayList() {
@@ -687,7 +687,7 @@ public class AnnotationMappingSmokeIT {
 		@IndexedEmbedded(includePaths = "myEmbedded.myLocalDateField")
 		@AssociationInverseSide(
 				inversePath = @ObjectPath(
-						@PropertyValue( propertyName = "embeddingAsMap")
+					@PropertyValue(propertyName = "embeddingAsMap")
 				)
 		)
 		@GenericField(

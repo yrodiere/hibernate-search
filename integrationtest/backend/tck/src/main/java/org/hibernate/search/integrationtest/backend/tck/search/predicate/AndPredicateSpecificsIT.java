@@ -96,9 +96,12 @@ public class AndPredicateSpecificsIT {
 	public void and_separatePredicateObject() {
 		StubMappingScope scope = index.createScope();
 
-		SearchPredicate predicate1 = scope.predicate().match().field( "field1" ).matching( FIELD1_VALUE1 ).toPredicate();
-		SearchPredicate predicate2 = scope.predicate().match().field( "field2" ).matching( FIELD2_VALUE1 ).toPredicate();
-		SearchPredicate predicate3 = scope.predicate().match().field( "field2" ).matching( FIELD2_VALUE2 ).toPredicate();
+		SearchPredicate predicate1 = scope.predicate().match().field( "field1" ).matching( FIELD1_VALUE1 )
+				.toPredicate();
+		SearchPredicate predicate2 = scope.predicate().match().field( "field2" ).matching( FIELD2_VALUE1 )
+				.toPredicate();
+		SearchPredicate predicate3 = scope.predicate().match().field( "field2" ).matching( FIELD2_VALUE2 )
+				.toPredicate();
 
 		assertThatQuery( scope.query()
 				.where( f -> f.and( predicate1 ) ) )
@@ -153,9 +156,12 @@ public class AndPredicateSpecificsIT {
 	public void add_separatePredicateObject() {
 		StubMappingScope scope = index.createScope();
 
-		SearchPredicate predicate1 = scope.predicate().match().field( "field1" ).matching( FIELD1_VALUE1 ).toPredicate();
-		SearchPredicate predicate2 = scope.predicate().match().field( "field2" ).matching( FIELD2_VALUE1 ).toPredicate();
-		SearchPredicate predicate3 = scope.predicate().match().field( "field2" ).matching( FIELD2_VALUE2 ).toPredicate();
+		SearchPredicate predicate1 = scope.predicate().match().field( "field1" ).matching( FIELD1_VALUE1 )
+				.toPredicate();
+		SearchPredicate predicate2 = scope.predicate().match().field( "field2" ).matching( FIELD2_VALUE1 )
+				.toPredicate();
+		SearchPredicate predicate3 = scope.predicate().match().field( "field2" ).matching( FIELD2_VALUE2 )
+				.toPredicate();
 
 		assertThatQuery( index.query()
 				.where( f -> f.and()

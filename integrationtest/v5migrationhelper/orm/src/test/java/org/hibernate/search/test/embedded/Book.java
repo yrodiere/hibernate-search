@@ -18,5 +18,4 @@ import org.hibernate.search.annotations.Indexed;
  */
 @Entity
 @Indexed(index = "AbstractProduct") // Indexed in common index
-public class Book extends AbstractProduct {
-}
+public class Book extends AbstractProduct {}

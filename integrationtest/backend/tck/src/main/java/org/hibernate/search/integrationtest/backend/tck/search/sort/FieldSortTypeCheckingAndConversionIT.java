@@ -110,7 +110,8 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 	@BeforeClass
 	public static void setup() {
 		setupHelper.start()
-				.withIndexes( mainIndex, compatibleIndex, rawFieldCompatibleIndex, missingFieldIndex, incompatibleIndex )
+				.withIndexes( mainIndex, compatibleIndex, rawFieldCompatibleIndex, missingFieldIndex,
+						incompatibleIndex )
 				.setup();
 
 		initData();
@@ -174,7 +175,7 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 		String fieldPath = getNonSortableFieldPath();
 
 		assertThatThrownBy( () -> {
-				scope.sort().field( fieldPath );
+			scope.sort().field( fieldPath );
 		} )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
@@ -258,12 +259,15 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 		assertThatThrownBy(
 				() -> {
 					matchAllQuery( f -> f.field( fieldPath ).asc().missing()
-							.use( new ValueWrapper<>( getSingleValueForMissingUse( BEFORE_DOCUMENT_1_ORDINAL ) ) ), scope );
+							.use( new ValueWrapper<>( getSingleValueForMissingUse( BEFORE_DOCUMENT_1_ORDINAL ) ) ),
+							scope );
 				}
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Attribute 'dslConverter' differs", " vs. "
 				)
 				.satisfies( FailureReportUtils.hasContext(
@@ -299,7 +303,8 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 	@TestForIssue(jiraKey = "HSEARCH-4173")
 	public void multiIndex_withMissingFieldIndex_dslConverterEnabled() {
 		assumeTrue(
-				"This backend doesn't support sorts on a field of type '" + fieldTypeDescriptor
+				"This backend doesn't support sorts on a field of type '"
+						+ fieldTypeDescriptor
 						+ "' that is missing from some of the target indexes.",
 				TckConfiguration.get().getBackendFeatures()
 						.supportsFieldSortWhenFieldMissingInSomeTargetIndexes( fieldTypeDescriptor.getJavaType() )
@@ -331,7 +336,8 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 	@TestForIssue(jiraKey = "HSEARCH-4173")
 	public void multiIndex_withMissingFieldIndex_dslConverterDisabled() {
 		assumeTrue(
-				"This backend doesn't support sorts on a field of type '" + fieldTypeDescriptor
+				"This backend doesn't support sorts on a field of type '"
+						+ fieldTypeDescriptor
 						+ "' that is missing from some of the target indexes.",
 				TckConfiguration.get().getBackendFeatures()
 						.supportsFieldSortWhenFieldMissingInSomeTargetIndexes( fieldTypeDescriptor.getJavaType() )
@@ -367,7 +373,8 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 	@TestForIssue(jiraKey = "HSEARCH-4173")
 	public void multiIndex_withMissingFieldIndex_nested() {
 		assumeTrue(
-				"This backend doesn't support sorts on a field of type '" + fieldTypeDescriptor
+				"This backend doesn't support sorts on a field of type '"
+						+ fieldTypeDescriptor
 						+ "' that is missing from some of the target indexes.",
 				TckConfiguration.get().getBackendFeatures()
 						.supportsFieldSortWhenFieldMissingInSomeTargetIndexes( fieldTypeDescriptor.getJavaType() )
@@ -412,7 +419,9 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Inconsistent support for 'sort:field'"
 				)
 				.satisfies( FailureReportUtils.hasContext(
@@ -433,7 +442,9 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Inconsistent support for 'sort:field'"
 				)
 				.satisfies( FailureReportUtils.hasContext(
@@ -485,7 +496,8 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 
 		DocumentElement nested = document.addObject( indexBinding.nested.self );
 		indexBinding.nested.fieldModels.forEach( fieldModel -> addValue( fieldModel, nested, ordinal ) );
-		indexBinding.nested.fieldWithDslConverterModels.forEach( fieldModel -> addValue( fieldModel, nested, ordinal ) );
+		indexBinding.nested.fieldWithDslConverterModels.forEach( fieldModel -> addValue( fieldModel, nested,
+				ordinal ) );
 	}
 
 	@SuppressWarnings("unchecked")
@@ -523,13 +535,14 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 				.add( COMPATIBLE_INDEX_DOCUMENT_1, document -> {
 					CompatibleIndexBinding binding = compatibleIndex.binding();
 					binding.fieldModels.forEach( fieldModel -> addValue( fieldModel, document, DOCUMENT_1_ORDINAL ) );
-					binding.fieldWithDslConverterModels.forEach( fieldModel -> addValue( fieldModel, document, DOCUMENT_1_ORDINAL ) );
+					binding.fieldWithDslConverterModels.forEach( fieldModel -> addValue( fieldModel, document,
+							DOCUMENT_1_ORDINAL ) );
 				} );
 		BulkIndexer rawFieldCompatibleIndexer = rawFieldCompatibleIndex.bulkIndexer()
 				.add( RAW_FIELD_COMPATIBLE_INDEX_DOCUMENT_1,
 						document -> initDocument( rawFieldCompatibleIndex.binding(), document, DOCUMENT_1_ORDINAL ) );
 		BulkIndexer missingFieldIndexer = missingFieldIndex.bulkIndexer()
-				.add( MISSING_FIELD_INDEX_DOCUMENT_1, document -> { } );
+				.add( MISSING_FIELD_INDEX_DOCUMENT_1, document -> {} );
 		mainIndexer.join( compatibleIndexer, rawFieldCompatibleIndexer, missingFieldIndexer );
 	}
 
@@ -563,7 +576,7 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 		final FirstLevelObjectMapping nested;
 
 		IndexBinding(IndexSchemaElement root) {
-			this( root, ignored -> { } );
+			this( root, ignored -> {} );
 		}
 
 		IndexBinding(IndexSchemaElement root,
@@ -615,7 +628,8 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 		}
 
 		// See HSEARCH-3307: this checks that irrelevant options are ignored when checking cross-index field compatibility
-		protected void addIrrelevantOptions(FieldTypeDescriptor<?> fieldType, StandardIndexFieldTypeOptionsStep<?, ?> c) {
+		protected void addIrrelevantOptions(FieldTypeDescriptor<?> fieldType, StandardIndexFieldTypeOptionsStep<?,
+				?> c) {
 			c.searchable( Searchable.NO );
 			c.projectable( Projectable.YES );
 			if ( fieldType.isFieldSortSupported() ) {
@@ -649,9 +663,9 @@ public class FieldSortTypeCheckingAndConversionIT<F> {
 		}
 
 		private static void mapFieldsWithIncompatibleType(IndexSchemaElement parent) {
-			supportedFieldTypes.forEach( typeDescriptor ->
-					SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible( typeDescriptor ) )
-							.map( parent, "" + typeDescriptor.getUniqueName() )
+			supportedFieldTypes.forEach( typeDescriptor -> SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible(
+					typeDescriptor ) )
+					.map( parent, "" + typeDescriptor.getUniqueName() )
 			);
 		}
 	}

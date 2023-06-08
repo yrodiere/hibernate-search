@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.Arrays;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -30,7 +31,8 @@ import org.junit.Test;
 public class HibernateOrmEntryPointsIT {
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private SessionFactory theSessionFactory;
 
@@ -104,7 +106,8 @@ public class HibernateOrmEntryPointsIT {
 				Search.mapping( theSessionFactory );
 		// tag::searchScope-fromSearchMapping[]
 		SearchScope<Book> bookScope = searchMapping.scope( Book.class ); // <2>
-		SearchScope<Person> associateAndManagerScope = searchMapping.scope( Arrays.asList( Associate.class, Manager.class ) ); // <3>
+		SearchScope<Person> associateAndManagerScope = searchMapping.scope( Arrays.asList( Associate.class,
+				Manager.class ) ); // <3>
 		SearchScope<Person> personScope = searchMapping.scope( Person.class ); // <4>
 		SearchScope<Person> personSubTypesScope = searchMapping.scope( Person.class,
 				Arrays.asList( "Manager", "Associate" ) ); // <5>
@@ -136,7 +139,8 @@ public class HibernateOrmEntryPointsIT {
 					Search.session( theSession );
 			// tag::searchScope-fromSearchSession[]
 			SearchScope<Book> bookScope = searchSession.scope( Book.class ); // <2>
-			SearchScope<Person> associateAndManagerScope = searchSession.scope( Arrays.asList( Associate.class, Manager.class ) ); // <3>
+			SearchScope<Person> associateAndManagerScope = searchSession.scope( Arrays.asList( Associate.class,
+					Manager.class ) ); // <3>
 			SearchScope<Person> personScope = searchSession.scope( Person.class ); // <4>
 			SearchScope<Person> personSubTypesScope = searchSession.scope( Person.class,
 					Arrays.asList( "Manager", "Associate" ) ); // <5>

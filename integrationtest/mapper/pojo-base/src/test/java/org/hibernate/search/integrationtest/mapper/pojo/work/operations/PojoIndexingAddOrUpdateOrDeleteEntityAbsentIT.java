@@ -18,7 +18,8 @@ import org.junit.runner.RunWith;
 @RunWith(NestedRunner.class)
 public class PojoIndexingAddOrUpdateOrDeleteEntityAbsentIT {
 
-	private static final PojoIndexingOperationScenario SCENARIO = new PojoIndexingAddOrUpdateOrDeleteScenario( BackendIndexingOperation.DELETE ) {
+	private static final PojoIndexingOperationScenario SCENARIO = new PojoIndexingAddOrUpdateOrDeleteScenario(
+			BackendIndexingOperation.DELETE ) {
 		@Override
 		public boolean isEntityPresentOnLoading() {
 			return false;
@@ -34,7 +35,8 @@ public class PojoIndexingAddOrUpdateOrDeleteEntityAbsentIT {
 	}
 
 	@Nested
-	public static class IndexingPlanContainedNullEntityIT extends AbstractPojoIndexingPlanOperationContainedNullEntityIT {
+	public static class IndexingPlanContainedNullEntityIT
+			extends AbstractPojoIndexingPlanOperationContainedNullEntityIT {
 		@Override
 		protected PojoIndexingOperationScenario scenario() {
 			return SCENARIO;

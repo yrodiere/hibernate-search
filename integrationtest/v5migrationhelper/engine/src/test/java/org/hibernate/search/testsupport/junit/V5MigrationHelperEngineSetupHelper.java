@@ -22,11 +22,14 @@ import org.hibernate.search.mapper.pojo.standalone.mapping.StandalonePojoMapping
 import org.hibernate.search.testsupport.configuration.V5MigrationHelperTestLuceneBackendConfiguration;
 import org.hibernate.search.util.common.impl.CollectionHelper;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendSetupStrategy;
-import org.hibernate.search.util.impl.integrationtest.common.stub.backend.BackendMappingHandle;
 import org.hibernate.search.util.impl.integrationtest.common.rule.MappingSetupHelper;
+import org.hibernate.search.util.impl.integrationtest.common.stub.backend.BackendMappingHandle;
 
 public final class V5MigrationHelperEngineSetupHelper
-		extends MappingSetupHelper<V5MigrationHelperEngineSetupHelper.SetupContext, SearchMappingBuilder, StandalonePojoMappingConfigurationContext, CloseableSearchMapping> {
+		extends MappingSetupHelper<V5MigrationHelperEngineSetupHelper.SetupContext,
+				SearchMappingBuilder,
+				StandalonePojoMappingConfigurationContext,
+				CloseableSearchMapping> {
 
 	public static V5MigrationHelperEngineSetupHelper create() {
 		return new V5MigrationHelperEngineSetupHelper(
@@ -49,7 +52,10 @@ public final class V5MigrationHelperEngineSetupHelper
 	}
 
 	public final class SetupContext
-			extends MappingSetupHelper<SetupContext, SearchMappingBuilder, StandalonePojoMappingConfigurationContext, CloseableSearchMapping>.AbstractSetupContext {
+			extends MappingSetupHelper<SetupContext,
+					SearchMappingBuilder,
+					StandalonePojoMappingConfigurationContext,
+					CloseableSearchMapping>.AbstractSetupContext {
 
 		// Use a LinkedHashMap for deterministic iteration
 		private final Map<String, Object> properties = new LinkedHashMap<>();
@@ -73,7 +79,7 @@ public final class V5MigrationHelperEngineSetupHelper
 			} );
 		}
 
-		public SetupContext withAnnotatedEntityTypes(Class<?> ... annotatedEntityTypes) {
+		public SetupContext withAnnotatedEntityTypes(Class<?>... annotatedEntityTypes) {
 			return withAnnotatedEntityTypes( CollectionHelper.asLinkedHashSet( annotatedEntityTypes ) );
 		}
 
@@ -84,7 +90,7 @@ public final class V5MigrationHelperEngineSetupHelper
 			} );
 		}
 
-		public SetupContext withAnnotatedTypes(Class<?> ... annotatedTypes) {
+		public SetupContext withAnnotatedTypes(Class<?>... annotatedTypes) {
 			return withAnnotatedTypes( CollectionHelper.asLinkedHashSet( annotatedTypes ) );
 		}
 
@@ -92,7 +98,7 @@ public final class V5MigrationHelperEngineSetupHelper
 			return withConfiguration( builder -> builder.annotationMapping().add( annotatedTypes ) );
 		}
 
-		public SearchMapping setup(Class<?> ... annotatedEntityTypes) {
+		public SearchMapping setup(Class<?>... annotatedEntityTypes) {
 			return withAnnotatedEntityTypes( annotatedEntityTypes ).setup();
 		}
 
@@ -102,7 +108,8 @@ public final class V5MigrationHelperEngineSetupHelper
 		}
 
 		@Override
-		protected void consumeBeforeBuildConfigurations(SearchMappingBuilder builder, List<Consumer<StandalonePojoMappingConfigurationContext>> consumers) {
+		protected void consumeBeforeBuildConfigurations(SearchMappingBuilder builder, List<Consumer<
+				StandalonePojoMappingConfigurationContext>> consumers) {
 			List<Object> configurers = consumers.stream()
 					.map( c -> (StandalonePojoMappingConfigurer) c::accept )
 					.collect( Collectors.toList() );

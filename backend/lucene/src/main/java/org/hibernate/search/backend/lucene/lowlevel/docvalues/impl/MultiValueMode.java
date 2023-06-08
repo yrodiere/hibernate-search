@@ -54,8 +54,7 @@ public enum MultiValueMode {
 		}
 
 		@Override
-		double pick(SortedNumericDoubleDocValues values, ChildDocIds childDocsWithValues)
-				throws IOException {
+		double pick(SortedNumericDoubleDocValues values, ChildDocIds childDocsWithValues) throws IOException {
 			double result = 0;
 			while ( childDocsWithValues.nextChild() != DocIdSetIterator.NO_MORE_DOCS ) {
 				final int valueCountForChild = values.docValueCount();
@@ -110,8 +109,7 @@ public enum MultiValueMode {
 		}
 
 		@Override
-		double pick(SortedNumericDoubleDocValues values, ChildDocIds childDocsWithValues)
-				throws IOException {
+		double pick(SortedNumericDoubleDocValues values, ChildDocIds childDocsWithValues) throws IOException {
 			double result = 0;
 			int valueCount = 0;
 			while ( childDocsWithValues.nextChild() != DocIdSetIterator.NO_MORE_DOCS ) {
@@ -154,8 +152,7 @@ public enum MultiValueMode {
 		}
 
 		@Override
-		double pick(SortedNumericDoubleDocValues values, ChildDocIds childDocsWithValues)
-				throws IOException {
+		double pick(SortedNumericDoubleDocValues values, ChildDocIds childDocsWithValues) throws IOException {
 			double result = Double.POSITIVE_INFINITY;
 			while ( childDocsWithValues.nextChild() != DocIdSetIterator.NO_MORE_DOCS ) {
 				// Values are sorted; the first value is the min for this document.
@@ -220,8 +217,7 @@ public enum MultiValueMode {
 		}
 
 		@Override
-		double pick(SortedNumericDoubleDocValues values, ChildDocIds childDocsWithValues)
-				throws IOException {
+		double pick(SortedNumericDoubleDocValues values, ChildDocIds childDocsWithValues) throws IOException {
 			double result = Double.NEGATIVE_INFINITY;
 			while ( childDocsWithValues.nextChild() != DocIdSetIterator.NO_MORE_DOCS ) {
 				final int valueCountForChild = values.docValueCount();

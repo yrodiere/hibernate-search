@@ -17,15 +17,15 @@ import java.util.stream.Collectors;
 
 import org.hibernate.search.engine.backend.work.execution.DocumentCommitStrategy;
 import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrategy;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.loading.MassLoadingStrategy;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.standalone.loading.MassLoadingStrategy;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.StubSearchWorkBehavior;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class LoadingStrategyInheritanceIT {
 		backendMock.verifyExpectationsMet();
 
 		try ( SearchSession session = mapping.createSession() ) {
-			backendMock.expectSearchObjects( Arrays.asList( rootEntityName, derivedEntityName ), c -> { },
+			backendMock.expectSearchObjects( Arrays.asList( rootEntityName, derivedEntityName ), c -> {},
 					StubSearchWorkBehavior.of( 2, reference( rootEntityName, "1" ),
 							reference( derivedEntityName, "2" ) ) );
 			assertThat( session.search( Object.class ).where( f -> f.matchAll() ).fetchAllHits() )
@@ -155,7 +155,7 @@ public class LoadingStrategyInheritanceIT {
 		backendMock.verifyExpectationsMet();
 
 		try ( SearchSession session = mapping.createSession() ) {
-			backendMock.expectSearchObjects( Arrays.asList( rootEntityName, derivedEntityName ), c -> { },
+			backendMock.expectSearchObjects( Arrays.asList( rootEntityName, derivedEntityName ), c -> {},
 					StubSearchWorkBehavior.of( 2, reference( rootEntityName, "1" ),
 							reference( derivedEntityName, "2" ) ) );
 			assertThat( session.search( Object.class ).where( f -> f.matchAll() ).fetchAllHits() )

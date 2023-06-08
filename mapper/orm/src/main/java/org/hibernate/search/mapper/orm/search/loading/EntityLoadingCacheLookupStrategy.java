@@ -28,14 +28,14 @@ public enum EntityLoadingCacheLookupStrategy {
 	 * <p>
 	 * This is the default strategy.
 	 */
-	SKIP( "skip" ),
+	SKIP("skip"),
 
 	/**
 	 * When a search query returns entities,
 	 * first check the persistence context to retrieve entities that are already in the session,
 	 * then load the entities that were not found in the session through an SQL query.
 	 */
-	PERSISTENCE_CONTEXT( "persistence-context" ),
+	PERSISTENCE_CONTEXT("persistence-context"),
 
 	/**
 	 * When a search query returns entities,
@@ -43,7 +43,7 @@ public enum EntityLoadingCacheLookupStrategy {
 	 * then check the second level cache to retrieve entities that are in the 2LC but not in the session,
 	 * then load the entities that were not found in the session or 2LC through an SQL query.
 	 */
-	PERSISTENCE_CONTEXT_THEN_SECOND_LEVEL_CACHE( "persistence-context-then-second-level-cache" );
+	PERSISTENCE_CONTEXT_THEN_SECOND_LEVEL_CACHE("persistence-context-then-second-level-cache");
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 

@@ -84,7 +84,8 @@ public class FieldSortBaseIT<F> {
 						dataSetForAsc = new DataSet<>( fieldStructure, fieldType, sortMode, sortMode );
 						dataSets.add( dataSetForAsc );
 						dataSetForDesc = dataSetForAsc;
-						parameters.add( new Object[] { fieldStructure, fieldType, sortMode, dataSetForAsc, dataSetForDesc } );
+						parameters.add( new Object[] { fieldStructure, fieldType, sortMode, dataSetForAsc,
+								dataSetForDesc } );
 					}
 				}
 			}
@@ -233,17 +234,20 @@ public class FieldSortBaseIT<F> {
 		dataSet = dataSetForAsc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ) );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id, dataSet.emptyDoc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id,
+						dataSet.emptyDoc1Id );
 
 		dataSet = dataSetForAsc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id, dataSet.emptyDoc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id,
+						dataSet.emptyDoc1Id );
 
 		dataSet = dataSetForDesc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).desc() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id, dataSet.emptyDoc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id,
+						dataSet.emptyDoc1Id );
 	}
 
 	@Test
@@ -259,63 +263,75 @@ public class FieldSortBaseIT<F> {
 		dataSet = dataSetForAsc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc().missing().last() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id, dataSet.emptyDoc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id,
+						dataSet.emptyDoc1Id );
 		dataSet = dataSetForDesc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).desc().missing().last() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id, dataSet.emptyDoc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id,
+						dataSet.emptyDoc1Id );
 
 		// Explicit order with missing().first()
 		dataSet = dataSetForAsc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc().missing().first() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc1Id, dataSet.doc2Id,
+						dataSet.doc3Id );
 		dataSet = dataSetForDesc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).desc().missing().first() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc3Id, dataSet.doc2Id,
+						dataSet.doc1Id );
 
 		// Explicit order with missing().lowest()
 		dataSet = dataSetForAsc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc().missing().lowest() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc1Id, dataSet.doc2Id,
+						dataSet.doc3Id );
 		dataSet = dataSetForDesc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).desc().missing().lowest() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id, dataSet.emptyDoc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id,
+						dataSet.emptyDoc1Id );
 
 		// Explicit order with missing().highest()
 		dataSet = dataSetForAsc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc().missing().highest() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id, dataSet.emptyDoc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id,
+						dataSet.emptyDoc1Id );
 		dataSet = dataSetForDesc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).desc().missing().highest() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc3Id, dataSet.doc2Id,
+						dataSet.doc1Id );
 
 		// Explicit order with missing().use( ... )
 		dataSet = dataSetForAsc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc()
 				.missing().use( getSingleValueForMissingUse( BEFORE_DOCUMENT_1_ORDINAL ) ) );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc1Id, dataSet.doc2Id,
+						dataSet.doc3Id );
 		dataSet = dataSetForAsc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc()
 				.missing().use( getSingleValueForMissingUse( BETWEEN_DOCUMENT_1_AND_2_ORDINAL ) ) );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.emptyDoc1Id, dataSet.doc2Id, dataSet.doc3Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.emptyDoc1Id, dataSet.doc2Id,
+						dataSet.doc3Id );
 		dataSet = dataSetForAsc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc()
 				.missing().use( getSingleValueForMissingUse( BETWEEN_DOCUMENT_2_AND_3_ORDINAL ) ) );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.emptyDoc1Id, dataSet.doc3Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.emptyDoc1Id,
+						dataSet.doc3Id );
 		dataSet = dataSetForAsc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc()
 				.missing().use( getSingleValueForMissingUse( AFTER_DOCUMENT_3_ORDINAL ) ) );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id, dataSet.emptyDoc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id,
+						dataSet.emptyDoc1Id );
 	}
 
 	@Test
@@ -428,12 +444,12 @@ public class FieldSortBaseIT<F> {
 		DataSet<F> dataSet = dataSetForAsc;
 		assertThatQuery( index.query()
 				.where( f -> f.matchAll().except( f.id().matchingAny( Arrays.asList(
-								dataSet.emptyDoc1Id, dataSet.emptyDoc2Id, dataSet.emptyDoc3Id, dataSet.emptyDoc4Id
-						) ) ) )
+						dataSet.emptyDoc1Id, dataSet.emptyDoc2Id, dataSet.emptyDoc3Id, dataSet.emptyDoc4Id
+				) ) ) )
 				.routing( dataSet.routingKey )
-				.sort( ( (Function<SearchSortFactory, FieldSortOptionsStep<?, ?>>)
-						f -> f.withRoot( parentObjectBinding.absolutePath )
-								.field( parentObjectBinding.getRelativeFieldName( fieldStructure, fieldType ) ) )
+				.sort( ( (Function<SearchSortFactory, FieldSortOptionsStep<?, ?>>) f -> f.withRoot(
+						parentObjectBinding.absolutePath )
+						.field( parentObjectBinding.getRelativeFieldName( fieldStructure, fieldType ) ) )
 						.andThen( this::applySortMode )
 						// Don't call this.applyFilter: we need to use the relative name of the discriminator field.
 						.andThen( optionsStep -> {
@@ -491,13 +507,17 @@ public class FieldSortBaseIT<F> {
 
 		// Explicit order with missing().last()
 		dataSet = dataSetForAsc;
-		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc().missing().last().missing().lowest().missing().first() );
+		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).asc().missing().last().missing()
+				.lowest().missing().first() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc1Id, dataSet.doc2Id, dataSet.doc3Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc1Id, dataSet.doc2Id,
+						dataSet.doc3Id );
 		dataSet = dataSetForDesc;
-		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).desc().missing().first().missing().highest() );
+		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).desc().missing().first().missing()
+				.highest() );
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.emptyDoc1Id, dataSet.doc3Id, dataSet.doc2Id,
+						dataSet.doc1Id );
 		dataSet = dataSetForDesc;
 		query = matchNonEmptyAndEmpty1Query( dataSet, f -> f.field( fieldPath ).desc()
 				.missing().first()
@@ -506,7 +526,8 @@ public class FieldSortBaseIT<F> {
 				.missing().lowest()
 		);
 		assertThatQuery( query )
-				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id, dataSet.emptyDoc1Id );
+				.hasDocRefHitsExactOrder( index.typeName(), dataSet.doc3Id, dataSet.doc2Id, dataSet.doc1Id,
+						dataSet.emptyDoc1Id );
 	}
 
 	private SearchQuery<DocumentReference> matchNonEmptyQuery(DataSet<F> dataSet,
@@ -515,10 +536,12 @@ public class FieldSortBaseIT<F> {
 	}
 
 	private SearchQuery<DocumentReference> matchNonEmptyQuery(DataSet<F> dataSet,
-			Function<? super SearchSortFactory, ? extends FieldSortOptionsStep<?, ?>> sortContributor, StubMappingScope scope) {
+			Function<? super SearchSortFactory, ? extends FieldSortOptionsStep<?, ?>> sortContributor,
+			StubMappingScope scope) {
 		return query(
 				dataSet,
-				f -> f.matchAll().except( f.id().matchingAny( Arrays.asList( dataSet.emptyDoc1Id, dataSet.emptyDoc2Id, dataSet.emptyDoc3Id, dataSet.emptyDoc4Id ) ) ),
+				f -> f.matchAll().except( f.id().matchingAny( Arrays.asList( dataSet.emptyDoc1Id, dataSet.emptyDoc2Id,
+						dataSet.emptyDoc3Id, dataSet.emptyDoc4Id ) ) ),
 				sortContributor,
 				scope
 		);
@@ -530,10 +553,12 @@ public class FieldSortBaseIT<F> {
 	}
 
 	private SearchQuery<DocumentReference> matchNonEmptyAndEmpty1Query(DataSet<F> dataSet,
-			Function<? super SearchSortFactory, ? extends FieldSortOptionsStep<?, ?>> sortContributor, StubMappingScope scope) {
+			Function<? super SearchSortFactory, ? extends FieldSortOptionsStep<?, ?>> sortContributor,
+			StubMappingScope scope) {
 		return query(
 				dataSet,
-				f -> f.matchAll().except( f.id().matchingAny( Arrays.asList( dataSet.emptyDoc2Id, dataSet.emptyDoc3Id, dataSet.emptyDoc4Id ) ) ),
+				f -> f.matchAll().except( f.id().matchingAny( Arrays.asList( dataSet.emptyDoc2Id, dataSet.emptyDoc3Id,
+						dataSet.emptyDoc4Id ) ) ),
 				sortContributor,
 				scope
 		);
@@ -545,7 +570,8 @@ public class FieldSortBaseIT<F> {
 	}
 
 	private SearchQuery<DocumentReference> matchAllQuery(DataSet<F> dataSet,
-			Function<? super SearchSortFactory, ? extends FieldSortOptionsStep<?, ?>> sortContributor, StubMappingScope scope) {
+			Function<? super SearchSortFactory, ? extends FieldSortOptionsStep<?, ?>> sortContributor,
+			StubMappingScope scope) {
 		return query( dataSet, f -> f.matchAll(), sortContributor, scope );
 	}
 
@@ -599,10 +625,8 @@ public class FieldSortBaseIT<F> {
 
 	private boolean isSumWithTemporalField() {
 		return SortMode.SUM.equals( sortMode )
-				&& (
-						Temporal.class.isAssignableFrom( fieldType.getJavaType() )
-						|| MonthDay.class.equals( fieldType.getJavaType() )
-				);
+				&& ( Temporal.class.isAssignableFrom( fieldType.getJavaType() )
+						|| MonthDay.class.equals( fieldType.getJavaType() ) );
 	}
 
 	private boolean isMedianWithNestedField() {
@@ -648,8 +672,13 @@ public class FieldSortBaseIT<F> {
 			this.fieldStructure = fieldStructure;
 			this.fieldType = fieldType;
 			this.expectedSortMode = expectedSortMode;
-			this.routingKey = fieldType.getUniqueName() + "_" + fieldStructure.getUniqueName()
-					+ "_" + sortModeOrNull + "_" + expectedSortMode;
+			this.routingKey = fieldType.getUniqueName()
+					+ "_"
+					+ fieldStructure.getUniqueName()
+					+ "_"
+					+ sortModeOrNull
+					+ "_"
+					+ expectedSortMode;
 			this.doc1Id = docId( 1 );
 			this.doc2Id = docId( 2 );
 			this.doc3Id = docId( 3 );

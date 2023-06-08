@@ -23,9 +23,12 @@ public class Triplet<T0, T1, T2> {
 	@Override
 	public String toString() {
 		return "Pair["
-				+ "elem0=" + elem0
-				+ ", elem1=" + elem1
-				+ ", elem2=" + elem2
+				+ "elem0="
+				+ elem0
+				+ ", elem1="
+				+ elem1
+				+ ", elem2="
+				+ elem2
 				+ "]";
 	}
 

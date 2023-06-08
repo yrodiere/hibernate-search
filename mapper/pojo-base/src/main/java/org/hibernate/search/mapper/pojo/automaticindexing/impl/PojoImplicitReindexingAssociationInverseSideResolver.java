@@ -18,7 +18,8 @@ import org.hibernate.search.util.common.spi.ToStringTreeAppender;
 /**
  * Information about associations involved in reindexing.
  */
-public final class PojoImplicitReindexingAssociationInverseSideResolver implements AutoCloseable, ToStringTreeAppendable {
+public final class PojoImplicitReindexingAssociationInverseSideResolver
+		implements AutoCloseable, ToStringTreeAppendable {
 
 	private final PojoPathOrdinals pathOrdinals;
 
@@ -44,7 +45,8 @@ public final class PojoImplicitReindexingAssociationInverseSideResolver implemen
 		appender.attribute( "dirtyContainingAssociationFilter", dirtyContainingAssociationFilter );
 		appender.startObject( "resolversByAssociationPath" );
 		for ( int i = 0; i < resolversByOrdinal.size(); i++ ) {
-			List<PojoImplicitReindexingAssociationInverseSideResolverNode<Object>> resolvers = resolversByOrdinal.get( i );
+			List<PojoImplicitReindexingAssociationInverseSideResolverNode<Object>> resolvers = resolversByOrdinal.get(
+					i );
 			if ( resolvers != null ) {
 				appender.attribute( pathOrdinals.toPath( i ), resolvers );
 			}
@@ -55,7 +57,8 @@ public final class PojoImplicitReindexingAssociationInverseSideResolver implemen
 	@Override
 	public void close() {
 		try ( Closer<RuntimeException> closer = new Closer<>() ) {
-			for ( List<PojoImplicitReindexingAssociationInverseSideResolverNode<Object>> ordinalList : resolversByOrdinal ) {
+			for ( List<PojoImplicitReindexingAssociationInverseSideResolverNode<
+					Object>> ordinalList : resolversByOrdinal ) {
 				closer.pushAll( PojoImplicitReindexingAssociationInverseSideResolverNode::close, ordinalList );
 			}
 		}
@@ -82,7 +85,8 @@ public final class PojoImplicitReindexingAssociationInverseSideResolver implemen
 		int resolverSize = resolversByOrdinal.size();
 		for ( int i = dirtyAssociationPaths.nextSetBit( 0 ); i >= 0 && i < resolverSize;
 				i = dirtyAssociationPaths.nextSetBit( i + 1 ) ) {
-			for ( PojoImplicitReindexingAssociationInverseSideResolverNode<Object> resolver : resolversByOrdinal.get( i ) ) {
+			for ( PojoImplicitReindexingAssociationInverseSideResolverNode<Object> resolver : resolversByOrdinal.get(
+					i ) ) {
 				if ( oldState != null ) {
 					resolver.resolveEntitiesToReindex( collector, oldState[i], context );
 				}

@@ -26,62 +26,49 @@ public class ReflectionUtilsTest {
 
 	@Test
 	public void simple() {
-		new AssertWithType<String>() {
-		}
+		new AssertWithType<String>() {}
 				.resolveRawTypeTo( String.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<Iterable<CustomType>>() {
-		}
+		new AssertWithType<Iterable<CustomType>>() {}
 				.resolveRawTypeTo( Iterable.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<Collection<CustomType>>() {
-		}
+		new AssertWithType<Collection<CustomType>>() {}
 				.resolveRawTypeTo( Collection.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<List<CustomType>>() {
-		}
+		new AssertWithType<List<CustomType>>() {}
 				.resolveRawTypeTo( List.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<ArrayList<CustomType>>() {
-		}
+		new AssertWithType<ArrayList<CustomType>>() {}
 				.resolveRawTypeTo( ArrayList.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<Map<String, CustomType>>() {
-		}
+		new AssertWithType<Map<String, CustomType>>() {}
 				.resolveRawTypeTo( Map.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<HashMap<String, CustomType>>() {
-		}
+		new AssertWithType<HashMap<String, CustomType>>() {}
 				.resolveRawTypeTo( HashMap.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<String[]>() {
-		}
+		new AssertWithType<String[]>() {}
 				.resolveRawTypeTo( String[].class )
 				.resolveArrayElementTypeTo( String.class );
 	}
 
 	@Test
 	public void genericArgument() {
-		new AssertWithType<Iterable<CustomGenericType<String, Integer>>>() {
-		}
+		new AssertWithType<Iterable<CustomGenericType<String, Integer>>>() {}
 				.resolveRawTypeTo( Iterable.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<CustomGenericType<String, Integer>[]>() {
-		}
+		new AssertWithType<CustomGenericType<String, Integer>[]>() {}
 				.resolveRawTypeTo( CustomGenericType[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<CustomGenericType<String, Integer>>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<CustomGenericType<String, Integer>>() {} );
 	}
 
 	@Test
 	@SuppressWarnings("rawtypes")
 	public void rawType() {
-		new AssertWithType<Iterable>() {
-		}
+		new AssertWithType<Iterable>() {}
 				.resolveRawTypeTo( Iterable.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<CustomGenericType[]>() {
-		}
+		new AssertWithType<CustomGenericType[]>() {}
 				.resolveRawTypeTo( CustomGenericType[].class )
 				.resolveArrayElementTypeTo( CustomGenericType.class );
 	}
@@ -89,171 +76,134 @@ public class ReflectionUtilsTest {
 	@Test
 	public <T> void unboundedTypeVariable() {
 		// Type variable as the tested type
-		new AssertWithType<T>() {
-		}
+		new AssertWithType<T>() {}
 				.resolveRawTypeTo( Object.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<T[]>() {
-		}
+		new AssertWithType<T[]>() {}
 				.resolveRawTypeTo( Object[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<T>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<T>() {} );
 
 		// Type variable as an argument to the tested type
-		new AssertWithType<CustomGenericInterface<T, String>>() {
-		}
+		new AssertWithType<CustomGenericInterface<T, String>>() {}
 				.resolveRawTypeTo( CustomGenericInterface.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<CustomGenericInterface<T, String>[]>() {
-		}
+		new AssertWithType<CustomGenericInterface<T, String>[]>() {}
 				.resolveRawTypeTo( CustomGenericInterface[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<CustomGenericInterface<T, String>>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<CustomGenericInterface<T, String>>() {} );
 	}
 
 	@Test
 	public <T extends CustomGenericInterface<Integer, String>> void singleUpperBoundTypeVariable() {
 		// Type variable as the tested type
-		new AssertWithType<T>() {
-		}
+		new AssertWithType<T>() {}
 				.resolveRawTypeTo( CustomGenericInterface.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<T[]>() {
-		}
+		new AssertWithType<T[]>() {}
 				.resolveRawTypeTo( CustomGenericInterface[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<T>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<T>() {} );
 
 		// Type variable as an argument to the tested type
-		new AssertWithType<Map<T, String>>() {
-		}
+		new AssertWithType<Map<T, String>>() {}
 				.resolveRawTypeTo( Map.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<Map<T, String>[]>() {
-		}
+		new AssertWithType<Map<T, String>[]>() {}
 				.resolveRawTypeTo( Map[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<Map<T, String>>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<Map<T, String>>() {} );
 	}
 
 	@Test
-	public <T extends CustomGenericInterface<Integer, String> & Collection<Double>> void multipleUpperBoundsTypeVariable() {
+	public <
+			T extends CustomGenericInterface<Integer, String> & Collection<
+					Double>> void multipleUpperBoundsTypeVariable() {
 		// Type variable as the tested type
-		new AssertWithType<T>() {
-		}
+		new AssertWithType<T>() {}
 				.resolveRawTypeTo( CustomGenericInterface.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<T[]>() {
-		}
+		new AssertWithType<T[]>() {}
 				.resolveRawTypeTo( CustomGenericInterface[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<T>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<T>() {} );
 
 		// Type variable as an argument to the tested type
-		new AssertWithType<Map<T, String>>() {
-		}
+		new AssertWithType<Map<T, String>>() {}
 				.resolveRawTypeTo( Map.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<Map<T, String>[]>() {
-		}
+		new AssertWithType<Map<T, String>[]>() {}
 				.resolveRawTypeTo( Map[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<Map<T, String>>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<Map<T, String>>() {} );
 	}
 
 	@Test
 	public void unboundedWildcard() {
 		// Wildcard as the tested type
-		new AssertWithWildcardType<Of<?>>() {
-		}
+		new AssertWithWildcardType<Of<?>>() {}
 				.resolveRawTypeTo( Object.class )
 				.resolveArrayElementTypeToEmpty();
 
 		// Wildcard as an argument to the tested type
-		new AssertWithType<CustomGenericInterface<?, String>>() {
-		}
+		new AssertWithType<CustomGenericInterface<?, String>>() {}
 				.resolveRawTypeTo( CustomGenericInterface.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<CustomGenericInterface<?, String>[]>() {
-		}
+		new AssertWithType<CustomGenericInterface<?, String>[]>() {}
 				.resolveRawTypeTo( CustomGenericInterface[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<CustomGenericInterface<?, String>>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<CustomGenericInterface<?, String>>() {} );
 	}
 
 	@Test
 	public void singleUpperBoundWildcard() {
 		// Wildcard as the tested type
-		new AssertWithWildcardType<Of<? extends CustomGenericInterface<Integer, String>>>() {
-		}
+		new AssertWithWildcardType<Of<? extends CustomGenericInterface<Integer, String>>>() {}
 				.resolveRawTypeTo( CustomGenericInterface.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithWildcardType<Of<? extends CustomGenericInterface<Integer, String>[]>>() {
-		}
+		new AssertWithWildcardType<Of<? extends CustomGenericInterface<Integer, String>[]>>() {}
 				.resolveRawTypeTo( CustomGenericInterface[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<CustomGenericInterface<Integer, String>>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<CustomGenericInterface<Integer, String>>() {} );
 
 		// Wildcard as an argument to the tested type
-		new AssertWithType<Map<? extends CustomGenericInterface<Integer, String>, String>>() {
-		}
+		new AssertWithType<Map<? extends CustomGenericInterface<Integer, String>, String>>() {}
 				.resolveRawTypeTo( Map.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<Map<? extends CustomGenericInterface<Integer, String>, String>[]>() {
-		}
+		new AssertWithType<Map<? extends CustomGenericInterface<Integer, String>, String>[]>() {}
 				.resolveRawTypeTo( Map[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<Map<? extends CustomGenericInterface<Integer, String>, String>>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<Map<? extends CustomGenericInterface<Integer, String>,
+						String>>() {} );
 	}
 
 	@Test
 	public <T> void unboundedTypeVariableUpperBoundWildcard() {
 		// Wildcard as the tested type
-		new AssertWithWildcardType<Of<? extends T>>() {
-		}
+		new AssertWithWildcardType<Of<? extends T>>() {}
 				.resolveRawTypeTo( Object.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithWildcardType<Of<? extends T[]>>() {
-		}
+		new AssertWithWildcardType<Of<? extends T[]>>() {}
 				.resolveRawTypeTo( Object[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<T>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<T>() {} );
 
 		// Wildcard as an argument to the tested type
-		new AssertWithType<CustomGenericInterface<? extends T, String>>() {
-		}
+		new AssertWithType<CustomGenericInterface<? extends T, String>>() {}
 				.resolveRawTypeTo( CustomGenericInterface.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<CustomGenericInterface<? extends T, String>[]>() {
-		}
+		new AssertWithType<CustomGenericInterface<? extends T, String>[]>() {}
 				.resolveRawTypeTo( CustomGenericInterface[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<CustomGenericInterface<? extends T, String>>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<CustomGenericInterface<? extends T, String>>() {} );
 	}
 
 	@Test
 	public <T extends CustomGenericInterface<Integer, String>> void boundedTypeVariableUpperBoundWildcard() {
 		// Wildcard as the tested type
-		new AssertWithWildcardType<Of<? extends T>>() {
-		}
+		new AssertWithWildcardType<Of<? extends T>>() {}
 				.resolveRawTypeTo( CustomGenericInterface.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithWildcardType<Of<? extends T[]>>() {
-		}
+		new AssertWithWildcardType<Of<? extends T[]>>() {}
 				.resolveRawTypeTo( CustomGenericInterface[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<T>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<T>() {} );
 
 		// Wildcard as an argument to the tested type
-		new AssertWithType<Map<? extends T, String>>() {
-		}
+		new AssertWithType<Map<? extends T, String>>() {}
 				.resolveRawTypeTo( Map.class )
 				.resolveArrayElementTypeToEmpty();
-		new AssertWithType<Map<? extends T, String>[]>() {
-		}
+		new AssertWithType<Map<? extends T, String>[]>() {}
 				.resolveRawTypeTo( Map[].class )
-				.resolveArrayElementTypeTo( new TypeCapture<Map<? extends T, String>>() {
-				} );
+				.resolveArrayElementTypeTo( new TypeCapture<Map<? extends T, String>>() {} );
 	}
 
 	private abstract static class AbstractReflectionUtilsForTypeAssert {

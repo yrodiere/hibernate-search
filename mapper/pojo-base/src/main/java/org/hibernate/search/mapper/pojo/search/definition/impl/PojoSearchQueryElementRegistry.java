@@ -21,7 +21,8 @@ public final class PojoSearchQueryElementRegistry implements ProjectionRegistry,
 
 	private final Map<Class<?>, CompositeProjectionDefinition<?>> compositeProjectionDefinitions;
 
-	public PojoSearchQueryElementRegistry(Map<Class<?>, CompositeProjectionDefinition<?>> compositeProjectionDefinitions) {
+	public PojoSearchQueryElementRegistry(Map<Class<?>,
+			CompositeProjectionDefinition<?>> compositeProjectionDefinitions) {
 		this.compositeProjectionDefinitions = compositeProjectionDefinitions;
 	}
 

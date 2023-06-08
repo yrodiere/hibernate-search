@@ -32,9 +32,15 @@ public class StubDocumentReference implements DocumentReference {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "[" +
-				"typeName='" + typeName +
-				", id=" + id +
+		return getClass().getSimpleName()
+				+ "["
+				+
+				"typeName='"
+				+ typeName
+				+
+				", id="
+				+ id
+				+
 				"]";
 	}
 
@@ -47,7 +53,8 @@ public class StubDocumentReference implements DocumentReference {
 			return false;
 		}
 		StubDocumentReference that = (StubDocumentReference) o;
-		return Objects.equals( typeName, that.typeName ) &&
+		return Objects.equals( typeName, that.typeName )
+				&&
 				Objects.equals( id, that.id );
 	}
 

@@ -72,7 +72,8 @@ public class InstantFieldTypeDescriptor extends FieldTypeDescriptor<Instant> {
 	@Override
 	protected List<Instant> createUniquelyMatchableValues() {
 		Set<Instant> values = new LinkedHashSet<>();
-		for ( LocalDateTime localDateTime : LocalDateTimeFieldTypeDescriptor.INSTANCE.getIndexableValues().getSingle() ) {
+		for ( LocalDateTime localDateTime : LocalDateTimeFieldTypeDescriptor.INSTANCE.getIndexableValues()
+				.getSingle() ) {
 			values.add( localDateTime.atOffset( ZoneOffset.UTC ).toInstant() );
 		}
 		values.add( Instant.EPOCH );

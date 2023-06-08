@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.CacheMode;
@@ -388,13 +389,16 @@ public final class MassIndexingJob {
 					defaultedCheckpointInterval,
 					rowsPerPartition != null ? rowsPerPartition : Defaults.ROWS_PER_PARTITION
 			);
-			int defaultedSessionClearInterval = Defaults.sessionClearInterval( sessionClearInterval, defaultedCheckpointInterval );
+			int defaultedSessionClearInterval = Defaults.sessionClearInterval( sessionClearInterval,
+					defaultedCheckpointInterval );
 			ValidationUtil.validateSessionClearInterval( defaultedSessionClearInterval, defaultedCheckpointInterval );
 
 			Properties jobParams = new Properties();
 
-			addIfNotNull( jobParams, MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_NAMESPACE, entityManagerFactoryNamespace );
-			addIfNotNull( jobParams, MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_REFERENCE, entityManagerFactoryReference );
+			addIfNotNull( jobParams, MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_NAMESPACE,
+					entityManagerFactoryNamespace );
+			addIfNotNull( jobParams, MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_REFERENCE,
+					entityManagerFactoryReference );
 			addIfNotNull( jobParams, MassIndexingJobParameters.ID_FETCH_SIZE, idFetchSize );
 			addIfNotNull( jobParams, MassIndexingJobParameters.ENTITY_FETCH_SIZE, entityFetchSize );
 			addIfNotNull( jobParams, MassIndexingJobParameters.CUSTOM_QUERY_HQL, customQueryHql );

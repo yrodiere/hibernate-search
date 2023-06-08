@@ -14,8 +14,8 @@ import java.util.Map;
 
 import org.hibernate.search.mapper.pojo.automaticindexing.building.impl.PojoIndexingDependencyCollectorTypeNode;
 import org.hibernate.search.mapper.pojo.logging.impl.Log;
-import org.hibernate.search.mapper.pojo.model.PojoModelCompositeElement;
 import org.hibernate.search.mapper.pojo.model.PojoElementAccessor;
+import org.hibernate.search.mapper.pojo.model.PojoModelCompositeElement;
 import org.hibernate.search.mapper.pojo.model.PojoModelProperty;
 import org.hibernate.search.mapper.pojo.model.additionalmetadata.building.impl.PojoTypeAdditionalMetadataProvider;
 import org.hibernate.search.mapper.pojo.model.additionalmetadata.impl.PojoPropertyAdditionalMetadata;
@@ -79,7 +79,8 @@ public abstract class AbstractPojoModelCompositeElement<V> implements PojoModelC
 	public PojoModelNestedCompositeElement<?, ?> property(String relativeFieldName) {
 		return properties.computeIfAbsent( relativeFieldName, name -> {
 			BoundPojoModelPathTypeNode<V> modelPathTypeNode = getModelPathTypeNode();
-			PojoPropertyAdditionalMetadata additionalMetadata = getTypeAdditionalMetadata().getPropertyAdditionalMetadata( name );
+			PojoPropertyAdditionalMetadata additionalMetadata = getTypeAdditionalMetadata()
+					.getPropertyAdditionalMetadata( name );
 			return new PojoModelNestedCompositeElement<>(
 					this,
 					modelPathTypeNode.property( name ),
@@ -134,7 +135,8 @@ public abstract class AbstractPojoModelCompositeElement<V> implements PojoModelC
 
 	private PojoTypeAdditionalMetadata getTypeAdditionalMetadata() {
 		if ( typeAdditionalMetadata == null ) {
-			typeAdditionalMetadata = typeAdditionalMetadataProvider.get( getModelPathTypeNode().getTypeModel().rawType() );
+			typeAdditionalMetadata = typeAdditionalMetadataProvider.get( getModelPathTypeNode().getTypeModel()
+					.rawType() );
 		}
 		return typeAdditionalMetadata;
 	}

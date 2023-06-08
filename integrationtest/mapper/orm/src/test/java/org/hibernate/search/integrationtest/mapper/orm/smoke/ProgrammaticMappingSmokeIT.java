@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -46,7 +47,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.MethodRule;
-
 
 public class ProgrammaticMappingSmokeIT {
 
@@ -268,7 +268,7 @@ public class ProgrammaticMappingSmokeIT {
 											)
 									)
 							)
-							.objectField( "myEmbeddedList", b2 -> { } )
+							.objectField( "myEmbeddedList", b2 -> {} )
 							.objectField( "embeddedMap", b2 -> b2
 									.objectField( "myEmbedded", b3 -> b3
 											.field( "myLocalDateField", entity3.getEmbedded().getLocalDate() )
@@ -298,8 +298,8 @@ public class ProgrammaticMappingSmokeIT {
 		setupHolder.runInTransaction( session -> {
 			SearchSession searchSession = Search.session( session );
 			SearchQuery<ParentIndexedEntity> query = searchSession.search(
-							Arrays.asList( IndexedEntity.class, YetAnotherIndexedEntity.class )
-					)
+					Arrays.asList( IndexedEntity.class, YetAnotherIndexedEntity.class )
+			)
 					.selectEntity()
 					.where( f -> f.matchAll() )
 					.toQuery();
@@ -340,14 +340,14 @@ public class ProgrammaticMappingSmokeIT {
 			indexedEntityMapping.indexed().index( IndexedEntity.NAME );
 			indexedEntityMapping.binder(
 					new CustomTypeBridge.Binder()
-					.objectName( "customBridgeOnClass" )
+							.objectName( "customBridgeOnClass" )
 			);
 			indexedEntityMapping.property( "id" ).documentId();
 			indexedEntityMapping.property( "text" ).genericField( "myTextField" );
 			indexedEntityMapping.property( "embedded" )
 					.indexedEmbedded( "myEmbedded" )
-							.includeDepth( 1 )
-							.includePaths( "customBridgeOnClass.text", "myEmbedded.customBridgeOnClass.text" );
+					.includeDepth( 1 )
+					.includePaths( "customBridgeOnClass.text", "myEmbedded.customBridgeOnClass.text" );
 
 			ProgrammaticMappingConfigurationContext secondMapping = context.programmaticMapping();
 
@@ -357,7 +357,7 @@ public class ProgrammaticMappingSmokeIT {
 			parentIndexedEntityMapping.property( "embedded" )
 					.binder(
 							new CustomPropertyBridge.Binder()
-							.objectName( "customBridgeOnProperty" )
+									.objectName( "customBridgeOnProperty" )
 					);
 
 			TypeMappingStep otherIndexedEntityMapping = secondMapping.type( OtherIndexedEntity.class );
@@ -374,7 +374,7 @@ public class ProgrammaticMappingSmokeIT {
 			yetAnotherIndexedEntityMapping.property( "numeric" ).genericField();
 			yetAnotherIndexedEntityMapping.property( "embeddedList" )
 					.indexedEmbedded( "myEmbeddedList" )
-							.includePaths( "myEmbedded.customBridgeOnClass.text" );
+					.includePaths( "myEmbedded.customBridgeOnClass.text" );
 			yetAnotherIndexedEntityMapping.property( "embeddedMap" )
 					.genericField( "embeddedMapKeys" ).extractor( BuiltinContainerExtractors.MAP_KEY )
 					.indexedEmbedded().includePaths( "myEmbedded.myLocalDateField" );

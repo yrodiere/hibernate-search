@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.documentation.testsupport.BackendConfigurations;
@@ -43,7 +44,8 @@ public class AggregationDslIT {
 	private static final int BOOK4_ID = 4;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -307,8 +309,8 @@ public class AggregationDslIT {
 							Range.canonical( 10.0, 20.0 ),
 							Range.atLeast( 20.0 )
 					)
-					// tag::range-objects-collection[]
-					/* ... */;
+			// tag::range-objects-collection[]
+			/* ... */;
 
 			AggregationKey<Map<Range<Double>, Long>> countsByPriceKey = AggregationKey.of( "countsByPrice" );
 			SearchResult<Book> result = searchSession.search( Book.class )
@@ -340,11 +342,11 @@ public class AggregationDslIT {
 									LocalDate.of( 1970, 1, 1 )
 											.atStartOfDay().toInstant( ZoneOffset.UTC ) )
 							.range( LocalDate.of( 1970, 1, 1 )
-											.atStartOfDay().toInstant( ZoneOffset.UTC ),
+									.atStartOfDay().toInstant( ZoneOffset.UTC ),
 									LocalDate.of( 2000, 1, 1 )
 											.atStartOfDay().toInstant( ZoneOffset.UTC ) )
 							.range( LocalDate.of( 2000, 1, 1 )
-											.atStartOfDay().toInstant( ZoneOffset.UTC ),
+									.atStartOfDay().toInstant( ZoneOffset.UTC ),
 									null )
 					)
 					.fetch( 20 );

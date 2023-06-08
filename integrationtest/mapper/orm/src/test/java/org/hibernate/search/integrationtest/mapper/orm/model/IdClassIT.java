@@ -11,6 +11,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -45,7 +46,8 @@ public class IdClassIT {
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
 						"Unable to define a document identifier for indexed type '"
-								+ IdClassIndexed.class.getName() + "'",
+								+ IdClassIndexed.class.getName()
+								+ "'",
 						"The property representing the entity identifier is unknown",
 						"Define the document identifier explicitly by annotating"
 								+ " a property whose values are unique with @DocumentId"
@@ -69,7 +71,7 @@ public class IdClassIT {
 			session.persist( entity );
 
 			backendMock.expectWorks( NonIdClassIndexed.NAME )
-					.add( "1", b -> { } );
+					.add( "1", b -> {} );
 		} );
 		backendMock.verifyExpectationsMet();
 	}
@@ -94,7 +96,7 @@ public class IdClassIT {
 			session.persist( entity );
 
 			backendMock.expectWorks( IdClassIndexedWithDocumentId.NAME )
-					.add( "8", b -> { } );
+					.add( "8", b -> {} );
 		} );
 		backendMock.verifyExpectationsMet();
 	}
@@ -244,7 +246,8 @@ public class IdClassIT {
 				return false;
 			}
 			MyIdClass myIdClass = (MyIdClass) o;
-			return Objects.equals( id1, myIdClass.id1 ) &&
+			return Objects.equals( id1, myIdClass.id1 )
+					&&
 					Objects.equals( id2, myIdClass.id2 );
 		}
 

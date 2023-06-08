@@ -21,7 +21,8 @@ import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeIdentifier;
 
 class StandalonePojoRawTypeModel<T> extends AbstractPojoHCAnnRawTypeModel<T, StandalonePojoBootstrapIntrospector> {
 
-	StandalonePojoRawTypeModel(StandalonePojoBootstrapIntrospector introspector, PojoRawTypeIdentifier<T> typeIdentifier,
+	StandalonePojoRawTypeModel(StandalonePojoBootstrapIntrospector introspector, PojoRawTypeIdentifier<
+			T> typeIdentifier,
 			RawTypeDeclaringContext<T> rawTypeDeclaringContext) {
 		super( introspector, typeIdentifier, rawTypeDeclaringContext );
 	}
@@ -30,7 +31,7 @@ class StandalonePojoRawTypeModel<T> extends AbstractPojoHCAnnRawTypeModel<T, Sta
 	@SuppressWarnings("unchecked") // xClass represents T, so its supertypes represent ? super T
 	public Stream<StandalonePojoRawTypeModel<? super T>> ascendingSuperTypes() {
 		return introspector.ascendingSuperClasses( xClass )
-					.map( xc -> (StandalonePojoRawTypeModel<? super T>) introspector.typeModel( xc ) );
+				.map( xc -> (StandalonePojoRawTypeModel<? super T>) introspector.typeModel( xc ) );
 	}
 
 	@Override

@@ -284,7 +284,6 @@ public class DslExtensionStateTest {
 		}
 	}
 
-	private static class MyResultType {
-	}
+	private static class MyResultType {}
 
 }

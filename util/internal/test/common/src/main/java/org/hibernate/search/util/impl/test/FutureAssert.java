@@ -20,7 +20,6 @@ import java.util.function.Consumer;
 import org.assertj.core.api.AbstractObjectAssert;
 import org.assertj.core.api.AbstractThrowableAssert;
 
-
 public class FutureAssert<T> extends AbstractObjectAssert<FutureAssert<T>, Future<T>> {
 
 	public static <T> FutureAssert<T> assertThatFuture(Future<T> future) {
@@ -59,7 +58,8 @@ public class FutureAssert<T> extends AbstractObjectAssert<FutureAssert<T>, Futur
 	public FutureAssert<T> isPending() {
 		try {
 			Object result = getNow();
-			failWithMessage( "future <%s> should be pending, but instead it succeeded with result <%s>", actual, result );
+			failWithMessage( "future <%s> should be pending, but instead it succeeded with result <%s>", actual,
+					result );
 		}
 		catch (TimeoutException e) {
 			// All's good
@@ -68,14 +68,14 @@ public class FutureAssert<T> extends AbstractObjectAssert<FutureAssert<T>, Futur
 			failWithCauseAndMessage( e, "future <%s> should be pending, but instead it's been cancelled", actual, e );
 		}
 		catch (ExecutionException e) {
-			failWithCauseAndMessage( e, "future <%s> should be pending, but instead it failed with exception: %s", actual, e );
+			failWithCauseAndMessage( e, "future <%s> should be pending, but instead it failed with exception: %s",
+					actual, e );
 		}
 		return this;
 	}
 
 	public FutureAssert<T> isSuccessful() {
-		return isSuccessful( value -> {
-		} );
+		return isSuccessful( value -> {} );
 	}
 
 	public FutureAssert<T> isSuccessful(T expectedValue) {
@@ -89,17 +89,20 @@ public class FutureAssert<T> extends AbstractObjectAssert<FutureAssert<T>, Futur
 				valueAssertion.accept( result );
 			}
 			catch (AssertionError e2) {
-				failWithCauseAndMessage( e2, "future <%s> succeeded as expected, but the result is wrong: %s", actual, e2 );
+				failWithCauseAndMessage( e2, "future <%s> succeeded as expected, but the result is wrong: %s", actual,
+						e2 );
 			}
 		}
 		catch (TimeoutException e) {
 			failWithMessage( "future <%s> should have succeeded, but instead it's still pending", actual );
 		}
 		catch (CancellationException e) {
-			failWithCauseAndMessage( e, "future <%s> should have succeeded, but instead it's been cancelled", actual, e );
+			failWithCauseAndMessage( e, "future <%s> should have succeeded, but instead it's been cancelled", actual,
+					e );
 		}
 		catch (ExecutionException e) {
-			failWithCauseAndMessage( e, "future <%s> should have succeeded, but instead it failed with exception: %s", actual, e );
+			failWithCauseAndMessage( e, "future <%s> should have succeeded, but instead it failed with exception: %s",
+					actual, e );
 		}
 		return this;
 	}
@@ -122,7 +125,8 @@ public class FutureAssert<T> extends AbstractObjectAssert<FutureAssert<T>, Futur
 	public AbstractThrowableAssert<?, Throwable> getFailure() {
 		try {
 			Object result = getNow();
-			failWithMessage( "future <%s> should have failed, but instead it succeeded with result <%s>", actual, result );
+			failWithMessage( "future <%s> should have failed, but instead it succeeded with result <%s>", actual,
+					result );
 		}
 		catch (TimeoutException e) {
 			failWithMessage( "future <%s> should have failed, but instead it's still pending", actual );
@@ -140,7 +144,8 @@ public class FutureAssert<T> extends AbstractObjectAssert<FutureAssert<T>, Futur
 	public FutureAssert<T> isCancelled() {
 		try {
 			Object result = getNow();
-			failWithMessage( "future <%s> should have been cancelled, but instead it succeeded with result <%s>", actual, result );
+			failWithMessage( "future <%s> should have been cancelled, but instead it succeeded with result <%s>",
+					actual, result );
 		}
 		catch (TimeoutException e) {
 			failWithMessage( "future <%s> should have been cancelled, but instead it's still pending", actual );
@@ -167,7 +172,8 @@ public class FutureAssert<T> extends AbstractObjectAssert<FutureAssert<T>, Futur
 			while ( t != null ) {
 				if ( t instanceof AssertionError ) {
 					Throwable cause = e.getCause();
-					failWithCauseAndMessage( cause, "future <%s> failed because of a failing assertion: %s", actual, cause );
+					failWithCauseAndMessage( cause, "future <%s> failed because of a failing assertion: %s", actual,
+							cause );
 				}
 				t = t.getCause();
 			}

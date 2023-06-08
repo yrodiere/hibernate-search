@@ -149,7 +149,8 @@ public abstract class HibernateSearchPreIntegrationService implements Service, A
 				Optional<ManagedBeanRegistry> managedBeanRegistryService =
 						HibernateOrmUtils.getServiceOrEmpty( registry, ManagedBeanRegistry.class );
 				HibernateOrmClassLoaderServiceClassAndResourceAndServiceResolver classAndResourceAndServiceResolver =
-						new HibernateOrmClassLoaderServiceClassAndResourceAndServiceResolver( hibernateOrmClassLoaderService );
+						new HibernateOrmClassLoaderServiceClassAndResourceAndServiceResolver(
+								hibernateOrmClassLoaderService );
 
 				environmentBuilder.classResolver( classAndResourceAndServiceResolver )
 						.resourceResolver( classAndResourceAndServiceResolver )
@@ -202,7 +203,8 @@ public abstract class HibernateSearchPreIntegrationService implements Service, A
 
 	public CoordinationConfigurationContextImpl coordinationStrategyConfiguration() {
 		if ( coordinationStrategyConfiguration == null ) {
-			coordinationStrategyConfiguration = CoordinationConfigurationContextImpl.configure( propertySource, beanResolver() );
+			coordinationStrategyConfiguration = CoordinationConfigurationContextImpl.configure( propertySource,
+					beanResolver() );
 		}
 		return coordinationStrategyConfiguration;
 	}

@@ -76,7 +76,8 @@ public class DistanceProjectionTypeCheckingAndConversionIT {
 	@BeforeClass
 	public static void setup() {
 		setupHelper.start()
-				.withIndexes( mainIndex, compatibleIndex, rawFieldCompatibleIndex, missingFieldIndex, incompatibleIndex )
+				.withIndexes( mainIndex, compatibleIndex, rawFieldCompatibleIndex, missingFieldIndex,
+						incompatibleIndex )
 				.setup();
 
 		initData();
@@ -137,7 +138,8 @@ public class DistanceProjectionTypeCheckingAndConversionIT {
 	@TestForIssue(jiraKey = "HSEARCH-3391")
 	public void singleValuedFieldInMultiValuedObjectField_flattened_singleValuedProjection() {
 		String fieldPath = mainIndex.binding().flattenedObjectWithMultipleValues.relativeFieldName
-				+ "." + mainIndex.binding().flattenedObjectWithMultipleValues.fieldModel.relativeFieldName;
+				+ "."
+				+ mainIndex.binding().flattenedObjectWithMultipleValues.fieldModel.relativeFieldName;
 
 		assertThatThrownBy( () -> mainIndex.query()
 				.select( f -> f.field( fieldPath, fieldType.getJavaType() ) )
@@ -155,7 +157,8 @@ public class DistanceProjectionTypeCheckingAndConversionIT {
 	@TestForIssue(jiraKey = "HSEARCH-3391")
 	public void singleValuedFieldInMultiValuedObjectField_nested_singleValuedProjection() {
 		String fieldPath = mainIndex.binding().nestedObjectWithMultipleValues.relativeFieldName
-				+ "." + mainIndex.binding().nestedObjectWithMultipleValues.fieldModel.relativeFieldName;
+				+ "."
+				+ mainIndex.binding().nestedObjectWithMultipleValues.fieldModel.relativeFieldName;
 
 		assertThatThrownBy( () -> mainIndex.query()
 				.select( f -> f.field( fieldPath, fieldType.getJavaType() ) )
@@ -256,7 +259,9 @@ public class DistanceProjectionTypeCheckingAndConversionIT {
 		assertThatThrownBy( () -> scope.projection().distance( fieldPath, CENTER_POINT_1 ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Inconsistent support for 'projection:distance'"
 				);
 	}
@@ -265,13 +270,16 @@ public class DistanceProjectionTypeCheckingAndConversionIT {
 	public void multiIndex_withIncompatibleIndex_inNestedObject() {
 		StubMappingScope scope = incompatibleIndex.createScope( mainIndex );
 
-		String fieldPath = mainIndex.binding().nestedObject.relativeFieldName + "."
+		String fieldPath = mainIndex.binding().nestedObject.relativeFieldName
+				+ "."
 				+ mainIndex.binding().nestedObject.fieldModel.relativeFieldName;
 
 		assertThatThrownBy( () -> scope.projection().distance( fieldPath, CENTER_POINT_1 ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Attribute 'nested", "' differs:"
 				);
 	}
@@ -324,8 +332,7 @@ public class DistanceProjectionTypeCheckingAndConversionIT {
 				.add( DOCUMENT_1, document -> initDocument( mainIndex.binding(), document, 1 ) )
 				.add( DOCUMENT_2, document -> initDocument( mainIndex.binding(), document, 2 ) )
 				.add( DOCUMENT_3, document -> initDocument( mainIndex.binding(), document, 3 ) )
-				.add( EMPTY, document -> {
-				} );
+				.add( EMPTY, document -> {} );
 		BulkIndexer compatibleIndexer = compatibleIndex.bulkIndexer()
 				.add( COMPATIBLE_INDEX_DOCUMENT_1, document -> {
 					addFieldValue( document, compatibleIndex.binding().fieldModel, 1 );
@@ -338,8 +345,7 @@ public class DistanceProjectionTypeCheckingAndConversionIT {
 								document, rawFieldCompatibleIndex.binding().fieldWithConverterModel, 1 )
 				);
 		BulkIndexer missingFieldIndexer = missingFieldIndex.bulkIndexer()
-				.add( MISSING_FIELD_INDEX_DOCUMENT_1, document -> {
-				} );
+				.add( MISSING_FIELD_INDEX_DOCUMENT_1, document -> {} );
 		mainIndexer.join( compatibleIndexer, rawFieldCompatibleIndexer, missingFieldIndexer );
 	}
 

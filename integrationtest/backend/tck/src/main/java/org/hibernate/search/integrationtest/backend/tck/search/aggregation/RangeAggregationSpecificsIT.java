@@ -200,7 +200,8 @@ public class RangeAggregationSpecificsIT<F> {
 	}
 
 	@Test
-	@PortedFromSearch5(original = "org.hibernate.search.test.query.facet.RangeFacetingTest.testRangeWithExcludeLimitsAtEachLevel")
+	@PortedFromSearch5(
+			original = "org.hibernate.search.test.query.facet.RangeFacetingTest.testRangeWithExcludeLimitsAtEachLevel")
 	public void rangesCanonical() {
 		String fieldPath = index.binding().fieldModels.get( fieldType ).relativeFieldName;
 
@@ -305,14 +306,14 @@ public class RangeAggregationSpecificsIT<F> {
 	}
 
 	@Test
-	@PortedFromSearch5(original = "org.hibernate.search.test.query.facet.RangeFacetingTest.testRangeQueryWithNullToAndFrom")
+	@PortedFromSearch5(
+			original = "org.hibernate.search.test.query.facet.RangeFacetingTest.testRangeQueryWithNullToAndFrom")
 	public void rangeNull() {
 		String fieldPath = index.binding().fieldModels.get( fieldType ).relativeFieldName;
 
-		assertThatThrownBy( () ->
-				index.createScope().aggregation().range()
-						.field( fieldPath, fieldType.getJavaType() )
-						.range( null )
+		assertThatThrownBy( () -> index.createScope().aggregation().range()
+				.field( fieldPath, fieldType.getJavaType() )
+				.range( null )
 		)
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContaining( "'range'" )
@@ -323,10 +324,9 @@ public class RangeAggregationSpecificsIT<F> {
 	public void rangesNull() {
 		String fieldPath = index.binding().fieldModels.get( fieldType ).relativeFieldName;
 
-		assertThatThrownBy( () ->
-				index.createScope().aggregation().range()
-						.field( fieldPath, fieldType.getJavaType() )
-						.ranges( null )
+		assertThatThrownBy( () -> index.createScope().aggregation().range()
+				.field( fieldPath, fieldType.getJavaType() )
+				.ranges( null )
 		)
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContaining( "'ranges'" )
@@ -337,13 +337,12 @@ public class RangeAggregationSpecificsIT<F> {
 	public void rangesContainingNull() {
 		String fieldPath = index.binding().fieldModels.get( fieldType ).relativeFieldName;
 
-		assertThatThrownBy( () ->
-				index.createScope().aggregation().range()
-						.field( fieldPath, fieldType.getJavaType() )
-						.ranges( Arrays.asList(
-								Range.canonical( ascendingValues.get( 0 ), ascendingValues.get( 1 ) ),
-								null
-						) )
+		assertThatThrownBy( () -> index.createScope().aggregation().range()
+				.field( fieldPath, fieldType.getJavaType() )
+				.ranges( Arrays.asList(
+						Range.canonical( ascendingValues.get( 0 ), ascendingValues.get( 1 ) ),
+						null
+				) )
 		)
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContaining( "'range'" )
@@ -351,7 +350,8 @@ public class RangeAggregationSpecificsIT<F> {
 	}
 
 	@Test
-	@PortedFromSearch5(original = "org.hibernate.search.test.query.facet.RangeFacetingTest.testUnsupportedRangeParameterTypeThrowsException")
+	@PortedFromSearch5(
+			original = "org.hibernate.search.test.query.facet.RangeFacetingTest.testUnsupportedRangeParameterTypeThrowsException")
 	public void fieldTypeSuperClass() {
 		String fieldPath = index.binding().fieldModels.get( fieldType ).relativeFieldName;
 
@@ -371,7 +371,8 @@ public class RangeAggregationSpecificsIT<F> {
 	 * Check that defining a predicate will affect the aggregation result.
 	 */
 	@Test
-	@PortedFromSearch5(original = "org.hibernate.search.test.query.facet.RangeFacetingTest.testRangeQueryForDoubleWithZeroCount")
+	@PortedFromSearch5(
+			original = "org.hibernate.search.test.query.facet.RangeFacetingTest.testRangeQueryForDoubleWithZeroCount")
 	public void predicate() {
 		String fieldPath = index.binding().fieldModels.get( fieldType ).relativeFieldName;
 
@@ -379,7 +380,8 @@ public class RangeAggregationSpecificsIT<F> {
 
 		assertThatQuery(
 				index.createScope().query()
-						.where( f -> f.id().matchingAny( Arrays.asList( dataSet.name + "_document_1", dataSet.name + "_document_5" ) ) )
+						.where( f -> f.id().matchingAny( Arrays.asList( dataSet.name + "_document_1", dataSet.name
+								+ "_document_5" ) ) )
 						.aggregation( aggregationKey, f -> f.range().field( fieldPath, fieldType.getJavaType() )
 								.range( null, ascendingValues.get( 2 ) )
 								.range( ascendingValues.get( 2 ), ascendingValues.get( 5 ) )
@@ -392,10 +394,10 @@ public class RangeAggregationSpecificsIT<F> {
 						aggregationKey,
 						// Only document 1 and 5 should be taken into account by the aggregation
 						containsExactly( c -> {
-								c.accept( Range.canonical( null, ascendingValues.get( 2 ) ), 1L );
-								// Ranges with 0 matching documents should still be returned
-								c.accept( Range.canonical( ascendingValues.get( 2 ), ascendingValues.get( 5 ) ), 0L );
-								c.accept( Range.canonical( ascendingValues.get( 5 ), null ), 1L );
+							c.accept( Range.canonical( null, ascendingValues.get( 2 ) ), 1L );
+							// Ranges with 0 matching documents should still be returned
+							c.accept( Range.canonical( ascendingValues.get( 2 ), ascendingValues.get( 5 ) ), 0L );
+							c.accept( Range.canonical( ascendingValues.get( 5 ), null ), 1L );
 						} )
 				);
 	}
@@ -536,7 +538,7 @@ public class RangeAggregationSpecificsIT<F> {
 					document.addValue( index.binding().fieldWithConverterModels.get( fieldType ).reference, value );
 				} );
 			}
-			indexer.add( name + "_document_empty", name, document -> { } );
+			indexer.add( name + "_document_empty", name, document -> {} );
 			indexer.join();
 		}
 	}

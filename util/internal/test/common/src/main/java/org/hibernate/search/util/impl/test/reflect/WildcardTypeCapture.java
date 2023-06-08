@@ -31,7 +31,6 @@ public abstract class WildcardTypeCapture<T extends WildcardTypeCapture.Of<?>> e
 		return parameterizedOfType.getActualTypeArguments()[0];
 	}
 
-	@SuppressWarnings( "unused" )
-	public interface Of<T> {
-	}
+	@SuppressWarnings("unused")
+	public interface Of<T> {}
 }

@@ -39,8 +39,10 @@ public class ElasticsearchBigIntegerFieldCodec implements ElasticsearchFieldCode
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "decimalScale=" + decimalScale
+		return getClass().getSimpleName()
+				+ "["
+				+ "decimalScale="
+				+ decimalScale
 				+ "]";
 	}
 

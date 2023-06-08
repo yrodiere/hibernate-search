@@ -8,8 +8,8 @@ package org.hibernate.search.backend.elasticsearch.schema.management.impl;
 
 import java.util.concurrent.CompletableFuture;
 
-import org.hibernate.search.backend.elasticsearch.index.layout.impl.IndexNames;
 import org.hibernate.search.backend.elasticsearch.index.layout.IndexLayoutStrategy;
+import org.hibernate.search.backend.elasticsearch.index.layout.impl.IndexNames;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.impl.IndexMetadata;
 import org.hibernate.search.backend.elasticsearch.util.spi.URLEncodedString;
 import org.hibernate.search.backend.elasticsearch.work.result.impl.ExistingIndexMetadata;
@@ -41,7 +41,8 @@ final class ElasticsearchSchemaCreator {
 	 * @return A future.
 	 * @throws SearchException If an error occurs.
 	 */
-	public CompletableFuture<?> createIndexAssumeNonExisting(IndexNames indexNames, IndexMetadata indexMetadata, OperationSubmitter operationSubmitter) {
+	public CompletableFuture<?> createIndexAssumeNonExisting(IndexNames indexNames, IndexMetadata indexMetadata,
+			OperationSubmitter operationSubmitter) {
 		return schemaAccessor.createIndexAssumeNonExisting(
 				createPrimaryIndexName( indexNames ),
 				indexMetadata.getAliases(),
@@ -60,7 +61,8 @@ final class ElasticsearchSchemaCreator {
 	 * @return A future holding the metadata of the pre-existing index, or null if the index had to be created.
 	 * @throws SearchException If an error occurs.
 	 */
-	public CompletableFuture<ExistingIndexMetadata> createIndexIfAbsent(IndexNames indexNames, IndexMetadata indexMetadata, OperationSubmitter operationSubmitter) {
+	public CompletableFuture<ExistingIndexMetadata> createIndexIfAbsent(IndexNames indexNames,
+			IndexMetadata indexMetadata, OperationSubmitter operationSubmitter) {
 		return schemaAccessor.getCurrentIndexMetadataOrNull( indexNames, operationSubmitter )
 				.thenCompose( existingIndexMetadata -> {
 					if ( existingIndexMetadata != null ) {

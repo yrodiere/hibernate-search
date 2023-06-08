@@ -11,26 +11,25 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import org.hibernate.search.engine.search.predicate.SearchPredicate;
-import org.hibernate.search.engine.search.predicate.dsl.SimpleBooleanPredicateClausesCollector;
-import org.hibernate.search.engine.search.projection.SearchProjection;
 import org.hibernate.search.engine.search.predicate.dsl.PredicateFinalStep;
 import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
-import org.hibernate.search.engine.search.projection.dsl.SearchProjectionFactory;
+import org.hibernate.search.engine.search.predicate.dsl.SimpleBooleanPredicateClausesCollector;
+import org.hibernate.search.engine.search.projection.SearchProjection;
 import org.hibernate.search.engine.search.projection.dsl.ProjectionFinalStep;
-import org.hibernate.search.engine.search.query.dsl.SearchQueryOptionsStep;
+import org.hibernate.search.engine.search.projection.dsl.SearchProjectionFactory;
 import org.hibernate.search.engine.search.query.dsl.SearchQueryDslExtension;
-import org.hibernate.search.engine.search.query.dsl.SearchQueryWhereStep;
+import org.hibernate.search.engine.search.query.dsl.SearchQueryOptionsStep;
 import org.hibernate.search.engine.search.query.dsl.SearchQuerySelectStep;
+import org.hibernate.search.engine.search.query.dsl.SearchQueryWhereStep;
 
 public abstract class AbstractDelegatingSearchQuerySelectStep<R, E, LOS>
 		implements SearchQuerySelectStep<
-						SearchQueryOptionsStep<?, E, LOS, ?, ?>,
-						R,
-						E,
-						LOS,
-						SearchProjectionFactory<R, E>,
-						SearchPredicateFactory
-				> {
+				SearchQueryOptionsStep<?, E, LOS, ?, ?>,
+				R,
+				E,
+				LOS,
+				SearchProjectionFactory<R, E>,
+				SearchPredicateFactory> {
 
 	private final SearchQuerySelectStep<?, R, E, LOS, ?, ?> delegate;
 
@@ -78,7 +77,8 @@ public abstract class AbstractDelegatingSearchQuerySelectStep<R, E, LOS>
 
 	@Override
 	public SearchQueryOptionsStep<?, E, LOS, ?, ?> where(
-			BiConsumer<? super SearchPredicateFactory, ? super SimpleBooleanPredicateClausesCollector<?>> predicateContributor) {
+			BiConsumer<? super SearchPredicateFactory,
+					? super SimpleBooleanPredicateClausesCollector<?>> predicateContributor) {
 		return delegate.where( predicateContributor );
 	}
 

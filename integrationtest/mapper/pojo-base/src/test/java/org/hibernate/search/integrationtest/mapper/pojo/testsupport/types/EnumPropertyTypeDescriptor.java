@@ -92,8 +92,7 @@ public class EnumPropertyTypeDescriptor extends PropertyTypeDescriptor<EnumPrope
 	}
 
 	public enum MyEnum {
-		VALUE1,
-		VALUE2
+		VALUE1, VALUE2
 	}
 
 	@Indexed(index = DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_1_NAME)

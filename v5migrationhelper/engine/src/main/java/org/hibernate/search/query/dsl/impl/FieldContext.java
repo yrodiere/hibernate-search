@@ -53,7 +53,14 @@ public class FieldContext {
 
 	@Override
 	public String toString() {
-		return "FieldContext [field=" + field + ", fieldBoost=" + fieldBoost + ", ignoreAnalyzer=" + ignoreAnalyzer
-				+ ", ignoreFieldBridge=" + ignoreFieldBridge + "]";
+		return "FieldContext [field="
+				+ field
+				+ ", fieldBoost="
+				+ fieldBoost
+				+ ", ignoreAnalyzer="
+				+ ignoreAnalyzer
+				+ ", ignoreFieldBridge="
+				+ ignoreFieldBridge
+				+ "]";
 	}
 }

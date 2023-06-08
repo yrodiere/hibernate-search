@@ -7,11 +7,11 @@
 package org.hibernate.search.mapper.pojo.standalone.cfg;
 
 import org.hibernate.search.engine.environment.bean.BeanReference;
-import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
-import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategyNames;
 import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.mapping.StandalonePojoMappingConfigurer;
 import org.hibernate.search.mapper.pojo.standalone.schema.management.SchemaManagementStrategyName;
+import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
+import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategyNames;
 import org.hibernate.search.util.common.annotation.Incubating;
 
 @Incubating
@@ -72,7 +72,8 @@ public final class StandalonePojoMapperSettings {
 	 * @see org.hibernate.search.engine.cfg The core documentation of configuration properties,
 	 * which includes a description of the "bean reference" properties and accepted values.
 	 */
-	public static final String INDEXING_PLAN_SYNCHRONIZATION_STRATEGY = PREFIX + Radicals.INDEXING_PLAN_SYNCHRONIZATION_STRATEGY;
+	public static final String INDEXING_PLAN_SYNCHRONIZATION_STRATEGY = PREFIX
+			+ Radicals.INDEXING_PLAN_SYNCHRONIZATION_STRATEGY;
 
 	public static class Radicals {
 
@@ -83,7 +84,8 @@ public final class StandalonePojoMapperSettings {
 		public static final String MAPPING_CONFIGURER = "mapping.configurer";
 		public static final String MULTI_TENANCY_ENABLED = "mapping.multi_tenancy.enabled";
 		public static final String INDEXING_PLAN_SYNCHRONIZATION_PREFIX = "indexing.plan.synchronization.";
-		public static final String INDEXING_PLAN_SYNCHRONIZATION_STRATEGY = INDEXING_PLAN_SYNCHRONIZATION_PREFIX + "strategy";
+		public static final String INDEXING_PLAN_SYNCHRONIZATION_STRATEGY = INDEXING_PLAN_SYNCHRONIZATION_PREFIX
+				+ "strategy";
 
 	}
 
@@ -95,7 +97,8 @@ public final class StandalonePojoMapperSettings {
 		private Defaults() {
 		}
 
-		public static final SchemaManagementStrategyName SCHEMA_MANAGEMENT_STRATEGY = SchemaManagementStrategyName.CREATE_OR_VALIDATE;
+		public static final SchemaManagementStrategyName SCHEMA_MANAGEMENT_STRATEGY =
+				SchemaManagementStrategyName.CREATE_OR_VALIDATE;
 		public static final boolean MULTI_TENANCY_ENABLED = false;
 
 		public static final BeanReference<IndexingPlanSynchronizationStrategy> INDEXING_PLAN_SYNCHRONIZATION_STRATEGY =

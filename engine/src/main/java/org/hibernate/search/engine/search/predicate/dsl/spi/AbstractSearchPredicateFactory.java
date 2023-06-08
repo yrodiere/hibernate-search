@@ -57,11 +57,9 @@ import org.hibernate.search.engine.search.predicate.dsl.impl.WildcardPredicateFi
 import org.hibernate.search.engine.search.predicate.spi.SearchPredicateIndexScope;
 import org.hibernate.search.util.common.impl.Contracts;
 
-
 public abstract class AbstractSearchPredicateFactory<
-				S extends ExtendedSearchPredicateFactory<S>,
-				SC extends SearchPredicateIndexScope<?>
-		>
+		S extends ExtendedSearchPredicateFactory<S>,
+		SC extends SearchPredicateIndexScope<?>>
 		implements ExtendedSearchPredicateFactory<S> {
 
 	protected final SearchPredicateDslContext<SC> dslContext;
@@ -99,13 +97,15 @@ public abstract class AbstractSearchPredicateFactory<
 	public SimpleBooleanPredicateOptionsStep<?> and(
 			SearchPredicate firstSearchPredicate,
 			SearchPredicate... otherSearchPredicates) {
-		return new SimpleBooleanPredicateClausesStepImpl( AND, dslContext, this, firstSearchPredicate, otherSearchPredicates );
+		return new SimpleBooleanPredicateClausesStepImpl( AND, dslContext, this, firstSearchPredicate,
+				otherSearchPredicates );
 	}
 
 	@Override
 	public SimpleBooleanPredicateOptionsStep<?> and(PredicateFinalStep firstSearchPredicate,
 			PredicateFinalStep... otherSearchPredicate) {
-		return new SimpleBooleanPredicateClausesStepImpl( AND, dslContext, this, firstSearchPredicate, otherSearchPredicate );
+		return new SimpleBooleanPredicateClausesStepImpl( AND, dslContext, this, firstSearchPredicate,
+				otherSearchPredicate );
 	}
 
 	@Override
@@ -116,13 +116,15 @@ public abstract class AbstractSearchPredicateFactory<
 	@Override
 	public SimpleBooleanPredicateOptionsStep<?> or(SearchPredicate firstSearchPredicate,
 			SearchPredicate... otherSearchPredicate) {
-		return new SimpleBooleanPredicateClausesStepImpl( OR, dslContext, this, firstSearchPredicate, otherSearchPredicate );
+		return new SimpleBooleanPredicateClausesStepImpl( OR, dslContext, this, firstSearchPredicate,
+				otherSearchPredicate );
 	}
 
 	@Override
 	public SimpleBooleanPredicateOptionsStep<?> or(PredicateFinalStep firstSearchPredicate,
 			PredicateFinalStep... otherSearchPredicate) {
-		return new SimpleBooleanPredicateClausesStepImpl( OR, dslContext, this, firstSearchPredicate, otherSearchPredicate );
+		return new SimpleBooleanPredicateClausesStepImpl( OR, dslContext, this, firstSearchPredicate,
+				otherSearchPredicate );
 	}
 
 	@Override
@@ -176,7 +178,8 @@ public abstract class AbstractSearchPredicateFactory<
 	@Override
 	@Deprecated
 	public org.hibernate.search.engine.search.predicate.dsl.NestedPredicateFieldStep<?> nested() {
-		return new org.hibernate.search.engine.search.predicate.dsl.impl.NestedPredicateFieldStepImpl( dslContext, this );
+		return new org.hibernate.search.engine.search.predicate.dsl.impl.NestedPredicateFieldStepImpl( dslContext,
+				this );
 	}
 
 	@Override

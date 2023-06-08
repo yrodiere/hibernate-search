@@ -17,8 +17,8 @@ import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchReques
 import org.hibernate.search.backend.elasticsearch.util.spi.URLEncodedString;
 import org.hibernate.search.engine.backend.document.IndexFieldReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
-import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
+import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.integrationtest.backend.elasticsearch.testsupport.configuration.StubSingleIndexLayoutStrategy;
 import org.hibernate.search.integrationtest.backend.elasticsearch.testsupport.util.ElasticsearchClientSpy;
 import org.hibernate.search.integrationtest.backend.elasticsearch.testsupport.util.ElasticsearchRequestAssertionMode;
@@ -93,8 +93,11 @@ public class ElasticsearchIndexingIT {
 		clientSpy.expectNext(
 				ElasticsearchRequest.post()
 						.pathComponent( Paths._BULK )
-						.body( gson.fromJson( "{'index':{'_index': '" + writeName + "',"
-								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," ).orElse( "" )
+						.body( gson.fromJson( "{'index':{'_index': '"
+								+ writeName
+								+ "',"
+								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," )
+										.orElse( "" )
 								+ "'_id': '1'}}", JsonObject.class ) )
 						.body( new JsonObject() ) // We don't care about the document
 						.build(),
@@ -109,8 +112,11 @@ public class ElasticsearchIndexingIT {
 		clientSpy.expectNext(
 				ElasticsearchRequest.post()
 						.pathComponent( Paths._BULK )
-						.body( gson.fromJson( "{'index':{'_index': '" + writeName + "',"
-								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," ).orElse( "" )
+						.body( gson.fromJson( "{'index':{'_index': '"
+								+ writeName
+								+ "',"
+								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," )
+										.orElse( "" )
 								+ "'_id': '1'}}", JsonObject.class ) )
 						.body( new JsonObject() ) // We don't care about the document
 						.build(),
@@ -123,8 +129,11 @@ public class ElasticsearchIndexingIT {
 		clientSpy.expectNext(
 				ElasticsearchRequest.post()
 						.pathComponent( Paths._BULK )
-						.body( gson.fromJson( "{'delete':{'_index': '" + writeName + "',"
-								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," ).orElse( "" )
+						.body( gson.fromJson( "{'delete':{'_index': '"
+								+ writeName
+								+ "',"
+								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," )
+										.orElse( "" )
 								+ "'_id': '1'}}", JsonObject.class ) )
 						.build(),
 				ElasticsearchRequestAssertionMode.EXTENSIBLE
@@ -146,9 +155,14 @@ public class ElasticsearchIndexingIT {
 		clientSpy.expectNext(
 				ElasticsearchRequest.post()
 						.pathComponent( Paths._BULK )
-						.body( gson.fromJson( "{'index':{'_index': '" + writeName + "',"
-								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," ).orElse( "" )
-								+ "'routing': '" + routingKey + "',"
+						.body( gson.fromJson( "{'index':{'_index': '"
+								+ writeName
+								+ "',"
+								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," )
+										.orElse( "" )
+								+ "'routing': '"
+								+ routingKey
+								+ "',"
 								+ "'_id': '1'}}", JsonObject.class ) )
 						.body( new JsonObject() ) // We don't care about the document
 						.build(),
@@ -163,9 +177,14 @@ public class ElasticsearchIndexingIT {
 		clientSpy.expectNext(
 				ElasticsearchRequest.post()
 						.pathComponent( Paths._BULK )
-						.body( gson.fromJson( "{'index':{'_index': '" + writeName + "',"
-								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," ).orElse( "" )
-								+ "'routing': '" + routingKey + "',"
+						.body( gson.fromJson( "{'index':{'_index': '"
+								+ writeName
+								+ "',"
+								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," )
+										.orElse( "" )
+								+ "'routing': '"
+								+ routingKey
+								+ "',"
 								+ "'_id': '1'}}", JsonObject.class ) )
 						.body( new JsonObject() ) // We don't care about the document
 						.build(),
@@ -178,9 +197,14 @@ public class ElasticsearchIndexingIT {
 		clientSpy.expectNext(
 				ElasticsearchRequest.post()
 						.pathComponent( Paths._BULK )
-						.body( gson.fromJson( "{'delete':{'_index': '" + writeName + "',"
-								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," ).orElse( "" )
-								+ "'routing': '" + routingKey + "',"
+						.body( gson.fromJson( "{'delete':{'_index': '"
+								+ writeName
+								+ "',"
+								+ dialect.getTypeNameForMappingAndBulkApi().map( name -> "'_type': '" + name + "'," )
+										.orElse( "" )
+								+ "'routing': '"
+								+ routingKey
+								+ "',"
 								+ "'_id': '1'}}", JsonObject.class ) )
 						.build(),
 				ElasticsearchRequestAssertionMode.EXTENSIBLE

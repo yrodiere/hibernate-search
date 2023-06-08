@@ -6,12 +6,12 @@
  */
 package org.hibernate.search.documentation.search.converter;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.List;
 import java.util.stream.Stream;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.EntityManagerFactory;
@@ -34,7 +34,8 @@ import org.junit.Test;
 
 public class ProjectionConverterIT {
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -132,9 +133,7 @@ public class ProjectionConverterIT {
 	}
 
 	private enum OrderStatus {
-		ACKNOWLEDGED,
-		IN_PROGRESS,
-		DELIVERED
+		ACKNOWLEDGED, IN_PROGRESS, DELIVERED
 	}
 
 }

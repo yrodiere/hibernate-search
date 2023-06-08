@@ -19,21 +19,21 @@ import java.util.Set;
 import org.hibernate.search.engine.backend.Backend;
 import org.hibernate.search.engine.backend.index.IndexManager;
 import org.hibernate.search.engine.reporting.spi.EventContexts;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.entity.SearchIndexedEntity;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.scope.SearchScope;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.AssociationInverseSide;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ObjectPath;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyValue;
+import org.hibernate.search.mapper.pojo.standalone.entity.SearchIndexedEntity;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.scope.SearchScope;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.common.reporting.EventContext;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.index.impl.StubBackend;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.index.impl.StubIndexManager;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Before;
@@ -96,7 +96,8 @@ public class SearchMappingIT {
 						"No matching indexed entity type for name 'invalid'",
 						"Either this is not the name of an entity type, or the entity type is not indexed in Hibernate Search",
 						"Valid names for indexed entity types are: ["
-								+ Person.ENTITY_NAME + ", "
+								+ Person.ENTITY_NAME
+								+ ", "
 								+ Pet.ENTITY_NAME
 								// This should NOT include Toy, which is not an indexed entity type
 								+ "]"
@@ -112,7 +113,8 @@ public class SearchMappingIT {
 						"No matching indexed entity type for name '" + Toy.ENTITY_NAME + "'",
 						"Either this is not the name of an entity type, or the entity type is not indexed in Hibernate Search",
 						"Valid names for indexed entity types are: ["
-								+ Person.ENTITY_NAME + ", "
+								+ Person.ENTITY_NAME
+								+ ", "
 								+ Pet.ENTITY_NAME
 								// This should NOT include Toy, which is not an indexed entity type
 								+ "]"
@@ -139,7 +141,8 @@ public class SearchMappingIT {
 						"No matching indexed entity type for class '" + String.class.getName() + "'",
 						"Either this class is not an entity type, or the entity type is not indexed in Hibernate Search",
 						"Valid classes for indexed entity types are: ["
-								+ Person.class.getName() + ", "
+								+ Person.class.getName()
+								+ ", "
 								+ Pet.class.getName()
 								// This should NOT include Toy, which is not an indexed entity type
 								+ "]"
@@ -155,7 +158,8 @@ public class SearchMappingIT {
 						"No matching indexed entity type for class '" + Toy.class.getName() + "'",
 						"Either this class is not an entity type, or the entity type is not indexed in Hibernate Search",
 						"Valid classes for indexed entity types are: ["
-								+ Person.class.getName() + ", "
+								+ Person.class.getName()
+								+ ", "
 								+ Pet.class.getName()
 								// This should NOT include Toy, which is not an indexed entity type
 								+ "]"
@@ -225,7 +229,11 @@ public class SearchMappingIT {
 				.hasMessageContainingAll(
 						"No index manager with name 'invalid'",
 						"Check that at least one entity is configured to target that index",
-						"The following indexes can be retrieved by name: [" + Person.INDEX_NAME + ", " + Pet.ENTITY_NAME + "]"
+						"The following indexes can be retrieved by name: ["
+								+ Person.INDEX_NAME
+								+ ", "
+								+ Pet.ENTITY_NAME
+								+ "]"
 				);
 	}
 
@@ -284,6 +292,7 @@ public class SearchMappingIT {
 		public Integer getId() {
 			return id;
 		}
+
 		public String getName() {
 			return name;
 		}
@@ -318,9 +327,11 @@ public class SearchMappingIT {
 		public Integer getId() {
 			return id;
 		}
+
 		public String getName() {
 			return name;
 		}
+
 		public Pet getOwner() {
 			return owner;
 		}

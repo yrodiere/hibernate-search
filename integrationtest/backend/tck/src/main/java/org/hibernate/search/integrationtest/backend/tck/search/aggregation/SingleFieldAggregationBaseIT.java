@@ -68,7 +68,8 @@ public class SingleFieldAggregationBaseIT<F> {
 		for ( AggregationDescriptor aggregationDescriptor : AggregationDescriptor.getAll() ) {
 			for ( FieldTypeDescriptor<?> fieldTypeDescriptor : FieldTypeDescriptor.getAll() ) {
 				Optional<? extends SupportedSingleFieldAggregationExpectations<?>> expectations =
-						aggregationDescriptor.getSingleFieldAggregationExpectations( fieldTypeDescriptor ).getSupported();
+						aggregationDescriptor.getSingleFieldAggregationExpectations( fieldTypeDescriptor )
+								.getSupported();
 				if ( expectations.isPresent() ) {
 					for ( TestedFieldStructure fieldStructure : TestedFieldStructure.all() ) {
 						supportedFieldTypes.add( fieldTypeDescriptor );
@@ -155,7 +156,8 @@ public class SingleFieldAggregationBaseIT<F> {
 		String fieldPath = getFieldPath( mainIndex.binding() );
 		AggregationKey<A> aggregationKey = AggregationKey.of( AGGREGATION_NAME );
 
-		SearchAggregation<A> aggregation = scenario.setup( scope.aggregation(), fieldPath, getFilterOrNull( mainIndex.binding() ) )
+		SearchAggregation<A> aggregation = scenario.setup( scope.aggregation(), fieldPath, getFilterOrNull( mainIndex
+				.binding() ) )
 				.toAggregation();
 
 		assertThatQuery(
@@ -250,7 +252,9 @@ public class SingleFieldAggregationBaseIT<F> {
 
 	private <A> void testValidAggregation(AggregationScenario<A> scenario, StubMappingScope scope,
 			Function<SearchPredicateFactory, ? extends PredicateFinalStep> predicateContributor,
-			BiFunction<SearchAggregationFactory, AggregationScenario<A>, AggregationFinalStep<A>> aggregationContributor) {
+			BiFunction<SearchAggregationFactory,
+					AggregationScenario<A>,
+					AggregationFinalStep<A>> aggregationContributor) {
 		AggregationKey<A> aggregationKey = AggregationKey.of( AGGREGATION_NAME );
 		assertThatQuery(
 				scope.query()
@@ -307,8 +311,11 @@ public class SingleFieldAggregationBaseIT<F> {
 				TestedFieldStructure fieldStructure) {
 			this.expectations = expectations;
 			this.fieldType = expectations.fieldType();
-			this.routingKey = expectations.aggregationName() + "_" + expectations.fieldType().getUniqueName()
-					+ "_" + fieldStructure.getUniqueName();
+			this.routingKey = expectations.aggregationName()
+					+ "_"
+					+ expectations.fieldType().getUniqueName()
+					+ "_"
+					+ fieldStructure.getUniqueName();
 			this.fieldStructure = fieldStructure;
 		}
 
@@ -340,7 +347,7 @@ public class SingleFieldAggregationBaseIT<F> {
 				}
 			}
 			mainIndexer.add(
-					documentProvider( routingKey + "_document_empty", routingKey, document -> { } )
+					documentProvider( routingKey + "_document_empty", routingKey, document -> {} )
 			);
 
 			nullOnlyIndexer.add(

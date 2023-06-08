@@ -26,7 +26,8 @@ class BackendMockSetupStrategy implements BackendSetupStrategy {
 			TestConfigurationProvider configurationProvider,
 			CompletionStage<BackendMappingHandle> mappingHandlePromise) {
 		if ( defaultBackendMock != null ) {
-			setupContext = setupContext.withBackendProperty( "type", defaultBackendMock.factory( mappingHandlePromise ) );
+			setupContext = setupContext.withBackendProperty( "type", defaultBackendMock.factory(
+					mappingHandlePromise ) );
 		}
 		for ( Map.Entry<String, BackendMock> entry : namedBackendMocks.entrySet() ) {
 			BackendMock backendMock = entry.getValue();

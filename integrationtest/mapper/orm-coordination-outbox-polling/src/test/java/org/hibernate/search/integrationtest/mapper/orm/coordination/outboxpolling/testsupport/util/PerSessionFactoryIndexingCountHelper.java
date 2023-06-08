@@ -111,7 +111,8 @@ public class PerSessionFactoryIndexingCountHelper {
 			for ( StaticCountersKeys counterKeys : counterKeys ) {
 				sum += counters.get( counterKeys.forTenantId( tenantId ) );
 			}
-			log.debugf( "Count of indexing operations across all session factories for tenant ID <%s>: %s", tenantId, sum );
+			log.debugf( "Count of indexing operations across all session factories for tenant ID <%s>: %s", tenantId,
+					sum );
 			return assertThat( sum )
 					.as( "Count of indexing operations across all session factories for tenant ID <%s>", tenantId );
 		}
@@ -126,7 +127,8 @@ public class PerSessionFactoryIndexingCountHelper {
 		public List<Integer> forEachSessionFactory() {
 			List<Integer> counts = counterKeys.stream().map( keys -> keys.forTenantId( tenantId ) )
 					.map( counters::get ).collect( Collectors.toList() );
-			log.debugf( "Count of indexing operations for each session factory for tenant ID <%s>: %s", tenantId, counts );
+			log.debugf( "Count of indexing operations for each session factory for tenant ID <%s>: %s", tenantId,
+					counts );
 			return counts;
 		}
 

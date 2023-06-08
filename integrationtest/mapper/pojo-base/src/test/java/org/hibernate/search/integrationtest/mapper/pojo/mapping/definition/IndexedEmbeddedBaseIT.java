@@ -25,9 +25,6 @@ import org.hibernate.search.engine.backend.types.Searchable;
 import org.hibernate.search.integrationtest.mapper.pojo.smoke.AnnotationMappingSmokeIT;
 import org.hibernate.search.integrationtest.mapper.pojo.smoke.ProgrammaticMappingSmokeIT;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.util.StartupStubBridge;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.bridge.IdentifierBridge;
 import org.hibernate.search.mapper.pojo.bridge.binding.IdentifierBindingContext;
 import org.hibernate.search.mapper.pojo.bridge.builtin.spatial.impl.GeoPointBridge;
@@ -35,10 +32,10 @@ import org.hibernate.search.mapper.pojo.bridge.builtin.spatial.impl.LatitudeMark
 import org.hibernate.search.mapper.pojo.bridge.builtin.spatial.impl.LongitudeMarker;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.IdentifierBinderRef;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.IdentifierBridgeRef;
-import org.hibernate.search.mapper.pojo.common.annotation.Param;
 import org.hibernate.search.mapper.pojo.bridge.mapping.programmatic.IdentifierBinder;
 import org.hibernate.search.mapper.pojo.bridge.runtime.IdentifierBridgeFromDocumentIdentifierContext;
 import org.hibernate.search.mapper.pojo.bridge.runtime.IdentifierBridgeToDocumentIdentifierContext;
+import org.hibernate.search.mapper.pojo.common.annotation.Param;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.AssociationInverseSide;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
@@ -48,11 +45,14 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ObjectPath
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyValue;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.TypeMappingStep;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPath;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.common.impl.CollectionHelper;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.document.StubDocumentNode;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 import org.hibernate.search.util.impl.test.rule.StaticCounters;
 
@@ -78,7 +78,8 @@ public class IndexedEmbeddedBaseIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Rule
 	public StaticCounters counters = new StaticCounters();
@@ -101,6 +102,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String level1Value, String level2Value) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -148,6 +150,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(name = "explicitName")
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String value) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -172,7 +175,7 @@ public class IndexedEmbeddedBaseIT {
 				document -> document
 						.objectField( "explicitName", b2 -> b2
 								.field( "level1Property", "level1Value" )
-				)
+						)
 		);
 	}
 
@@ -188,6 +191,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(name = "invalid.withdot")
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String value) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -203,7 +207,8 @@ public class IndexedEmbeddedBaseIT {
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".level1" )
 						.annotationContextAnyParameters( IndexedEmbedded.class )
-						.failure( "Invalid index field name 'invalid.withdot': field names cannot contain a dot ('.')" ) );
+						.failure(
+								"Invalid index field name 'invalid.withdot': field names cannot contain a dot ('.')" ) );
 	}
 
 	@Test
@@ -219,6 +224,7 @@ public class IndexedEmbeddedBaseIT {
 			@SuppressWarnings("deprecation")
 			@IndexedEmbedded(name = "somename", prefix = "someprefix.")
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String value) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -252,14 +258,17 @@ public class IndexedEmbeddedBaseIT {
 			public String getForDefault() {
 				return forDefault;
 			}
+
 			@GenericField
 			public String getFlat() {
 				return flat;
 			}
+
 			@GenericField
 			public String getNest() {
 				return nest;
 			}
+
 			@GenericField
 			public String getCommon() {
 				return common;
@@ -269,12 +278,13 @@ public class IndexedEmbeddedBaseIT {
 		class IndexedEntity {
 			@DocumentId
 			Integer id;
-			@IndexedEmbedded(name = "default", includePaths = {"default", "common"})
-			@IndexedEmbedded(name = "flat", includePaths = {"flat", "common"},
+			@IndexedEmbedded(name = "default", includePaths = { "default", "common" })
+			@IndexedEmbedded(name = "flat", includePaths = { "flat", "common" },
 					structure = ObjectStructure.FLATTENED)
-			@IndexedEmbedded(name = "nest", includePaths = {"nest", "common"},
+			@IndexedEmbedded(name = "nest", includePaths = { "nest", "common" },
 					structure = ObjectStructure.NESTED)
 			Embedded embedded;
+
 			public IndexedEntity(int id, String value) {
 				this.id = id;
 				this.embedded = new Embedded();
@@ -286,21 +296,21 @@ public class IndexedEmbeddedBaseIT {
 		}
 
 		backendMock.expectSchema( INDEX_NAME, b -> {
-				b.objectField( "default", b2 -> {
-					b2.field( "default", String.class );
-					b2.field( "common", String.class );
-				} );
-				b.objectField( "flat", b2 -> {
-					b2.objectStructure( ObjectStructure.FLATTENED );
-					b2.field( "flat", String.class );
-					b2.field( "common", String.class );
-				} );
-				b.objectField( "nest", b2 -> {
-					b2.objectStructure( ObjectStructure.NESTED );
-					b2.field( "nest", String.class );
-					b2.field( "common", String.class );
-				} );
-			}
+			b.objectField( "default", b2 -> {
+				b2.field( "default", String.class );
+				b2.field( "common", String.class );
+			} );
+			b.objectField( "flat", b2 -> {
+				b2.objectStructure( ObjectStructure.FLATTENED );
+				b2.field( "flat", String.class );
+				b2.field( "common", String.class );
+			} );
+			b.objectField( "nest", b2 -> {
+				b2.objectStructure( ObjectStructure.NESTED );
+				b2.field( "nest", String.class );
+				b2.field( "common", String.class );
+			} );
+		}
 		);
 		SearchMapping mapping = setupHelper.start()
 				.withAnnotatedEntityTypes( IndexedEntity.class )
@@ -380,6 +390,7 @@ public class IndexedEmbeddedBaseIT {
 	public void prefix_multiValued() {
 		class IndexedEmbeddedLevel2 {
 			String level2Property;
+
 			@GenericField
 			public String getLevel2Property() {
 				return level2Property;
@@ -390,20 +401,24 @@ public class IndexedEmbeddedBaseIT {
 			IndexedEmbeddedLevel2 level2OneDotInPrefix = new IndexedEmbeddedLevel2();
 			IndexedEmbeddedLevel2 level2TwoDotsInPrefix = new IndexedEmbeddedLevel2();
 			String level1Property;
+
 			@GenericField
 			public String getLevel1Property() {
 				return level1Property;
 			}
+
 			@SuppressWarnings("deprecation")
 			@IndexedEmbedded(prefix = "level2NoDotInPrefix_")
 			public IndexedEmbeddedLevel2 getLevel2NoDotInPrefix() {
 				return level2NoDotInPrefix;
 			}
+
 			@SuppressWarnings("deprecation")
 			@IndexedEmbedded(prefix = "level2OneDotInPrefix.")
 			public IndexedEmbeddedLevel2 getLevel2OneDotInPrefix() {
 				return level2OneDotInPrefix;
 			}
+
 			@SuppressWarnings("deprecation")
 			@IndexedEmbedded(prefix = "level2TwoDotsInPrefix.level3.")
 			public IndexedEmbeddedLevel2 getLevel2TwoDotsInPrefix() {
@@ -501,6 +516,7 @@ public class IndexedEmbeddedBaseIT {
 			@SuppressWarnings("deprecation")
 			@IndexedEmbedded(prefix = "customPrefix_")
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String level1Property) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -535,10 +551,12 @@ public class IndexedEmbeddedBaseIT {
 		class IndexedEmbeddedLevel1 {
 			String ignoredProperty;
 			String includedProperty;
+
 			@GenericField
 			public String getIgnoredProperty() {
 				return ignoredProperty;
 			}
+
 			@GenericField
 			public String getIncludedProperty() {
 				return includedProperty;
@@ -550,6 +568,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includePaths = "includedProperty")
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String ignoredProperty, String includedProperty) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -594,8 +613,9 @@ public class IndexedEmbeddedBaseIT {
 		class IndexedEntity {
 			@DocumentId
 			Integer id;
-			@IndexedEmbedded(includePaths = {"includedProperty", "nonMatchingPath"})
+			@IndexedEmbedded(includePaths = { "includedProperty", "nonMatchingPath" })
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String ignoredProperty, String includedProperty) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -632,6 +652,7 @@ public class IndexedEmbeddedBaseIT {
 	public void includeDepth() {
 		class IndexedEmbeddedLevel2 {
 			String level2Property;
+
 			@GenericField
 			public String getLevel2Property() {
 				return level2Property;
@@ -640,10 +661,12 @@ public class IndexedEmbeddedBaseIT {
 		class IndexedEmbeddedLevel1 {
 			String level1Property;
 			IndexedEmbeddedLevel2 level2;
+
 			@GenericField
 			public String getLevel1Property() {
 				return level1Property;
 			}
+
 			@IndexedEmbedded
 			public IndexedEmbeddedLevel2 getLevel2() {
 				return level2;
@@ -655,6 +678,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeDepth = 1)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String level1Value, String level2Value) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -694,6 +718,7 @@ public class IndexedEmbeddedBaseIT {
 		class IndexedEmbeddedLevel1 {
 			@GenericField
 			String level1Property;
+
 			public String getLevel1Property() {
 				return level1Property;
 			}
@@ -704,6 +729,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(structure = ObjectStructure.NESTED)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String level1Value) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -743,10 +769,12 @@ public class IndexedEmbeddedBaseIT {
 
 		class IndexedEmbeddedLevel1 {
 			String level1Property;
+
 			public Double getLongitude() {
 				StaticCounters.get().increment( getLongitudeKey );
 				return null;
 			}
+
 			public Double getLatitude() {
 				StaticCounters.get().increment( getLatitudeKey );
 				return null;
@@ -755,6 +783,7 @@ public class IndexedEmbeddedBaseIT {
 		class IndexedEntity {
 			Integer id;
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String level1Property) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -777,8 +806,9 @@ public class IndexedEmbeddedBaseIT {
 					indexedEntityMapping.property( "id" ).documentId();
 					indexedEntityMapping.property( "level1" )
 							.indexedEmbedded()
-									.includePaths( "level1IncludedField" );
-					TypeMappingStep indexedEmbeddedLevel1Mapping = b.programmaticMapping().type( IndexedEmbeddedLevel1.class );
+							.includePaths( "level1IncludedField" );
+					TypeMappingStep indexedEmbeddedLevel1Mapping = b.programmaticMapping().type(
+							IndexedEmbeddedLevel1.class );
 					indexedEmbeddedLevel1Mapping.binder( StartupStubBridge.binder( filteredOutBridgeCounterKeys ) );
 					indexedEmbeddedLevel1Mapping.binder( new GeoPointBridge.Binder().fieldName( "location" ) );
 					indexedEmbeddedLevel1Mapping.property( "latitude" ).marker( new LatitudeMarker.Binder() );
@@ -787,7 +817,7 @@ public class IndexedEmbeddedBaseIT {
 							.binder( StartupStubBridge.binder( filteredOutBridgeCounterKeys ) )
 							.genericField( "level1IncludedField" )
 							.genericField( "filteredOut" )
-									.valueBinder( StartupStubBridge.binder( String.class, filteredOutBridgeCounterKeys ) );
+							.valueBinder( StartupStubBridge.binder( String.class, filteredOutBridgeCounterKeys ) );
 				} )
 				.setup();
 		backendMock.verifyExpectationsMet();
@@ -823,15 +853,18 @@ public class IndexedEmbeddedBaseIT {
 	public void targetType() {
 		abstract class IndexedEmbeddedLevel1 {
 			public abstract String getLevel1Property();
+
 			public abstract void setLevel1Property(String level1Property);
 		}
 		class IndexedEmbeddedLevel1Impl extends IndexedEmbeddedLevel1 {
 			String level1Property;
+
 			@Override
 			@GenericField
 			public String getLevel1Property() {
 				return level1Property;
 			}
+
 			@Override
 			public void setLevel1Property(String level1Property) {
 				this.level1Property = level1Property;
@@ -843,6 +876,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeDepth = 1, targetType = IndexedEmbeddedLevel1Impl.class)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String level1Value) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1Impl();
@@ -875,15 +909,18 @@ public class IndexedEmbeddedBaseIT {
 	public void targetType_castException() {
 		abstract class IndexedEmbeddedLevel1 {
 			public abstract String getLevel1Property();
+
 			public abstract void setLevel1Property(String level1Property);
 		}
 		class IndexedEmbeddedLevel1Impl extends IndexedEmbeddedLevel1 {
 			String level1Property;
+
 			@Override
 			@GenericField
 			public String getLevel1Property() {
 				return level1Property;
 			}
+
 			@Override
 			public void setLevel1Property(String level1Property) {
 				this.level1Property = level1Property;
@@ -891,11 +928,13 @@ public class IndexedEmbeddedBaseIT {
 		}
 		class InvalidTypeImpl extends IndexedEmbeddedLevel1 {
 			String level1Property;
+
 			@Override
 			@GenericField
 			public String getLevel1Property() {
 				return level1Property;
 			}
+
 			@Override
 			public void setLevel1Property(String level1Property) {
 				this.level1Property = level1Property;
@@ -907,6 +946,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeDepth = 1, targetType = IndexedEmbeddedLevel1Impl.class)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String level1Value) {
 				this.id = id;
 				// The actual instance has a type that cannot be cast to IndexedEmbeddedLevel1Impl
@@ -943,15 +983,18 @@ public class IndexedEmbeddedBaseIT {
 	public void targetType_preserveGenericTypeContext() {
 		abstract class IndexedEmbeddedLevel1<T> {
 			public abstract T getLevel1Property();
+
 			public abstract void setLevel1Property(T level1Property);
 		}
 		class IndexedEmbeddedLevel1Impl<T> extends IndexedEmbeddedLevel1<T> {
 			T level1Property;
+
 			@Override
 			@GenericField
 			public T getLevel1Property() {
 				return level1Property;
 			}
+
 			@Override
 			public void setLevel1Property(T level1Property) {
 				this.level1Property = level1Property;
@@ -963,6 +1006,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeDepth = 1, targetType = IndexedEmbeddedLevel1Impl.class)
 			IndexedEmbeddedLevel1<String> level1;
+
 			public IndexedEntity(int id, String level1Value) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1Impl<>();
@@ -1005,6 +1049,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeEmbeddedObjectId = true)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String level1Id) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -1044,6 +1089,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeEmbeddedObjectId = true)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String level1Id) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -1086,6 +1132,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeEmbeddedObjectId = true)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, String level1Id) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -1123,6 +1170,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeEmbeddedObjectId = true)
 			List<IndexedEmbeddedLevel1> level1;
+
 			public IndexedEntity(int id, String level1Id1, String level1Id2) {
 				this.id = id;
 				this.level1 = Arrays.asList( new IndexedEmbeddedLevel1(), new IndexedEmbeddedLevel1() );
@@ -1169,6 +1217,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeEmbeddedObjectId = true)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, Long level1Id) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -1212,6 +1261,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeEmbeddedObjectId = true)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, Long level1Id) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -1256,6 +1306,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeEmbeddedObjectId = true)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, Long level1Id) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -1325,6 +1376,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeEmbeddedObjectId = true)
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, Long level1Id) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -1363,6 +1415,7 @@ public class IndexedEmbeddedBaseIT {
 		class IndexedEntity {
 			Integer id;
 			IndexedEmbeddedLevel1 level1;
+
 			public IndexedEntity(int id, Long level1Id) {
 				this.id = id;
 				this.level1 = new IndexedEmbeddedLevel1();
@@ -1467,6 +1520,7 @@ public class IndexedEmbeddedBaseIT {
 			Integer id;
 			@IndexedEmbedded(includeEmbeddedObjectId = true, targetType = IndexedEmbeddedLevel1.class)
 			Object level1;
+
 			public IndexedEntity(int id, String level1Id) {
 				this.id = id;
 				IndexedEmbeddedLevel1 level1 = new IndexedEmbeddedLevel1();
@@ -1514,7 +1568,9 @@ public class IndexedEmbeddedBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".invalid" )
-						.failure( "Unable to index-embed type '" + String.class.getName() + "': no index mapping"
+						.failure( "Unable to index-embed type '"
+								+ String.class.getName()
+								+ "': no index mapping"
 								+ " (@GenericField, @FullTextField, custom bridges, ...) is defined for that type." ) );
 	}
 
@@ -1530,8 +1586,7 @@ public class IndexedEmbeddedBaseIT {
 			}
 		}
 
-		class EmptyNested {
-		}
+		class EmptyNested {}
 
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
@@ -1550,7 +1605,9 @@ public class IndexedEmbeddedBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".invalid" )
-						.failure( "Unable to index-embed type '" + EmptyNested.class.getName() + "': no index mapping"
+						.failure( "Unable to index-embed type '"
+								+ EmptyNested.class.getName()
+								+ "': no index mapping"
 								+ " (@GenericField, @FullTextField, custom bridges, ...) is defined for that type." ) );
 	}
 
@@ -1564,6 +1621,7 @@ public class IndexedEmbeddedBaseIT {
 				@IndexedEmbedded
 				EntityB b;
 			}
+
 			class EntityB {
 				Integer id;
 				@IndexedEmbedded
@@ -1578,7 +1636,9 @@ public class IndexedEmbeddedBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( Model.EntityA.class.getName() )
 						.pathContext( ".b<no value extractors>.a<no value extractors>.b" )
-						.failure( "Cyclic @IndexedEmbedded recursion starting from type '" + Model.EntityA.class.getName() + "'",
+						.failure( "Cyclic @IndexedEmbedded recursion starting from type '"
+								+ Model.EntityA.class.getName()
+								+ "'",
 								"Path starting from that type and ending with a cycle: 'b.a.b.'",
 								"A type cannot declare an unrestricted @IndexedEmbedded to itself, even indirectly",
 								"To break the cycle, you should consider adding filters to your @IndexedEmbedded: includePaths, includeDepth, ..." )
@@ -1595,11 +1655,13 @@ public class IndexedEmbeddedBaseIT {
 				@IndexedEmbedded
 				EntityB b;
 			}
+
 			class EntityB {
 				Integer id;
 				@IndexedEmbedded
 				EntityC c;
 			}
+
 			class EntityC {
 				Integer id;
 				@IndexedEmbedded
@@ -1614,7 +1676,9 @@ public class IndexedEmbeddedBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( Model.EntityA.class.getName() )
 						.pathContext( ".b<no value extractors>.c<no value extractors>.b<no value extractors>.c" )
-						.failure( "Cyclic @IndexedEmbedded recursion starting from type '" + Model.EntityB.class.getName() + "'",
+						.failure( "Cyclic @IndexedEmbedded recursion starting from type '"
+								+ Model.EntityB.class.getName()
+								+ "'",
 								"Path starting from that type and ending with a cycle: 'c.b.c.'",
 								"A type cannot declare an unrestricted @IndexedEmbedded to itself, even indirectly",
 								"To break the cycle, you should consider adding filters to your @IndexedEmbedded: includePaths, includeDepth, ..." )

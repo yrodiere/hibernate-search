@@ -8,6 +8,7 @@ package org.hibernate.search.test.embedded;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -43,7 +44,7 @@ public class Address {
 	private Person ownedBy;
 
 	@ElementCollection
-	@IndexedEmbedded( prefix = "inhabitants." )
+	@IndexedEmbedded(prefix = "inhabitants.")
 	private Set<Resident> residents = new HashSet<Resident>();
 
 	@OneToMany(mappedBy = "address")

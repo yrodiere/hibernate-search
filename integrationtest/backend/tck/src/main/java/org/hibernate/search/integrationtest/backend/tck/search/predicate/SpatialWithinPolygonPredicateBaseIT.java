@@ -57,7 +57,8 @@ public class SpatialWithinPolygonPredicateBaseIT {
 						SearchableIT.searchableYesIndex, SearchableIT.searchableNoIndex,
 						ArgumentCheckingIT.index,
 						TypeCheckingNoConversionIT.index, TypeCheckingNoConversionIT.compatibleIndex,
-						TypeCheckingNoConversionIT.rawFieldCompatibleIndex, TypeCheckingNoConversionIT.missingFieldIndex,
+						TypeCheckingNoConversionIT.rawFieldCompatibleIndex,
+						TypeCheckingNoConversionIT.missingFieldIndex,
 						TypeCheckingNoConversionIT.incompatibleIndex
 				)
 				.setup();
@@ -78,7 +79,8 @@ public class SpatialWithinPolygonPredicateBaseIT {
 
 		final BulkIndexer typeCheckingMainIndexer = TypeCheckingNoConversionIT.index.bulkIndexer();
 		final BulkIndexer typeCheckingCompatibleIndexer = TypeCheckingNoConversionIT.compatibleIndex.bulkIndexer();
-		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex.bulkIndexer();
+		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex
+				.bulkIndexer();
 		final BulkIndexer typeCheckingMissingFieldIndexer = TypeCheckingNoConversionIT.missingFieldIndex.bulkIndexer();
 		TypeCheckingNoConversionIT.dataSet.contribute( TypeCheckingNoConversionIT.index, typeCheckingMainIndexer,
 				TypeCheckingNoConversionIT.compatibleIndex, typeCheckingCompatibleIndexer,
@@ -109,7 +111,8 @@ public class SpatialWithinPolygonPredicateBaseIT {
 
 	@Nested
 	public static class SingleFieldIT extends AbstractPredicateSingleFieldIT<SpatialWithinPolygonPredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinPolygonPredicateTestValues> dataSet = new DataSet<>( testValues() );
+		private static final DataSet<GeoPoint, SpatialWithinPolygonPredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
@@ -128,7 +131,8 @@ public class SpatialWithinPolygonPredicateBaseIT {
 
 	@Nested
 	public static class MultiFieldIT extends AbstractPredicateMultiFieldIT<SpatialWithinPolygonPredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinPolygonPredicateTestValues> dataSet = new DataSet<>( testValues() );
+		private static final DataSet<GeoPoint, SpatialWithinPolygonPredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
@@ -146,8 +150,10 @@ public class SpatialWithinPolygonPredicateBaseIT {
 		}
 
 		@Override
-		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths, int matchingDocOrdinal) {
-			return f.spatial().within().fields( fieldPaths ).polygon( dataSet.values.matchingArg( matchingDocOrdinal ) );
+		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths,
+				int matchingDocOrdinal) {
+			return f.spatial().within().fields( fieldPaths ).polygon( dataSet.values.matchingArg(
+					matchingDocOrdinal ) );
 		}
 
 		@Override
@@ -184,7 +190,8 @@ public class SpatialWithinPolygonPredicateBaseIT {
 
 	@Nested
 	public static class ScoreIT extends AbstractPredicateFieldScoreIT<SpatialWithinPolygonPredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinPolygonPredicateTestValues> dataSet = new DataSet<>( testValues() );
+		private static final DataSet<GeoPoint, SpatialWithinPolygonPredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
@@ -224,7 +231,8 @@ public class SpatialWithinPolygonPredicateBaseIT {
 		@Override
 		protected PredicateFinalStep predicateWithFieldLevelBoost(SearchPredicateFactory f, String fieldPath,
 				float fieldBoost, int matchingDocOrdinal) {
-			return f.spatial().within().field( fieldPath ).boost( fieldBoost ).polygon( dataSet.values.matchingArg( matchingDocOrdinal ) );
+			return f.spatial().within().field( fieldPath ).boost( fieldBoost ).polygon( dataSet.values.matchingArg(
+					matchingDocOrdinal ) );
 		}
 
 		@Override
@@ -347,7 +355,8 @@ public class SpatialWithinPolygonPredicateBaseIT {
 	@Nested
 	public static class TypeCheckingNoConversionIT
 			extends AbstractPredicateTypeCheckingNoConversionIT<SpatialWithinPolygonPredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinPolygonPredicateTestValues> dataSet = new DataSet<>( testValues() );
+		private static final DataSet<GeoPoint, SpatialWithinPolygonPredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )

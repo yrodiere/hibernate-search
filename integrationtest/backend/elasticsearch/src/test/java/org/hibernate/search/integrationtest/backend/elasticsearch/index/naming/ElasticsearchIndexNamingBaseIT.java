@@ -106,10 +106,13 @@ public class ElasticsearchIndexNamingBaseIT {
 				.satisfies(
 						FailureReportUtils.hasFailureReport()
 								.failure(
-										"Conflicting index names: Hibernate Search indexes '" + index1.name()
-												+ "' and '" + index2.name()
+										"Conflicting index names: Hibernate Search indexes '"
+												+ index1.name()
+												+ "' and '"
+												+ index2.name()
 												+ "' both target the Elasticsearch index name or alias '"
-												+ conflictingName + "'"
+												+ conflictingName
+												+ "'"
 								)
 				);
 	}

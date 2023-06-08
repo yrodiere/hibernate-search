@@ -44,19 +44,23 @@ public interface Log extends BaseHibernateSearchLogger {
 	@Message(id = 201, value = "The edit distance must be either 1 or 2")
 	SearchException incorrectEditDistance();
 
-	@Message(id = 227, value = "A BooleanQuery is not valid without at least one clause. Use at least one of should(Query) or must(Query)." )
+	@Message(id = 227,
+			value = "A BooleanQuery is not valid without at least one clause. Use at least one of should(Query) or must(Query).")
 	SearchException booleanQueryWithoutClauses();
 
-	@Message(id = 237, value = "Cannot create numeric range query for field '%s', since from and to values are null" )
+	@Message(id = 237, value = "Cannot create numeric range query for field '%s', since from and to values are null")
 	SearchException rangeQueryWithNullToAndFromValue(String fieldName);
 
-	@Message(id = 238, value = "Cannot create numeric range query for field '%s', since values are not numeric (Date, int, long, short or double)")
+	@Message(id = 238,
+			value = "Cannot create numeric range query for field '%s', since values are not numeric (Date, int, long, short or double)")
 	SearchException numericRangeQueryWithNonNumericToAndFromValues(String fieldName);
 
-	@Message(id = 269, value = "'%1$s' is not a supported type for a range faceting request parameter. Supported types are: '%2$s'")
+	@Message(id = 269,
+			value = "'%1$s' is not a supported type for a range faceting request parameter. Supported types are: '%2$s'")
 	SearchException unsupportedParameterTypeForRangeFaceting(String facetRangeParameterType, String supportedTypes);
 
-	@Message(id = 270, value = "At least of of the facets ranges in facet request '%1$s' contains neither start nor end value")
+	@Message(id = 270,
+			value = "At least of of the facets ranges in facet request '%1$s' contains neither start nor end value")
 	SearchException noStartOrEndSpecifiedForRangeQuery(String facetRequestName);
 
 	@Message(id = 271, value = "RANGE_DEFINITION_ORDER is not a valid sort order for a discrete faceting request.")
@@ -66,10 +70,11 @@ public interface Log extends BaseHibernateSearchLogger {
 	SearchException unexpectedProjectionConstant(String constantName);
 
 	@LogMessage(level = Logger.Level.DEBUG)
-	@Message(id = 336, value = "A file could not be deleted: likely lock contention. Not a problem for index replications as it will be attempted again in the future.")
+	@Message(id = 336,
+			value = "A file could not be deleted: likely lock contention. Not a problem for index replications as it will be attempted again in the future.")
 	void fileDeleteFailureIgnored(@Cause IOException e);
 
-	@Message(id = 342, value = "Field '%1$s' refers to both an analyzer and a normalizer." )
+	@Message(id = 342, value = "Field '%1$s' refers to both an analyzer and a normalizer.")
 	SearchException cannotReferenceAnalyzerAndNormalizer(String relativeFieldPath);
 
 	@Message(id = 352, value = "Multiple conflicting minimumShouldMatch constraints")
@@ -99,16 +104,20 @@ public interface Log extends BaseHibernateSearchLogger {
 			+ " Trying to define the analyzer: '%1$s' together with indexNullAs: '%2$s'.")
 	SearchException cannotUseIndexNullAsAndAnalyzer(String analyzerName, String indexNullAs);
 
-	@Message(id = 406, value = "For simple query string queries, if one field has its analyzer overridden," +
-			" all fields must have the same analyzers." +
-			" You probably forgot to override the analyzer for some fields," +
+	@Message(id = 406, value = "For simple query string queries, if one field has its analyzer overridden,"
+			+
+			" all fields must have the same analyzers."
+			+
+			" You probably forgot to override the analyzer for some fields,"
+			+
 			" because multiple analyzers were found: %1$s.")
 	SearchException unableToOverrideQueryAnalyzerWithMoreThanOneAnalyzerForSimpleQueryStringQueries(
 			Collection<String> analyzers);
 
-	@Message(id = 407, value = "Cannot apply an analyzer on a faceted field. Use a normalizer instead. Analyzer: '%1$s'."
-			+ " If an actual analyzer (with tokenization) is necessary, define two separate fields:"
-			+ " one with an analyzer and no corresponding @Facet,"
-			+ " and one with a normalizer and corresponding @Facet(forField = ...).")
+	@Message(id = 407,
+			value = "Cannot apply an analyzer on a faceted field. Use a normalizer instead. Analyzer: '%1$s'."
+					+ " If an actual analyzer (with tokenization) is necessary, define two separate fields:"
+					+ " one with an analyzer and no corresponding @Facet,"
+					+ " and one with a normalizer and corresponding @Facet(forField = ...).")
 	SearchException cannotUseAnalyzerOnFacetField(String analyzerName);
 }

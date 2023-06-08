@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.integrationtest.mapper.orm.realbackend.limitations;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.mapper.orm.coordination.outboxpolling.event.impl.OutboxPollingOutboxEventAdditionalJaxbMappingProducer.ENTITY_NAME;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
@@ -16,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -66,10 +66,10 @@ public class ConcurrentEmbeddedUpdateLimitationIT {
 						IndexingPlanSynchronizationStrategyNames.SYNC )
 				.skipTestForDialect( SQLServerDialect.class,
 						"The execution could provoke a failure caused by a deadlock on SQLServer, "
-						+ "which will abort our requests and will make the tests fail." )
+								+ "which will abort our requests and will make the tests fail." )
 				.skipTestForDialect( CockroachDB192Dialect.class,
 						"The execution could provoke a 'failed preemptive refresh due to a conflict' on CockroachDB,"
-						+ " which will abort our requests and will make the tests fail." )
+								+ " which will abort our requests and will make the tests fail." )
 				.setup( Book.class, Author.class, BookEdition.class );
 
 		reproducer();
@@ -194,7 +194,8 @@ public class ConcurrentEmbeddedUpdateLimitationIT {
 
 	private static boolean noMoreOutboxEvents(SessionFactory sessionFactory) {
 		try ( Session session = sessionFactory.openSession() ) {
-			return session.createQuery( "select e from " + ENTITY_NAME
+			return session.createQuery( "select e from "
+					+ ENTITY_NAME
 					+ " e order by id", OutboxEvent.class ).list().isEmpty();
 		}
 	}

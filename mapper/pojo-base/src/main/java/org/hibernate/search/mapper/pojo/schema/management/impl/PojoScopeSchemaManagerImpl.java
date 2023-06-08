@@ -16,10 +16,10 @@ import org.hibernate.search.engine.backend.schema.management.spi.IndexSchemaColl
 import org.hibernate.search.engine.backend.schema.management.spi.IndexSchemaManager;
 import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
 import org.hibernate.search.engine.common.schema.management.SchemaExport;
-import org.hibernate.search.mapper.pojo.schema.management.SearchSchemaCollector;
 import org.hibernate.search.engine.reporting.spi.ContextualFailureCollector;
 import org.hibernate.search.engine.reporting.spi.FailureCollector;
 import org.hibernate.search.mapper.pojo.reporting.spi.PojoEventContexts;
+import org.hibernate.search.mapper.pojo.schema.management.SearchSchemaCollector;
 import org.hibernate.search.mapper.pojo.schema.management.spi.PojoScopeSchemaManager;
 import org.hibernate.search.util.common.function.TriFunction;
 import org.hibernate.search.util.common.impl.Futures;
@@ -34,22 +34,28 @@ public class PojoScopeSchemaManagerImpl implements PojoScopeSchemaManager {
 	}
 
 	@Override
-	public CompletableFuture<?> createIfMissing(FailureCollector failureCollector, OperationSubmitter operationSubmitter) {
-		return doOperationOnTypesBiFunction( IndexSchemaManager::createIfMissing, failureCollector, operationSubmitter );
+	public CompletableFuture<?> createIfMissing(FailureCollector failureCollector,
+			OperationSubmitter operationSubmitter) {
+		return doOperationOnTypesBiFunction( IndexSchemaManager::createIfMissing, failureCollector,
+				operationSubmitter );
 	}
 
 	@Override
-	public CompletableFuture<?> createOrValidate(FailureCollector failureCollector, OperationSubmitter operationSubmitter) {
-		return doOperationOnTypesTriFunction( IndexSchemaManager::createOrValidate, failureCollector, operationSubmitter );
+	public CompletableFuture<?> createOrValidate(FailureCollector failureCollector,
+			OperationSubmitter operationSubmitter) {
+		return doOperationOnTypesTriFunction( IndexSchemaManager::createOrValidate, failureCollector,
+				operationSubmitter );
 	}
 
 	@Override
-	public CompletableFuture<?> createOrUpdate(FailureCollector failureCollector, OperationSubmitter operationSubmitter) {
+	public CompletableFuture<?> createOrUpdate(FailureCollector failureCollector,
+			OperationSubmitter operationSubmitter) {
 		return doOperationOnTypesBiFunction( IndexSchemaManager::createOrUpdate, failureCollector, operationSubmitter );
 	}
 
 	@Override
-	public CompletableFuture<?> dropAndCreate(FailureCollector failureCollector, OperationSubmitter operationSubmitter) {
+	public CompletableFuture<?> dropAndCreate(FailureCollector failureCollector,
+			OperationSubmitter operationSubmitter) {
 		return doOperationOnTypesBiFunction(
 				IndexSchemaManager::dropAndCreate,
 				failureCollector,
@@ -58,7 +64,8 @@ public class PojoScopeSchemaManagerImpl implements PojoScopeSchemaManager {
 	}
 
 	@Override
-	public CompletableFuture<?> dropIfExisting(FailureCollector failureCollector, OperationSubmitter operationSubmitter) {
+	public CompletableFuture<?> dropIfExisting(FailureCollector failureCollector,
+			OperationSubmitter operationSubmitter) {
 		return doOperationOnTypesBiFunction( IndexSchemaManager::dropIfExisting, failureCollector, operationSubmitter );
 	}
 
@@ -93,7 +100,10 @@ public class PojoScopeSchemaManagerImpl implements PojoScopeSchemaManager {
 	}
 
 	private CompletableFuture<?> doOperationOnTypesTriFunction(
-			TriFunction<IndexSchemaManager, ContextualFailureCollector, OperationSubmitter, CompletableFuture<?>> operation,
+			TriFunction<IndexSchemaManager,
+					ContextualFailureCollector,
+					OperationSubmitter,
+					CompletableFuture<?>> operation,
 			FailureCollector failureCollector,
 			OperationSubmitter operationSubmitter) {
 		CompletableFuture<?>[] futures = new CompletableFuture<?>[targetedTypeContexts.size()];

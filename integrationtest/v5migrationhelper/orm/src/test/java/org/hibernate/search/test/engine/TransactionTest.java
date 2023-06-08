@@ -17,6 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 import org.hibernate.search.test.Document;
 import org.hibernate.search.test.SearchTestBase;
+
 import org.junit.Test;
 
 /**
@@ -84,7 +85,7 @@ public class TransactionTest extends SearchTestBase {
 	}
 
 	@Override
-	public void configure(Map<String,Object> cfg) {
+	public void configure(Map<String, Object> cfg) {
 		cfg.put( "hibernate.allow_update_outside_transaction", "true" );
 	}
 

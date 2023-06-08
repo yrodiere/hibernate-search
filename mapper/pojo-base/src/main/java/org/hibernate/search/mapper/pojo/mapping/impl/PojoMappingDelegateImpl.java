@@ -41,7 +41,6 @@ import org.hibernate.search.mapper.pojo.work.spi.PojoIndexingQueueEventProcessin
 import org.hibernate.search.mapper.pojo.work.spi.PojoIndexingQueueEventSendingPlan;
 import org.hibernate.search.mapper.pojo.work.spi.PojoWorkSessionContext;
 
-
 public class PojoMappingDelegateImpl implements PojoMappingDelegate {
 
 	private final ThreadPoolProvider threadPoolProvider;
@@ -132,7 +131,8 @@ public class PojoMappingDelegateImpl implements PojoMappingDelegate {
 	}
 
 	@Override
-	public PojoIndexingPlan createIndexingPlan(PojoWorkSessionContext context, PojoIndexingQueueEventSendingPlan sendingPlan) {
+	public PojoIndexingPlan createIndexingPlan(PojoWorkSessionContext context,
+			PojoIndexingQueueEventSendingPlan sendingPlan) {
 		return new PojoIndexingPlanImpl( typeManagers, context,
 				new PojoIndexingPlanEventSendingStrategy( sendingPlan ) );
 	}

@@ -8,6 +8,7 @@
 package org.hibernate.search.test.embedded.nested.containedIn;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ public class Entity1ForUnindexed implements Serializable {
 	@Version
 	private int optlock;
 
-	@javax.persistence.OneToMany(mappedBy = "entity1", cascade = { })
+	@javax.persistence.OneToMany(mappedBy = "entity1", cascade = {})
 	@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 	private java.util.List<Entity2ForUnindexed> entities2 = new java.util.ArrayList<Entity2ForUnindexed>();
 

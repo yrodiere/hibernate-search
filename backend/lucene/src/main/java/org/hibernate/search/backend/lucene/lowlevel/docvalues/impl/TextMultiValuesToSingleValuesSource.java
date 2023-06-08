@@ -37,7 +37,8 @@ public abstract class TextMultiValuesToSingleValuesSource {
 	 * @param nested the nested provider
 	 * @return DoubleMultiValuesSource
 	 */
-	public static TextMultiValuesToSingleValuesSource fromField(String field, MultiValueMode mode, NestedDocsProvider nested) {
+	public static TextMultiValuesToSingleValuesSource fromField(String field, MultiValueMode mode,
+			NestedDocsProvider nested) {
 		return new FieldMultiValuesToSingleValuesSource( field, mode, nested );
 	}
 
@@ -154,7 +155,8 @@ public abstract class TextMultiValuesToSingleValuesSource {
 
 		private final String field;
 
-		public FieldMultiValuesToSingleValuesSource(String field, MultiValueMode mode, NestedDocsProvider nestedDocsProvider) {
+		public FieldMultiValuesToSingleValuesSource(String field, MultiValueMode mode,
+				NestedDocsProvider nestedDocsProvider) {
 			super( mode, nestedDocsProvider );
 			this.field = field;
 		}
@@ -198,7 +200,9 @@ public abstract class TextMultiValuesToSingleValuesSource {
 				// It would require defining our own FieldComparator mimicking TermOrdValComparator, which is pretty complex...
 				// Note that single-valued text docvalues are limited to that many different terms anyway,
 				// so this is no worse than the "legacy" sorts on single-valued text fields.
-				throw new IllegalStateException( "Cannot sort when more than " + Integer.MAX_VALUE + " terms are indexed" );
+				throw new IllegalStateException( "Cannot sort when more than "
+						+ Integer.MAX_VALUE
+						+ " terms are indexed" );
 			}
 		}
 

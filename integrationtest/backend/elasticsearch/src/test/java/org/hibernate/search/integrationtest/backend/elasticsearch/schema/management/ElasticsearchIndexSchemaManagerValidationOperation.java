@@ -27,13 +27,15 @@ enum ElasticsearchIndexSchemaManagerValidationOperation {
 
 	CREATE_OR_VALIDATE {
 		@Override
-		protected CompletableFuture<?> apply(IndexSchemaManager schemaManager, ContextualFailureCollector failureCollector) {
+		protected CompletableFuture<?> apply(IndexSchemaManager schemaManager,
+				ContextualFailureCollector failureCollector) {
 			return schemaManager.createOrValidate( failureCollector, OperationSubmitter.blocking() );
 		}
 	},
 	VALIDATE {
 		@Override
-		protected CompletableFuture<?> apply(IndexSchemaManager schemaManager, ContextualFailureCollector failureCollector) {
+		protected CompletableFuture<?> apply(IndexSchemaManager schemaManager,
+				ContextualFailureCollector failureCollector) {
 			return schemaManager.validate( failureCollector, OperationSubmitter.blocking() );
 		}
 	};
@@ -52,7 +54,8 @@ enum ElasticsearchIndexSchemaManagerValidationOperation {
 				} ) );
 	}
 
-	protected abstract CompletableFuture<?> apply(IndexSchemaManager schemaManager, ContextualFailureCollector failureCollector);
+	protected abstract CompletableFuture<?> apply(IndexSchemaManager schemaManager,
+			ContextualFailureCollector failureCollector);
 
 	public static EnumSet<ElasticsearchIndexSchemaManagerValidationOperation> all() {
 		return EnumSet.allOf( ElasticsearchIndexSchemaManagerValidationOperation.class );

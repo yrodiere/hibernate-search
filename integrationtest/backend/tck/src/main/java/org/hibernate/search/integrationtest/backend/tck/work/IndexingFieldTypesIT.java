@@ -16,8 +16,8 @@ import java.util.Objects;
 
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
 import org.hibernate.search.engine.backend.types.Projectable;
-import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
+import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.types.FieldTypeDescriptor;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.SimpleFieldModel;
@@ -208,9 +208,15 @@ public class IndexingFieldTypesIT<F> {
 
 		@Override
 		public String toString() {
-			return "IdAndValue{" +
-					"documentId='" + documentId + '\'' +
-					", fieldValue=" + fieldValue +
+			return "IdAndValue{"
+					+
+					"documentId='"
+					+ documentId
+					+ '\''
+					+
+					", fieldValue="
+					+ fieldValue
+					+
 					'}';
 		}
 
@@ -223,7 +229,8 @@ public class IndexingFieldTypesIT<F> {
 				return false;
 			}
 			IdAndValue<?> that = (IdAndValue<?>) o;
-			return Objects.equals( documentId, that.documentId ) &&
+			return Objects.equals( documentId, that.documentId )
+					&&
 					Objects.equals( fieldValue, that.fieldValue );
 		}
 

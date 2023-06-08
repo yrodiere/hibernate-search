@@ -22,7 +22,8 @@ import org.hibernate.search.mapper.pojo.massindexing.MassIndexingFailureContext;
  * @deprecated move to {@link org.hibernate.search.mapper.pojo.massindexing.MassIndexingFailureHandler}.
  */
 @Deprecated
-public interface MassIndexingFailureHandler extends org.hibernate.search.mapper.pojo.massindexing.MassIndexingFailureHandler {
+public interface MassIndexingFailureHandler
+		extends org.hibernate.search.mapper.pojo.massindexing.MassIndexingFailureHandler {
 
 	/**
 	 * Handle a generic failure.

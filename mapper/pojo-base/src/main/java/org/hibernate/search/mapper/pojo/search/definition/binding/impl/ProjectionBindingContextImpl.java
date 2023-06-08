@@ -97,9 +97,11 @@ public class ProjectionBindingContextImpl<P> implements ProjectionBindingContext
 		}
 		else {
 			if ( boundParameterElementExtractorNames.size() > 1
-					|| ! ( BuiltinContainerExtractors.COLLECTION.equals( boundParameterElementExtractorNames.get( 0 ) )
-					|| BuiltinContainerExtractors.ITERABLE.equals( boundParameterElementExtractorNames.get( 0 ) ) )
-					|| !mappingHelper.introspector().typeModel( List.class ).isSubTypeOf( parameterTypeModel.rawType() ) ) {
+					|| !( BuiltinContainerExtractors.COLLECTION.equals( boundParameterElementExtractorNames.get( 0 ) )
+							|| BuiltinContainerExtractors.ITERABLE.equals( boundParameterElementExtractorNames.get(
+									0 ) ) )
+					|| !mappingHelper.introspector().typeModel( List.class ).isSubTypeOf( parameterTypeModel
+							.rawType() ) ) {
 				throw log.invalidMultiValuedParameterTypeForProjectionConstructor( parameterTypeModel );
 			}
 			return Optional.of( new MultiContextImpl<>( boundParameterElementPath.getExtractedType() ) );
@@ -177,7 +179,8 @@ public class ProjectionBindingContextImpl<P> implements ProjectionBindingContext
 	private <P2> void checkAndBind(BeanHolder<? extends ProjectionDefinition<? extends P2>> definitionHolder,
 			PojoRawTypeModel<P2> expectedValueType) {
 		if ( !expectedValueType.isSubTypeOf( parameterTypeModel.rawType() ) ) {
-			throw log.invalidOutputTypeForProjectionDefinition( definitionHolder.get(), parameterTypeModel, expectedValueType );
+			throw log.invalidOutputTypeForProjectionDefinition( definitionHolder.get(), parameterTypeModel,
+					expectedValueType );
 		}
 
 		@SuppressWarnings("unchecked") // We check that P2 extends P explicitly using reflection (see above)
@@ -230,10 +233,12 @@ public class ProjectionBindingContextImpl<P> implements ProjectionBindingContext
 			return parameterContainerElementRootElement;
 		}
 
-		private <P2> void checkAndBind(BeanHolder<? extends ProjectionDefinition<? extends List<? extends P2>>> definitionHolder,
+		private <P2> void checkAndBind(BeanHolder<? extends ProjectionDefinition<? extends List<
+				? extends P2>>> definitionHolder,
 				PojoRawTypeModel<P2> expectedValueType) {
 			if ( !expectedValueType.isSubTypeOf( parameterContainerElementTypeModel.rawType() ) ) {
-				throw log.invalidOutputTypeForMultiValuedProjectionDefinition( definitionHolder.get(), parameterTypeModel,
+				throw log.invalidOutputTypeForMultiValuedProjectionDefinition( definitionHolder.get(),
+						parameterTypeModel,
 						expectedValueType );
 			}
 

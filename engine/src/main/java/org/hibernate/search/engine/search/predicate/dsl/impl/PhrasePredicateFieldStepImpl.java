@@ -8,12 +8,12 @@ package org.hibernate.search.engine.search.predicate.dsl.impl;
 
 import java.util.Arrays;
 
-import org.hibernate.search.engine.search.predicate.dsl.PhrasePredicateFieldStep;
 import org.hibernate.search.engine.search.predicate.dsl.PhrasePredicateFieldMoreStep;
+import org.hibernate.search.engine.search.predicate.dsl.PhrasePredicateFieldStep;
 import org.hibernate.search.engine.search.predicate.dsl.spi.SearchPredicateDslContext;
 
-
-public final class PhrasePredicateFieldStepImpl implements PhrasePredicateFieldStep<PhrasePredicateFieldMoreStep<?, ?>> {
+public final class PhrasePredicateFieldStepImpl
+		implements PhrasePredicateFieldStep<PhrasePredicateFieldMoreStep<?, ?>> {
 
 	private final PhrasePredicateFieldMoreStepImpl.CommonState commonState;
 
@@ -22,7 +22,7 @@ public final class PhrasePredicateFieldStepImpl implements PhrasePredicateFieldS
 	}
 
 	@Override
-	public PhrasePredicateFieldMoreStep<?, ?> fields(String ... fieldPaths) {
+	public PhrasePredicateFieldMoreStep<?, ?> fields(String... fieldPaths) {
 		return new PhrasePredicateFieldMoreStepImpl( commonState, Arrays.asList( fieldPaths ) );
 	}
 }

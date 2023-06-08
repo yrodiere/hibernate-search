@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.documentation.mapper.orm.binding.dependencies.containers.fromotherentity;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
@@ -23,7 +22,8 @@ import org.junit.Test;
 
 public class DependenciesFromOtherEntityIT {
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -36,7 +36,8 @@ public class DependenciesFromOtherEntityIT {
 	public void smoke() {
 		with( entityManagerFactory ).runInTransaction( entityManager -> {
 			ScientificPaper paper1 = new ScientificPaper( 1 );
-			paper1.setTitle( "Fundamental Ideas of the General Theory of Relativity and the Application of this Theory in Astronomy" );
+			paper1.setTitle(
+					"Fundamental Ideas of the General Theory of Relativity and the Application of this Theory in Astronomy" );
 			ScientificPaper paper2 = new ScientificPaper( 2 );
 			paper2.setTitle( "On the General Theory of Relativity" );
 			paper2.getReferences().add( paper1 );

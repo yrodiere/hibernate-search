@@ -77,8 +77,10 @@ public class ExistsPredicateObjectsSpecificsIT {
 			SimpleMappedIndex.of( DifferentFieldsIndexBinding::new ).name( "differentFields" );
 	private static final SimpleMappedIndex<DifferentFieldsNoInnerNestedIndexBinding> noInnerNestedField =
 			SimpleMappedIndex.of( DifferentFieldsNoInnerNestedIndexBinding::new ).name( "noInnerNestedField" );
-	private static final SimpleMappedIndex<DifferentFieldsDifferentInnerNestedFieldsIndexBinding> differentInnerNestedField =
-			SimpleMappedIndex.of( DifferentFieldsDifferentInnerNestedFieldsIndexBinding::new ).name( "differentInnerNestedField" );
+	private static final SimpleMappedIndex<
+			DifferentFieldsDifferentInnerNestedFieldsIndexBinding> differentInnerNestedField =
+					SimpleMappedIndex.of( DifferentFieldsDifferentInnerNestedFieldsIndexBinding::new ).name(
+							"differentInnerNestedField" );
 
 
 	@BeforeClass
@@ -129,7 +131,9 @@ public class ExistsPredicateObjectsSpecificsIT {
 		assertThatThrownBy( () -> f.exists().field( fieldPath ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"This field is a value field in some indexes, but an object field in other indexes" )
 				.satisfies( FailureReportUtils.hasContext(
 						EventContexts.fromIndexNames( mainIndex.name(), incompatibleIndex.name() )
@@ -157,7 +161,9 @@ public class ExistsPredicateObjectsSpecificsIT {
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
 						"Cannot use 'predicate:exists' on field '" + fieldPath + "'",
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Attribute 'nestedPathHierarchy' differs:", " vs. " )
 				.satisfies( FailureReportUtils.hasContext(
 						EventContexts.fromIndexNames( mainIndex.name(), invertedIndex.name() ),
@@ -225,7 +231,9 @@ public class ExistsPredicateObjectsSpecificsIT {
 		assertThatThrownBy( () -> f.exists().field( fieldPath ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"This field is a value field in some indexes, but an object field in other indexes" )
 				.satisfies( FailureReportUtils.hasContext(
 						EventContexts.fromIndexNames( incompatibleIndex.name(), mainIndex.name() )
@@ -253,7 +261,9 @@ public class ExistsPredicateObjectsSpecificsIT {
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
 						"Cannot use 'predicate:exists' on field '" + fieldPath + "'",
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Attribute 'nestedPathHierarchy' differs:", " vs. " )
 				.satisfies( FailureReportUtils.hasContext(
 						EventContexts.fromIndexNames( invertedIndex.name(), mainIndex.name() ),
@@ -273,7 +283,7 @@ public class ExistsPredicateObjectsSpecificsIT {
 
 	private static void initData() {
 		mainIndex.bulkIndexer()
-				.add( DOCUMENT_0, document -> { } )
+				.add( DOCUMENT_0, document -> {} )
 				.add( DOCUMENT_1, document -> {
 					document.addValue( mainIndex.binding().string, ANY_STRING );
 					document.addValue( mainIndex.binding().numeric, ANY_INTEGER );
@@ -327,7 +337,8 @@ public class ExistsPredicateObjectsSpecificsIT {
 		differentInnerNestedField.bulkIndexer()
 				.add( DOCUMENT_6, document -> {
 					DocumentElement nestedDocument = document.addObject( differentInnerNestedField.binding().nested );
-					DocumentElement nestedX2Document = nestedDocument.addObject( differentInnerNestedField.binding().nestedX2 );
+					DocumentElement nestedX2Document = nestedDocument.addObject( differentInnerNestedField
+							.binding().nestedX2 );
 					nestedX2Document.addValue( differentInnerNestedField.binding().nestedX2String, ANY_STRING );
 				} )
 				.add( DOCUMENT_7, document -> {
@@ -379,7 +390,8 @@ public class ExistsPredicateObjectsSpecificsIT {
 			this.flattenedString = flattenedObject.field( "string", f -> f.asString() ).toReference();
 			this.flattenedNumeric = flattenedObject.field( "numeric", f -> f.asInteger() ).toReference();
 
-			IndexSchemaObjectField flattenedX2Object = flattenedObject.objectField( "flattenedX2", ObjectStructure.FLATTENED );
+			IndexSchemaObjectField flattenedX2Object = flattenedObject.objectField( "flattenedX2",
+					ObjectStructure.FLATTENED );
 			this.flattenedX2 = flattenedX2Object.toReference();
 			this.flattenedX2String = flattenedX2Object.field( "string", f -> f.asString() ).toReference();
 
@@ -449,6 +461,7 @@ public class ExistsPredicateObjectsSpecificsIT {
 		final IndexObjectFieldReference nested;
 		final IndexObjectFieldReference nestedX2;
 		final IndexFieldReference<String> nestedX2String;
+
 		DifferentFieldsDifferentInnerNestedFieldsIndexBinding(IndexSchemaElement root) {
 			IndexSchemaObjectField nestedObject = root.objectField( "nested", ObjectStructure.NESTED );
 			nested = nestedObject.toReference();

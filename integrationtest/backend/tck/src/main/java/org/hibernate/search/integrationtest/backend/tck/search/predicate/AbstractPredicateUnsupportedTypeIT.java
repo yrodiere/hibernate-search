@@ -26,7 +26,8 @@ public abstract class AbstractPredicateUnsupportedTypeIT {
 	private final SimpleMappedIndex<IndexBinding> index;
 	private final FieldTypeDescriptor<?> fieldType;
 
-	protected AbstractPredicateUnsupportedTypeIT(SimpleMappedIndex<IndexBinding> index, FieldTypeDescriptor<?> fieldType) {
+	protected AbstractPredicateUnsupportedTypeIT(SimpleMappedIndex<IndexBinding> index, FieldTypeDescriptor<
+			?> fieldType) {
 		this.index = index;
 		this.fieldType = fieldType;
 	}

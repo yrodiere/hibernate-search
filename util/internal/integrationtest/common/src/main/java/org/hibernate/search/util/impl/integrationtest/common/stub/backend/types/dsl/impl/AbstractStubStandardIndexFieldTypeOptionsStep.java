@@ -12,7 +12,9 @@ import org.hibernate.search.engine.backend.types.Searchable;
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.engine.backend.types.dsl.StandardIndexFieldTypeOptionsStep;
 
-abstract class AbstractStubStandardIndexFieldTypeOptionsStep<S extends AbstractStubStandardIndexFieldTypeOptionsStep<?, F>, F>
+abstract class AbstractStubStandardIndexFieldTypeOptionsStep<
+		S extends AbstractStubStandardIndexFieldTypeOptionsStep<?, F>,
+		F>
 		extends AbstractStubIndexFieldTypeOptionsStep<S, F>
 		implements StandardIndexFieldTypeOptionsStep<S, F> {
 

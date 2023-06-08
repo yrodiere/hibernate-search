@@ -20,24 +20,19 @@ import com.google.gson.reflect.TypeToken;
 public class AnalysisJsonAdapterFactory extends AbstractConfiguredExtraPropertiesJsonAdapterFactory {
 
 	private static final TypeToken<Map<String, AnalyzerDefinition>> ANALYZER_DEFINITIONS_MAP_TYPE_TOKEN =
-			new TypeToken<Map<String, AnalyzerDefinition>>() {
-			};
+			new TypeToken<Map<String, AnalyzerDefinition>>() {};
 
 	private static final TypeToken<Map<String, NormalizerDefinition>> NORMALIZER_DEFINITIONS_MAP_TYPE_TOKEN =
-			new TypeToken<Map<String, NormalizerDefinition>>() {
-			};
+			new TypeToken<Map<String, NormalizerDefinition>>() {};
 
 	private static final TypeToken<Map<String, TokenizerDefinition>> TOKENIZER_DEFINITIONS_MAP_TYPE_TOKEN =
-			new TypeToken<Map<String, TokenizerDefinition>>() {
-			};
+			new TypeToken<Map<String, TokenizerDefinition>>() {};
 
 	private static final TypeToken<Map<String, TokenFilterDefinition>> TOKEN_FILTER_DEFINITIONS_MAP_TYPE_TOKEN =
-			new TypeToken<Map<String, TokenFilterDefinition>>() {
-			};
+			new TypeToken<Map<String, TokenFilterDefinition>>() {};
 
 	private static final TypeToken<Map<String, CharFilterDefinition>> CHAR_FILTER_DEFINITIONS_MAP_TYPE_TOKEN =
-			new TypeToken<Map<String, CharFilterDefinition>>() {
-			};
+			new TypeToken<Map<String, CharFilterDefinition>>() {};
 
 	@Override
 	protected <T> void addFields(Builder<T> builder) {

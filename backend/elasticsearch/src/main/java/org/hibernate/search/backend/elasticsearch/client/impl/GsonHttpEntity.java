@@ -15,6 +15,11 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.hibernate.search.util.common.impl.Contracts;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ContentType;
@@ -23,11 +28,6 @@ import org.apache.http.nio.ContentEncoder;
 import org.apache.http.nio.IOControl;
 import org.apache.http.nio.entity.HttpAsyncContentProducer;
 import org.apache.http.protocol.HTTP;
-
-import org.hibernate.search.util.common.impl.Contracts;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 /**
  * Optimised adapter to encode GSON objects into HttpEntity instances.
@@ -61,7 +61,8 @@ final class GsonHttpEntity implements HttpEntity, HttpAsyncContentProducer {
 
 	private static final Charset CHARSET = StandardCharsets.UTF_8;
 
-	private static final BasicHeader CONTENT_TYPE = new BasicHeader( HTTP.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString() );
+	private static final BasicHeader CONTENT_TYPE = new BasicHeader( HTTP.CONTENT_TYPE, ContentType.APPLICATION_JSON
+			.toString() );
 
 	/**
 	 * The size of byte buffer pages in {@link ProgressiveCharBufferWriter}

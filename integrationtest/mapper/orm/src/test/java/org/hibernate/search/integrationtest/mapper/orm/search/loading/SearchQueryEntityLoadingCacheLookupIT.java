@@ -12,6 +12,7 @@ import static org.junit.Assume.assumeTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.persistence.SharedCacheMode;
 
 import org.hibernate.Hibernate;
@@ -97,7 +98,7 @@ public class SearchQueryEntityLoadingCacheLookupIT<T> extends AbstractSearchQuer
 		backendMock.expectAnySchema( model.getIndexName() );
 
 		setupContext.withProperty( HibernateOrmMapperSettings.QUERY_LOADING_CACHE_LOOKUP_STRATEGY,
-						defaultCacheLookupStrategy )
+				defaultCacheLookupStrategy )
 				.withProperty( AvailableSettings.JPA_SHARED_CACHE_MODE, SharedCacheMode.ALL.name() )
 				.withConfiguration( c -> mapping.configure( c, model ) );
 	}
@@ -239,7 +240,8 @@ public class SearchQueryEntityLoadingCacheLookupIT<T> extends AbstractSearchQuer
 	private void testLoadingCacheLookupExpectingPersistenceContextOnlyLookup(
 			EntityLoadingCacheLookupStrategy overriddenLookupStrategy) {
 		if ( !mapping.isCacheLookupSupported() ) {
-			logged.expectEvent( Level.DEBUG, "The entity loader for '" + model.getIndexedEntityName()
+			logged.expectEvent( Level.DEBUG, "The entity loader for '"
+					+ model.getIndexedEntityName()
 					+ "' is ignoring the cache lookup strategy" );
 			testLoadingCacheLookupExpectingSkipCacheLookup( overriddenLookupStrategy );
 			return;
@@ -265,7 +267,8 @@ public class SearchQueryEntityLoadingCacheLookupIT<T> extends AbstractSearchQuer
 	private void testLoadingCacheLookupExpectingSecondLevelCacheLookup(
 			EntityLoadingCacheLookupStrategy overriddenLookupStrategy) {
 		if ( !mapping.isCacheLookupSupported() ) {
-			logged.expectEvent( Level.DEBUG, "The entity loader for '" + model.getIndexedEntityName()
+			logged.expectEvent( Level.DEBUG, "The entity loader for '"
+					+ model.getIndexedEntityName()
 					+ "' is ignoring the cache lookup strategy" );
 			testLoadingCacheLookupExpectingSkipCacheLookup( overriddenLookupStrategy );
 			return;
@@ -288,7 +291,7 @@ public class SearchQueryEntityLoadingCacheLookupIT<T> extends AbstractSearchQuer
 		);
 	}
 
-	@SuppressWarnings({"unchecked", "deprecation"})
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	private void testLoadingCacheLookup(EntityLoadingCacheLookupStrategy overriddenLookupStrategy,
 			int entityCount,
 			List<Integer> entitiesToPutInSecondLevelCache,
@@ -329,7 +332,8 @@ public class SearchQueryEntityLoadingCacheLookupIT<T> extends AbstractSearchQuer
 				entityCount,
 				c -> {
 					c.assertEntityLoadCount()
-							.isEqualTo( entityCount - expectedPersistenceContextHitCount - expectedSecondLevelCacheHitCount );
+							.isEqualTo( entityCount - expectedPersistenceContextHitCount
+									- expectedSecondLevelCacheHitCount );
 					c.assertSecondLevelCacheHitCount()
 							.isEqualTo( expectedSecondLevelCacheHitCount );
 					c.assertStatementExecutionCount()

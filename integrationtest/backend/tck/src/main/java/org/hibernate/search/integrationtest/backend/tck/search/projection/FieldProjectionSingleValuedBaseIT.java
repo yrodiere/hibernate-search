@@ -158,9 +158,8 @@ public class FieldProjectionSingleValuedBaseIT<F> {
 						Collections.singletonList( dataSet.getFieldValue( 2 ) ),
 						Collections.singletonList( dataSet.getFieldValue( 3 ) ),
 						// Empty document
-						TckConfiguration.get().getBackendFeatures().projectionPreservesNulls()
-								? Collections.singletonList( null )
-								: Collections.emptyList()
+						TckConfiguration.get().getBackendFeatures().projectionPreservesNulls() ?
+								Collections.singletonList( null ) : Collections.emptyList()
 				);
 	}
 
@@ -174,11 +173,10 @@ public class FieldProjectionSingleValuedBaseIT<F> {
 		String fieldPath = getFieldPath();
 
 		assertThatQuery( scope.query()
-				.select( f ->
-						f.composite(
-								f.field( fieldPath, fieldType.getJavaType() ),
-								f.field( fieldPath, fieldType.getJavaType() )
-						)
+				.select( f -> f.composite(
+						f.field( fieldPath, fieldType.getJavaType() ),
+						f.field( fieldPath, fieldType.getJavaType() )
+				)
 				)
 				.where( f -> f.matchAll() )
 				.routing( dataSet.routingKey )
@@ -201,7 +199,8 @@ public class FieldProjectionSingleValuedBaseIT<F> {
 
 		assertThatQuery( index.query()
 				.select( f -> f.withRoot( parentObjectBinding.absolutePath )
-						.field( parentObjectBinding.getRelativeFieldName( fieldStructure, fieldType ), fieldType.getJavaType() ) )
+						.field( parentObjectBinding.getRelativeFieldName( fieldStructure, fieldType ), fieldType
+								.getJavaType() ) )
 				.where( f -> f.matchAll() )
 				.routing( dataSet.routingKey )
 				.toQuery() )

@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -294,7 +295,7 @@ public class MassIndexingJobWithCompositeIdIT {
 	 */
 	@Entity(name = "EntityWithIdClass")
 	@Indexed
-	@IdClass( EntityWithIdClass.DatePK.class )
+	@IdClass(EntityWithIdClass.DatePK.class)
 	public static class EntityWithIdClass implements Serializable {
 
 		private static final long serialVersionUID = 1L;

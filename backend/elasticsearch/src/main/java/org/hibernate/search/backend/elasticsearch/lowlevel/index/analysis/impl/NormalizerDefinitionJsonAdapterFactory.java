@@ -10,12 +10,10 @@ import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
 
-
 public class NormalizerDefinitionJsonAdapterFactory extends AnalysisDefinitionJsonAdapterFactory {
 
 	private static final TypeToken<List<String>> STRING_LIST_TYPE_TOKEN =
-			new TypeToken<List<String>>() {
-			};
+			new TypeToken<List<String>>() {};
 
 	@Override
 	protected <T> void addFields(Builder<T> builder) {

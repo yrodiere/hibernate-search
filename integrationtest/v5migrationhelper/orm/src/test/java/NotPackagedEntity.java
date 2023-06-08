@@ -6,8 +6,8 @@
  */
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -15,11 +15,15 @@ import org.hibernate.search.annotations.Indexed;
 /**
  * This entity is intentionally in no package for testing purposes
  */
-@Indexed @Entity
+@Indexed
+@Entity
 public class NotPackagedEntity {
 
-	@GeneratedValue @Id long id;
+	@GeneratedValue
+	@Id
+	long id;
 
-	@Field String title;
+	@Field
+	String title;
 
 }

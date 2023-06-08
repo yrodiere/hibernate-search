@@ -17,13 +17,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.hibernate.annotations.common.reflection.java.JavaReflectionManager;
-import org.hibernate.search.mapper.pojo.standalone.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.model.hcann.spi.AbstractPojoHCAnnBootstrapIntrospector;
 import org.hibernate.search.mapper.pojo.model.hcann.spi.PojoHCannOrmGenericContextHelper;
 import org.hibernate.search.mapper.pojo.model.spi.GenericContextAwarePojoGenericTypeModel.RawTypeDeclaringContext;
 import org.hibernate.search.mapper.pojo.model.spi.PojoBootstrapIntrospector;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeIdentifier;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
+import org.hibernate.search.mapper.pojo.standalone.logging.impl.Log;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.impl.ReflectionHelper;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
@@ -34,7 +34,8 @@ import org.hibernate.search.util.common.reflect.spi.ValueReadHandle;
 /**
  * A very simple introspector for Pojo mapping in standalone mode (without Hibernate ORM).
  */
-public class StandalonePojoBootstrapIntrospector extends AbstractPojoHCAnnBootstrapIntrospector implements PojoBootstrapIntrospector {
+public class StandalonePojoBootstrapIntrospector extends AbstractPojoHCAnnBootstrapIntrospector
+		implements PojoBootstrapIntrospector {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
@@ -71,7 +72,8 @@ public class StandalonePojoBootstrapIntrospector extends AbstractPojoHCAnnBootst
 	}
 
 	@Override
-	protected <T> ValueCreateHandle<T> createValueCreateHandle(Constructor<T> constructor) throws IllegalAccessException {
+	protected <T> ValueCreateHandle<T> createValueCreateHandle(Constructor<
+			T> constructor) throws IllegalAccessException {
 		setAccessible( constructor );
 		return valueHandleFactory.createForConstructor( constructor );
 	}

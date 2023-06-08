@@ -30,13 +30,12 @@ import org.hibernate.search.engine.search.query.dsl.spi.AbstractSearchQuerySelec
 
 public class LuceneSearchQuerySelectStepImpl<R, E, LOS>
 		extends AbstractSearchQuerySelectStep<
-						LuceneSearchQueryOptionsStep<E, LOS>,
-						R,
-						E,
-						LOS,
-						LuceneSearchProjectionFactory<R, E>,
-						LuceneSearchPredicateFactory
-				>
+				LuceneSearchQueryOptionsStep<E, LOS>,
+				R,
+				E,
+				LOS,
+				LuceneSearchProjectionFactory<R, E>,
+				LuceneSearchPredicateFactory>
 		implements LuceneSearchQuerySelectStep<R, E, LOS> {
 
 	private final LuceneSearchQueryIndexScope<?> scope;
@@ -68,7 +67,8 @@ public class LuceneSearchQuerySelectStepImpl<R, E, LOS>
 
 	@Override
 	public <P> LuceneSearchQueryWhereStep<P, LOS> select(
-			Function<? super LuceneSearchProjectionFactory<R, E>, ? extends ProjectionFinalStep<P>> projectionContributor) {
+			Function<? super LuceneSearchProjectionFactory<R, E>,
+					? extends ProjectionFinalStep<P>> projectionContributor) {
 		SearchProjection<P> projection = projectionContributor.apply( scope.projectionFactory() ).toProjection();
 		return select( projection );
 	}
@@ -100,7 +100,8 @@ public class LuceneSearchQuerySelectStepImpl<R, E, LOS>
 
 	@Override
 	public LuceneSearchQueryOptionsStep<E, LOS> where(
-			BiConsumer<? super LuceneSearchPredicateFactory, ? super SimpleBooleanPredicateClausesCollector<?>> predicateContributor) {
+			BiConsumer<? super LuceneSearchPredicateFactory,
+					? super SimpleBooleanPredicateClausesCollector<?>> predicateContributor) {
 		return selectEntity().where( predicateContributor );
 	}
 

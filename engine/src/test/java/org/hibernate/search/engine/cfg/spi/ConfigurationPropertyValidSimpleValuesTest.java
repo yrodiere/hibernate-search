@@ -34,7 +34,7 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
 @RunWith(Parameterized.class)
-@SuppressWarnings({"unchecked", "rawtypes"}) // Raw types are the only way to mock parameterized types
+@SuppressWarnings({ "unchecked", "rawtypes" }) // Raw types are the only way to mock parameterized types
 public class ConfigurationPropertyValidSimpleValuesTest<T> {
 
 	@Parameterized.Parameters(name = "{2}")
@@ -207,7 +207,8 @@ public class ConfigurationPropertyValidSimpleValuesTest<T> {
 		assertThat( result.get() ).containsExactly( expectedValue );
 
 		// Typed value - multiple
-		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( createCollection( expectedValue, expectedValue ) ) );
+		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( createCollection( expectedValue,
+				expectedValue ) ) );
 		result = property.get( sourceMock );
 		verifyNoOtherSourceInteractionsAndReset();
 		assertThat( result ).isNotEmpty();
@@ -346,14 +347,16 @@ public class ConfigurationPropertyValidSimpleValuesTest<T> {
 		assertThat( result.get() ).containsExactly( expectedValue );
 
 		// Substituted value - multiple
-		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( createCollection( MyEnum.VALUE1, MyEnum.VALUE2 ) ) );
+		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( createCollection( MyEnum.VALUE1,
+				MyEnum.VALUE2 ) ) );
 		result = property.get( sourceMock );
 		verifyNoOtherSourceInteractionsAndReset();
 		assertThat( result ).isNotEmpty();
 		assertThat( result.get() ).containsExactly( expectedValue, expectedValue );
 
 		// Substituted value - multiple and mixed
-		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( createCollection( expectedValue, MyEnum.VALUE1 ) ) );
+		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( createCollection( expectedValue,
+				MyEnum.VALUE1 ) ) );
 		result = property.get( sourceMock );
 		verifyNoOtherSourceInteractionsAndReset();
 		assertThat( result ).isNotEmpty();
@@ -381,7 +384,8 @@ public class ConfigurationPropertyValidSimpleValuesTest<T> {
 		assertThat( result.get() ).containsExactly( expectedValue );
 
 		// Typed value - multiple
-		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( createCollection( expectedValue, expectedValue ) ) );
+		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( createCollection( expectedValue,
+				expectedValue ) ) );
 		result = property.get( sourceMock );
 		verifyNoOtherSourceInteractionsAndReset();
 		assertThat( result ).isNotEmpty();
@@ -431,8 +435,7 @@ public class ConfigurationPropertyValidSimpleValuesTest<T> {
 	}
 
 	private enum MyEnum {
-		VALUE1,
-		VALUE2;
+		VALUE1, VALUE2;
 	}
 
 }

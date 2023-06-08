@@ -14,5 +14,4 @@ package org.hibernate.search.engine.search.projection;
  *
  * @param <P> The type of the element returned by the projection.
  */
-public interface SearchProjection<P> {
-}
+public interface SearchProjection<P> {}

@@ -57,7 +57,9 @@ public abstract class AbstractPredicateSearchableIT {
 		assertThatThrownBy( () -> tryPredicate( f, fieldPath ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Inconsistent support for '" + predicateNameInErrorMessage() + "'"
 				);
 	}
@@ -69,7 +71,8 @@ public abstract class AbstractPredicateSearchableIT {
 	public static final class SearchableYesIndexBinding {
 		private final SimpleFieldModelsByType field;
 
-		public SearchableYesIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<?>> fieldTypes) {
+		public SearchableYesIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<
+				?>> fieldTypes) {
 			field = SimpleFieldModelsByType.mapAll( fieldTypes, root, "", c -> c.searchable( Searchable.YES ) );
 		}
 	}
@@ -77,7 +80,8 @@ public abstract class AbstractPredicateSearchableIT {
 	public static final class SearchableNoIndexBinding {
 		private final SimpleFieldModelsByType field;
 
-		public SearchableNoIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<?>> fieldTypes) {
+		public SearchableNoIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<
+				?>> fieldTypes) {
 			field = SimpleFieldModelsByType.mapAll( fieldTypes, root, "", c -> c.searchable( Searchable.NO ) );
 		}
 	}

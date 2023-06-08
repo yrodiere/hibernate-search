@@ -64,7 +64,8 @@ public class Elasticsearch7DefaultFieldFormatProvider implements ElasticsearchDe
 		this.dateTimeFormatters = new HashMap<>();
 		this.mappingFormats = new HashMap<>();
 
-		for ( Map.Entry<Class<? extends TemporalAccessor>, String> entry : JAVA_TIME_FORMAT_PATTERN_BY_TYPE.entrySet() ) {
+		for ( Map.Entry<Class<? extends TemporalAccessor>, String> entry : JAVA_TIME_FORMAT_PATTERN_BY_TYPE
+				.entrySet() ) {
 			Class<? extends TemporalAccessor> type = entry.getKey();
 			String pattern = entry.getValue();
 			dateTimeFormatters.put( type, DateTimeFormatter.ofPattern( pattern, Locale.ROOT ) );

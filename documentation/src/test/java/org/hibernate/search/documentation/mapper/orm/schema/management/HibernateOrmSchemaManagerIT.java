@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -40,7 +41,8 @@ public class HibernateOrmSchemaManagerIT {
 	private static final int INIT_DATA_TRANSACTION_SIZE = 100;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -133,8 +135,8 @@ public class HibernateOrmSchemaManagerIT {
 			// end::schema-export[]
 
 			assertThat( Files.list( targetDirectory.resolve( "backend" )
-							.resolve( "indexes" )
-							.resolve( Book.class.getSimpleName() ) )
+					.resolve( "indexes" )
+					.resolve( Book.class.getSimpleName() ) )
 					.map( f -> f.getFileName().toString() )
 					.collect( Collectors.toSet() ) )
 					.containsAnyOf(
@@ -144,8 +146,8 @@ public class HibernateOrmSchemaManagerIT {
 					);
 
 			assertThat( Files.list( targetDirectory.resolve( "backend" )
-							.resolve( "indexes" )
-							.resolve( Author.class.getSimpleName() ) )
+					.resolve( "indexes" )
+					.resolve( Author.class.getSimpleName() ) )
 					.map( f -> f.getFileName().toString() )
 					.collect( Collectors.toSet() ) )
 					.containsAnyOf(

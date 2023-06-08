@@ -9,6 +9,7 @@ package org.hibernate.search.documentation.mapper.orm.indexedembedded.filteredas
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -73,7 +74,7 @@ public class Book {
 	@Transient // <2>
 	@IndexedEmbedded // <3>
 	@AssociationInverseSide(inversePath = @ObjectPath( // <4>
-			@PropertyValue(propertyName = "book")
+	@PropertyValue(propertyName = "book")
 	))
 	@IndexingDependency(derivedFrom = @ObjectPath({ // <5>
 			@PropertyValue(propertyName = "editions"),

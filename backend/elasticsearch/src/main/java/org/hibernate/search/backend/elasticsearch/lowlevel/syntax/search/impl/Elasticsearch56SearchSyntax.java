@@ -19,7 +19,8 @@ import com.google.gson.JsonPrimitive;
  */
 public class Elasticsearch56SearchSyntax extends Elasticsearch60SearchSyntax {
 	private static final JsonAccessor<JsonElement> NESTED_PATH_ACCESSOR = JsonAccessor.root().property( "nested_path" );
-	private static final JsonAccessor<JsonElement> NESTED_FILTER_ACCESSOR = JsonAccessor.root().property( "nested_filter" );
+	private static final JsonAccessor<JsonElement> NESTED_FILTER_ACCESSOR = JsonAccessor.root().property(
+			"nested_filter" );
 
 	@Override
 	public String getTermAggregationOrderByTermToken() {

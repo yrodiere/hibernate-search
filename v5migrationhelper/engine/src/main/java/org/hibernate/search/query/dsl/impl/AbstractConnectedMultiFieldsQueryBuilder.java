@@ -16,7 +16,9 @@ import org.hibernate.search.query.dsl.Termination;
 
 import org.apache.lucene.search.Query;
 
-abstract class AbstractConnectedMultiFieldsQueryBuilder<T, F extends PredicateScoreStep<? extends F> & PredicateFinalStep>
+abstract class AbstractConnectedMultiFieldsQueryBuilder<
+		T,
+		F extends PredicateScoreStep<? extends F> & PredicateFinalStep>
 		implements Termination<T> {
 
 	protected final QueryBuildingContext queryContext;

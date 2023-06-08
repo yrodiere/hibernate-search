@@ -16,9 +16,9 @@ import org.hibernate.search.engine.search.sort.spi.DistanceSortBuilder;
 import org.hibernate.search.engine.search.sort.spi.FieldSortBuilder;
 import org.hibernate.search.engine.search.sort.spi.ScoreSortBuilder;
 import org.hibernate.search.engine.spatial.GeoPoint;
+import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.AbstractStubSearchQueryElementFactory;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.StubSearchIndexNodeContext;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.StubSearchIndexScope;
-import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.AbstractStubSearchQueryElementFactory;
 
 public class StubSearchSort implements SearchSort {
 
@@ -40,7 +40,8 @@ public class StubSearchSort implements SearchSort {
 		}
 	}
 
-	public static class Builder implements ScoreSortBuilder,
+	public static class Builder
+			implements ScoreSortBuilder,
 			FieldSortBuilder, DistanceSortBuilder, CompositeSortBuilder {
 
 		@Override

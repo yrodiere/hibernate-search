@@ -11,6 +11,7 @@ import static org.hibernate.search.integrationtest.mapper.orm.coordination.outbo
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -34,7 +35,8 @@ import org.junit.Test;
 public class OutboxPollingAutomaticIndexingLifecycleIT {
 
 	// The value doesn't matter, we just need to be sure that's the one that was configured.
-	private static final long BATCH_SIZE = HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_EVENT_PROCESSOR_BATCH_SIZE;
+	private static final long BATCH_SIZE =
+			HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_EVENT_PROCESSOR_BATCH_SIZE;
 
 	@Rule
 	public BackendMock backendMock = new BackendMock();
@@ -136,11 +138,14 @@ public class OutboxPollingAutomaticIndexingLifecycleIT {
 			List<OutboxEvent> events = eventFilter.findOutboxEventsNoFilter( session );
 			assertThat( events ).hasSize( 3 );
 			// add
-			verifyOutboxEntry( events.get( 0 ), OutboxPollingAutomaticIndexingOutOfOrderIdsIT.IndexedEntity.INDEX, "1", null );
+			verifyOutboxEntry( events.get( 0 ), OutboxPollingAutomaticIndexingOutOfOrderIdsIT.IndexedEntity.INDEX, "1",
+					null );
 			// update
-			verifyOutboxEntry( events.get( 1 ), OutboxPollingAutomaticIndexingOutOfOrderIdsIT.IndexedEntity.INDEX, "1", null );
+			verifyOutboxEntry( events.get( 1 ), OutboxPollingAutomaticIndexingOutOfOrderIdsIT.IndexedEntity.INDEX, "1",
+					null );
 			// delete
-			verifyOutboxEntry( events.get( 2 ), OutboxPollingAutomaticIndexingOutOfOrderIdsIT.IndexedEntity.INDEX, "1", null );
+			verifyOutboxEntry( events.get( 2 ), OutboxPollingAutomaticIndexingOutOfOrderIdsIT.IndexedEntity.INDEX, "1",
+					null );
 		} );
 
 		// Only a delete work is expected to be executed by the time the outbox events are processed;

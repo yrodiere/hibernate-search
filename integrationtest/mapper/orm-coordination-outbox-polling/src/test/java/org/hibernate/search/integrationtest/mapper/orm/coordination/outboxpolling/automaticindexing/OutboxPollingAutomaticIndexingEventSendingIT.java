@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -57,7 +58,8 @@ public class OutboxPollingAutomaticIndexingEventSendingIT {
 	public MethodRule setupHolderMethodRule = setupHolder.methodRule();
 
 	@ReusableOrmSetupHolder.Setup
-	public void setup(OrmSetupHelper.SetupContext setupContext, ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
+	public void setup(OrmSetupHelper.SetupContext setupContext,
+			ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
 		backendMock.expectSchema( IndexedEntity.NAME, b -> b
 				.field( "text", String.class, f -> f.analyzerName( AnalyzerNames.DEFAULT ) )
 		);
@@ -508,7 +510,8 @@ public class OutboxPollingAutomaticIndexingEventSendingIT {
 			softly.assertThat( outboxEvent.getEntityName() ).isEqualTo( entityName );
 			softly.assertThat( outboxEvent.getEntityId() ).isEqualTo( entityId );
 
-			PojoIndexingQueueEventPayload payload = EventPayloadSerializationUtils.deserialize( outboxEvent.getPayload() );
+			PojoIndexingQueueEventPayload payload = EventPayloadSerializationUtils.deserialize( outboxEvent
+					.getPayload() );
 			DocumentRoutesDescriptor routesDescriptor = payload.routes;
 
 			softly.assertThat( routesDescriptor ).isNotNull();

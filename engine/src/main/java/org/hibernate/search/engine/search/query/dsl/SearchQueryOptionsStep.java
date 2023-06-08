@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.engine.search.query.dsl;
 
-
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -41,12 +40,11 @@ import org.hibernate.search.util.common.annotation.Incubating;
  * @param <AF> The type of factory used to create aggregations in {@link #aggregation(AggregationKey, Function)}.
  */
 public interface SearchQueryOptionsStep<
-				S extends SearchQueryOptionsStep<?, H, LOS, SF, AF>,
-				H,
-				LOS,
-				SF extends SearchSortFactory,
-				AF extends SearchAggregationFactory
-		>
+		S extends SearchQueryOptionsStep<?, H, LOS, SF, AF>,
+		H,
+		LOS,
+		SF extends SearchSortFactory,
+		AF extends SearchAggregationFactory>
 		extends SearchQueryFinalStep<H>, SearchFetchable<H> {
 
 	/**
@@ -143,7 +141,8 @@ public interface SearchQueryOptionsStep<
 	 * @param <T> The type of aggregation values.
 	 * @return {@code this}, for method chaining.
 	 */
-	<T> S aggregation(AggregationKey<T> key, Function<? super AF, ? extends AggregationFinalStep<T>> aggregationContributor);
+	<T> S aggregation(AggregationKey<T> key, Function<? super AF,
+			? extends AggregationFinalStep<T>> aggregationContributor);
 
 	/**
 	 * Allow Hibernate Search to return a lower-bound estimate of the total hit count
@@ -208,7 +207,8 @@ public interface SearchQueryOptionsStep<
 	 * @see HighlightProjectionOptionsStep#highlighter(String)
 	 */
 	@Incubating
-	S highlighter(String highlighterName, Function<? super SearchHighlighterFactory, ? extends HighlighterFinalStep> highlighterContributor);
+	S highlighter(String highlighterName, Function<? super SearchHighlighterFactory,
+			? extends HighlighterFinalStep> highlighterContributor);
 
 	/**
 	 * Configure a named highlighter.

@@ -15,8 +15,8 @@ import java.util.Optional;
 import org.hibernate.search.engine.backend.document.IndexObjectFieldReference;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.mapper.mapping.building.spi.IndexBindingContext;
-import org.hibernate.search.mapper.pojo.automaticindexing.building.impl.PojoIndexingDependencyCollectorTypeNode;
 import org.hibernate.search.mapper.pojo.automaticindexing.building.impl.AbstractPojoIndexingDependencyCollectorDirectValueNode;
+import org.hibernate.search.mapper.pojo.automaticindexing.building.impl.PojoIndexingDependencyCollectorTypeNode;
 import org.hibernate.search.mapper.pojo.bridge.TypeBridge;
 import org.hibernate.search.mapper.pojo.bridge.binding.impl.BoundTypeBridge;
 import org.hibernate.search.mapper.pojo.bridge.mapping.programmatic.TypeBinder;
@@ -62,7 +62,7 @@ public abstract class AbstractPojoIndexingProcessorTypeNodeBuilder<T, U> extends
 	@Override
 	public void typeBinder(TypeBinder builder, Map<String, Object> params) {
 		mappingHelper.indexModelBinder().bindType( bindingContext, getModelPath(), builder, params )
-			.ifPresent( boundBridges::add );
+				.ifPresent( boundBridges::add );
 	}
 
 	@Override

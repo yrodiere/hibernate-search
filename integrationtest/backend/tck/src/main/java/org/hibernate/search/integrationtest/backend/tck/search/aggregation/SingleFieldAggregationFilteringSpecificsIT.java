@@ -18,8 +18,8 @@ import java.util.function.Function;
 import org.hibernate.search.engine.backend.document.IndexObjectFieldReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaObjectField;
-import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.engine.backend.types.Aggregable;
+import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.operations.AggregationDescriptor;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.operations.expectations.AggregationScenario;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.operations.expectations.SupportedSingleFieldAggregationExpectations;
@@ -87,7 +87,8 @@ public class SingleFieldAggregationFilteringSpecificsIT<F> {
 	public void nonNested() {
 		StubMappingScope scope = mainIndex.createScope();
 		AggregationScenario<?> scenario = expectations.simple();
-		String fieldPath = mainIndex.binding().flattenedObject.relativeFieldName + "."
+		String fieldPath = mainIndex.binding().flattenedObject.relativeFieldName
+				+ "."
 				+ mainIndex.binding().flattenedObject.fieldModels.get( fieldType ).relativeFieldName;
 
 		assertThatThrownBy(
@@ -105,7 +106,8 @@ public class SingleFieldAggregationFilteringSpecificsIT<F> {
 	public void invalidNestedPath_parent() {
 		StubMappingScope scope = mainIndex.createScope();
 		AggregationScenario<?> scenario = expectations.simple();
-		String fieldPath = mainIndex.binding().nestedObject1.relativeFieldName + "."
+		String fieldPath = mainIndex.binding().nestedObject1.relativeFieldName
+				+ "."
 				+ mainIndex.binding().nestedObject1.fieldModels.get( fieldType ).relativeFieldName;
 		String fieldInParentPath = mainIndex.binding().fieldModels.get( fieldType ).relativeFieldName;
 
@@ -116,7 +118,8 @@ public class SingleFieldAggregationFilteringSpecificsIT<F> {
 				.hasMessageContainingAll( "Invalid search predicate",
 						"This predicate targets fields [" + fieldInParentPath + "]",
 						"only fields that are contained in the nested object with path '"
-								+ mainIndex.binding().nestedObject1.relativeFieldName + "'"
+								+ mainIndex.binding().nestedObject1.relativeFieldName
+								+ "'"
 								+ " are allowed here." );
 	}
 
@@ -125,9 +128,11 @@ public class SingleFieldAggregationFilteringSpecificsIT<F> {
 	public void invalidNestedPath_sibling() {
 		StubMappingScope scope = mainIndex.createScope();
 		AggregationScenario<?> scenario = expectations.simple();
-		String fieldPath = mainIndex.binding().nestedObject1.relativeFieldName + "."
+		String fieldPath = mainIndex.binding().nestedObject1.relativeFieldName
+				+ "."
 				+ mainIndex.binding().nestedObject1.fieldModels.get( fieldType ).relativeFieldName;
-		String fieldInSiblingPath = mainIndex.binding().nestedObject2.relativeFieldName + "."
+		String fieldInSiblingPath = mainIndex.binding().nestedObject2.relativeFieldName
+				+ "."
 				+ mainIndex.binding().nestedObject2.fieldModels.get( fieldType ).relativeFieldName;
 
 		assertThatThrownBy(
@@ -137,7 +142,8 @@ public class SingleFieldAggregationFilteringSpecificsIT<F> {
 				.hasMessageContainingAll( "Invalid search predicate",
 						"This predicate targets fields [" + fieldInSiblingPath + "]",
 						"only fields that are contained in the nested object with path '"
-								+ mainIndex.binding().nestedObject1.relativeFieldName + "'"
+								+ mainIndex.binding().nestedObject1.relativeFieldName
+								+ "'"
 								+ " are allowed here." );
 	}
 

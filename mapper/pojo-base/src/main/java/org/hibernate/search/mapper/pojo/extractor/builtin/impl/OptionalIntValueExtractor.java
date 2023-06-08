@@ -20,7 +20,8 @@ public class OptionalIntValueExtractor implements ContainerExtractor<OptionalInt
 	}
 
 	@Override
-	public <T, C2> void extract(OptionalInt container, ValueProcessor<T, ? super Integer, C2> perValueProcessor, T target,
+	public <T, C2> void extract(OptionalInt container, ValueProcessor<T, ? super Integer, C2> perValueProcessor,
+			T target,
 			C2 context, ContainerExtractionContext extractionContext) {
 		if ( container == null ) {
 			return;

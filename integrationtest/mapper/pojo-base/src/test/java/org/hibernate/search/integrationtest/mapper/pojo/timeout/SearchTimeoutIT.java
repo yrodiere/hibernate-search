@@ -13,17 +13,17 @@ import java.lang.invoke.MethodHandles;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
-import org.hibernate.search.engine.search.query.SearchQuery;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.engine.common.EntityReference;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
+import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.StubSearchWorkBehavior;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,7 +37,8 @@ public class SearchTimeoutIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private SearchMapping mapping;
 
@@ -54,8 +55,8 @@ public class SearchTimeoutIT {
 			SearchQuery<EntityReference> query = session.search( IndexedEntity.class )
 					.selectEntityReference()
 					.where( f -> f.matchAll() )
-						// define a timeout
-						.truncateAfter( 5L, TimeUnit.SECONDS )
+					// define a timeout
+					.truncateAfter( 5L, TimeUnit.SECONDS )
 					.toQuery();
 
 			backendMock.expectSearchReferences( Collections.singletonList( INDEX_NAME ),

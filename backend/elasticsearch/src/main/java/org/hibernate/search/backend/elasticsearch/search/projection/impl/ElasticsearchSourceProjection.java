@@ -19,7 +19,8 @@ import com.google.gson.JsonPrimitive;
 class ElasticsearchSourceProjection extends AbstractElasticsearchProjection<JsonObject>
 		implements ElasticsearchSearchProjection.Extractor<JsonObject, JsonObject> {
 
-	private static final JsonArrayAccessor REQUEST_SOURCE_ACCESSOR = JsonAccessor.root().property( "_source" ).asArray();
+	private static final JsonArrayAccessor REQUEST_SOURCE_ACCESSOR = JsonAccessor.root().property( "_source" )
+			.asArray();
 	private static final JsonPrimitive WILDCARD_ALL = new JsonPrimitive( "*" );
 
 	ElasticsearchSourceProjection(ElasticsearchSearchIndexScope<?> scope) {

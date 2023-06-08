@@ -33,7 +33,10 @@ class IndexScaleWorkCall extends Call<IndexScaleWorkCall> {
 	}
 
 	public CallBehavior<CompletableFuture<?>> verify(IndexScaleWorkCall actualCall) {
-		String whenThisWorkWasExpected = "when index-scale work of type '" + work.getType() + "' on index '" + indexName
+		String whenThisWorkWasExpected = "when index-scale work of type '"
+				+ work.getType()
+				+ "' on index '"
+				+ indexName
 				+ "' was expected";
 		assertThatIndexScaleWork( actualCall.work )
 				.as( "Incorrect work " + whenThisWorkWasExpected + ":\n" )

@@ -56,7 +56,8 @@ public interface MappingAnnotationProcessorContext {
 	 * @param <T> The bean type.
 	 * @return The corresponding bean reference, or an empty optional if neither the type nor the name is provided.
 	 */
-	default <T> Optional<BeanReference<? extends T>> toBeanReference(Class<T> expectedType, Class<?> undefinedTypeMarker,
+	default <T> Optional<BeanReference<? extends T>> toBeanReference(Class<T> expectedType, Class<
+			?> undefinedTypeMarker,
 			Class<? extends T> type, String name) {
 		return toBeanReference( expectedType, undefinedTypeMarker, type, name, BeanRetrieval.ANY );
 	}

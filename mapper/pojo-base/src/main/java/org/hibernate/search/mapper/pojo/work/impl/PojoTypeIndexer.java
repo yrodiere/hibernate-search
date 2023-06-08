@@ -12,9 +12,9 @@ import java.util.function.Supplier;
 
 import org.hibernate.search.engine.backend.work.execution.DocumentCommitStrategy;
 import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrategy;
+import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
 import org.hibernate.search.engine.backend.work.execution.spi.DocumentReferenceProvider;
 import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexer;
-import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
 import org.hibernate.search.mapper.pojo.bridge.runtime.impl.NoOpDocumentRouter;
 import org.hibernate.search.mapper.pojo.processing.spi.PojoIndexingProcessorRootContext;
 import org.hibernate.search.mapper.pojo.processing.spi.PojoIndexingProcessorSessionContext;
@@ -124,7 +124,8 @@ public class PojoTypeIndexer<I, E> implements PojoIndexingProcessorRootContext {
 		}
 		DocumentReferenceProvider referenceProvider = new PojoDocumentReferenceProvider( documentIdentifier,
 				routes.currentRoute().routingKey(), identifier );
-		return deletePreviousFuture.thenCombine( delegate.delete( referenceProvider, commitStrategy, refreshStrategy, operationSubmitter ),
+		return deletePreviousFuture.thenCombine( delegate.delete( referenceProvider, commitStrategy, refreshStrategy,
+				operationSubmitter ),
 				(deletePreviousResult, deleteResult) -> deleteResult );
 	}
 
@@ -144,12 +145,15 @@ public class PojoTypeIndexer<I, E> implements PojoIndexingProcessorRootContext {
 
 		DocumentReferenceProvider referenceProvider = new PojoDocumentReferenceProvider( documentIdentifier,
 				routes.currentRoute().routingKey(), identifier );
-		return deletePreviousFuture.thenCombine( delegate.delete( referenceProvider, commitStrategy, refreshStrategy, operationSubmitter ),
+		return deletePreviousFuture.thenCombine( delegate.delete( referenceProvider, commitStrategy, refreshStrategy,
+				operationSubmitter ),
 				(deletePreviousResult, deleteResult) -> deleteResult );
 	}
 
-	private CompletableFuture<?> deletePrevious(String documentIdentifier, Collection<DocumentRouteDescriptor> previousRoutes,
-			I identifier, DocumentCommitStrategy commitStrategy, DocumentRefreshStrategy refreshStrategy, OperationSubmitter operationSubmitter) {
+	private CompletableFuture<?> deletePrevious(String documentIdentifier, Collection<
+			DocumentRouteDescriptor> previousRoutes,
+			I identifier, DocumentCommitStrategy commitStrategy, DocumentRefreshStrategy refreshStrategy,
+			OperationSubmitter operationSubmitter) {
 		if ( previousRoutes.isEmpty() ) {
 			return CompletableFuture.completedFuture( null );
 		}

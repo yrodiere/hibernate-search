@@ -30,9 +30,11 @@ public class ElasticsearchSearchProjectionBuilderFactory implements SearchProjec
 	public ElasticsearchSearchProjectionBuilderFactory(SearchProjectionBackendContext searchProjectionBackendContext,
 			ElasticsearchSearchIndexScope<?> scope) {
 		this.scope = scope;
-		this.mappedTypeNameExtractionHelper = searchProjectionBackendContext.createMappedTypeNameExtractionHelper( scope );
+		this.mappedTypeNameExtractionHelper = searchProjectionBackendContext.createMappedTypeNameExtractionHelper(
+				scope );
 		this.documentReferenceExtractionHelper =
-				searchProjectionBackendContext.createDocumentReferenceExtractionHelper( mappedTypeNameExtractionHelper );
+				searchProjectionBackendContext.createDocumentReferenceExtractionHelper(
+						mappedTypeNameExtractionHelper );
 		this.idProjectionExtractionHelper = searchProjectionBackendContext.idProjectionExtractionHelper();
 	}
 

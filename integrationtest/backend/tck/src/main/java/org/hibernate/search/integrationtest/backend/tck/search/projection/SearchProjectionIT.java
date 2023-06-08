@@ -29,6 +29,7 @@ import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.engine.backend.types.Projectable;
 import org.hibernate.search.engine.backend.types.dsl.IndexFieldTypeFactory;
 import org.hibernate.search.engine.backend.types.dsl.StandardIndexFieldTypeOptionsStep;
+import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.search.loading.spi.SearchLoadingContext;
 import org.hibernate.search.engine.search.projection.SearchProjection;
 import org.hibernate.search.engine.search.projection.dsl.ProjectionFinalStep;
@@ -39,7 +40,6 @@ import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.engine.search.query.SearchResult;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.configuration.DefaultAnalysisDefinitions;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.stub.StubEntity;
-import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.StandardFieldMapper;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 import org.hibernate.search.util.common.SearchException;
@@ -68,7 +68,8 @@ public class SearchProjectionIT {
 	private static final String DOCUMENT_3 = "3";
 	private static final String EMPTY = "empty";
 
-	private static final ProjectionMappedTypeContext mainTypeContextMock = Mockito.mock( ProjectionMappedTypeContext.class );
+	private static final ProjectionMappedTypeContext mainTypeContextMock = Mockito.mock(
+			ProjectionMappedTypeContext.class );
 
 	@Rule
 	public final MockitoRule mockito = MockitoJUnit.rule().strictness( Strictness.STRICT_STUBS );
@@ -213,7 +214,8 @@ public class SearchProjectionIT {
 
 		SearchQuery<Float> query = scope.query()
 				.select( f -> f.score() )
-				.where( f -> f.match().field( mainIndex.binding().scoreField.relativeFieldName ).matching( "scorepattern" ) )
+				.where( f -> f.match().field( mainIndex.binding().scoreField.relativeFieldName ).matching(
+						"scorepattern" ) )
 				.sort( f -> f.score().desc() )
 				.toQuery();
 
@@ -238,7 +240,8 @@ public class SearchProjectionIT {
 
 		SearchQuery<Float> query = scope.query()
 				.select( f -> f.score() )
-				.where( f -> f.match().field( mainIndex.binding().scoreField.relativeFieldName ).matching( "scorepattern" ) )
+				.where( f -> f.match().field( mainIndex.binding().scoreField.relativeFieldName ).matching(
+						"scorepattern" ) )
 				.sort( f -> f.indexOrder() )
 				.toQuery();
 
@@ -337,12 +340,11 @@ public class SearchProjectionIT {
 		SearchQuery<List<?>> query;
 
 		query = scope.query()
-				.select( f ->
-						f.composite(
-								f.field( mainIndex.binding().string1Field.relativeFieldName, String.class ),
-								f.documentReference(),
-								f.field( mainIndex.binding().string2Field.relativeFieldName, String.class )
-						)
+				.select( f -> f.composite(
+						f.field( mainIndex.binding().string1Field.relativeFieldName, String.class ),
+						f.documentReference(),
+						f.field( mainIndex.binding().string2Field.relativeFieldName, String.class )
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
@@ -381,14 +383,15 @@ public class SearchProjectionIT {
 		SearchQuery<List<?>> query;
 
 		query = scope.query()
-				.select( f ->
-						f.composite(
-								f.field( mainIndex.binding().string1Field.relativeFieldName, String.class ),
-								f.documentReference(),
-								f.field( "nested." + mainIndex.binding().nestedField.relativeFieldName, String.class ),
-								f.field( "nested.nested." + mainIndex.binding().nestedNestedField.relativeFieldName, String.class ),
-								f.field( "nested.flattened." + mainIndex.binding().flattenedField.relativeFieldName, String.class )
-						)
+				.select( f -> f.composite(
+						f.field( mainIndex.binding().string1Field.relativeFieldName, String.class ),
+						f.documentReference(),
+						f.field( "nested." + mainIndex.binding().nestedField.relativeFieldName, String.class ),
+						f.field( "nested.nested." + mainIndex.binding().nestedNestedField.relativeFieldName,
+								String.class ),
+						f.field( "nested.flattened." + mainIndex.binding().flattenedField.relativeFieldName,
+								String.class )
+				)
 				)
 				.where( f -> f.matchAll() )
 				.toQuery();
@@ -479,11 +482,10 @@ public class SearchProjectionIT {
 
 		// reuse the same projection instance on a different scope,
 		// targeting a different index
-		assertThatThrownBy( () ->
-				otherIndex.createScope().query()
-						.select( projection )
-						.where( f -> f.matchAll() )
-						.toQuery() )
+		assertThatThrownBy( () -> otherIndex.createScope().query()
+				.select( projection )
+				.where( f -> f.matchAll() )
+				.toQuery() )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid search projection",
 						"You must build the projection from a scope targeting indexes ", otherIndex.name(),
@@ -491,11 +493,10 @@ public class SearchProjectionIT {
 
 		// reuse the same projection instance on a different scope,
 		// targeting different indexes
-		assertThatThrownBy( () ->
-				mainIndex.createScope( otherIndex ).query()
-						.select( projection )
-						.where( f -> f.matchAll() )
-						.toQuery() )
+		assertThatThrownBy( () -> mainIndex.createScope( otherIndex ).query()
+				.select( projection )
+				.where( f -> f.matchAll() )
+				.toQuery() )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid search projection",
 						"You must build the projection from a scope targeting indexes ",
@@ -624,7 +625,8 @@ public class SearchProjectionIT {
 					DocumentElement nestedDocument = document.addObject( mainIndex.binding().nestedObject );
 					mainIndex.binding().nestedField.document1Value.write( nestedDocument );
 
-					DocumentElement nestedNestedDocument = nestedDocument.addObject( mainIndex.binding().nestedNestedObject );
+					DocumentElement nestedNestedDocument = nestedDocument.addObject( mainIndex
+							.binding().nestedNestedObject );
 					mainIndex.binding().nestedNestedField.document1Value.write( nestedNestedDocument );
 
 					DocumentElement flattedDocument = nestedDocument.addObject( mainIndex.binding().flattenedObject );
@@ -639,7 +641,8 @@ public class SearchProjectionIT {
 					DocumentElement nestedDocument = document.addObject( mainIndex.binding().nestedObject );
 					mainIndex.binding().nestedField.document2Value.write( nestedDocument );
 
-					DocumentElement nestedNestedDocument = nestedDocument.addObject( mainIndex.binding().nestedNestedObject );
+					DocumentElement nestedNestedDocument = nestedDocument.addObject( mainIndex
+							.binding().nestedNestedObject );
 					mainIndex.binding().nestedNestedField.document2Value.write( nestedNestedDocument );
 
 					DocumentElement flattedDocument = nestedDocument.addObject( mainIndex.binding().flattenedObject );
@@ -654,13 +657,14 @@ public class SearchProjectionIT {
 					DocumentElement nestedDocument = document.addObject( mainIndex.binding().nestedObject );
 					mainIndex.binding().nestedField.document3Value.write( nestedDocument );
 
-					DocumentElement nestedNestedDocument = nestedDocument.addObject( mainIndex.binding().nestedNestedObject );
+					DocumentElement nestedNestedDocument = nestedDocument.addObject( mainIndex
+							.binding().nestedNestedObject );
 					mainIndex.binding().nestedNestedField.document3Value.write( nestedNestedDocument );
 
 					DocumentElement flattedDocument = nestedDocument.addObject( mainIndex.binding().flattenedObject );
 					mainIndex.binding().flattenedField.document3Value.write( flattedDocument );
 				} )
-				.add( EMPTY, document -> { } )
+				.add( EMPTY, document -> {} )
 				.join();
 	}
 

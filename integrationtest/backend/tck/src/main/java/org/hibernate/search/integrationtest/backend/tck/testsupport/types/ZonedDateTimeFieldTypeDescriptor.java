@@ -67,12 +67,15 @@ public class ZonedDateTimeFieldTypeDescriptor extends FieldTypeDescriptor<ZonedD
 				return Arrays.asList(
 						LocalDateTime.of( 2018, 1, 1, 12, 58, 30, 0 ).atZone( ZoneId.of( "Africa/Cairo" /* UTC+2 */ ) ),
 						LocalDateTime.of( 2018, 2, 1, 8, 15, 30, 0 ).atZone( ZoneOffset.ofHours( -2 ) ),
-						LocalDateTime.of( 2018, 2, 1, 2, 15, 30, 0 ).atZone( ZoneId.of( "Pacific/Honolulu" /* UTC-10 */ ) ),
-						LocalDateTime.of( 2018, 2, 15, 20, 15, 30, 0 ).atZone( ZoneId.of( "Asia/Vladivostok" /* UTC+10 */ ) ),
+						LocalDateTime.of( 2018, 2, 1, 2, 15, 30, 0 ).atZone( ZoneId.of(
+								"Pacific/Honolulu" /* UTC-10 */ ) ),
+						LocalDateTime.of( 2018, 2, 15, 20, 15, 30, 0 ).atZone( ZoneId.of(
+								"Asia/Vladivostok" /* UTC+10 */ ) ),
 						LocalDateTime.of( 2018, 3, 1, 8, 15, 30, 0 ).atZone( ZoneId.of( "UTC" ) ),
 						LocalDateTime.of( 2018, 3, 1, 12, 15, 32, 0 ).atZone( ZoneOffset.ofHours( 4 ) ),
 						LocalDateTime.of( 2018, 3, 15, 9, 15, 30, 0 ).atZone( ZoneId.of( "UTC" ) ),
-						LocalDateTime.of( 2018, 3, 15, 11, 15, 30, 0 ).atZone( ZoneId.of( "Europe/Paris" /* UTC+1 */ ) ),
+						LocalDateTime.of( 2018, 3, 15, 11, 15, 30, 0 ).atZone( ZoneId.of(
+								"Europe/Paris" /* UTC+1 */ ) ),
 						LocalDateTime.of( 2018, 4, 1, 10, 15, 30, 0 ).atZone( ZoneId.of( "UTC" ) )
 				);
 			}
@@ -95,7 +98,8 @@ public class ZonedDateTimeFieldTypeDescriptor extends FieldTypeDescriptor<ZonedD
 			@Override
 			protected List<ZonedDateTime> createSingle() {
 				List<ZonedDateTime> values = new ArrayList<>();
-				for ( LocalDateTime localDateTime : LocalDateTimeFieldTypeDescriptor.INSTANCE.getIndexableValues().getSingle() ) {
+				for ( LocalDateTime localDateTime : LocalDateTimeFieldTypeDescriptor.INSTANCE.getIndexableValues()
+						.getSingle() ) {
 					for ( ZoneId zoneId : createIndexableZoneIdList() ) {
 						values.add( localDateTime.atZone( zoneId ) );
 					}
@@ -116,7 +120,8 @@ public class ZonedDateTimeFieldTypeDescriptor extends FieldTypeDescriptor<ZonedD
 	@Override
 	protected List<ZonedDateTime> createUniquelyMatchableValues() {
 		List<ZonedDateTime> values = new ArrayList<>();
-		for ( LocalDateTime localDateTime : LocalDateTimeFieldTypeDescriptor.INSTANCE.getIndexableValues().getSingle() ) {
+		for ( LocalDateTime localDateTime : LocalDateTimeFieldTypeDescriptor.INSTANCE.getIndexableValues()
+				.getSingle() ) {
 			for ( ZoneId zoneId : createIndexableZoneIdList() ) {
 				values.add( localDateTime.atZone( zoneId ) );
 			}

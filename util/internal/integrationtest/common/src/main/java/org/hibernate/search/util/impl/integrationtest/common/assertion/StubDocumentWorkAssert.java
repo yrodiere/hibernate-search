@@ -11,16 +11,17 @@ import static org.junit.Assert.fail;
 import java.util.Map;
 import java.util.Objects;
 
+import org.hibernate.search.util.common.impl.ToStringStyle;
+import org.hibernate.search.util.common.impl.ToStringTreeBuilder;
 import org.hibernate.search.util.impl.integrationtest.common.stub.StubTreeNodeDiffer;
 import org.hibernate.search.util.impl.integrationtest.common.stub.StubTreeNodeMismatch;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.document.StubDocumentNode;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.index.StubDocumentWork;
-import org.hibernate.search.util.common.impl.ToStringStyle;
-import org.hibernate.search.util.common.impl.ToStringTreeBuilder;
 
 public class StubDocumentWorkAssert {
 
-	public static final StubTreeNodeDiffer<StubDocumentNode> DEFAULT_DOCUMENT_DIFFER = StubTreeNodeDiffer.<StubDocumentNode>builder().build();
+	public static final StubTreeNodeDiffer<StubDocumentNode> DEFAULT_DOCUMENT_DIFFER = StubTreeNodeDiffer
+			.<StubDocumentNode>builder().build();
 
 	public static StubDocumentWorkAssert assertThatDocumentWork(StubDocumentWork work) {
 		return new StubDocumentWorkAssert( work );
@@ -62,9 +63,11 @@ public class StubDocumentWorkAssert {
 		hasAnyMismatch = hasAnyMismatch || mismatch;
 		mismatch = checkForMismatch( builder, "routingKey", expected.getRoutingKey(), actual.getRoutingKey() );
 		hasAnyMismatch = hasAnyMismatch || mismatch;
-		mismatch = checkForMismatch( builder, "commitStrategy", expected.getCommitStrategy(), actual.getCommitStrategy() );
+		mismatch = checkForMismatch( builder, "commitStrategy", expected.getCommitStrategy(), actual
+				.getCommitStrategy() );
 		hasAnyMismatch = hasAnyMismatch || mismatch;
-		mismatch = checkForMismatch( builder, "refreshStrategy", expected.getRefreshStrategy(), actual.getRefreshStrategy() );
+		mismatch = checkForMismatch( builder, "refreshStrategy", expected.getRefreshStrategy(), actual
+				.getRefreshStrategy() );
 		hasAnyMismatch = hasAnyMismatch || mismatch;
 
 		Map<String, StubTreeNodeMismatch> documentMismatches =

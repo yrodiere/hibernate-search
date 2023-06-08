@@ -8,7 +8,6 @@ package org.hibernate.search.documentation.mapper.orm.reindexing.reindexonupdate
 
 public enum SensorStatus {
 
-	ONLINE,
-	OFFLINE;
+	ONLINE, OFFLINE;
 
 }

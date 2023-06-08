@@ -89,7 +89,8 @@ class AnnotationPojoTypeMetadataContributorFactory {
 				processedAtLeastOneAnnotation = true;
 			}
 			for ( PojoMethodParameterModel<?> parameterModel : constructorModel.declaredParameters() ) {
-				MethodParameterMappingStep mappingContext = constructorMappingContext.parameter( parameterModel.index() );
+				MethodParameterMappingStep mappingContext = constructorMappingContext.parameter( parameterModel
+						.index() );
 				if ( processMethodParameterLevelAnnotations( mappingContext, constructorModel, parameterModel ) ) {
 					processedAtLeastOneAnnotation = true;
 				}
@@ -206,7 +207,8 @@ class AnnotationPojoTypeMetadataContributorFactory {
 		}
 
 		MethodParameterMappingAnnotationProcessorContext context =
-				new MethodParameterMappingAnnotationProcessorContextImpl( constructorModel, methodParameterModel, annotation,
+				new MethodParameterMappingAnnotationProcessorContextImpl( constructorModel, methodParameterModel,
+						annotation,
 						annotationHelper );
 
 		try ( BeanHolder<? extends MethodParameterMappingAnnotationProcessor<? super A>> processorHolder =

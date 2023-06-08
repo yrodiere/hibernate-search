@@ -14,8 +14,8 @@ import org.junit.runners.model.InitializationError;
 final class BlockJUnit4ClassRunnerWithEnclosingTestClass extends BlockJUnit4ClassRunner {
 	private final Object enclosingTestInstance;
 
-	public BlockJUnit4ClassRunnerWithEnclosingTestClass(Class<?> testClass, Object enclosingTestInstance)
-			throws InitializationError {
+	public BlockJUnit4ClassRunnerWithEnclosingTestClass(Class<?> testClass,
+			Object enclosingTestInstance) throws InitializationError {
 		super( testClass );
 		this.enclosingTestInstance = enclosingTestInstance;
 	}

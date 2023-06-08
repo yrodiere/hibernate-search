@@ -7,6 +7,7 @@
 package org.hibernate.search.mapper.orm.session.impl;
 
 import java.lang.invoke.MethodHandles;
+
 import javax.transaction.Status;
 import javax.transaction.Synchronization;
 
@@ -47,7 +48,8 @@ class AfterCommitIndexingPlanSynchronization implements Synchronization {
 	public void afterCompletion(int i) {
 		try {
 			if ( Status.STATUS_COMMITTED == i ) {
-				log.tracef( "Processing Transaction's afterCompletion() phase for %s. Executing indexing plan.", transactionIdentifier );
+				log.tracef( "Processing Transaction's afterCompletion() phase for %s. Executing indexing plan.",
+						transactionIdentifier );
 				synchronizationStrategy.executeAndSynchronize( indexingPlan );
 			}
 			else {

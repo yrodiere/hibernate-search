@@ -61,7 +61,8 @@ class PojoIndexedEmbeddedIdentityMappingCollector<E> implements PojoIdentityMapp
 
 		embeddedTypeNodeBuilder.property( identifierModelPath.getPropertyModel().name() )
 				.value( ContainerExtractorPath.defaultExtractors() )
-				.valueBinder( identifierBinder == null ? null : new IdentifierBinderToValueBinderAdapter( identifierBinder ),
+				.valueBinder( identifierBinder == null ?
+						null : new IdentifierBinderToValueBinderAdapter( identifierBinder ),
 						params, null,
 						context -> context.standardTypeOptionsStep().searchable( Searchable.YES )
 								.projectable( Projectable.YES ) );

@@ -36,7 +36,8 @@ public final class MarkerBindingProcessor implements PropertyMappingAnnotationPr
 		mapping.marker( binder, params );
 	}
 
-	private MarkerBinder createBinder(MarkerBinderRef binderReferenceAnnotation, MappingAnnotationProcessorContext context) {
+	private MarkerBinder createBinder(MarkerBinderRef binderReferenceAnnotation,
+			MappingAnnotationProcessorContext context) {
 		Optional<BeanReference<? extends MarkerBinder>> binderReference = context.toBeanReference(
 				MarkerBinder.class,
 				MarkerBinderRef.UndefinedBinderImplementationType.class,

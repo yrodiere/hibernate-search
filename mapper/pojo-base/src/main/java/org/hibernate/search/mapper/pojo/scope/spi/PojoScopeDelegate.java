@@ -56,7 +56,8 @@ public interface PojoScopeDelegate<R extends EntityReference, E, C> {
 	 * @deprecated Use {@link #workspace(String)} instead.
 	 */
 	@Deprecated
-	PojoScopeWorkspace workspace(org.hibernate.search.engine.backend.session.spi.DetachedBackendSessionContext sessionContext);
+	PojoScopeWorkspace workspace(
+			org.hibernate.search.engine.backend.session.spi.DetachedBackendSessionContext sessionContext);
 
 	PojoScopeWorkspace workspace(String tenantId);
 
@@ -71,7 +72,8 @@ public interface PojoScopeDelegate<R extends EntityReference, E, C> {
 	 * @deprecated Use {@link #massIndexer(PojoMassIndexingContext, Set)} instead.
 	 */
 	@Deprecated
-	PojoMassIndexer massIndexer(PojoMassIndexingContext context, org.hibernate.search.engine.backend.session.spi.DetachedBackendSessionContext detachedSession);
+	PojoMassIndexer massIndexer(PojoMassIndexingContext context,
+			org.hibernate.search.engine.backend.session.spi.DetachedBackendSessionContext detachedSession);
 
 	PojoMassIndexer massIndexer(PojoMassIndexingContext context, Set<String> tenantIds);
 

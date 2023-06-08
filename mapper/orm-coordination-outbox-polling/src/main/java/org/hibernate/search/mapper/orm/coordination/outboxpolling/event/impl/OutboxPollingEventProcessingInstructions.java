@@ -15,7 +15,8 @@ final class OutboxPollingEventProcessingInstructions {
 	final Instant expiration;
 	final Optional<OutboxEventFinder> eventFinder;
 
-	public OutboxPollingEventProcessingInstructions(Clock clock, Instant expiration, Optional<OutboxEventFinder> eventFinder) {
+	public OutboxPollingEventProcessingInstructions(Clock clock, Instant expiration, Optional<
+			OutboxEventFinder> eventFinder) {
 		this.clock = clock;
 		this.expiration = expiration;
 		this.eventFinder = eventFinder;

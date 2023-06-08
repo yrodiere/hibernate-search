@@ -7,7 +7,6 @@
 package org.hibernate.search.documentation.backend.elasticsearch.layout;
 
 // tag::include[]
-
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -30,7 +29,8 @@ public class CustomLayoutStrategy implements IndexLayoutStrategy {
 	public String createInitialElasticsearchIndexName(String hibernateSearchIndexName) {
 		// Clock is Clock.systemUTC() in production, may be overridden in tests
 		Clock clock = MyApplicationClock.get();
-		return hibernateSearchIndexName + "-"
+		return hibernateSearchIndexName
+				+ "-"
 				+ INDEX_SUFFIX_FORMATTER.format( Instant.now( clock ) );
 	}
 

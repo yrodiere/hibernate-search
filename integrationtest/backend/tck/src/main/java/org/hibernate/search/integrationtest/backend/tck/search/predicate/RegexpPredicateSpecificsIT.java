@@ -40,10 +40,13 @@ public class RegexpPredicateSpecificsIT {
 	private static final String EMPTY = "empty";
 
 	// taken from the current project documentation:
-	private static final String TEXT_1 = "Hibernate Search will transparently index every entity persisted, updated or removed through Hibernate ORM";
+	private static final String TEXT_1 =
+			"Hibernate Search will transparently index every entity persisted, updated or removed through Hibernate ORM";
 	private static final String TEXT_2 = "The above paragraphs gave you an overview of Hibernate Search";
-	private static final String TEXT_3 = "Applications targeted by Hibernate search generally use an entity-based model to represent data.";
-	private static final String TEXT_4 = "     Hibernate        Search   will transparently index every entity persisted, updated or removed through Hibernate ORM";
+	private static final String TEXT_3 =
+			"Applications targeted by Hibernate search generally use an entity-based model to represent data.";
+	private static final String TEXT_4 =
+			"     Hibernate        Search   will transparently index every entity persisted, updated or removed through Hibernate ORM";
 	private static final String TEXT_5 = "7.39";
 
 	private static final String TEXT_COMPLEMENT = "a~bc";
@@ -86,11 +89,14 @@ public class RegexpPredicateSpecificsIT {
 				.where( f -> f.regexp().field( absoluteFieldPath ).matching( queryString ) );
 
 		assertThatQuery( createQuery.apply( "Hibernate.*" ) ).hasNoHits();
-		assertThatQuery( createQuery.apply( "hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1, DOCUMENT_2, DOCUMENT_3, DOCUMENT_4 );
+		assertThatQuery( createQuery.apply( "hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1,
+				DOCUMENT_2, DOCUMENT_3, DOCUMENT_4 );
 		assertThatQuery( createQuery.apply( "Hibernate Search.*" ) ).hasNoHits();
 		assertThatQuery( createQuery.apply( "hibernate search.*" ) ).hasNoHits();
-		assertThatQuery( createQuery.apply( "search.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1, DOCUMENT_2, DOCUMENT_3, DOCUMENT_4 );
-		assertThatQuery( createQuery.apply( ".*search" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1, DOCUMENT_2, DOCUMENT_3, DOCUMENT_4 );
+		assertThatQuery( createQuery.apply( "search.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1,
+				DOCUMENT_2, DOCUMENT_3, DOCUMENT_4 );
+		assertThatQuery( createQuery.apply( ".*search" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1,
+				DOCUMENT_2, DOCUMENT_3, DOCUMENT_4 );
 	}
 
 	@Test
@@ -102,7 +108,8 @@ public class RegexpPredicateSpecificsIT {
 
 		if ( TckConfiguration.get().getBackendFeatures().regexpExpressionIsNormalized() ) {
 			assertThatQuery( createQuery.apply( "Hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1 );
-			assertThatQuery( createQuery.apply( "hibernate search.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1 );
+			assertThatQuery( createQuery.apply( "hibernate search.*" ) ).hasDocRefHitsAnyOrder( index.typeName(),
+					DOCUMENT_1 );
 		}
 		else {
 			assertThatQuery( createQuery.apply( "Hibernate.*" ) ).hasNoHits();
@@ -110,7 +117,8 @@ public class RegexpPredicateSpecificsIT {
 		}
 
 		assertThatQuery( createQuery.apply( "hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1 );
-		assertThatQuery( createQuery.apply( "hibernate search.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1 );
+		assertThatQuery( createQuery.apply( "hibernate search.*" ) ).hasDocRefHitsAnyOrder( index.typeName(),
+				DOCUMENT_1 );
 		assertThatQuery( createQuery.apply( "search.*" ) ).hasNoHits();
 		assertThatQuery( createQuery.apply( ".*search" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_2 );
 	}
@@ -124,7 +132,8 @@ public class RegexpPredicateSpecificsIT {
 
 		assertThatQuery( createQuery.apply( "Hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1 );
 		assertThatQuery( createQuery.apply( "hibernate.*" ) ).hasNoHits();
-		assertThatQuery( createQuery.apply( "Hibernate Search.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1 );
+		assertThatQuery( createQuery.apply( "Hibernate Search.*" ) ).hasDocRefHitsAnyOrder( index.typeName(),
+				DOCUMENT_1 );
 		assertThatQuery( createQuery.apply( "hibernate search.*" ) ).hasNoHits();
 		assertThatQuery( createQuery.apply( "search.*" ) ).hasNoHits();
 		assertThatQuery( createQuery.apply( ".*search" ) ).hasNoHits();
@@ -137,12 +146,16 @@ public class RegexpPredicateSpecificsIT {
 		Function<String, SearchQueryFinalStep<DocumentReference>> createQuery = queryString -> scope.query()
 				.where( f -> f.regexp().field( absoluteFieldPath ).matching( queryString ) );
 
-		assertThatQuery( createQuery.apply( "(\\ )+Hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_4 );
-		assertThatQuery( createQuery.apply( "(\\ )*Hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1, DOCUMENT_4 );
-		assertThatQuery( createQuery.apply( "(\\ )?Hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1 );
+		assertThatQuery( createQuery.apply( "(\\ )+Hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(),
+				DOCUMENT_4 );
+		assertThatQuery( createQuery.apply( "(\\ )*Hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_1,
+				DOCUMENT_4 );
+		assertThatQuery( createQuery.apply( "(\\ )?Hibernate.*" ) ).hasDocRefHitsAnyOrder( index.typeName(),
+				DOCUMENT_1 );
 
 		assertThatQuery( createQuery.apply( "[739]+\\.[739]+" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_5 );
-		assertThatQuery( createQuery.apply( "[739]+(\\.)?[739]+" ) ).hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_5 );
+		assertThatQuery( createQuery.apply( "[739]+(\\.)?[739]+" ) ).hasDocRefHitsAnyOrder( index.typeName(),
+				DOCUMENT_5 );
 		assertThatQuery( createQuery.apply( "[739]+(\\.)?[79]+" ) ).hasNoHits();
 	}
 
@@ -367,15 +380,15 @@ public class RegexpPredicateSpecificsIT {
 
 		public void contribute(BulkIndexer indexer) {
 			indexer.add( DOCUMENT_1, document -> {
-						document.addValue( index.binding().analyzedField.reference, TEXT_1 );
-						document.addValue( index.binding().normalizedField.reference, TEXT_1 );
-						document.addValue( index.binding().nonAnalyzedField.reference, TEXT_1 );
-						document.addValue( index.binding().complementField.reference, TEXT_COMPLEMENT );
-						document.addValue( index.binding().intervalField.reference, TEXT_INTERVAL );
-						document.addValue( index.binding().intersectionField.reference, TEXT_INTERSECTION );
-						document.addValue( index.binding().anyStringField.reference, TEXT_ANYSTRING );
+				document.addValue( index.binding().analyzedField.reference, TEXT_1 );
+				document.addValue( index.binding().normalizedField.reference, TEXT_1 );
+				document.addValue( index.binding().nonAnalyzedField.reference, TEXT_1 );
+				document.addValue( index.binding().complementField.reference, TEXT_COMPLEMENT );
+				document.addValue( index.binding().intervalField.reference, TEXT_INTERVAL );
+				document.addValue( index.binding().intersectionField.reference, TEXT_INTERSECTION );
+				document.addValue( index.binding().anyStringField.reference, TEXT_ANYSTRING );
 
-					} )
+			} )
 					.add( DOCUMENT_2, document -> {
 						document.addValue( index.binding().analyzedField.reference, TEXT_2 );
 						document.addValue( index.binding().normalizedField.reference, TEXT_2 );
@@ -405,7 +418,7 @@ public class RegexpPredicateSpecificsIT {
 						document.addValue( index.binding().normalizedField.reference, TEXT_5 );
 						document.addValue( index.binding().nonAnalyzedField.reference, TEXT_5 );
 					} )
-					.add( EMPTY, document -> { } );
+					.add( EMPTY, document -> {} );
 		}
 	}
 }

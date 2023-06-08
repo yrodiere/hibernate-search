@@ -6,17 +6,17 @@
  */
 package org.hibernate.search.backend.lucene.document.model.dsl.impl;
 
-import org.hibernate.search.backend.lucene.document.model.impl.LuceneIndexObjectFieldTemplate;
 import org.hibernate.search.backend.lucene.document.model.impl.LuceneIndexCompositeNode;
+import org.hibernate.search.backend.lucene.document.model.impl.LuceneIndexObjectFieldTemplate;
 import org.hibernate.search.backend.lucene.types.impl.LuceneIndexCompositeNodeType;
-import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.engine.backend.document.model.spi.IndexFieldInclusion;
+import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.util.common.pattern.spi.SimpleGlobPattern;
 
 class LuceneIndexObjectFieldTemplateBuilder
 		extends AbstractLuceneIndexFieldTemplateBuilder<
-					LuceneIndexObjectFieldTemplateBuilder, LuceneIndexObjectFieldTemplate
-				> {
+				LuceneIndexObjectFieldTemplateBuilder,
+				LuceneIndexObjectFieldTemplate> {
 
 	private final LuceneIndexCompositeNodeType.Builder typeBuilder;
 

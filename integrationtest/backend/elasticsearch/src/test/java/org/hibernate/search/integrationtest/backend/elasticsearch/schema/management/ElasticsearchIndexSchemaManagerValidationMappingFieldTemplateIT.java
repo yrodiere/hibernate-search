@@ -7,8 +7,8 @@
 package org.hibernate.search.integrationtest.backend.elasticsearch.schema.management;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.hibernate.search.integrationtest.backend.elasticsearch.schema.management.ElasticsearchIndexSchemaManagerTestUtils.hasValidationFailureReport;
 import static org.hibernate.search.integrationtest.backend.elasticsearch.schema.management.ElasticsearchIndexSchemaManagerTestUtils.defaultMetadataMappingForInitialization;
+import static org.hibernate.search.integrationtest.backend.elasticsearch.schema.management.ElasticsearchIndexSchemaManagerTestUtils.hasValidationFailureReport;
 
 import java.util.EnumSet;
 
@@ -71,29 +71,29 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate1': {"
-									+ "'path_match': '*_t1',"
-									+ "'mapping': { 'type': 'integer', 'doc_values': false }"
-							+ "} },"
-							+ "{'myTemplate2': {"
-									+ "'path_match': '*_t2',"
-									+ "'mapping': { 'type': 'text', 'analyzer': 'default' }"
-							+ "} },"
-							+ "{ 'myTemplate3': {"
-									+ "'path_match': '*_t3',"
-									+ "'mapping': { 'type': 'keyword' }"
-							+ "} },"
-							+ "{ 'myTemplate4': {"
-									+ "'match_mapping_type': 'object',"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'nested' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate1': {"
+						+ "'path_match': '*_t1',"
+						+ "'mapping': { 'type': 'integer', 'doc_values': false }"
+						+ "} },"
+						+ "{'myTemplate2': {"
+						+ "'path_match': '*_t2',"
+						+ "'mapping': { 'type': 'text', 'analyzer': 'default' }"
+						+ "} },"
+						+ "{ 'myTemplate3': {"
+						+ "'path_match': '*_t3',"
+						+ "'mapping': { 'type': 'keyword' }"
+						+ "} },"
+						+ "{ 'myTemplate4': {"
+						+ "'match_mapping_type': 'object',"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'nested' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		setupAndValidate( index );
@@ -110,20 +110,20 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate1': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'integer', 'doc_values': false }"
-							+ "} },"
-							+ "{ 'myTemplate3': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'keyword' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate1': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'integer', 'doc_values': false }"
+						+ "} },"
+						+ "{ 'myTemplate3': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'keyword' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -144,28 +144,28 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate1': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'integer', 'doc_values': false }"
-							+ "} },"
-							+ "{'myTemplate2': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'text', 'analyzer': 'default' }"
-							+ "} },"
-							+ "{ 'extraTemplate': {"
-									+ "'path_match': '*_extra',"
-									+ "'mapping': { 'type': 'keyword' }"
-							+ "} },"
-							+ "{ 'myTemplate3': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'keyword' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate1': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'integer', 'doc_values': false }"
+						+ "} },"
+						+ "{'myTemplate2': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'text', 'analyzer': 'default' }"
+						+ "} },"
+						+ "{ 'extraTemplate': {"
+						+ "'path_match': '*_extra',"
+						+ "'mapping': { 'type': 'keyword' }"
+						+ "} },"
+						+ "{ 'myTemplate3': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'keyword' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -186,24 +186,24 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate2': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'text', 'analyzer': 'default' }"
-							+ "} },"
-							+ "{'myTemplate1': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'integer', 'doc_values': false }"
-							+ "} },"
-							+ "{ 'myTemplate3': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'keyword' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate2': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'text', 'analyzer': 'default' }"
+						+ "} },"
+						+ "{'myTemplate1': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'integer', 'doc_values': false }"
+						+ "} },"
+						+ "{ 'myTemplate3': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'keyword' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -225,20 +225,20 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate1': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'integer', 'doc_values': false }"
-							+ "} },"
-							+ "{ 'myTemplate1': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'keyword' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate1': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'integer', 'doc_values': false }"
+						+ "} },"
+						+ "{ 'myTemplate1': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'keyword' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -261,16 +261,16 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate': {"
-									+ "'match_mapping_type': 'object',"
-									+ "'mapping': { 'type': 'nested' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate': {"
+						+ "'match_mapping_type': 'object',"
+						+ "'mapping': { 'type': 'nested' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -291,17 +291,17 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate': {"
-									+ "'match_mapping_type': 'object',"
-									+ "'path_match': '*_suffix2',"
-									+ "'mapping': { 'type': 'nested' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate': {"
+						+ "'match_mapping_type': 'object',"
+						+ "'path_match': '*_suffix2',"
+						+ "'mapping': { 'type': 'nested' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -321,16 +321,16 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate': {"
-									+ "'path_match': '*_suffix',"
-									+ "'mapping': { 'type': 'keyword' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate': {"
+						+ "'path_match': '*_suffix',"
+						+ "'mapping': { 'type': 'keyword' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -350,16 +350,16 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'nested' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'nested' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -379,17 +379,17 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate': {"
-									+ "'path_match': '*',"
-									+ "'match_mapping_type': 'long',"
-									+ "'mapping': { 'type': 'nested' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate': {"
+						+ "'path_match': '*',"
+						+ "'match_mapping_type': 'long',"
+						+ "'mapping': { 'type': 'nested' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -409,17 +409,17 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate': {"
-									+ "'path_match': '*',"
-									+ "'match_mapping_type': 'long',"
-									+ "'mapping': { 'type': 'keyword' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate': {"
+						+ "'path_match': '*',"
+						+ "'match_mapping_type': 'long',"
+						+ "'mapping': { 'type': 'keyword' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -439,17 +439,17 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate': {"
-									+ "'path_match': '*',"
-									+ "'match': '*_suffix',"
-									+ "'mapping': { 'type': 'keyword' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate': {"
+						+ "'path_match': '*',"
+						+ "'match': '*_suffix',"
+						+ "'mapping': { 'type': 'keyword' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )
@@ -469,16 +469,16 @@ public class ElasticsearchIndexSchemaManagerValidationMappingFieldTemplateIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate();
 		elasticSearchClient.index( index.name() ).type().putMapping(
 				"{"
-					+ "'dynamic_templates': ["
-							+ "{'myTemplate': {"
-									+ "'path_match': '*',"
-									+ "'mapping': { 'type': 'integer' }"
-							+ "} }"
-					+ "],"
-					+ "'properties': {"
-							+ defaultMetadataMappingForInitialization()
-					+ "}"
-				+ "}"
+						+ "'dynamic_templates': ["
+						+ "{'myTemplate': {"
+						+ "'path_match': '*',"
+						+ "'mapping': { 'type': 'integer' }"
+						+ "} }"
+						+ "],"
+						+ "'properties': {"
+						+ defaultMetadataMappingForInitialization()
+						+ "}"
+						+ "}"
 		);
 
 		assertThatThrownBy( () -> setupAndValidate( index ) )

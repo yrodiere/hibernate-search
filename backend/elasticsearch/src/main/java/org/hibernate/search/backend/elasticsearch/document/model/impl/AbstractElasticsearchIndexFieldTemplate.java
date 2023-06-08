@@ -10,14 +10,12 @@ import org.hibernate.search.engine.backend.document.model.spi.AbstractIndexField
 import org.hibernate.search.engine.backend.document.model.spi.IndexFieldInclusion;
 import org.hibernate.search.util.common.pattern.spi.SimpleGlobPattern;
 
-
 public abstract class AbstractElasticsearchIndexFieldTemplate<FT>
 		extends AbstractIndexFieldTemplate<
-						ElasticsearchIndexModel,
-						ElasticsearchIndexField,
-						ElasticsearchIndexCompositeNode,
-						FT
-				> {
+				ElasticsearchIndexModel,
+				ElasticsearchIndexField,
+				ElasticsearchIndexCompositeNode,
+				FT> {
 
 	AbstractElasticsearchIndexFieldTemplate(ElasticsearchIndexCompositeNode declaringParent,
 			SimpleGlobPattern absolutePathGlob, FT type, IndexFieldInclusion inclusion, boolean multiValued) {

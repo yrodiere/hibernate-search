@@ -9,6 +9,7 @@ package org.hibernate.search.integrationtest.showcase.library.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
@@ -71,7 +72,8 @@ public class Library extends AbstractEntity<Integer> {
 	public Library() {
 	}
 
-	public Library(int id, String name, int collectionSize, double latitude, double longitude, LibraryServiceOption... services) {
+	public Library(int id, String name, int collectionSize, double latitude, double longitude,
+			LibraryServiceOption... services) {
 		this.id = id;
 		this.name = name;
 		this.collectionSize = collectionSize;

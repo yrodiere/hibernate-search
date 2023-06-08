@@ -20,9 +20,9 @@ import org.hibernate.search.engine.search.projection.spi.ProjectionTypeKeys;
 import org.hibernate.search.engine.search.sort.spi.SortTypeKeys;
 import org.hibernate.search.engine.spatial.GeoPoint;
 
-
 class ElasticsearchGeoPointIndexFieldTypeOptionsStep
-		extends AbstractElasticsearchSimpleStandardFieldTypeOptionsStep<ElasticsearchGeoPointIndexFieldTypeOptionsStep, GeoPoint> {
+		extends AbstractElasticsearchSimpleStandardFieldTypeOptionsStep<ElasticsearchGeoPointIndexFieldTypeOptionsStep,
+				GeoPoint> {
 
 	ElasticsearchGeoPointIndexFieldTypeOptionsStep(ElasticsearchIndexFieldTypeBuildContext buildContext) {
 		super( buildContext, GeoPoint.class, DataTypes.GEO_POINT );
@@ -59,7 +59,8 @@ class ElasticsearchGeoPointIndexFieldTypeOptionsStep
 
 		if ( resolvedProjectable ) {
 			builder.projectable( true );
-			builder.queryElementFactory( ProjectionTypeKeys.FIELD, new ElasticsearchFieldProjection.Factory<>( codec ) );
+			builder.queryElementFactory( ProjectionTypeKeys.FIELD, new ElasticsearchFieldProjection.Factory<>(
+					codec ) );
 			builder.queryElementFactory( ProjectionTypeKeys.DISTANCE,
 					new ElasticsearchDistanceToFieldProjection.Factory() );
 		}

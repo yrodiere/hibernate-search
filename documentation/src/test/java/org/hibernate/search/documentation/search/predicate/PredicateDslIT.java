@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.documentation.testsupport.BackendConfigurations;
@@ -44,7 +45,8 @@ public class PredicateDslIT {
 	private static final int BOOK4_ID = 4;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -173,11 +175,11 @@ public class PredicateDslIT {
 			// tag::and[]
 			List<Book> hits = searchSession.search( Book.class )
 					.where( f -> f.and(
-									f.match().field( "title" )
-											.matching( "robot" ), // <1>
-									f.match().field( "description" )
-											.matching( "crime" ) // <2>
-							)
+							f.match().field( "title" )
+									.matching( "robot" ), // <1>
+							f.match().field( "description" )
+									.matching( "crime" ) // <2>
+					)
 					)
 					.fetchHits( 20 ); // <3>
 			// end::and[]
@@ -246,11 +248,11 @@ public class PredicateDslIT {
 			// tag::or[]
 			List<Book> hits = searchSession.search( Book.class )
 					.where( f -> f.or(
-									f.match().field( "title" )
-											.matching( "robot" ), // <1>
-									f.match().field( "description" )
-											.matching( "investigation" ) // <2>
-							)
+							f.match().field( "title" )
+									.matching( "robot" ), // <1>
+							f.match().field( "description" )
+									.matching( "investigation" ) // <2>
+					)
 					)
 					.fetchHits( 20 ); // <3>
 			// end::or[]
@@ -1191,8 +1193,11 @@ public class PredicateDslIT {
 
 	private interface MySearchParameters {
 		Genre getGenreFilter();
+
 		String getFullTextFilter();
+
 		Integer getPageCountMaxFilter();
+
 		List<String> getAuthorFilters();
 	}
 }

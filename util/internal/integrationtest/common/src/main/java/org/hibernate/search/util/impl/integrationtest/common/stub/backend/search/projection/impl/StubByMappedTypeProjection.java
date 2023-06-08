@@ -25,7 +25,8 @@ final class StubByMappedTypeProjection<P> extends StubSearchProjection<P> {
 	}
 
 	@Override
-	public DelegateAndExtractedValue<P> extract(ProjectionHitMapper<?> projectionHitMapper, Iterator<?> projectionFromIndex,
+	public DelegateAndExtractedValue<P> extract(ProjectionHitMapper<?> projectionHitMapper, Iterator<
+			?> projectionFromIndex,
 			StubSearchProjectionContext context) {
 		Object selfProjectionFromIndex = projectionFromIndex.next();
 		String typeName;
@@ -56,7 +57,7 @@ final class StubByMappedTypeProjection<P> extends StubSearchProjection<P> {
 	@Override
 	@SuppressWarnings("unchecked")
 	public P transform(LoadingResult<?> loadingResult, Object extractedData, StubSearchProjectionContext context) {
-		return ((DelegateAndExtractedValue<P>) extractedData).transform( loadingResult, context );
+		return ( (DelegateAndExtractedValue<P>) extractedData ).transform( loadingResult, context );
 	}
 
 	@Override

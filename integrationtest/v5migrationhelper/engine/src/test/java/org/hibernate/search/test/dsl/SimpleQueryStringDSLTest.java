@@ -6,20 +6,22 @@
  */
 package org.hibernate.search.test.dsl;
 
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.testsupport.AnalysisNames;
 import org.hibernate.search.testsupport.TestForIssue;
 import org.hibernate.search.testsupport.junit.PortedToSearch6;
 import org.hibernate.search.testsupport.junit.SearchFactoryHolder;
 import org.hibernate.search.testsupport.junit.SearchITHelper;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.rules.ExpectedException;
+
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 
 /**
  * @author Guillaume Smet
@@ -87,11 +89,11 @@ public class SimpleQueryStringDSLTest {
 		QueryBuilder qb = getCoffeeQueryBuilder();
 
 		Query query = qb.simpleQueryString()
-			.onFields( "name", "summary" ).boostedTo( 5f )
-			.andField( "description" )
-			.withAndAsDefaultOperator()
-			.matching( "fruity arabicas south american" )
-			.createQuery();
+				.onFields( "name", "summary" ).boostedTo( 5f )
+				.andField( "description" )
+				.withAndAsDefaultOperator()
+				.matching( "fruity arabicas south american" )
+				.createQuery();
 		helper.assertThatQuery( query ).from( Coffee.class )
 				.sort( new Sort( SortField.FIELD_SCORE ) )
 				.matchesExactlyIds( "Decaffeinato", "Ristretto" );
@@ -114,10 +116,10 @@ public class SimpleQueryStringDSLTest {
 		QueryBuilder qb = getCoffeeQueryBuilder();
 
 		Query query = qb.simpleQueryString()
-			.onFields( "name", "summary", "description" )
-			.withAndAsDefaultOperator()
-			.matching( "fruity arabica~2" )
-			.createQuery();
+				.onFields( "name", "summary", "description" )
+				.withAndAsDefaultOperator()
+				.matching( "fruity arabica~2" )
+				.createQuery();
 
 		helper.assertThatQuery( query ).from( Coffee.class )
 				.sort( qb.sort().byField( Coffee.NAME_SORT ).createSort() )
@@ -165,6 +167,7 @@ public class SimpleQueryStringDSLTest {
 				.sort( qb.sort().byField( "title_sort" ).createSort() )
 				.matchesExactlyIds( "Dom Garcie de Navarre", "Le Grand Molière illustré" );
 	}
+
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-2700")
 	@Category(PortedToSearch6.class)
@@ -447,14 +450,15 @@ public class SimpleQueryStringDSLTest {
 
 		helper.add(
 				new Book( "Le chat qui regardait les étoiles", "Lilian Jackson Braun" ),
-				new Book( "Le chat qui déplaçait des montagnes", "Lilian Jackson Braun" ) ,
+				new Book( "Le chat qui déplaçait des montagnes", "Lilian Jackson Braun" ),
 				new Book( "Le Grand Molière illustré", "Caroline Guillot" ),
 				new Book( "Tartuffe", "Molière" ),
 				new Book( "Dom Garcie de Navarre", "moliere" ) // Molière all lowercase and without an accent
 		);
 	}
 
-	private void createCoffee(String name, String summary, String description, int intensity, CoffeeBrand brand, CoffeeMaker maker) {
+	private void createCoffee(String name, String summary, String description, int intensity, CoffeeBrand brand,
+			CoffeeMaker maker) {
 		Coffee coffee = new Coffee();
 		coffee.setId( name );
 		coffee.setName( name );

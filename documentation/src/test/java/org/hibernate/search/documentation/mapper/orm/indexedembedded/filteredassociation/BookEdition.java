@@ -17,8 +17,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextFi
 public class BookEdition {
 
 	public enum Status {
-		PUBLISHING,
-		RETIRED
+		PUBLISHING, RETIRED
 	}
 
 	@Id

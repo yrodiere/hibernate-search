@@ -85,9 +85,8 @@ public abstract class AbstractBackendHolder {
 					integrationPartialBuildState.finalizer( propertySource, unusedPropertyChecker );
 			mapping = finalizer.finalizeMapping(
 					mappingKey,
-					(context, partialMapping) ->
-							partialMapping.finalizeMapping(
-									StubMappingSchemaManagementStrategy.DROP_AND_CREATE_AND_DROP )
+					(context, partialMapping) -> partialMapping.finalizeMapping(
+							StubMappingSchemaManagementStrategy.DROP_AND_CREATE_AND_DROP )
 			);
 			finalizer.finalizeIntegration();
 		}
@@ -127,8 +126,8 @@ public abstract class AbstractBackendHolder {
 		return map;
 	}
 
-	protected abstract ConfigurationPropertySource getDefaultBackendProperties(TemporaryFileHolder temporaryFileHolder)
-			throws IOException;
+	protected abstract ConfigurationPropertySource getDefaultBackendProperties(
+			TemporaryFileHolder temporaryFileHolder) throws IOException;
 
 	protected abstract String getConfigurationParameter();
 }

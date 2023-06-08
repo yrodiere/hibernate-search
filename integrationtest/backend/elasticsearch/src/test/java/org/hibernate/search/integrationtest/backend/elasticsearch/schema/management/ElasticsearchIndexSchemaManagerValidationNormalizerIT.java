@@ -61,26 +61,26 @@ public class ElasticsearchIndexSchemaManagerValidationNormalizerIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate(
 				"index.analysis",
 				"{"
-					+ "'normalizer': {"
-							+ "'custom-normalizer': {"
-									+ "'char_filter': ['custom-char-mapping'],"
-									+ "'filter': ['custom-elision']"
-							+ "}"
-					+ "},"
-					+ "'char_filter': {"
-							+ "'custom-char-mapping': {"
-									+ "'type': 'mapping',"
-									+ "'mappings': ['foo => bar']"
-							+ "}"
-					+ "},"
-					+ "'filter': {"
-							+ "'custom-elision': {"
-									+ "'type': 'elision',"
-									+ "'articles': ['l', 'd']"
-							+ "}"
-					+ "}"
-				+ "}"
-				);
+						+ "'normalizer': {"
+						+ "'custom-normalizer': {"
+						+ "'char_filter': ['custom-char-mapping'],"
+						+ "'filter': ['custom-elision']"
+						+ "}"
+						+ "},"
+						+ "'char_filter': {"
+						+ "'custom-char-mapping': {"
+						+ "'type': 'mapping',"
+						+ "'mappings': ['foo => bar']"
+						+ "}"
+						+ "},"
+						+ "'filter': {"
+						+ "'custom-elision': {"
+						+ "'type': 'elision',"
+						+ "'articles': ['l', 'd']"
+						+ "}"
+						+ "}"
+						+ "}"
+		);
 
 		putMapping();
 
@@ -94,20 +94,20 @@ public class ElasticsearchIndexSchemaManagerValidationNormalizerIT {
 		elasticSearchClient.index( index.name() ).deleteAndCreate(
 				"index.analysis",
 				"{"
-					+ "'char_filter': {"
-							+ "'custom-char-mapping': {"
-									+ "'type': 'mapping',"
-									+ "'mappings': ['foo => bar']"
-							+ "}"
-					+ "},"
-					+ "'filter': {"
-							+ "'custom-elision': {"
-									+ "'type': 'elision',"
-									+ "'articles': ['l', 'd']"
-							+ "}"
-					+ "}"
-				+ "}"
-				);
+						+ "'char_filter': {"
+						+ "'custom-char-mapping': {"
+						+ "'type': 'mapping',"
+						+ "'mappings': ['foo => bar']"
+						+ "}"
+						+ "},"
+						+ "'filter': {"
+						+ "'custom-elision': {"
+						+ "'type': 'elision',"
+						+ "'articles': ['l', 'd']"
+						+ "}"
+						+ "}"
+						+ "}"
+		);
 
 		putMapping();
 

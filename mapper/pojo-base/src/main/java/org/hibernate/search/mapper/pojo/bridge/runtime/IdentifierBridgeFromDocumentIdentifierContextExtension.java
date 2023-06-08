@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.mapper.pojo.bridge.runtime;
 
-
 import java.util.Optional;
 
 import org.hibernate.search.mapper.pojo.bridge.runtime.spi.BridgeSessionContext;
@@ -36,6 +35,7 @@ public interface IdentifierBridgeFromDocumentIdentifierContextExtension<T> {
 	 * @return An optional containing the extended context ({@link T}) in case
 	 * of success, or an empty optional otherwise.
 	 */
-	Optional<T> extendOptional(IdentifierBridgeFromDocumentIdentifierContext original, BridgeSessionContext sessionContext);
+	Optional<T> extendOptional(IdentifierBridgeFromDocumentIdentifierContext original,
+			BridgeSessionContext sessionContext);
 
 }

@@ -6,17 +6,18 @@
  */
 package org.hibernate.search.test.jpa;
 
-import org.apache.lucene.document.IntPoint;
-import org.apache.lucene.search.Query;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.apache.lucene.document.IntPoint;
+import org.apache.lucene.search.Query;
 
 /**
  * @author Emmanuel Bernard
@@ -41,7 +42,8 @@ public class EntityManagerTest extends JPATestCase {
 	@Test
 	public void testMassIndexer() throws Exception {
 		// verify against index
-		assertEquals( "At the beginning of the test there should be an indexed Bretzel", 1, countBretzelsViaIndex( em ) );
+		assertEquals( "At the beginning of the test there should be an indexed Bretzel", 1, countBretzelsViaIndex(
+				em ) );
 
 		// clear index
 		em.purgeAll( Bretzel.class );
@@ -71,7 +73,8 @@ public class EntityManagerTest extends JPATestCase {
 		em.getTransaction().begin();
 
 		Query query = IntPoint.newExactQuery( "saltQty", 23 );
-		assertEquals( "getResultList should return a result", 1, em.createFullTextQuery( query ).getResultList().size() );
+		assertEquals( "getResultList should return a result", 1, em.createFullTextQuery( query ).getResultList()
+				.size() );
 
 		em.getTransaction().commit();
 	}
@@ -103,7 +106,8 @@ public class EntityManagerTest extends JPATestCase {
 		em.getTransaction().begin();
 
 		// verify against index
-		assertEquals( "At the beginning of the test there should be an indexed Bretzel", 1, countBretzelsViaIndex( em ) );
+		assertEquals( "At the beginning of the test there should be an indexed Bretzel", 1, countBretzelsViaIndex(
+				em ) );
 
 		// clear index
 		em.purgeAll( Bretzel.class );

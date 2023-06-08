@@ -58,7 +58,8 @@ public class SimpleQueryStringPredicateBaseIT {
 						SearchableIT.searchableYesIndex, SearchableIT.searchableNoIndex,
 						ArgumentCheckingIT.index,
 						TypeCheckingNoConversionIT.index, TypeCheckingNoConversionIT.compatibleIndex,
-						TypeCheckingNoConversionIT.rawFieldCompatibleIndex, TypeCheckingNoConversionIT.missingFieldIndex,
+						TypeCheckingNoConversionIT.rawFieldCompatibleIndex,
+						TypeCheckingNoConversionIT.missingFieldIndex,
 						TypeCheckingNoConversionIT.incompatibleIndex
 				)
 				.setup();
@@ -86,9 +87,11 @@ public class SimpleQueryStringPredicateBaseIT {
 
 		final BulkIndexer typeCheckingMainIndexer = TypeCheckingNoConversionIT.index.bulkIndexer();
 		final BulkIndexer typeCheckingCompatibleIndexer = TypeCheckingNoConversionIT.compatibleIndex.bulkIndexer();
-		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex.bulkIndexer();
+		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex
+				.bulkIndexer();
 		final BulkIndexer typeCheckingMissingFieldIndexer = TypeCheckingNoConversionIT.missingFieldIndex.bulkIndexer();
-		TypeCheckingNoConversionIT.dataSets.forEach( d -> d.contribute( TypeCheckingNoConversionIT.index, typeCheckingMainIndexer,
+		TypeCheckingNoConversionIT.dataSets.forEach( d -> d.contribute( TypeCheckingNoConversionIT.index,
+				typeCheckingMainIndexer,
 				TypeCheckingNoConversionIT.compatibleIndex, typeCheckingCompatibleIndexer,
 				TypeCheckingNoConversionIT.rawFieldCompatibleIndex, typeCheckingRawFieldCompatibleIndexer,
 				TypeCheckingNoConversionIT.missingFieldIndex, typeCheckingMissingFieldIndexer ) );
@@ -118,7 +121,8 @@ public class SimpleQueryStringPredicateBaseIT {
 		private static final List<Object[]> parameters = new ArrayList<>();
 		static {
 			for ( FieldTypeDescriptor<String> fieldType : supportedFieldTypes ) {
-				DataSet<String, SimpleQueryStringPredicateTestValues> dataSet = new DataSet<>( testValues( fieldType ) );
+				DataSet<String, SimpleQueryStringPredicateTestValues> dataSet = new DataSet<>( testValues(
+						fieldType ) );
 				dataSets.add( dataSet );
 				parameters.add( new Object[] { dataSet } );
 			}
@@ -139,7 +143,8 @@ public class SimpleQueryStringPredicateBaseIT {
 
 		@Override
 		protected PredicateFinalStep predicate(SearchPredicateFactory f, String fieldPath, int matchingDocOrdinal) {
-			return f.simpleQueryString().field( fieldPath ).matching( dataSet.values.matchingArg( matchingDocOrdinal ) );
+			return f.simpleQueryString().field( fieldPath ).matching( dataSet.values.matchingArg(
+					matchingDocOrdinal ) );
 		}
 	}
 
@@ -150,7 +155,8 @@ public class SimpleQueryStringPredicateBaseIT {
 		private static final List<Object[]> parameters = new ArrayList<>();
 		static {
 			for ( FieldTypeDescriptor<String> fieldType : supportedFieldTypes ) {
-				DataSet<String, SimpleQueryStringPredicateTestValues> dataSet = new DataSet<>( testValues( fieldType ) );
+				DataSet<String, SimpleQueryStringPredicateTestValues> dataSet = new DataSet<>( testValues(
+						fieldType ) );
 				dataSets.add( dataSet );
 				parameters.add( new Object[] { dataSet } );
 			}
@@ -177,8 +183,10 @@ public class SimpleQueryStringPredicateBaseIT {
 		}
 
 		@Override
-		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths, int matchingDocOrdinal) {
-			return f.simpleQueryString().fields( fieldPaths ).matching( dataSet.values.matchingArg( matchingDocOrdinal ) );
+		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths,
+				int matchingDocOrdinal) {
+			return f.simpleQueryString().fields( fieldPaths ).matching( dataSet.values.matchingArg(
+					matchingDocOrdinal ) );
 		}
 
 		@Override
@@ -222,7 +230,8 @@ public class SimpleQueryStringPredicateBaseIT {
 
 		@Override
 		protected PredicateFinalStep predicate(SearchPredicateFactory f, String fieldPath, int matchingDocOrdinal) {
-			return f.simpleQueryString().field( fieldPath ).matching( dataSet.values.matchingArg( matchingDocOrdinal ) );
+			return f.simpleQueryString().field( fieldPath ).matching( dataSet.values.matchingArg(
+					matchingDocOrdinal ) );
 		}
 	}
 
@@ -266,7 +275,8 @@ public class SimpleQueryStringPredicateBaseIT {
 		private static final List<Object[]> parameters = new ArrayList<>();
 		static {
 			for ( FieldTypeDescriptor<String> fieldType : supportedFieldTypes ) {
-				DataSet<String, SimpleQueryStringPredicateTestValues> dataSet = new DataSet<>( testValues( fieldType ) );
+				DataSet<String, SimpleQueryStringPredicateTestValues> dataSet = new DataSet<>( testValues(
+						fieldType ) );
 				dataSets.add( dataSet );
 				parameters.add( new Object[] { dataSet } );
 			}
@@ -315,7 +325,8 @@ public class SimpleQueryStringPredicateBaseIT {
 		protected PredicateFinalStep predicateWithConstantScoreAndPredicateLevelBoost(SearchPredicateFactory f,
 				String[] fieldPaths, int matchingDocOrdinal, float predicateBoost) {
 			return f.simpleQueryString().fields( fieldPaths )
-					.matching( dataSet.values.matchingArg( matchingDocOrdinal ) ).constantScore().boost( predicateBoost );
+					.matching( dataSet.values.matchingArg( matchingDocOrdinal ) ).constantScore().boost(
+							predicateBoost );
 		}
 
 		@Override
@@ -469,7 +480,8 @@ public class SimpleQueryStringPredicateBaseIT {
 		private static final List<Object[]> parameters = new ArrayList<>();
 		static {
 			for ( FieldTypeDescriptor<String> fieldType : supportedFieldTypes ) {
-				DataSet<String, SimpleQueryStringPredicateTestValues> dataSet = new DataSet<>( testValues( fieldType ) );
+				DataSet<String, SimpleQueryStringPredicateTestValues> dataSet = new DataSet<>( testValues(
+						fieldType ) );
 				dataSets.add( dataSet );
 				parameters.add( new Object[] { dataSet } );
 			}
@@ -502,13 +514,15 @@ public class SimpleQueryStringPredicateBaseIT {
 
 		@Override
 		protected PredicateFinalStep predicate(SearchPredicateFactory f, String fieldPath, int matchingDocOrdinal) {
-			return f.simpleQueryString().field( fieldPath ).matching( dataSet.values.matchingArg( matchingDocOrdinal ) );
+			return f.simpleQueryString().field( fieldPath ).matching( dataSet.values.matchingArg(
+					matchingDocOrdinal ) );
 		}
 
 		@Override
 		protected PredicateFinalStep predicate(SearchPredicateFactory f, String field0Path, String field1Path,
 				int matchingDocOrdinal) {
-			return f.simpleQueryString().field( field0Path ).field( field1Path ).matching( dataSet.values.matchingArg( matchingDocOrdinal ) );
+			return f.simpleQueryString().field( field0Path ).field( field1Path ).matching( dataSet.values.matchingArg(
+					matchingDocOrdinal ) );
 		}
 
 		@Override

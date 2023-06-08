@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.Arrays;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -32,7 +33,8 @@ public class HibernateOrmManualIndexingIT {
 	private static final int INIT_DATA_TRANSACTION_SIZE = 500;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	@Test
 	public void persist_automaticIndexing_periodicFlushClear() {
@@ -44,7 +46,7 @@ public class HibernateOrmManualIndexingIT {
 			// tag::persist-automatic-indexing-periodic-flush-clear[]
 			entityManager.getTransaction().begin();
 			try {
-				for ( int i = 0 ; i < NUMBER_OF_BOOKS ; ++i ) { // <1>
+				for ( int i = 0; i < NUMBER_OF_BOOKS; ++i ) { // <1>
 					Book book = newBook( i );
 					entityManager.persist( book ); // <2>
 
@@ -78,7 +80,7 @@ public class HibernateOrmManualIndexingIT {
 
 			entityManager.getTransaction().begin();
 			try {
-				for ( int i = 0 ; i < NUMBER_OF_BOOKS ; ++i ) {
+				for ( int i = 0; i < NUMBER_OF_BOOKS; ++i ) {
 					Book book = newBook( i );
 					entityManager.persist( book ); // <3>
 

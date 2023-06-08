@@ -229,7 +229,8 @@ public class MatchPredicateFuzzyIT {
 			assertThatThrownBy( () -> f.match().field( absoluteFieldPath ).matching( valueToMatch ).fuzzy(),
 					"match() predicate with fuzzy() and unsupported type on field " + absoluteFieldPath )
 					.isInstanceOf( SearchException.class )
-					.hasMessageContaining( "Full-text features (analysis, fuzziness) are not supported for fields of this type" )
+					.hasMessageContaining(
+							"Full-text features (analysis, fuzziness) are not supported for fields of this type" )
 					.satisfies( FailureReportUtils.hasContext(
 							EventContexts.fromIndexFieldAbsolutePath( absoluteFieldPath )
 					) );
@@ -237,15 +238,17 @@ public class MatchPredicateFuzzyIT {
 			assertThatThrownBy( () -> f.match().field( absoluteFieldPath ).matching( valueToMatch ).fuzzy( 1 ),
 					"match() predicate with fuzzy(int) and unsupported type on field " + absoluteFieldPath )
 					.isInstanceOf( SearchException.class )
-					.hasMessageContaining( "Full-text features (analysis, fuzziness) are not supported for fields of this type" )
+					.hasMessageContaining(
+							"Full-text features (analysis, fuzziness) are not supported for fields of this type" )
 					.satisfies( FailureReportUtils.hasContext(
 							EventContexts.fromIndexFieldAbsolutePath( absoluteFieldPath )
 					) );
 
-			assertThatThrownBy( () -> f.match() .field( absoluteFieldPath ).matching( valueToMatch ).fuzzy( 1, 1 ),
+			assertThatThrownBy( () -> f.match().field( absoluteFieldPath ).matching( valueToMatch ).fuzzy( 1, 1 ),
 					"match() predicate with fuzzy(int, int) and unsupported type on field " + absoluteFieldPath )
 					.isInstanceOf( SearchException.class )
-					.hasMessageContaining( "Full-text features (analysis, fuzziness) are not supported for fields of this type" )
+					.hasMessageContaining(
+							"Full-text features (analysis, fuzziness) are not supported for fields of this type" )
 					.satisfies( FailureReportUtils.hasContext(
 							EventContexts.fromIndexFieldAbsolutePath( absoluteFieldPath )
 					) );
@@ -286,7 +289,8 @@ public class MatchPredicateFuzzyIT {
 	public void analyzerOverride() {
 		String whitespaceAnalyzedField = index.binding().whitespaceAnalyzedField.relativeFieldName;
 		String whitespaceLowercaseAnalyzedField = index.binding().whitespaceLowercaseAnalyzedField.relativeFieldName;
-		String whitespaceLowercaseSearchAnalyzedField = index.binding().whitespaceLowercaseSearchAnalyzedField.relativeFieldName;
+		String whitespaceLowercaseSearchAnalyzedField = index
+				.binding().whitespaceLowercaseSearchAnalyzedField.relativeFieldName;
 
 		// Terms are never lower-cased, neither at write nor at query time.
 		assertThatQuery( index.query()
@@ -329,7 +333,8 @@ public class MatchPredicateFuzzyIT {
 		// ignoring the analyzer means that the parameter of match predicate will not be tokenized
 		// so it will not match any token
 		assertThatQuery( index.query()
-				.where( f -> f.match().field( absoluteFieldPath ).matching( "word another word" ).fuzzy().skipAnalysis() ) )
+				.where( f -> f.match().field( absoluteFieldPath ).matching( "word another word" ).fuzzy()
+						.skipAnalysis() ) )
 				.hasNoHits();
 
 		// to have a match with the skipAnalysis option enabled, we have to pass the parameter as a token is

@@ -62,13 +62,15 @@ public class ElasticsearchGeoPointSpatialWithinBoundingBoxPredicate extends Abst
 
 	public static class Factory
 			extends
-			AbstractElasticsearchCodecAwareSearchQueryElementFactory<SpatialWithinBoundingBoxPredicateBuilder, GeoPoint> {
+			AbstractElasticsearchCodecAwareSearchQueryElementFactory<SpatialWithinBoundingBoxPredicateBuilder,
+					GeoPoint> {
 		public Factory(ElasticsearchFieldCodec<GeoPoint> codec) {
 			super( codec );
 		}
 
 		@Override
-		public Builder create(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<GeoPoint> field) {
+		public Builder create(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<
+				GeoPoint> field) {
 			return new Builder( codec, scope, field );
 		}
 	}

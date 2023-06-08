@@ -13,8 +13,8 @@ import org.hibernate.search.backend.lucene.resources.impl.BackendThreads;
 import org.hibernate.search.engine.backend.orchestration.spi.AbstractWorkOrchestrator;
 import org.hibernate.search.engine.backend.orchestration.spi.BatchingExecutor;
 import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
-import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
+import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.reporting.FailureHandler;
 import org.hibernate.search.util.common.data.impl.HashTable;
 import org.hibernate.search.util.common.data.impl.ModuloHashTable;
@@ -92,7 +92,8 @@ public class LuceneSerialWorkOrchestratorImpl
 	}
 
 	@Override
-	protected void doSubmit(LuceneBatchedWork<?> work, OperationSubmitter operationSubmitter) throws InterruptedException {
+	protected void doSubmit(LuceneBatchedWork<?> work,
+			OperationSubmitter operationSubmitter) throws InterruptedException {
 		executors.get( work.getQueuingKey() ).submit( work, operationSubmitter );
 	}
 

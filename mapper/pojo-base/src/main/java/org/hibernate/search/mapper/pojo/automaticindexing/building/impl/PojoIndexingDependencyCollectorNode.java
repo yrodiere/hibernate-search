@@ -34,7 +34,8 @@ public abstract class PojoIndexingDependencyCollectorNode {
 			otherReindexOnUpdate = buildingHelper.getDefaultReindexOnUpdate();
 		}
 		// Whatever reindexOnUpdate is strictest wins.
-		ReindexOnUpdate strictestReindexOnUpdate = getStrictestReindexOnUpdate( reindexOnUpdate(), otherReindexOnUpdate );
+		ReindexOnUpdate strictestReindexOnUpdate = getStrictestReindexOnUpdate( reindexOnUpdate(),
+				otherReindexOnUpdate );
 		if ( ReindexOnUpdate.SHALLOW.equals( strictestReindexOnUpdate )
 				&& !lastEntityNode().equals( otherEntityNode ) ) {
 			// We crossed entity boundaries: SHALLOW becomes NO.
@@ -60,11 +61,12 @@ public abstract class PojoIndexingDependencyCollectorNode {
 
 	abstract ReindexOnUpdate reindexOnUpdate();
 
-	static class Walker implements PojoModelPathWalker<
-			Void, PojoIndexingDependencyCollectorTypeNode<?>,
-			PojoIndexingDependencyCollectorPropertyNode<?, ?>,
-			AbstractPojoIndexingDependencyCollectorDirectValueNode<?, ?>
-			> {
+	static class Walker
+			implements PojoModelPathWalker<
+					Void,
+					PojoIndexingDependencyCollectorTypeNode<?>,
+					PojoIndexingDependencyCollectorPropertyNode<?, ?>,
+					AbstractPojoIndexingDependencyCollectorDirectValueNode<?, ?>> {
 		private final LinkedNode<DerivedDependencyWalkingInfo> derivedDependencyPath;
 
 		Walker(LinkedNode<DerivedDependencyWalkingInfo> derivedDependencyPath) {

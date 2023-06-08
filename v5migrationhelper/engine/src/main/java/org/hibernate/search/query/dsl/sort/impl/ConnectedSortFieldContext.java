@@ -6,10 +6,11 @@
  */
 package org.hibernate.search.query.dsl.sort.impl;
 
-import org.apache.lucene.search.Sort;
 import org.hibernate.search.query.dsl.impl.QueryBuildingContext;
 import org.hibernate.search.query.dsl.sort.SortFieldContext;
 import org.hibernate.search.query.dsl.sort.SortMissingValueContext;
+
+import org.apache.lucene.search.Sort;
 
 /**
  * @author Emmanuel Bernard emmanuel@hibernate.org
@@ -20,6 +21,7 @@ public class ConnectedSortFieldContext extends ConnectedSortAdditionalSortFieldC
 	public ConnectedSortFieldContext(QueryBuildingContext queryContext, SortFieldStates states) {
 		super( queryContext, states );
 	}
+
 	@Override
 	public SortFieldContext asc() {
 		getStates().setAsc();

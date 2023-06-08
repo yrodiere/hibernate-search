@@ -16,6 +16,7 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 
 import org.hibernate.search.engine.backend.common.DocumentReference;
+import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.search.loading.spi.SearchLoadingContext;
 import org.hibernate.search.engine.search.projection.spi.ProjectionMappedTypeContext;
 import org.hibernate.search.engine.search.query.SearchQuery;
@@ -23,7 +24,6 @@ import org.hibernate.search.engine.search.query.SearchScroll;
 import org.hibernate.search.engine.search.query.dsl.SearchQuerySelectStep;
 import org.hibernate.search.engine.search.query.dsl.SearchQueryWhereStep;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.stub.StubEntity;
-import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.BulkIndexer;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.GenericStubMappingScope;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMappedIndex;
@@ -42,7 +42,8 @@ public abstract class AbstractEntityReferenceProjectionIT {
 	private static final String DOCUMENT_1_ID = "1";
 	private static final String DOCUMENT_2_ID = "2";
 
-	private static final ProjectionMappedTypeContext mainTypeContextMock = Mockito.mock( ProjectionMappedTypeContext.class );
+	private static final ProjectionMappedTypeContext mainTypeContextMock = Mockito.mock(
+			ProjectionMappedTypeContext.class );
 
 	@Rule
 	public final MockitoRule mockito = MockitoJUnit.rule().strictness( Strictness.STRICT_STUBS );
@@ -94,7 +95,8 @@ public abstract class AbstractEntityReferenceProjectionIT {
 									.entityReference( doc1Reference, doc1EntityReference )
 									.entityReference( doc2Reference, doc2EntityReference )
 					);
-					assertThatHits( hitsUsingScroll( referencesQuery ) ).hasHitsAnyOrder( doc1EntityReference, doc2EntityReference );
+					assertThatHits( hitsUsingScroll( referencesQuery ) ).hasHitsAnyOrder( doc1EntityReference,
+							doc2EntityReference );
 					verify( loadingContextMock ).createProjectionHitMapper();
 				} );
 	}
@@ -107,8 +109,8 @@ public abstract class AbstractEntityReferenceProjectionIT {
 
 	public static void initData(BulkIndexer indexer) {
 		indexer
-				.add( DOCUMENT_1_ID, document -> { } )
-				.add( DOCUMENT_2_ID, document -> { } );
+				.add( DOCUMENT_1_ID, document -> {} )
+				.add( DOCUMENT_2_ID, document -> {} );
 	}
 
 }

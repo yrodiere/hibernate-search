@@ -31,7 +31,8 @@ public class PojoHCannOrmGenericContextHelper implements GenericContextAwarePojo
 
 	@Override
 	public Type propertyGenericType(PojoPropertyModel<?> rawPropertyModel) {
-		AbstractPojoHCAnnPropertyModel<?, ?> hcannPropertyModel = (AbstractPojoHCAnnPropertyModel<?, ?>) rawPropertyModel;
+		AbstractPojoHCAnnPropertyModel<?, ?> hcannPropertyModel = (AbstractPojoHCAnnPropertyModel<?,
+				?>) rawPropertyModel;
 		return hcannPropertyModel.getterGenericReturnType();
 	}
 }

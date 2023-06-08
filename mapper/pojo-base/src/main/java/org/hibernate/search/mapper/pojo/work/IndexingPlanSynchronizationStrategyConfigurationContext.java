@@ -44,7 +44,8 @@ public interface IndexingPlanSynchronizationStrategyConfigurationContext {
 	 * the report will {@link SearchIndexingPlanExecutionReport#throwable() contain a throwable}
 	 * and (if applicable) {@link SearchIndexingPlanExecutionReport#failingEntities() a list of failing entities}.
 	 */
-	void indexingFutureHandler(Consumer<? super CompletableFuture<? extends SearchIndexingPlanExecutionReport>> handler);
+	void indexingFutureHandler(Consumer<? super CompletableFuture<
+			? extends SearchIndexingPlanExecutionReport>> handler);
 
 	/**
 	 * @return The failure handler.

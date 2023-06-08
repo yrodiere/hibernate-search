@@ -33,8 +33,8 @@ import org.hibernate.search.backend.elasticsearch.types.dsl.provider.impl.Elasti
 import org.hibernate.search.engine.backend.spi.BackendBuildContext;
 import org.hibernate.search.engine.backend.spi.BackendFactory;
 import org.hibernate.search.engine.backend.spi.BackendImplementor;
-import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
+import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.spi.OptionalConfigurationProperty;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanReference;
@@ -46,7 +46,6 @@ import org.hibernate.search.util.common.reporting.EventContext;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 
 public class ElasticsearchBackendFactory implements BackendFactory {
 
@@ -63,10 +62,11 @@ public class ElasticsearchBackendFactory implements BackendFactory {
 					.withDefault( ElasticsearchBackendSettings.Defaults.LOG_JSON_PRETTY_PRINTING )
 					.build();
 
-	private static final OptionalConfigurationProperty<BeanReference<? extends ElasticsearchClientFactory>> CLIENT_FACTORY =
-			ConfigurationProperty.forKey( ElasticsearchBackendImplSettings.CLIENT_FACTORY )
-					.asBeanReference( ElasticsearchClientFactory.class )
-					.build();
+	private static final OptionalConfigurationProperty<BeanReference<
+			? extends ElasticsearchClientFactory>> CLIENT_FACTORY =
+					ConfigurationProperty.forKey( ElasticsearchBackendImplSettings.CLIENT_FACTORY )
+							.asBeanReference( ElasticsearchClientFactory.class )
+							.build();
 
 	private static final ConfigurationProperty<TypeNameMappingStrategyName> MAPPING_TYPE_STRATEGY =
 			ConfigurationProperty.forKey( ElasticsearchBackendSettings.MAPPING_TYPE_NAME_STRATEGY )
@@ -178,11 +178,11 @@ public class ElasticsearchBackendFactory implements BackendFactory {
 					}
 					return optionalName;
 				} ).orElseGet( () -> {
-			// set dynamic default
-			return ( buildContext.multiTenancyEnabled() ) ?
-					MultiTenancyStrategyName.DISCRIMINATOR :
-					MultiTenancyStrategyName.NONE;
-		} );
+					// set dynamic default
+					return ( buildContext.multiTenancyEnabled() ) ?
+							MultiTenancyStrategyName.DISCRIMINATOR :
+							MultiTenancyStrategyName.NONE;
+				} );
 
 		switch ( multiTenancyStrategy ) {
 			case NONE:

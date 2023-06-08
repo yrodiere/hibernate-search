@@ -24,7 +24,8 @@ abstract class AbstractHibernateOrmSelectionEntityLoader<E> implements PojoSelec
 	protected final MutableEntityLoadingOptions loadingOptions;
 	protected final TypeQueryFactory<E, ?> queryFactory;
 
-	public AbstractHibernateOrmSelectionEntityLoader(EntityPersister entityPersister, TypeQueryFactory<E, ?> queryFactory,
+	public AbstractHibernateOrmSelectionEntityLoader(EntityPersister entityPersister, TypeQueryFactory<E,
+			?> queryFactory,
 			LoadingSessionContext sessionContext, MutableEntityLoadingOptions loadingOptions) {
 		this.entityPersister = entityPersister;
 		this.sessionContext = sessionContext;
@@ -51,7 +52,8 @@ abstract class AbstractHibernateOrmSelectionEntityLoader<E> implements PojoSelec
 	abstract List<E> doLoadEntities(List<?> allIds, Long timeout);
 
 	final Query<E> createQuery(int fetchSize, Long timeout) {
-		Query<E> query = queryFactory.createQueryForLoadByUniqueProperty( sessionContext.session(), IDS_PARAMETER_NAME );
+		Query<E> query = queryFactory.createQueryForLoadByUniqueProperty( sessionContext.session(),
+				IDS_PARAMETER_NAME );
 
 		query.setFetchSize( fetchSize );
 		if ( timeout != null ) {

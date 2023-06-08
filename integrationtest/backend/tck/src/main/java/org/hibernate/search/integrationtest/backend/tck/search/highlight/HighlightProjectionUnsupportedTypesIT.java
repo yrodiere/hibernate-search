@@ -92,7 +92,8 @@ public class HighlightProjectionUnsupportedTypesIT<F> {
 		IndexBinding(IndexSchemaElement root) {
 			fieldModels = SimpleFieldModelsByType.mapAll( unsupportedTypeDescriptors(), root, "", c -> {
 				if ( c instanceof StringIndexFieldTypeOptionsStep<?> ) {
-					( (StringIndexFieldTypeOptionsStep<?>) c ).highlightable( Collections.singleton( Highlightable.ANY ) );
+					( (StringIndexFieldTypeOptionsStep<?>) c ).highlightable( Collections.singleton(
+							Highlightable.ANY ) );
 				}
 			} );
 		}

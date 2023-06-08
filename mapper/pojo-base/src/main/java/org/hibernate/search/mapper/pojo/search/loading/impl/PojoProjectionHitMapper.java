@@ -29,7 +29,8 @@ public final class PojoProjectionHitMapper<E> implements ProjectionHitMapper<E> 
 	private final BridgeSessionContext sessionContext;
 	private final PojoLoadingPlan<E> loadingPlan;
 
-	public PojoProjectionHitMapper(Map<String, PojoSearchLoadingIndexedTypeContext<? extends E>> targetTypesByEntityName,
+	public PojoProjectionHitMapper(Map<String,
+			PojoSearchLoadingIndexedTypeContext<? extends E>> targetTypesByEntityName,
 			PojoEntityReferenceFactoryDelegate entityReferenceFactoryDelegate,
 			BridgeSessionContext sessionContext,
 			PojoLoadingPlan<E> loadingPlan) {
@@ -79,7 +80,8 @@ public final class PojoProjectionHitMapper<E> implements ProjectionHitMapper<E> 
 		return type.identifierMapping().fromDocumentIdentifier( reference.id(), sessionContext );
 	}
 
-	private EntityReference toEntityReference(PojoSearchLoadingIndexedTypeContext<?> type, DocumentReference reference) {
+	private EntityReference toEntityReference(PojoSearchLoadingIndexedTypeContext<?> type,
+			DocumentReference reference) {
 		return entityReferenceFactoryDelegate.create( type.typeIdentifier(), type.entityName(),
 				toEntityIdentifier( type, reference ) );
 	}

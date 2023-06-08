@@ -9,6 +9,7 @@ package org.hibernate.search.mapper.orm.session;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 
@@ -44,7 +45,12 @@ public interface SearchSession {
 	 * @see SearchQuerySelectStep
 	 */
 	@SuppressWarnings("deprecation")
-	default <T> SearchQuerySelectStep<?, org.hibernate.search.mapper.orm.common.EntityReference, T, SearchLoadingOptionsStep, ?, ?> search(Class<T> type) {
+	default <T> SearchQuerySelectStep<?,
+			org.hibernate.search.mapper.orm.common.EntityReference,
+			T,
+			SearchLoadingOptionsStep,
+			?,
+			?> search(Class<T> type) {
 		return search( Collections.singleton( type ) );
 	}
 
@@ -59,8 +65,13 @@ public interface SearchSession {
 	 * @see SearchQuerySelectStep
 	 */
 	@SuppressWarnings("deprecation")
-	<T> SearchQuerySelectStep<?, org.hibernate.search.mapper.orm.common.EntityReference, T, SearchLoadingOptionsStep, ?, ?> search(
-			Collection<? extends Class<? extends T>> types);
+	<T> SearchQuerySelectStep<?,
+			org.hibernate.search.mapper.orm.common.EntityReference,
+			T,
+			SearchLoadingOptionsStep,
+			?,
+			?> search(
+					Collection<? extends Class<? extends T>> types);
 
 	/**
 	 * Initiate the building of a search query.
@@ -73,7 +84,12 @@ public interface SearchSession {
 	 * @see SearchQuerySelectStep
 	 */
 	@SuppressWarnings("deprecation")
-	<T> SearchQuerySelectStep<?, org.hibernate.search.mapper.orm.common.EntityReference, T, SearchLoadingOptionsStep, ?, ?> search(SearchScope<T> scope);
+	<T> SearchQuerySelectStep<?,
+			org.hibernate.search.mapper.orm.common.EntityReference,
+			T,
+			SearchLoadingOptionsStep,
+			?,
+			?> search(SearchScope<T> scope);
 
 	/**
 	 * Create a {@link SearchSchemaManager} for all indexes.
@@ -90,7 +106,7 @@ public interface SearchSession {
 	 * @param types One or more indexed types, or supertypes of all indexed types that will be targeted by the schema manager.
 	 * @return A {@link SearchSchemaManager}.
 	 */
-	default SearchSchemaManager schemaManager(Class<?> ... types) {
+	default SearchSchemaManager schemaManager(Class<?>... types) {
 		return schemaManager( Arrays.asList( types ) );
 	}
 
@@ -117,7 +133,7 @@ public interface SearchSession {
 	 * @param types One or more indexed types, or supertypes of all indexed types that will be targeted by the workspace.
 	 * @return A {@link SearchWorkspace}.
 	 */
-	default SearchWorkspace workspace(Class<?> ... types) {
+	default SearchWorkspace workspace(Class<?>... types) {
 		return workspace( Arrays.asList( types ) );
 	}
 
@@ -235,7 +251,8 @@ public interface SearchSession {
 	 * @deprecated Use {@link #indexingPlanSynchronizationStrategy(IndexingPlanSynchronizationStrategy)} instead.
 	 */
 	@Deprecated
-	void automaticIndexingSynchronizationStrategy(org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationStrategy synchronizationStrategy);
+	void automaticIndexingSynchronizationStrategy(
+			org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationStrategy synchronizationStrategy);
 
 	/**
 	 * Set the {@link IndexingPlanSynchronizationStrategy} to use for this session.

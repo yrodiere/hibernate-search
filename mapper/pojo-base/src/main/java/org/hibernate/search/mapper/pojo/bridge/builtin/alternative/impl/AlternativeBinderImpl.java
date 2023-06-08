@@ -99,10 +99,14 @@ public final class AlternativeBinderImpl<D, P> implements AlternativeBinder {
 
 		@Override
 		public String toString() {
-			return getClass().getSimpleName() + "["
-					+ "discriminatorAccessor=" + discriminatorAccessor
-					+ ", fieldValueSourceAccessor=" + fieldValueSourceAccessor
-					+ ", delegate=" + delegate
+			return getClass().getSimpleName()
+					+ "["
+					+ "discriminatorAccessor="
+					+ discriminatorAccessor
+					+ ", fieldValueSourceAccessor="
+					+ fieldValueSourceAccessor
+					+ ", delegate="
+					+ delegate
 					+ "]";
 		}
 

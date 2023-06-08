@@ -36,7 +36,8 @@ import org.junit.Test;
 public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionConstructorIT {
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Test
 	public void noArg() {
@@ -49,6 +50,7 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		}
 		class MyProjection {
 			public final String text;
+
 			@ProjectionConstructor
 			public MyProjection(@FieldProjection String text) {
 				this.text = text;
@@ -90,6 +92,7 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		}
 		class MyProjection {
 			public final String text;
+
 			@ProjectionConstructor
 			public MyProjection(@FieldProjection(path = "myText") String text) {
 				this.text = text;
@@ -131,6 +134,7 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		}
 		class MyProjection {
 			public final String myEnum;
+
 			@ProjectionConstructor
 			public MyProjection(@FieldProjection(convert = ValueConvert.NO) String myEnum) {
 				this.myEnum = myEnum;
@@ -176,6 +180,7 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		}
 		class MyProjection {
 			public final Object text;
+
 			@ProjectionConstructor
 			public MyProjection(@FieldProjection Object text) {
 				this.text = text;
@@ -217,6 +222,7 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		}
 		class MyProjection {
 			public final int integer;
+
 			@ProjectionConstructor
 			public MyProjection(@FieldProjection int integer) {
 				this.integer = integer;
@@ -268,6 +274,7 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		}
 		class MyInnerProjection {
 			public final String text;
+
 			@ProjectionConstructor
 			public MyInnerProjection(@FieldProjection String text) {
 				this.text = text;
@@ -276,6 +283,7 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		class MyProjection {
 			public final String text;
 			public final MyInnerProjection contained;
+
 			@ProjectionConstructor
 			public MyProjection(@FieldProjection String text, MyInnerProjection contained) {
 				this.text = text;
@@ -329,6 +337,7 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		class MyProjection {
 			public final List<String> text;
 			public final List<Integer> integer;
+
 			@ProjectionConstructor
 			public MyProjection(@FieldProjection List<String> text, @FieldProjection List<Integer> integer) {
 				this.text = text;
@@ -379,8 +388,10 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		class MyProjection {
 			public final Collection<String> text;
 			public final Collection<Integer> integer;
+
 			@ProjectionConstructor
-			public MyProjection(@FieldProjection Collection<String> text, @FieldProjection Collection<Integer> integer) {
+			public MyProjection(@FieldProjection Collection<String> text, @FieldProjection Collection<
+					Integer> integer) {
 				this.text = text;
 				this.integer = integer;
 			}
@@ -429,6 +440,7 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		class MyProjection {
 			public final Iterable<String> text;
 			public final Iterable<Integer> integer;
+
 			@ProjectionConstructor
 			public MyProjection(@FieldProjection Iterable<String> text, @FieldProjection Iterable<Integer> integer) {
 				this.text = text;
@@ -479,6 +491,7 @@ public class ProjectionConstructorFieldProjectionIT extends AbstractProjectionCo
 		class MyProjection {
 			public final Set<String> text;
 			public final List<Integer> integer;
+
 			@ProjectionConstructor
 			public MyProjection(@FieldProjection Set<String> text, @FieldProjection List<Integer> integer) {
 				this.text = text;

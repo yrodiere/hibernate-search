@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.engine.environment.classpath.spi;
 
-
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.common.annotation.impl.SuppressForbiddenApis;
 
@@ -28,5 +27,4 @@ public class ClassLoadingException extends SearchException {
 		super( message, cause );
 	}
 }
-
 

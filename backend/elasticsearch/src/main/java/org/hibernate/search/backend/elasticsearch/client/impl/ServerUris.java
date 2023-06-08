@@ -32,9 +32,11 @@ final class ServerUris {
 	static ServerUris fromOptionalStrings(Optional<String> protocol, Optional<List<String>> hostAndPortStrings,
 			Optional<List<String>> uris) {
 		if ( !uris.isPresent() ) {
-			String protocolValue = ( protocol.isPresent() ) ? protocol.get() :
+			String protocolValue = ( protocol.isPresent() ) ?
+					protocol.get() :
 					ElasticsearchBackendSettings.Defaults.PROTOCOL;
-			List<String> hostAndPortValues = ( hostAndPortStrings.isPresent() ) ? hostAndPortStrings.get() :
+			List<String> hostAndPortValues = ( hostAndPortStrings.isPresent() ) ?
+					hostAndPortStrings.get() :
 					ElasticsearchBackendSettings.Defaults.HOSTS;
 			return fromStrings( protocolValue, hostAndPortValues );
 		}
@@ -82,7 +84,7 @@ final class ServerUris {
 		// Note: protocol and URI scheme are not the same thing,
 		// but for HTTP/HTTPS both the protocol and URI scheme are named HTTP/HTTPS.
 		String scheme = protocol.toLowerCase( Locale.ROOT );
-		for ( int i = 0 ; i < hostAndPortStrings.size() ; ++i ) {
+		for ( int i = 0; i < hostAndPortStrings.size(); ++i ) {
 			HttpHost host = createHttpHost( scheme, hostAndPortStrings.get( i ) );
 			hosts[i] = host;
 		}

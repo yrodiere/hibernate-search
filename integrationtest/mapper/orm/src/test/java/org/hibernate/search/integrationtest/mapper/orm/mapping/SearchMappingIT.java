@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -23,8 +24,8 @@ import org.hibernate.search.engine.backend.Backend;
 import org.hibernate.search.engine.backend.index.IndexManager;
 import org.hibernate.search.engine.reporting.spi.EventContexts;
 import org.hibernate.search.mapper.orm.Search;
-import org.hibernate.search.mapper.orm.mapping.SearchMapping;
 import org.hibernate.search.mapper.orm.entity.SearchIndexedEntity;
+import org.hibernate.search.mapper.orm.mapping.SearchMapping;
 import org.hibernate.search.mapper.orm.scope.SearchScope;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
@@ -101,9 +102,12 @@ public class SearchMappingIT {
 						"Either this is not the name of an entity type, or the entity type is not indexed in Hibernate Search",
 						"Valid names for indexed entity types are: ["
 								// JPA entity names + Hibernate ORM entity names
-								+ Person.JPA_ENTITY_NAME + ", "
-								+ Person.class.getName() + ", "
-								+ Pet.JPA_ENTITY_NAME + ", "
+								+ Person.JPA_ENTITY_NAME
+								+ ", "
+								+ Person.class.getName()
+								+ ", "
+								+ Pet.JPA_ENTITY_NAME
+								+ ", "
 								+ Pet.class.getName()
 								// This should NOT include Toy, which is not an indexed entity type
 								+ "]"
@@ -120,9 +124,12 @@ public class SearchMappingIT {
 						"Either this is not the name of an entity type, or the entity type is not indexed in Hibernate Search",
 						"Valid names for indexed entity types are: ["
 								// JPA entity names + Hibernate ORM entity names
-								+ Person.JPA_ENTITY_NAME + ", "
-								+ Person.class.getName() + ", "
-								+ Pet.JPA_ENTITY_NAME + ", "
+								+ Person.JPA_ENTITY_NAME
+								+ ", "
+								+ Person.class.getName()
+								+ ", "
+								+ Pet.JPA_ENTITY_NAME
+								+ ", "
 								+ Pet.class.getName()
 								// This should NOT include Toy, which is not an indexed entity type
 								+ "]"
@@ -149,7 +156,8 @@ public class SearchMappingIT {
 						"No matching indexed entity type for class '" + String.class.getName() + "'",
 						"Either this class is not an entity type, or the entity type is not indexed in Hibernate Search",
 						"Valid classes for indexed entity types are: ["
-								+ Person.class.getName() + ", "
+								+ Person.class.getName()
+								+ ", "
 								+ Pet.class.getName()
 								// This should NOT include Toy, which is not an indexed entity type
 								+ "]"
@@ -165,7 +173,8 @@ public class SearchMappingIT {
 						"No matching indexed entity type for class '" + Toy.class.getName() + "'",
 						"Either this class is not an entity type, or the entity type is not indexed in Hibernate Search",
 						"Valid classes for indexed entity types are: ["
-								+ Person.class.getName() + ", "
+								+ Person.class.getName()
+								+ ", "
 								+ Pet.class.getName()
 								// This should NOT include Toy, which is not an indexed entity type
 								+ "]"
@@ -235,7 +244,11 @@ public class SearchMappingIT {
 				.hasMessageContainingAll(
 						"No index manager with name 'invalid'",
 						"Check that at least one entity is configured to target that index",
-						"The following indexes can be retrieved by name: [" + Person.INDEX_NAME + ", " + Pet.JPA_ENTITY_NAME + "]"
+						"The following indexes can be retrieved by name: ["
+								+ Person.INDEX_NAME
+								+ ", "
+								+ Pet.JPA_ENTITY_NAME
+								+ "]"
 				);
 	}
 
@@ -295,6 +308,7 @@ public class SearchMappingIT {
 		public Integer getId() {
 			return id;
 		}
+
 		public String getName() {
 			return name;
 		}
@@ -318,9 +332,11 @@ public class SearchMappingIT {
 		public Integer getId() {
 			return id;
 		}
+
 		public String getNickname() {
 			return nickname;
 		}
+
 		public List<Toy> getToys() {
 			return toys;
 		}
@@ -343,9 +359,11 @@ public class SearchMappingIT {
 		public Integer getId() {
 			return id;
 		}
+
 		public String getName() {
 			return name;
 		}
+
 		public Pet getOwner() {
 			return owner;
 		}

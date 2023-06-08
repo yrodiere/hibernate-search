@@ -93,7 +93,8 @@ public class Elasticsearch7WorkFactory implements ElasticsearchWorkFactory {
 	}
 
 	@Override
-	public <T> SearchWork.Builder<T> search(JsonObject payload, ElasticsearchSearchResultExtractor<T> searchResultExtractor) {
+	public <T> SearchWork.Builder<T> search(JsonObject payload, ElasticsearchSearchResultExtractor<
+			T> searchResultExtractor) {
 		return SearchWork.Builder.forElasticsearch7AndAbove( payload, searchResultExtractor );
 	}
 

@@ -9,6 +9,7 @@ package org.hibernate.search.integrationtest.mapper.orm.automaticindexing;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -55,15 +56,14 @@ public abstract class AbstractIndexingPlanFilterIT {
 	protected static final String DYNAMIC_NOT_INDEXED_SUBTYPE_B_B = "DynamicNotIndexedSubTypeB_B";
 
 
-
 	@ReusableOrmSetupHolder.Setup
 	public void setup(OrmSetupHelper.SetupContext setupContext) {
 		backendMock.expectSchema( IndexedEntity.INDEX, b -> b
-						.field( "indexedField", String.class )
-						.objectField(
-								"containedIndexedEmbedded", b2 -> b2.field( "indexedField", String.class ).multiValued( true )
-						)
+				.field( "indexedField", String.class )
+				.objectField(
+						"containedIndexedEmbedded", b2 -> b2.field( "indexedField", String.class ).multiValued( true )
 				)
+		)
 				.expectSchema( OtherIndexedEntity.INDEX, b -> b
 						.field( "indexedField", String.class )
 						.objectField(
@@ -79,7 +79,8 @@ public abstract class AbstractIndexingPlanFilterIT {
 				.expectSchema( IndexedSubtypeOfNotIndexedEntity.INDEX, b -> b.field( "indexedField", String.class ) );
 
 		setupContext.withAnnotatedTypes( IndexedEntity.class, OtherIndexedEntity.class, ContainedEntity.class,
-				EntityA.class, Entity1A.class, Entity1B.class, Entity2A.class, EntityFromSuperclass.class, SuperClass.class,
+				EntityA.class, Entity1A.class, Entity1B.class, Entity2A.class, EntityFromSuperclass.class,
+				SuperClass.class,
 				SimpleNotIndexedEntity.class, NotIndexedEntityFromSuperclass.class,
 				NotIndexedEntity.class, IndexedSubtypeOfNotIndexedEntity.class
 		);
@@ -91,15 +92,18 @@ public abstract class AbstractIndexingPlanFilterIT {
 				.withProperty(
 						HibernateOrmMapperSettings.MAPPING_CONFIGURER,
 						(HibernateOrmSearchMappingConfigurer) context -> {
-							TypeMappingStep entityATypeMapping = context.programmaticMapping().type( DYNAMIC_BASE_TYPE_A );
+							TypeMappingStep entityATypeMapping = context.programmaticMapping().type(
+									DYNAMIC_BASE_TYPE_A );
 							entityATypeMapping.indexed();
 							entityATypeMapping.property( "propertyOfA" ).genericField();
 
-							TypeMappingStep entityA_BTypeMapping = context.programmaticMapping().type( DYNAMIC_SUBTYPE_B );
+							TypeMappingStep entityA_BTypeMapping = context.programmaticMapping().type(
+									DYNAMIC_SUBTYPE_B );
 							entityA_BTypeMapping.indexed();
 							entityA_BTypeMapping.property( "propertyOfB" ).genericField();
 
-							TypeMappingStep entityA_CTypeMapping = context.programmaticMapping().type( DYNAMIC_SUBTYPE_C );
+							TypeMappingStep entityA_CTypeMapping = context.programmaticMapping().type(
+									DYNAMIC_SUBTYPE_C );
 							entityA_CTypeMapping.indexed();
 							entityA_CTypeMapping.property( "propertyOfC" ).genericField();
 
@@ -110,7 +114,7 @@ public abstract class AbstractIndexingPlanFilterIT {
 						}
 				);
 		backendMock.expectSchema( DYNAMIC_BASE_TYPE_A, b -> b
-						.field( "propertyOfA", String.class ) )
+				.field( "propertyOfA", String.class ) )
 				.expectSchema( DYNAMIC_SUBTYPE_B, b -> b
 						.field( "propertyOfA", String.class )
 						.field( "propertyOfB", Integer.class ) )
@@ -397,11 +401,9 @@ public abstract class AbstractIndexingPlanFilterIT {
 		}
 	}
 
-	public interface InterfaceA {
-	}
+	public interface InterfaceA {}
 
-	public interface InterfaceB {
-	}
+	public interface InterfaceB {}
 
 	@Entity(name = EntityFromSuperclass.INDEX)
 	@Indexed
@@ -446,8 +448,7 @@ public abstract class AbstractIndexingPlanFilterIT {
 		}
 	}
 
-	public static class NotAnEntity {
-	}
+	public static class NotAnEntity {}
 
 	@Indexed(index = IndexedNotAnEntity.INDEX)
 	public static class IndexedNotAnEntity {

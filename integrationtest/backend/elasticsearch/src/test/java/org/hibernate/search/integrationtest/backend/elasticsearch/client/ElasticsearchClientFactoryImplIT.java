@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
 import javax.net.ssl.SSLContext;
 
 import org.hibernate.search.backend.elasticsearch.cfg.ElasticsearchBackendSettings;
@@ -86,6 +87,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponseInterceptor;
 import org.apache.http.config.RegistryBuilder;
@@ -128,7 +130,8 @@ public class ElasticsearchClientFactoryImplIT {
 	private final WireMockRule wireMockRule1 = new WireMockRule( wireMockConfig().port( 0 )
 			.httpsPort( 0 ) /* Automatic port selection */ );
 
-	private final WireMockRule wireMockRule2 = new WireMockRule( wireMockConfig().port( 0 ).httpsPort( 0 ) /* Automatic port selection */ );
+	private final WireMockRule wireMockRule2 = new WireMockRule( wireMockConfig().port( 0 ).httpsPort(
+			0 ) /* Automatic port selection */ );
 
 	private final TestConfigurationProvider testConfigurationProvider = new TestConfigurationProvider();
 
@@ -195,8 +198,8 @@ public class ElasticsearchClientFactoryImplIT {
 
 		try ( ElasticsearchClientImplementor client = createClient( properties -> properties.accept(
 				ElasticsearchBackendSettings.CLIENT_CONFIGURER,
-				(ElasticsearchHttpClientConfigurer) context ->
-						context.clientBuilder().addInterceptorFirst( responseInterceptor )
+				(ElasticsearchHttpClientConfigurer) context -> context.clientBuilder().addInterceptorFirst(
+						responseInterceptor )
 		) ) ) {
 			ElasticsearchResponse result = doPost( client, "/myIndex/myType", payload );
 			assertThat( result.statusCode() ).as( "status code" ).isEqualTo( 200 );
@@ -372,7 +375,7 @@ public class ElasticsearchClientFactoryImplIT {
 				.withRequestBody( equalToJson( payload ) )
 				.willReturn(
 						elasticsearchResponse().withStatus( 500 )
-						.withBody( responseBody )
+								.withBody( responseBody )
 				) );
 
 		try ( ElasticsearchClientImplementor client = createClient() ) {
@@ -389,7 +392,7 @@ public class ElasticsearchClientFactoryImplIT {
 				.withRequestBody( equalToJson( payload ) )
 				.willReturn(
 						elasticsearchResponse()
-						.withBody( "'unparseable" )
+								.withBody( "'unparseable" )
 				) );
 
 		assertThatThrownBy( () -> {
@@ -414,7 +417,7 @@ public class ElasticsearchClientFactoryImplIT {
 				.withRequestBody( equalToJson( payload ) )
 				.willReturn(
 						elasticsearchResponse()
-						.withFixedDelay( 2000 )
+								.withFixedDelay( 2000 )
 				) );
 
 		assertThatThrownBy( () -> {
@@ -442,7 +445,7 @@ public class ElasticsearchClientFactoryImplIT {
 				.withRequestBody( equalToJson( payload ) )
 				.willReturn(
 						elasticsearchResponse()
-						.withFixedDelay( 2000 )
+								.withFixedDelay( 2000 )
 				) );
 
 		assertThatThrownBy( () -> {
@@ -475,7 +478,8 @@ public class ElasticsearchClientFactoryImplIT {
 		String payload = "{ \"foo\": \"bar\" }";
 		wireMockRule1.stubFor( post( urlPathMatching( "/long" ) )
 				.willReturn( elasticsearchResponse()
-						.withFixedDelay( 300 /* 300ms => should not time out, but will still clog up the client */ ) ) );
+						.withFixedDelay(
+								300 /* 300ms => should not time out, but will still clog up the client */ ) ) );
 		wireMockRule1.stubFor( post( urlPathMatching( "/myIndex/myType" ) )
 				.withRequestBody( equalToJson( payload ) )
 				.willReturn( elasticsearchResponse().withStatus( 200 )
@@ -491,7 +495,7 @@ public class ElasticsearchClientFactoryImplIT {
 			// Clog up the client: put many requests in the queue, to be executed asynchronously,
 			// so that we're sure the next request will have to wait in the queue
 			// for more that the configured timeout before it ends up being executed.
-			for ( int i = 0 ; i < 10 ; ++i ) {
+			for ( int i = 0; i < 10; ++i ) {
 				client.submit( buildRequest( ElasticsearchRequest.post(), "/long", payload ) );
 			}
 
@@ -512,7 +516,8 @@ public class ElasticsearchClientFactoryImplIT {
 		String payload = "{ \"foo\": \"bar\" }";
 		wireMockRule1.stubFor( post( urlPathMatching( "/long" ) )
 				.willReturn( elasticsearchResponse()
-						.withFixedDelay( 300 /* 300ms => should not time out, but will still clog up the client */ ) ) );
+						.withFixedDelay(
+								300 /* 300ms => should not time out, but will still clog up the client */ ) ) );
 		wireMockRule1.stubFor( post( urlPathMatching( "/myIndex/myType" ) )
 				.withRequestBody( equalToJson( payload ) )
 				.willReturn( elasticsearchResponse().withStatus( 200 )
@@ -528,12 +533,12 @@ public class ElasticsearchClientFactoryImplIT {
 			// Clog up the client: put many requests in the queue, to be executed asynchronously,
 			// so that we're sure the next request will have to wait in the queue
 			// for more that the configured timeout before it ends up being executed.
-			for ( int i = 0 ; i < 10 ; ++i ) {
+			for ( int i = 0; i < 10; ++i ) {
 				client.submit( buildRequest( ElasticsearchRequest.post(), "/long", payload ) );
 			}
 
 			assertThatThrownBy( () -> {
-					doPost( client, "/myIndex/myType", payload );
+				doPost( client, "/myIndex/myType", payload );
 			} )
 					.isInstanceOf( AssertionFailure.class )
 					.extracting( Throwable::getCause, InstanceOfAssertFactories.THROWABLE )
@@ -558,7 +563,8 @@ public class ElasticsearchClientFactoryImplIT {
 
 		try ( ElasticsearchClientImplementor client = createClient(
 				properties -> {
-					properties.accept( ElasticsearchBackendSettings.HOSTS, httpHostAndPortFor( wireMockRule1, wireMockRule2 ) );
+					properties.accept( ElasticsearchBackendSettings.HOSTS, httpHostAndPortFor( wireMockRule1,
+							wireMockRule2 ) );
 				}
 		) ) {
 			ElasticsearchResponse result = doPost( client, "/myIndex/myType", payload );
@@ -583,7 +589,8 @@ public class ElasticsearchClientFactoryImplIT {
 
 		try ( ElasticsearchClientImplementor client = createClient(
 				properties -> {
-					properties.accept( ElasticsearchBackendSettings.URIS, httpsUrisFor( wireMockRule1, wireMockRule2 ) );
+					properties.accept( ElasticsearchBackendSettings.URIS, httpsUrisFor( wireMockRule1,
+							wireMockRule2 ) );
 				}
 		) ) {
 			ElasticsearchResponse result = doPost( client, "/myIndex/myType", payload );
@@ -609,7 +616,8 @@ public class ElasticsearchClientFactoryImplIT {
 
 		try ( ElasticsearchClientImplementor client = createClient(
 				properties -> {
-					properties.accept( ElasticsearchBackendSettings.HOSTS, httpHostAndPortFor( wireMockRule1, wireMockRule2 ) );
+					properties.accept( ElasticsearchBackendSettings.HOSTS, httpHostAndPortFor( wireMockRule1,
+							wireMockRule2 ) );
 				}
 		) ) {
 			ElasticsearchResponse result = doPost( client, "/myIndex/myType", payload );
@@ -643,11 +651,13 @@ public class ElasticsearchClientFactoryImplIT {
 				.willReturn( elasticsearchResponse().withStatus( 200 ) ) );
 		wireMockRule2.stubFor( post( urlPathMatching( "/myIndex/myType" ) )
 				.withRequestBody( equalToJson( payload ) )
-				.willReturn( elasticsearchResponse().withStatus( 200 ).withFixedDelay( 5_000 /* 5s => will time out */ ) ) );
+				.willReturn( elasticsearchResponse().withStatus( 200 ).withFixedDelay(
+						5_000 /* 5s => will time out */ ) ) );
 
 		try ( ElasticsearchClientImplementor client = createClient(
 				properties -> {
-					properties.accept( ElasticsearchBackendSettings.HOSTS, httpHostAndPortFor( wireMockRule1, wireMockRule2 ) );
+					properties.accept( ElasticsearchBackendSettings.HOSTS, httpHostAndPortFor( wireMockRule1,
+							wireMockRule2 ) );
 					// Use a timeout much higher than 1s, because wiremock can be really slow...
 					properties.accept( ElasticsearchBackendSettings.READ_TIMEOUT, "1000" /* 1s */ );
 				}
@@ -696,7 +706,8 @@ public class ElasticsearchClientFactoryImplIT {
 
 		try ( ElasticsearchClientImplementor client = createClient(
 				properties -> {
-					properties.accept( ElasticsearchBackendSettings.HOSTS, httpHostAndPortFor( wireMockRule1, wireMockRule2 ) );
+					properties.accept( ElasticsearchBackendSettings.HOSTS, httpHostAndPortFor( wireMockRule1,
+							wireMockRule2 ) );
 				}
 		) ) {
 			ElasticsearchResponse result = doPost( client, "/myIndex/myType", payload );
@@ -854,8 +865,10 @@ public class ElasticsearchClientFactoryImplIT {
 	@TestForIssue(jiraKey = "HSEARCH-2453")
 	public void authentication() {
 		assumeFalse(
-				"This test only is only relevant if Elasticsearch request are *NOT* automatically" +
-						" augmented with an \"Authentication:\" header." +
+				"This test only is only relevant if Elasticsearch request are *NOT* automatically"
+						+
+						" augmented with an \"Authentication:\" header."
+						+
 						" \"Authentication:\" headers are added by the AWS integration in particular.",
 				ElasticsearchTestHostConnectionConfiguration.get().isAws()
 		);
@@ -889,7 +902,7 @@ public class ElasticsearchClientFactoryImplIT {
 				.withRequestBody( equalToJson( payload ) )
 				.willReturn(
 						elasticsearchResponse().withStatus( 401 /* Unauthorized */ )
-						.withStatusMessage( statusMessage )
+								.withStatusMessage( statusMessage )
 				) );
 
 		try ( ElasticsearchClientImplementor client = createClient() ) {
@@ -956,7 +969,8 @@ public class ElasticsearchClientFactoryImplIT {
 	@Test
 	public void differentProtocolsOnUris() {
 		Consumer<BiConsumer<String, Object>> additionalProperties = properties -> {
-			properties.accept( ElasticsearchBackendSettings.URIS, "http://is-not-called:12345, https://neather-is:12345" );
+			properties.accept( ElasticsearchBackendSettings.URIS,
+					"http://is-not-called:12345, https://neather-is:12345" );
 		};
 
 		assertThatThrownBy( () -> createClient( additionalProperties ) )
@@ -996,7 +1010,8 @@ public class ElasticsearchClientFactoryImplIT {
 
 	@Test
 	public void clientInstance() throws IOException {
-		try ( RestClient myRestClient = RestClient.builder( HttpHost.create( httpUrisFor( wireMockRule1 ) ) ).build() ) {
+		try ( RestClient myRestClient = RestClient.builder( HttpHost.create( httpUrisFor( wireMockRule1 ) ) )
+				.build() ) {
 			String payload = "{ \"foo\": \"bar\" }";
 			String statusMessage = "StatusMessage";
 			String responseBody = "{ \"foo\": \"bar\" }";
@@ -1008,7 +1023,8 @@ public class ElasticsearchClientFactoryImplIT {
 							.withBody( responseBody ) ) );
 
 			try ( ElasticsearchClientImplementor client = createClient( properties -> {
-				properties.accept( ElasticsearchBackendSpiSettings.CLIENT_INSTANCE, BeanReference.ofInstance( myRestClient ) );
+				properties.accept( ElasticsearchBackendSpiSettings.CLIENT_INSTANCE, BeanReference.ofInstance(
+						myRestClient ) );
 			} ) ) {
 				ElasticsearchResponse result = doPost( client, "/myIndex/myType", payload );
 				assertThat( result.statusCode() ).as( "status code" ).isEqualTo( 200 );
@@ -1049,7 +1065,7 @@ public class ElasticsearchClientFactoryImplIT {
 		maxKeepAliveConnection( 10, 2 );
 	}
 
-	public void maxKeepAliveConnection(long time, int connections ) throws InterruptedException {
+	public void maxKeepAliveConnection(long time, int connections) throws InterruptedException {
 		String payload = "{ \"foo\": \"bar\" }";
 		String statusMessage = "StatusMessage";
 		String responseBody = "{ \"foo\": \"bar\" }";
@@ -1129,7 +1145,7 @@ public class ElasticsearchClientFactoryImplIT {
 	}
 
 	private ElasticsearchClientImplementor createClient() {
-		return createClient( ignored -> { } );
+		return createClient( ignored -> {} );
 	}
 
 	private ElasticsearchClientImplementor createClient(Consumer<BiConsumer<String, Object>> additionalProperties) {
@@ -1153,7 +1169,8 @@ public class ElasticsearchClientFactoryImplIT {
 			clientProperties.put( ElasticsearchBackendSettings.URIS, httpUrisFor( wireMockRule1 ) );
 		}
 
-		ConfigurationPropertySource clientPropertySource = AllAwareConfigurationPropertySource.fromMap( clientProperties );
+		ConfigurationPropertySource clientPropertySource = AllAwareConfigurationPropertySource.fromMap(
+				clientProperties );
 
 		Map<String, Object> beanResolverConfiguration = new HashMap<>();
 		// Accept Wiremock's self-signed SSL certificates
@@ -1195,25 +1212,25 @@ public class ElasticsearchClientFactoryImplIT {
 		return builder.build();
 	}
 
-	private static String httpHostAndPortFor(WireMockRule ... rules) {
+	private static String httpHostAndPortFor(WireMockRule... rules) {
 		return Arrays.stream( rules )
 				.map( rule -> "localhost:" + rule.port() )
 				.collect( Collectors.joining( "," ) );
 	}
 
-	private static String httpsHostAndPortFor(WireMockRule ... rules) {
+	private static String httpsHostAndPortFor(WireMockRule... rules) {
 		return Arrays.stream( rules )
 				.map( rule -> "localhost:" + rule.httpsPort() )
 				.collect( Collectors.joining( "," ) );
 	}
 
-	private static String httpUrisFor(WireMockRule ... rules) {
+	private static String httpUrisFor(WireMockRule... rules) {
 		return Arrays.stream( rules )
 				.map( rule -> "http://localhost:" + rule.port() )
 				.collect( Collectors.joining( "," ) );
 	}
 
-	private static String httpsUrisFor(WireMockRule ... rules) {
+	private static String httpsUrisFor(WireMockRule... rules) {
 		return Arrays.stream( rules )
 				.map( rule -> "https://localhost:" + rule.httpsPort() )
 				.collect( Collectors.joining( "," ) );

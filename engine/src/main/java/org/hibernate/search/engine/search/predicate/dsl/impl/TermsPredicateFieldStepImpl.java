@@ -12,7 +12,6 @@ import org.hibernate.search.engine.search.predicate.dsl.TermsPredicateFieldMoreS
 import org.hibernate.search.engine.search.predicate.dsl.TermsPredicateFieldStep;
 import org.hibernate.search.engine.search.predicate.dsl.spi.SearchPredicateDslContext;
 
-
 public final class TermsPredicateFieldStepImpl implements TermsPredicateFieldStep<TermsPredicateFieldMoreStep<?, ?>> {
 
 	private final TermsPredicateFieldMoreStepImpl.CommonState commonState;
@@ -22,7 +21,7 @@ public final class TermsPredicateFieldStepImpl implements TermsPredicateFieldSte
 	}
 
 	@Override
-	public TermsPredicateFieldMoreStep<?, ?> fields(String ... fieldPaths) {
+	public TermsPredicateFieldMoreStep<?, ?> fields(String... fieldPaths) {
 		return new TermsPredicateFieldMoreStepImpl( commonState, Arrays.asList( fieldPaths ) );
 	}
 }

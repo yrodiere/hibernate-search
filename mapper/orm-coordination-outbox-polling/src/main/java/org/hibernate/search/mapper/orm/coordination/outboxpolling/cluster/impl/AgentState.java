@@ -12,9 +12,7 @@ import java.util.Set;
 
 public enum AgentState {
 
-	RUNNING,
-	WAITING,
-	SUSPENDED;
+	RUNNING, WAITING, SUSPENDED;
 
 	public static final Set<AgentState> WAITING_OR_RUNNING =
 			Collections.unmodifiableSet( EnumSet.of( WAITING, RUNNING ) );

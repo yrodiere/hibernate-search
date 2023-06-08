@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Sort;
-
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
@@ -29,9 +26,13 @@ import org.hibernate.search.testsupport.AnalysisNames;
 import org.hibernate.search.testsupport.TestForIssue;
 import org.hibernate.search.testsupport.junit.SearchFactoryHolder;
 import org.hibernate.search.testsupport.junit.SearchITHelper;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
 
 /**
  * Test to verify we apply the right sorting strategy for non-trivial mapped entities
@@ -134,7 +135,7 @@ public class SortingTest {
 				new Person( 0, 3, "Three", new CuddlyToy( "Hippo" ) ),
 				new Person( 1, 10, "Ten", new CuddlyToy( "Giraffe" ) ),
 				new Person( 2, 9, "Nine", new CuddlyToy( "Gorilla" ) ),
-				new Person( 3, 5, "Five" , new CuddlyToy( "Alligator" ) )
+				new Person( 3, 5, "Five", new CuddlyToy( "Alligator" ) )
 		);
 
 		Sort sortAsString = builder().sort().byField( "favoriteCuddlyToy.type" ).createSort();
@@ -234,8 +235,8 @@ public class SortingTest {
 				@org.hibernate.search.annotations.SortableField(forField = "ageForNullChecks")
 		})
 		@Fields({
-			@Field(name = "ageForIntSorting", store = Store.YES, analyze = Analyze.NO),
-			@Field(name = "ageForNullChecks", store = Store.YES, analyze = Analyze.NO, indexNullAs = "-1")
+				@Field(name = "ageForIntSorting", store = Store.YES, analyze = Analyze.NO),
+				@Field(name = "ageForNullChecks", store = Store.YES, analyze = Analyze.NO, indexNullAs = "-1")
 		})
 		final Integer age;
 		@Field(name = "ageForStringSorting", store = Store.YES, analyze = Analyze.NO)
@@ -248,7 +249,8 @@ public class SortingTest {
 		})
 		@Fields({
 				@Field(name = "name", store = Store.YES, analyze = Analyze.NO, indexNullAs = "_null_"),
-				@Field(name = "collatedName", store = Store.YES, normalizer = @Normalizer(definition = COLLATING_NORMALIZER_NAME))
+				@Field(name = "collatedName", store = Store.YES, normalizer = @Normalizer(
+						definition = COLLATING_NORMALIZER_NAME))
 		})
 		final String name;
 

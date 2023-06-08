@@ -16,6 +16,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchStatus;
 import javax.batch.runtime.JobExecution;
@@ -29,12 +30,12 @@ import javax.persistence.criteria.Root;
 import org.hibernate.search.batch.jsr352.core.logging.impl.Log;
 import org.hibernate.search.batch.jsr352.core.massindexing.MassIndexingJob;
 import org.hibernate.search.batch.jsr352.core.massindexing.step.impl.StepProgress;
-import org.hibernate.search.integrationtest.batch.jsr352.util.BackendConfigurations;
-import org.hibernate.search.integrationtest.batch.jsr352.util.JobTestUtil;
 import org.hibernate.search.integrationtest.batch.jsr352.massindexing.entity.Company;
 import org.hibernate.search.integrationtest.batch.jsr352.massindexing.entity.CompanyGroup;
 import org.hibernate.search.integrationtest.batch.jsr352.massindexing.entity.Person;
 import org.hibernate.search.integrationtest.batch.jsr352.massindexing.entity.WhoAmI;
+import org.hibernate.search.integrationtest.batch.jsr352.util.BackendConfigurations;
+import org.hibernate.search.integrationtest.batch.jsr352.util.JobTestUtil;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.cfg.HibernateOrmMapperSettings;
 import org.hibernate.search.mapper.orm.session.SearchSession;
@@ -81,7 +82,8 @@ public class BatchIndexingJobIT {
 	private JobOperator jobOperator;
 
 	@ReusableOrmSetupHolder.Setup
-	public void setup(OrmSetupHelper.SetupContext setupContext, ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
+	public void setup(OrmSetupHelper.SetupContext setupContext,
+			ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
 		setupContext.withAnnotatedTypes( Company.class, Person.class, WhoAmI.class, CompanyGroup.class )
 				.withProperty( HibernateOrmMapperSettings.AUTOMATIC_INDEXING_ENABLED, false );
 
@@ -118,8 +120,7 @@ public class BatchIndexingJobIT {
 	}
 
 	@Test
-	public void simple() throws InterruptedException,
-			IOException {
+	public void simple() throws InterruptedException, IOException {
 		List<Company> companies = JobTestUtil.findIndexedResults( emf, Company.class, "name", "Google" );
 		List<Person> people = JobTestUtil.findIndexedResults( emf, Person.class, "firstName", "Linus" );
 		List<WhoAmI> whos = JobTestUtil.findIndexedResults( emf, WhoAmI.class, "id", "id01" );
@@ -133,7 +134,7 @@ public class BatchIndexingJobIT {
 						.forEntities( Company.class, Person.class, WhoAmI.class )
 						.checkpointInterval( CHECKPOINT_INTERVAL )
 						.build()
-				);
+		);
 		JobExecution jobExecution = jobOperator.getJobExecution( executionId );
 		JobTestUtil.waitForTermination( jobOperator, jobExecution, JOB_TIMEOUT_MS );
 		assertCompletion( executionId );
@@ -150,8 +151,7 @@ public class BatchIndexingJobIT {
 	}
 
 	@Test
-	public void simple_defaultCheckpointInterval() throws InterruptedException,
-			IOException {
+	public void simple_defaultCheckpointInterval() throws InterruptedException, IOException {
 		List<Company> companies = JobTestUtil.findIndexedResults( emf, Company.class, "name", "Google" );
 		List<Person> people = JobTestUtil.findIndexedResults( emf, Person.class, "firstName", "Linus" );
 		List<WhoAmI> whos = JobTestUtil.findIndexedResults( emf, WhoAmI.class, "id", "id01" );
@@ -182,8 +182,7 @@ public class BatchIndexingJobIT {
 
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-2637")
-	public void indexedEmbeddedCollection() throws InterruptedException,
-			IOException {
+	public void indexedEmbeddedCollection() throws InterruptedException, IOException {
 		setupHolder.runInTransaction( em -> {
 			CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 			CriteriaQuery<Company> criteria = criteriaBuilder.createQuery( Company.class );
@@ -203,9 +202,12 @@ public class BatchIndexingJobIT {
 			groups.forEach( em::persist );
 		} );
 
-		List<CompanyGroup> groupsContainingGoogle = JobTestUtil.findIndexedResults( emf, CompanyGroup.class, "companies.name", "Google" );
-		List<CompanyGroup> groupsContainingRedHat = JobTestUtil.findIndexedResults( emf, CompanyGroup.class, "companies.name", "Red Hat" );
-		List<CompanyGroup> groupsContainingMicrosoft = JobTestUtil.findIndexedResults( emf, CompanyGroup.class, "companies.name", "Microsoft" );
+		List<CompanyGroup> groupsContainingGoogle = JobTestUtil.findIndexedResults( emf, CompanyGroup.class,
+				"companies.name", "Google" );
+		List<CompanyGroup> groupsContainingRedHat = JobTestUtil.findIndexedResults( emf, CompanyGroup.class,
+				"companies.name", "Red Hat" );
+		List<CompanyGroup> groupsContainingMicrosoft = JobTestUtil.findIndexedResults( emf, CompanyGroup.class,
+				"companies.name", "Microsoft" );
 		assertEquals( 0, groupsContainingGoogle.size() );
 		assertEquals( 0, groupsContainingRedHat.size() );
 		assertEquals( 0, groupsContainingMicrosoft.size() );
@@ -216,7 +218,7 @@ public class BatchIndexingJobIT {
 						.forEntities( CompanyGroup.class )
 						.checkpointInterval( CHECKPOINT_INTERVAL )
 						.build()
-				);
+		);
 		JobExecution jobExecution = jobOperator.getJobExecution( executionId );
 		JobTestUtil.waitForTermination( jobOperator, jobExecution, JOB_TIMEOUT_MS );
 		assertCompletion( executionId );
@@ -224,7 +226,8 @@ public class BatchIndexingJobIT {
 
 		groupsContainingGoogle = JobTestUtil.findIndexedResults( emf, CompanyGroup.class, "companies.name", "Google" );
 		groupsContainingRedHat = JobTestUtil.findIndexedResults( emf, CompanyGroup.class, "companies.name", "Red Hat" );
-		groupsContainingMicrosoft = JobTestUtil.findIndexedResults( emf, CompanyGroup.class, "companies.name", "Microsoft" );
+		groupsContainingMicrosoft = JobTestUtil.findIndexedResults( emf, CompanyGroup.class, "companies.name",
+				"Microsoft" );
 		assertEquals( 2 * INSTANCES_PER_DATA_TEMPLATE, groupsContainingGoogle.size() );
 		assertEquals( INSTANCES_PER_DATA_TEMPLATE, groupsContainingRedHat.size() );
 		assertEquals( INSTANCES_PER_DATA_TEMPLATE, groupsContainingMicrosoft.size() );
@@ -283,8 +286,7 @@ public class BatchIndexingJobIT {
 	}
 
 	@Test
-	public void hql() throws InterruptedException,
-			IOException {
+	public void hql() throws InterruptedException, IOException {
 		// searches before mass index,
 		// expected no results for each search
 		assertEquals( 0, JobTestUtil.findIndexedResults( emf, Company.class, "name", "Google" ).size() );
@@ -298,18 +300,19 @@ public class BatchIndexingJobIT {
 						.checkpointInterval( CHECKPOINT_INTERVAL )
 						.restrictedBy( "select c from Company c where c.name like 'Google%' or c.name like 'Red Hat%'" )
 						.build()
-				);
+		);
 		JobExecution jobExecution = jobOperator.getJobExecution( executionId );
 		JobTestUtil.waitForTermination( jobOperator, jobExecution, JOB_TIMEOUT_MS );
 
-		assertEquals( INSTANCES_PER_DATA_TEMPLATE, JobTestUtil.findIndexedResults( emf, Company.class, "name", "Google" ).size() );
-		assertEquals( INSTANCES_PER_DATA_TEMPLATE, JobTestUtil.findIndexedResults( emf, Company.class, "name", "Red Hat" ).size() );
+		assertEquals( INSTANCES_PER_DATA_TEMPLATE, JobTestUtil.findIndexedResults( emf, Company.class, "name",
+				"Google" ).size() );
+		assertEquals( INSTANCES_PER_DATA_TEMPLATE, JobTestUtil.findIndexedResults( emf, Company.class, "name",
+				"Red Hat" ).size() );
 		assertEquals( 0, JobTestUtil.findIndexedResults( emf, Company.class, "name", "Microsoft" ).size() );
 	}
 
 	@Test
-	public void hql_maxResults() throws InterruptedException,
-			IOException {
+	public void hql_maxResults() throws InterruptedException, IOException {
 		// searches before mass index,
 		// expected no results for each search
 		assertEquals( 0, JobTestUtil.nbDocumentsInIndex( emf, Company.class ) );
@@ -332,8 +335,7 @@ public class BatchIndexingJobIT {
 	}
 
 	@Test
-	public void partitioned() throws InterruptedException,
-			IOException {
+	public void partitioned() throws InterruptedException, IOException {
 		List<Company> companies = JobTestUtil.findIndexedResults( emf, Company.class, "name", "Google" );
 		List<Person> people = JobTestUtil.findIndexedResults( emf, Person.class, "firstName", "Linus" );
 		List<WhoAmI> whos = JobTestUtil.findIndexedResults( emf, WhoAmI.class, "id", "id01" );
@@ -348,7 +350,7 @@ public class BatchIndexingJobIT {
 						.checkpointInterval( CHECKPOINT_INTERVAL )
 						.rowsPerPartition( INSTANCE_PER_ENTITY_TYPE - 1 )
 						.build()
-				);
+		);
 		JobExecution jobExecution = jobOperator.getJobExecution( executionId );
 		JobTestUtil.waitForTermination( jobOperator, jobExecution, JOB_TIMEOUT_MS );
 		assertCompletion( executionId );

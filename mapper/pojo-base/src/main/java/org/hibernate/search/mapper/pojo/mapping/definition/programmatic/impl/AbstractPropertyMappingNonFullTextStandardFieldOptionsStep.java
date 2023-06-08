@@ -9,13 +9,11 @@ package org.hibernate.search.mapper.pojo.mapping.definition.programmatic.impl;
 import org.hibernate.search.engine.backend.types.Aggregable;
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.mapper.pojo.bridge.binding.spi.FieldModelContributor;
-import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.PropertyMappingStep;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.PropertyMappingNonFullTextFieldOptionsStep;
-
+import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.PropertyMappingStep;
 
 abstract class AbstractPropertyMappingNonFullTextStandardFieldOptionsStep<
-				S extends PropertyMappingNonFullTextFieldOptionsStep<?>
-		>
+		S extends PropertyMappingNonFullTextFieldOptionsStep<?>>
 		extends AbstractPropertyMappingStandardFieldOptionsStep<S>
 		implements PropertyMappingNonFullTextFieldOptionsStep<S> {
 

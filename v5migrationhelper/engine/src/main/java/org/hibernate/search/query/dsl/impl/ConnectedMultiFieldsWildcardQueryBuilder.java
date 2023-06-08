@@ -27,7 +27,8 @@ public class ConnectedMultiFieldsWildcardQueryBuilder
 	}
 
 	@Override
-	protected WildcardPredicateOptionsStep<?> createPredicate(SearchPredicateFactory factory, FieldContext fieldContext) {
+	protected WildcardPredicateOptionsStep<?> createPredicate(SearchPredicateFactory factory,
+			FieldContext fieldContext) {
 		return fieldContext.applyBoost( factory.wildcard().field( fieldContext.getField() ) )
 				.matching( value.toString() );
 	}

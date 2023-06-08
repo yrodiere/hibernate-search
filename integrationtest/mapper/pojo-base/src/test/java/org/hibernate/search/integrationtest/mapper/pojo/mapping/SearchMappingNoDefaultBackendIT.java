@@ -75,7 +75,11 @@ public class SearchMappingNoDefaultBackendIT {
 				.hasMessageContainingAll(
 						"No default backend",
 						"Check that at least one entity is configured to target the default backend",
-						"The following backends can be retrieved by name: [" + BACKEND_1_NAME + ", " + BACKEND_2_NAME + "]"
+						"The following backends can be retrieved by name: ["
+								+ BACKEND_1_NAME
+								+ ", "
+								+ BACKEND_2_NAME
+								+ "]"
 				);
 	}
 
@@ -87,7 +91,11 @@ public class SearchMappingNoDefaultBackendIT {
 				.hasMessageContainingAll(
 						"No backend with name 'invalid'",
 						"Check that at least one entity is configured to target that backend",
-						"The following backends can be retrieved by name: [" + BACKEND_1_NAME + ", " + BACKEND_2_NAME + "]",
+						"The following backends can be retrieved by name: ["
+								+ BACKEND_1_NAME
+								+ ", "
+								+ BACKEND_2_NAME
+								+ "]",
 						"The default backend cannot be retrieved, because no entity is mapped to that backend"
 				);
 	}
@@ -108,6 +116,7 @@ public class SearchMappingNoDefaultBackendIT {
 		public Integer getId() {
 			return id;
 		}
+
 		public String getName() {
 			return name;
 		}
@@ -142,9 +151,11 @@ public class SearchMappingNoDefaultBackendIT {
 		public Integer getId() {
 			return id;
 		}
+
 		public String getName() {
 			return name;
 		}
+
 		public Pet getOwner() {
 			return owner;
 		}

@@ -10,16 +10,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.lang.invoke.MethodHandles;
 
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.ProgrammaticMappingConfigurationContext;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.TypeMappingStep;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPath;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -34,7 +34,8 @@ public class DefaultReindexOnUpdateIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private SearchMapping mapping;
 
@@ -164,13 +165,18 @@ public class DefaultReindexOnUpdateIT {
 						.typeContext( ParentEntity.class.getName() )
 						.pathContext( ".child<no value extractors>.value<no value extractors>" )
 						.failure(
-								"Unable to find the inverse side of the association on type '" + ParentEntity.class.getName() + "'"
+								"Unable to find the inverse side of the association on type '"
+										+ ParentEntity.class.getName()
+										+ "'"
 										+ " at path '.child<no value extractors>'",
 								"Hibernate Search needs this information in order to reindex '"
-										+ ParentEntity.class.getName() + "' when '"
-										+ ChildEntity.class.getName() + "' is modified."
+										+ ParentEntity.class.getName()
+										+ "' when '"
+										+ ChildEntity.class.getName()
+										+ "' is modified."
 						) );
 	}
+
 	/**
 	 * If ReindexOnUpdate.NO is the default,
 	 * even if the inverse side of associations is not correctly set up,

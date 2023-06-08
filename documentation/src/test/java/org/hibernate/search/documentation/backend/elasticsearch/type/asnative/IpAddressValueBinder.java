@@ -26,7 +26,7 @@ public class IpAddressValueBinder implements ValueBinder { // <1>
 				context.typeFactory() // <2>
 						.extension( ElasticsearchExtension.get() ) // <3>
 						.asNative() // <4>
-								.mapping( "{\"type\": \"ip\"}" ) // <5>
+						.mapping( "{\"type\": \"ip\"}" ) // <5>
 		);
 	}
 

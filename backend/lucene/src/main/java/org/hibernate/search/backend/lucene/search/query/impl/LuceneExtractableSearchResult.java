@@ -46,7 +46,8 @@ public class LuceneExtractableSearchResult<H> {
 			LuceneSearchProjection.Extractor<?, H> rootExtractor,
 			Map<AggregationKey<?>, LuceneSearchAggregation<?>> aggregations, TimeoutManager timeoutManager) {
 		this.requestContext = requestContext;
-		this.fromDocumentValueConvertContext = new FromDocumentValueConvertContextImpl( requestContext.getSessionContext() );
+		this.fromDocumentValueConvertContext = new FromDocumentValueConvertContextImpl( requestContext
+				.getSessionContext() );
 		this.indexSearcher = indexSearcher;
 		this.luceneCollectors = luceneCollectors;
 		this.rootExtractor = rootExtractor;

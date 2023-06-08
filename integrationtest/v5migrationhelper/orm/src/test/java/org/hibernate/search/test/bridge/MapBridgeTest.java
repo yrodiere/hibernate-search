@@ -6,28 +6,28 @@
  */
 package org.hibernate.search.test.bridge;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.lucene.document.DateTools;
-import org.apache.lucene.search.Query;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
-import org.hibernate.search.query.dsl.QueryBuilder;
-import org.hibernate.search.query.dsl.TermMatchingContext;
-import org.hibernate.search.test.SearchTestBase;
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.hibernate.search.test.bridge.MapBridgeTestEntity.Language.ENGLISH;
 import static org.hibernate.search.test.bridge.MapBridgeTestEntity.Language.ITALIAN;
 import static org.hibernate.search.test.bridge.MapBridgeTestEntity.Language.KLINGON;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
+import org.hibernate.search.query.dsl.TermMatchingContext;
+import org.hibernate.search.test.SearchTestBase;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import org.apache.lucene.document.DateTools;
+import org.apache.lucene.search.Query;
 
 /**
  * Test indexing of {@link javax.persistence.ElementCollection} annotated maps.
@@ -95,7 +95,8 @@ public class MapBridgeTest extends SearchTestBase {
 
 		assertNotNull( "No result found for an indexed collection", results );
 		assertEquals( "Unexpected number of results in a collection", 1, results.size() );
-		assertEquals( "Wrong result returned looking for a null in a collection", withNullEntry.getName(), results.get( 0 ).getName() );
+		assertEquals( "Wrong result returned looking for a null in a collection", withNullEntry.getName(), results.get(
+				0 ).getName() );
 	}
 
 	@Test
@@ -105,7 +106,8 @@ public class MapBridgeTest extends SearchTestBase {
 
 		assertNotNull( "No result found for an indexed collection", results );
 		assertEquals( "Unexpected number of results in a collection", 1, results.size() );
-		assertEquals( "Wrong result returned looking for a null in a collection of numeric", withNullEntry.getName(), results.get( 0 ).getName() );
+		assertEquals( "Wrong result returned looking for a null in a collection of numeric", withNullEntry.getName(),
+				results.get( 0 ).getName() );
 	}
 
 	@Test

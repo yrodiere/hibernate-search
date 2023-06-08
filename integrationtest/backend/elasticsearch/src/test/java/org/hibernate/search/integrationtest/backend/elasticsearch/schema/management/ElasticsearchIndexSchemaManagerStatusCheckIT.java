@@ -60,7 +60,9 @@ public class ElasticsearchIndexSchemaManagerStatusCheckIT {
 
 	@Test
 	public void indexMissing() throws Exception {
-		assumeFalse( "The operation " + operation + " creates an index automatically."
+		assumeFalse( "The operation "
+				+ operation
+				+ " creates an index automatically."
 				+ " No point running this test.",
 				ElasticsearchIndexSchemaManagerOperation.creating().contains( operation ) );
 
@@ -73,7 +75,9 @@ public class ElasticsearchIndexSchemaManagerStatusCheckIT {
 
 	@Test
 	public void invalidIndexStatus_creatingIndex() throws Exception {
-		assumeTrue( "The operation " + operation + " doesn't create an index automatically."
+		assumeTrue( "The operation "
+				+ operation
+				+ " doesn't create an index automatically."
 				+ " No point running this test.",
 				ElasticsearchIndexSchemaManagerOperation.creating().contains( operation ) );
 
@@ -88,8 +92,10 @@ public class ElasticsearchIndexSchemaManagerStatusCheckIT {
 
 	@Test
 	public void invalidIndexStatus_usingPreexistingIndex() throws Exception {
-		assumeFalse( "The operation " + operation + " drops the existing index automatically."
-						+ " No point running this test.",
+		assumeFalse( "The operation "
+				+ operation
+				+ " drops the existing index automatically."
+				+ " No point running this test.",
 				ElasticsearchIndexSchemaManagerOperation.dropping().contains( operation ) );
 
 		// Make sure automatically created indexes will never be green by requiring 5 replicas

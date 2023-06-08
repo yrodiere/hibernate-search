@@ -36,7 +36,8 @@ public final class TypeBindingProcessor implements TypeMappingAnnotationProcesso
 		mapping.binder( binder, params );
 	}
 
-	private TypeBinder createBinder(TypeBinderRef binderReferenceAnnotation, MappingAnnotationProcessorContext context) {
+	private TypeBinder createBinder(TypeBinderRef binderReferenceAnnotation,
+			MappingAnnotationProcessorContext context) {
 		Optional<BeanReference<? extends TypeBinder>> binderReference = context.toBeanReference(
 				TypeBinder.class,
 				TypeBinderRef.UndefinedBinderImplementationType.class,

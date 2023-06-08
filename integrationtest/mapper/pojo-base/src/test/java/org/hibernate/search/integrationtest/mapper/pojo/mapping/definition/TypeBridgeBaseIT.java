@@ -16,9 +16,6 @@ import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaObjectF
 import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.engine.search.predicate.definition.PredicateDefinition;
 import org.hibernate.search.integrationtest.mapper.pojo.mapping.annotation.processing.CustomTypeMappingAnnotationBaseIT;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.bridge.TypeBridge;
 import org.hibernate.search.mapper.pojo.bridge.binding.TypeBindingContext;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.TypeBinderRef;
@@ -30,10 +27,13 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.TypeBinding;
 import org.hibernate.search.mapper.pojo.model.PojoElementAccessor;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -55,7 +55,8 @@ public class TypeBridgeBaseIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	/**
 	 * Basic test checking that a "normal" custom type bridge will work as expected
@@ -64,7 +65,7 @@ public class TypeBridgeBaseIT {
 	 * Note that reindexing is tested in depth in the ORM mapper integration tests.
 	 */
 	@Test
-	@TestForIssue(jiraKey = {"HSEARCH-2055", "HSEARCH-2641"})
+	@TestForIssue(jiraKey = { "HSEARCH-2055", "HSEARCH-2641" })
 	public void accessors() {
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
@@ -73,10 +74,9 @@ public class TypeBridgeBaseIT {
 			String stringProperty;
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.field( "someField", String.class, b2 -> {
-					b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
-				} )
+		backendMock.expectSchema( INDEX_NAME, b -> b.field( "someField", String.class, b2 -> {
+			b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
+		} )
 		);
 
 		SearchMapping mapping = setupHelper.start().withConfiguration(
@@ -91,9 +91,10 @@ public class TypeBridgeBaseIT {
 											f -> f.asString().analyzer( "myAnalyzer" )
 									)
 											.toReference();
-							context.bridge( (DocumentElement target, Object bridgedElement, TypeBridgeWriteContext context1) -> {
+							context.bridge( (DocumentElement target, Object bridgedElement,
+									TypeBridgeWriteContext context1) -> {
 								target.addValue(
-									indexFieldReference, pojoPropertyAccessor.read( bridgedElement )
+										indexFieldReference, pojoPropertyAccessor.read( bridgedElement )
 								);
 							} );
 						} )
@@ -139,10 +140,9 @@ public class TypeBridgeBaseIT {
 			String stringProperty;
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.field( "someField", String.class, b2 -> {
-					b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
-				} )
+		backendMock.expectSchema( INDEX_NAME, b -> b.field( "someField", String.class, b2 -> {
+			b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
+		} )
 		);
 
 		SearchMapping mapping = setupHelper.start().withConfiguration(
@@ -211,7 +211,8 @@ public class TypeBridgeBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.failure( "No readable property named 'doesNotExist' on type '"
-								+ IndexedEntity.class.getName() + "'" ) );
+								+ IndexedEntity.class.getName()
+								+ "'" ) );
 	}
 
 	/**
@@ -233,10 +234,9 @@ public class TypeBridgeBaseIT {
 			String stringProperty;
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.field( "someField", String.class, b2 -> {
-					b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
-				} )
+		backendMock.expectSchema( INDEX_NAME, b -> b.field( "someField", String.class, b2 -> {
+			b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
+		} )
 		);
 
 		SearchMapping mapping = setupHelper.start().withConfiguration(
@@ -300,6 +300,7 @@ public class TypeBridgeBaseIT {
 		class IndexedEntity {
 			@DocumentId
 			Integer id;
+
 			public Integer getId() {
 				return id;
 			}
@@ -328,7 +329,8 @@ public class TypeBridgeBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.failure( "No readable property named 'doesNotExist' on type '"
-								+ ContainedEntity.class.getName() + "'" ) );
+								+ ContainedEntity.class.getName()
+								+ "'" ) );
 	}
 
 	@Test
@@ -362,7 +364,8 @@ public class TypeBridgeBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.failure( "No readable property named 'doesNotExist' on type '"
-								+ ContainedEntity.class.getName() + "'" ) );
+								+ ContainedEntity.class.getName()
+								+ "'" ) );
 	}
 
 	@Test
@@ -370,6 +373,7 @@ public class TypeBridgeBaseIT {
 	public void explicitReindexing_error_fromOtherEntity_bridgedElementNotEntityType() {
 		class NotEntity {
 			String stringProperty;
+
 			public String getStringProperty() {
 				return stringProperty;
 			}
@@ -403,8 +407,10 @@ public class TypeBridgeBaseIT {
 						.pathContext( ".notEntity<no value extractors>" )
 						.failure(
 								"Invalid use of 'fromOtherEntity': this method can only be used when the bridged element has an entity type,"
-								+ " but the bridged element has type '" + NotEntity.class.getName() + "',"
-								+ " which is not an entity type."
+										+ " but the bridged element has type '"
+										+ NotEntity.class.getName()
+										+ "',"
+										+ " which is not an entity type."
 						) );
 	}
 
@@ -416,8 +422,7 @@ public class TypeBridgeBaseIT {
 			@DocumentId
 			Integer id;
 		}
-		class NotEntity {
-		}
+		class NotEntity {}
 
 		assertThatThrownBy(
 				() -> setupHelper.start().withConfiguration(
@@ -451,8 +456,7 @@ public class TypeBridgeBaseIT {
 			@DocumentId
 			Integer id;
 		}
-		class DifferentEntity {
-		}
+		class DifferentEntity {}
 		class ContainedEntity {
 			IndexedEntity parent;
 			String stringProperty;
@@ -477,8 +481,12 @@ public class TypeBridgeBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.failure(
-								"The inverse association targets type '" + DifferentEntity.class.getName() + "',"
-								+ " but a supertype or subtype of '" + IndexedEntity.class.getName() + "' was expected."
+								"The inverse association targets type '"
+										+ DifferentEntity.class.getName()
+										+ "',"
+										+ " but a supertype or subtype of '"
+										+ IndexedEntity.class.getName()
+										+ "' was expected."
 						) );
 	}
 
@@ -508,8 +516,8 @@ public class TypeBridgeBaseIT {
 						.failure(
 								"Incorrect binder implementation",
 								"the binder did not declare any dependency to the entity model during binding."
-								+ " Declare dependencies using context.dependencies().use(...) or,"
-								+ " if the bridge really does not depend on the entity model, context.dependencies().useRootOnly()"
+										+ " Declare dependencies using context.dependencies().use(...) or,"
+										+ " if the bridge really does not depend on the entity model, context.dependencies().useRootOnly()"
 						) );
 	}
 
@@ -617,9 +625,10 @@ public class TypeBridgeBaseIT {
 	}
 
 	private enum CustomEnum {
-		VALUE1("value1String"),
-		VALUE2("value2String");
+		VALUE1("value1String"), VALUE2("value2String");
+
 		final String stringProperty;
+
 		CustomEnum(String stringProperty) {
 			this.stringProperty = stringProperty;
 		}
@@ -631,8 +640,7 @@ public class TypeBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3324")
 	public void field() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -674,8 +682,7 @@ public class TypeBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3324")
 	public void objectField() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -727,8 +734,7 @@ public class TypeBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3273")
 	public void fieldTemplate() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -775,8 +781,7 @@ public class TypeBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3273")
 	public void objectFieldTemplate() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -853,7 +858,8 @@ public class TypeBridgeBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.failure( "'.stringProperty<no value extractors>' cannot be assigned to '"
-								+ Integer.class.getName() + "'" ) );
+								+ Integer.class.getName()
+								+ "'" ) );
 	}
 
 	private static class UnusedTypeBridge implements TypeBridge<Object> {
@@ -876,17 +882,22 @@ public class TypeBridgeBaseIT {
 				.isInstanceOf( SearchException.class )
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
-						.failure( "Invalid bridge for input type '" + IndexedEntity.class.getName()
-										+ "': '" + MyTargetTypeBridge.TOSTRING + "'",
+						.failure( "Invalid bridge for input type '"
+								+ IndexedEntity.class.getName()
+								+ "': '"
+								+ MyTargetTypeBridge.TOSTRING
+								+ "'",
 								"This bridge expects an input of type '" + TargetType.class.getName() + "'" ) );
 	}
 
 	public static class MyTargetTypeBridge implements TypeBridge<TargetType> {
 		private static final String TOSTRING = "<MyTargetTypeBridge toString() result>";
+
 		@Override
 		public void write(DocumentElement target, TargetType bridgedElement, TypeBridgeWriteContext context) {
 			throw new UnsupportedOperationException( "Should not be called" );
 		}
+
 		@Override
 		public String toString() {
 			return TOSTRING;
@@ -901,8 +912,7 @@ public class TypeBridgeBaseIT {
 		}
 	}
 
-	public interface TargetType {
-	}
+	public interface TargetType {}
 
 	/**
 	 * Test for backward compatibility with 6.0.0.CR1 APIs
@@ -966,8 +976,7 @@ public class TypeBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-4166")
 	public void namedPredicate() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -982,7 +991,7 @@ public class TypeBridgeBaseIT {
 
 		backendMock.expectSchema( INDEX_NAME, b -> b
 				.objectField( "contained", b2 -> b2
-						.field( "string", String.class, b3 -> { } )
+						.field( "string", String.class, b3 -> {} )
 						.namedPredicate( "named", b3 -> b3
 								.predicateDefinition( predicateDefinition )
 						)
@@ -1011,8 +1020,7 @@ public class TypeBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-4166")
 	public void namedPredicate_indexedEmbeddedIncludePaths() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -1027,7 +1035,7 @@ public class TypeBridgeBaseIT {
 
 		backendMock.expectSchema( INDEX_NAME, b -> b
 				.objectField( "contained", b2 -> b2
-						.field( "included", String.class, b3 -> { } )
+						.field( "included", String.class, b3 -> {} )
 						.namedPredicate( "named", b3 -> b3
 								.predicateDefinition( predicateDefinition )
 						)

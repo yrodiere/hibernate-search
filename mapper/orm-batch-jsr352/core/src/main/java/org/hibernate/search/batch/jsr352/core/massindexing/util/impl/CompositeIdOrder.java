@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.function.BiFunction;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.IdClass;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -79,8 +80,8 @@ public class CompositeIdOrder implements IdOrder {
 	@Override
 	@SuppressWarnings("unchecked")
 	public Predicate idGreater(CriteriaBuilder builder, Root<?> root, Object idObj) {
-		BiFunction<String, Object, Predicate> strictOperator = (String path, Object obj) ->
-				builder.greaterThan( root.get( path ), (Comparable<? super Object>) idObj );
+		BiFunction<String, Object, Predicate> strictOperator = (String path, Object obj) -> builder.greaterThan( root
+				.get( path ), (Comparable<? super Object>) idObj );
 		return restrictLexicographically( strictOperator, builder, root, idObj, false );
 	}
 
@@ -91,16 +92,16 @@ public class CompositeIdOrder implements IdOrder {
 		 * Caution, using Restrictions::ge here won't cut it, we really need
 		 * to separate the strict operator from the equals.
 		 */
-		BiFunction<String, Object, Predicate> strictOperator = (String path, Object obj) ->
-				builder.greaterThan( root.get( path ), (Comparable<? super Object>) idObj );
+		BiFunction<String, Object, Predicate> strictOperator = (String path, Object obj) -> builder.greaterThan( root
+				.get( path ), (Comparable<? super Object>) idObj );
 		return restrictLexicographically( strictOperator, builder, root, idObj, true );
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public Predicate idLesser(CriteriaBuilder builder, Root<?> root, Object idObj) {
-		BiFunction<String, Object, Predicate> strictOperator = (String path, Object obj) ->
-				builder.lessThan( root.get( path ), (Comparable<? super Object>) idObj );
+		BiFunction<String, Object, Predicate> strictOperator = (String path, Object obj) -> builder.lessThan( root.get(
+				path ), (Comparable<? super Object>) idObj );
 		return restrictLexicographically( strictOperator, builder, root, idObj, false );
 	}
 

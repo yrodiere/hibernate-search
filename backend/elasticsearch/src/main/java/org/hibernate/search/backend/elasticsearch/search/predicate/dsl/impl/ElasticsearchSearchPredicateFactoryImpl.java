@@ -15,15 +15,14 @@ import org.hibernate.search.engine.search.predicate.dsl.spi.StaticPredicateFinal
 
 import com.google.gson.JsonObject;
 
-
 public class ElasticsearchSearchPredicateFactoryImpl
 		extends AbstractSearchPredicateFactory<
-						ElasticsearchSearchPredicateFactory,
-						ElasticsearchSearchPredicateIndexScope<?>
-				>
+				ElasticsearchSearchPredicateFactory,
+				ElasticsearchSearchPredicateIndexScope<?>>
 		implements ElasticsearchSearchPredicateFactory {
 
-	public ElasticsearchSearchPredicateFactoryImpl(SearchPredicateDslContext<ElasticsearchSearchPredicateIndexScope<?>> dslContext) {
+	public ElasticsearchSearchPredicateFactoryImpl(SearchPredicateDslContext<ElasticsearchSearchPredicateIndexScope<
+			?>> dslContext) {
 		super( dslContext );
 	}
 

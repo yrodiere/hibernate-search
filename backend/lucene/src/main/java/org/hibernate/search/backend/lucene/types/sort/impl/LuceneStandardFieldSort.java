@@ -95,7 +95,8 @@ public class LuceneStandardFieldSort extends AbstractLuceneDocumentValueSort {
 		public void missingAs(Object value, ValueConvert convert) {
 			DslConverter<?, ? extends F> dslToIndexConverter = field.type().dslConverter( convert );
 			try {
-				F converted = dslToIndexConverter.unknownTypeToDocumentValue( value, scope.toDocumentValueConvertContext() );
+				F converted = dslToIndexConverter.unknownTypeToDocumentValue( value, scope
+						.toDocumentValueConvertContext() );
 				missingValue = encodeMissingAs( converted );
 			}
 			catch (RuntimeException e) {
@@ -115,12 +116,12 @@ public class LuceneStandardFieldSort extends AbstractLuceneDocumentValueSort {
 		protected final Object getEffectiveMissingValue() {
 			Object effectiveMissingValue;
 			if ( missingValue == SortMissingValue.MISSING_FIRST ) {
-				effectiveMissingValue = order == SortOrder.DESC ? sortMissingValueLastPlaceholder
-						: sortMissingValueFirstPlaceholder;
+				effectiveMissingValue = order == SortOrder.DESC ?
+						sortMissingValueLastPlaceholder : sortMissingValueFirstPlaceholder;
 			}
 			else if ( missingValue == SortMissingValue.MISSING_LAST ) {
-				effectiveMissingValue = order == SortOrder.DESC ? sortMissingValueFirstPlaceholder
-						: sortMissingValueLastPlaceholder;
+				effectiveMissingValue = order == SortOrder.DESC ?
+						sortMissingValueFirstPlaceholder : sortMissingValueLastPlaceholder;
 			}
 			else if ( missingValue == SortMissingValue.MISSING_LOWEST ) {
 				effectiveMissingValue = sortMissingValueFirstPlaceholder;

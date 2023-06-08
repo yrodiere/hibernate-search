@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.search.engine.common.timing.Deadline;
+import org.hibernate.search.mapper.pojo.loading.spi.PojoLoadingTypeContext;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoSelectionEntityLoader;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoSelectionLoadingContext;
-import org.hibernate.search.mapper.pojo.loading.spi.PojoLoadingTypeContext;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoSelectionLoadingStrategy;
 
 final class PojoSingleLoaderLoadingPlan<T> implements PojoLoadingPlan<T> {
@@ -120,9 +120,10 @@ final class PojoSingleLoaderLoadingPlan<T> implements PojoLoadingPlan<T> {
 			// and we can only get passed that exact type.
 			return (T2) loadedObject;
 		}
-		else if ( expectedType.typeIdentifier().equals( context.runtimeIntrospector().detectEntityType( loadedObject ) ) ) {
-			return (T2) loadedObject;
-		}
+		else if ( expectedType.typeIdentifier().equals( context.runtimeIntrospector().detectEntityType(
+				loadedObject ) ) ) {
+					return (T2) loadedObject;
+				}
 		else {
 			return null;
 		}

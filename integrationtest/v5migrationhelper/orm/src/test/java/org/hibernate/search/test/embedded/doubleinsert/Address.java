@@ -8,6 +8,7 @@ package org.hibernate.search.test.embedded.doubleinsert;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -73,7 +74,8 @@ public class Address implements Serializable {
 	@IndexedEmbedded
 	private Contact contact;
 
-	public Address(String address1, String address2, String town, String county, String country, String postcode, boolean active, Contact contact) {
+	public Address(String address1, String address2, String town, String county, String country, String postcode,
+			boolean active, Contact contact) {
 		super();
 		this.address1 = address1;
 		this.address2 = address2;

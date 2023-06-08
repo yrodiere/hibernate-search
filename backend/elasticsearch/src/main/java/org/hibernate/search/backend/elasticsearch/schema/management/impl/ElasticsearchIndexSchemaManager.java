@@ -76,9 +76,9 @@ public class ElasticsearchIndexSchemaManager implements IndexSchemaManager {
 						);
 					}
 				} )
-				.thenCompose( ignored -> failureCollector.hasFailure()
-						? CompletableFuture.completedFuture( null )
-						: schemaAccessor.waitForIndexStatus( indexNames, executionOptions, operationSubmitter )
+				.thenCompose( ignored -> failureCollector.hasFailure() ?
+						CompletableFuture.completedFuture( null ) : schemaAccessor.waitForIndexStatus( indexNames,
+								executionOptions, operationSubmitter )
 				);
 	}
 
@@ -123,9 +123,9 @@ public class ElasticsearchIndexSchemaManager implements IndexSchemaManager {
 						expectedMetadata, actualIndexMetadata.getMetadata(),
 						failureCollector
 				) )
-				.thenCompose( ignored -> failureCollector.hasFailure()
-						? CompletableFuture.completedFuture( null )
-						: schemaAccessor.waitForIndexStatus( indexNames, executionOptions, operationSubmitter )
+				.thenCompose( ignored -> failureCollector.hasFailure() ?
+						CompletableFuture.completedFuture( null ) : schemaAccessor.waitForIndexStatus( indexNames,
+								executionOptions, operationSubmitter )
 				);
 	}
 

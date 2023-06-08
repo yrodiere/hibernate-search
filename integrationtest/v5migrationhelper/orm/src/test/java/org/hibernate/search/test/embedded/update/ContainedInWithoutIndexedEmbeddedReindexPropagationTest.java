@@ -11,16 +11,18 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.WildcardQuery;
 import org.hibernate.Transaction;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.test.SearchTestBase;
 import org.hibernate.search.testsupport.TestForIssue;
+
 import org.junit.Test;
+
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.WildcardQuery;
 
 /**
  * @author Guillaume Smet
@@ -121,7 +123,8 @@ public class ContainedInWithoutIndexedEmbeddedReindexPropagationTest extends Sea
 	}
 
 	private List<SimpleChildEntity> getSimpleChildEntitiesFromIndex(FullTextSession session, String name) {
-		FullTextQuery q = session.createFullTextQuery( new TermQuery( new Term( "parentName", name ) ), SimpleChildEntity.class );
+		FullTextQuery q = session.createFullTextQuery( new TermQuery( new Term( "parentName", name ) ),
+				SimpleChildEntity.class );
 		@SuppressWarnings("unchecked")
 		List<SimpleChildEntity> results = q.list();
 		return results;
@@ -138,7 +141,8 @@ public class ContainedInWithoutIndexedEmbeddedReindexPropagationTest extends Sea
 
 	@Override
 	public Class<?>[] getAnnotatedClasses() {
-		return new Class[] { SimpleParentEntity.class, SimpleChildEntity.class, ProductArticle.class, ProductModel.class, ProductReferenceCode.class,
+		return new Class[] { SimpleParentEntity.class, SimpleChildEntity.class, ProductArticle.class,
+				ProductModel.class, ProductReferenceCode.class,
 				ProductShootingBrief.class };
 	}
 }

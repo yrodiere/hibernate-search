@@ -70,14 +70,22 @@ public class ElasticsearchIndexSchemaManagerExporterIT {
 		} );
 
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"mappings\": {" +
-						"    \"properties\": {" +
-						"      \"_entity_type\": {" +
-						"        \"type\": \"keyword\"" +
-						"      }" +
-						"    }" +
-						"  }" +
+				"{"
+						+
+						"  \"mappings\": {"
+						+
+						"    \"properties\": {"
+						+
+						"      \"_entity_type\": {"
+						+
+						"        \"type\": \"keyword\""
+						+
+						"      }"
+						+
+						"    }"
+						+
+						"  }"
+						+
 						"}",
 				readString( directory.resolve( testIndexName ).resolve( "create-index.json" ) )
 		);

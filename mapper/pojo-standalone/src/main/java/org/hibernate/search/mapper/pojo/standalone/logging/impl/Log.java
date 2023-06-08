@@ -8,6 +8,7 @@ package org.hibernate.search.mapper.pojo.standalone.logging.impl;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.hibernate.search.engine.environment.bean.spi.BeanProvider;
 import org.hibernate.search.engine.logging.spi.MappableTypeModelFormatter;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeIdentifier;
@@ -25,7 +26,8 @@ import org.jboss.logging.annotations.MessageLogger;
 import org.jboss.logging.annotations.ValidIdRange;
 
 @MessageLogger(projectCode = MessageConstants.PROJECT_CODE)
-@ValidIdRange(min = MessageConstants.MAPPER_POJO_STANDALONE_ID_RANGE_MIN, max = MessageConstants.MAPPER_POJO_STANDALONE_ID_RANGE_MAX)
+@ValidIdRange(min = MessageConstants.MAPPER_POJO_STANDALONE_ID_RANGE_MIN,
+		max = MessageConstants.MAPPER_POJO_STANDALONE_ID_RANGE_MAX)
 public interface Log extends BasicLogger {
 
 	int ID_OFFSET = MessageConstants.MAPPER_POJO_STANDALONE_ID_RANGE_MIN;
@@ -33,8 +35,10 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 3, value = "Unable to retrieve type model for class '%1$s'.")
 	SearchException errorRetrievingTypeModel(@FormatWith(ClassFormatter.class) Class<?> clazz, @Cause Exception cause);
 
-	@Message(id = ID_OFFSET + 5, value = "Entity type '%1$s' has multiple, conflicting defintions in the mapping builder.")
-	SearchException multipleEntityTypeDefinitions(@FormatWith(MappableTypeModelFormatter.class) PojoRawTypeModel<?> type);
+	@Message(id = ID_OFFSET + 5,
+			value = "Entity type '%1$s' has multiple, conflicting defintions in the mapping builder.")
+	SearchException multipleEntityTypeDefinitions(@FormatWith(MappableTypeModelFormatter.class) PojoRawTypeModel<
+			?> type);
 
 	@Message(id = ID_OFFSET + 6, value = "Multiple entity types configured with the same name '%1$s': '%2$s', '%3$s'")
 	SearchException multipleEntityTypesWithSameName(String entityName,

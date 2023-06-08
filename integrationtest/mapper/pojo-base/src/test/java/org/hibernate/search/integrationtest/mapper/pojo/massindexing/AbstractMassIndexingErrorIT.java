@@ -25,7 +25,10 @@ import org.hibernate.search.engine.reporting.FailureHandler;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.PersistenceTypeKey;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.StubLoadingContext;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.StubMassLoadingStrategy;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.massindexing.MassIndexingFailureHandler;
 import org.hibernate.search.mapper.pojo.standalone.loading.LoadingTypeGroup;
 import org.hibernate.search.mapper.pojo.standalone.loading.MassEntityLoader;
 import org.hibernate.search.mapper.pojo.standalone.loading.MassEntitySink;
@@ -35,14 +38,11 @@ import org.hibernate.search.mapper.pojo.standalone.loading.MassLoadingOptions;
 import org.hibernate.search.mapper.pojo.standalone.loading.MassLoadingStrategy;
 import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.massindexing.MassIndexer;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
-import org.hibernate.search.mapper.pojo.massindexing.MassIndexingFailureHandler;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.ThreadSpy;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.index.StubIndexScaleWork;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.index.StubSchemaManagementWork;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -64,8 +64,8 @@ public abstract class AbstractMassIndexingErrorIT {
 	public final BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public final StandalonePojoMappingSetupHelper setupHelper
-			= StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public final StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Rule
 	public ThreadSpy threadSpy = new ThreadSpy();
@@ -73,7 +73,7 @@ public abstract class AbstractMassIndexingErrorIT {
 	private final StubLoadingContext loadingContext = new StubLoadingContext();
 
 	@Test
-	@TestForIssue(jiraKey = {"HSEARCH-4218", "HSEARCH-4236"})
+	@TestForIssue(jiraKey = { "HSEARCH-4218", "HSEARCH-4236" })
 	public void identifierLoading() {
 		String errorMessage = "ID loading error";
 
@@ -384,8 +384,8 @@ public abstract class AbstractMassIndexingErrorIT {
 										.as( "Mass indexing threads" )
 										.isNotEmpty()
 										.allSatisfy( t -> assertThat( t )
-										.extracting( Thread::getState )
-										.isEqualTo( Thread.State.TERMINATED )
+												.extracting( Thread::getState )
+												.isEqualTo( Thread.State.TERMINATED )
 										)
 						);
 						break;
@@ -581,7 +581,8 @@ public abstract class AbstractMassIndexingErrorIT {
 
 		SearchMapping mapping = setupHelper.start()
 				.expectCustomBeans()
-				.withPropertyRadical( EngineSettings.Radicals.BACKGROUND_FAILURE_HANDLER, getBackgroundFailureHandlerReference() )
+				.withPropertyRadical( EngineSettings.Radicals.BACKGROUND_FAILURE_HANDLER,
+						getBackgroundFailureHandlerReference() )
 				.withPropertyRadical( EngineSpiSettings.Radicals.THREAD_PROVIDER, threadSpy.getThreadProvider() )
 				.withConfiguration( b -> {
 					b.addEntityType( Book.class, c -> c.massLoadingStrategy( loadingStrategy ) );
@@ -604,14 +605,11 @@ public abstract class AbstractMassIndexingErrorIT {
 	}
 
 	private enum ExecutionExpectation {
-		SUCCEED,
-		ERROR,
-		STOP;
+		SUCCEED, ERROR, STOP;
 	}
 
 	private enum ThreadExpectation {
-		CREATED_AND_TERMINATED,
-		NOT_CREATED;
+		CREATED_AND_TERMINATED, NOT_CREATED;
 	}
 
 	@Indexed(index = Book.NAME)

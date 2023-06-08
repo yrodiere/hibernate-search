@@ -45,7 +45,8 @@ public final class Range<T> {
 	 */
 	public static <T> Range<T> canonical(T lowerBoundValue, T upperBoundValue) {
 		return new Range<>( lowerBoundValue, RangeBoundInclusion.INCLUDED,
-				upperBoundValue, upperBoundValue == null ? RangeBoundInclusion.INCLUDED : RangeBoundInclusion.EXCLUDED );
+				upperBoundValue, upperBoundValue == null ?
+						RangeBoundInclusion.INCLUDED : RangeBoundInclusion.EXCLUDED );
 	}
 
 	/**

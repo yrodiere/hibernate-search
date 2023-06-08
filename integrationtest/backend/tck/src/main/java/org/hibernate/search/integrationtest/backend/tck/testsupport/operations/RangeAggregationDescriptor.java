@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.hibernate.search.engine.search.aggregation.dsl.RangeAggregationOptionsStep;
-import org.hibernate.search.engine.search.common.ValueConvert;
 import org.hibernate.search.engine.search.aggregation.dsl.AggregationFinalStep;
+import org.hibernate.search.engine.search.aggregation.dsl.RangeAggregationOptionsStep;
 import org.hibernate.search.engine.search.aggregation.dsl.SearchAggregationFactory;
+import org.hibernate.search.engine.search.common.ValueConvert;
 import org.hibernate.search.engine.search.predicate.dsl.PredicateFinalStep;
 import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.engine.spatial.GeoPoint;
@@ -41,9 +41,9 @@ public class RangeAggregationDescriptor extends AggregationDescriptor {
 
 	@Override
 	public <F> ExpectationsAlternative<
-					SupportedSingleFieldAggregationExpectations<F>,
-					UnsupportedSingleFieldAggregationExpectations
-			> getSingleFieldAggregationExpectations(FieldTypeDescriptor<F> typeDescriptor) {
+			SupportedSingleFieldAggregationExpectations<F>,
+			UnsupportedSingleFieldAggregationExpectations> getSingleFieldAggregationExpectations(FieldTypeDescriptor<
+					F> typeDescriptor) {
 		if ( String.class.equals( typeDescriptor.getJavaType() )
 				|| GeoPoint.class.equals( typeDescriptor.getJavaType() )
 				|| Boolean.class.equals( typeDescriptor.getJavaType() ) ) {
@@ -151,7 +151,8 @@ public class RangeAggregationDescriptor extends AggregationDescriptor {
 					}
 
 					@Override
-					public AggregationFinalStep<Map<Range<T>, Long>> setupWithConverterSetting(SearchAggregationFactory factory,
+					public AggregationFinalStep<Map<Range<T>, Long>> setupWithConverterSetting(
+							SearchAggregationFactory factory,
 							String fieldPath, ValueConvert convert) {
 						return factory.range().field( fieldPath, helper.getJavaClass(), convert )
 								.range( helper.create( ascendingValues.get( 0 ) ),
@@ -183,7 +184,8 @@ public class RangeAggregationDescriptor extends AggregationDescriptor {
 		} );
 	}
 
-	private <F> UnsupportedSingleFieldAggregationExpectations unsupportedExpectations(FieldTypeDescriptor<F> typeDescriptor) {
+	private <F> UnsupportedSingleFieldAggregationExpectations unsupportedExpectations(FieldTypeDescriptor<
+			F> typeDescriptor) {
 		return new UnsupportedSingleFieldAggregationExpectations() {
 			@Override
 			public String aggregationName() {

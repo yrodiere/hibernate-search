@@ -69,7 +69,7 @@ public class LuceneDoubleDomain implements LuceneNumericDomain<Double> {
 	@Override
 	public Query createRangeQuery(String absoluteFieldPath, Double lowerLimit, Double upperLimit) {
 		return DoublePoint.newRangeQuery(
-			absoluteFieldPath, lowerLimit, upperLimit
+				absoluteFieldPath, lowerLimit, upperLimit
 		);
 	}
 

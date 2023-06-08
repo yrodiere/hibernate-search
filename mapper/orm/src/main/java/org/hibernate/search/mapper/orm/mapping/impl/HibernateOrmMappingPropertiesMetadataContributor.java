@@ -48,8 +48,9 @@ public final class HibernateOrmMappingPropertiesMetadataContributor implements P
 	@Override
 	public void contributeAdditionalMetadata(PojoAdditionalMetadataCollectorTypeNode collector) {
 		for ( Property property : properties ) {
-			collector.property( property.getName(), collectorPropertyNode ->
-					collectMetadataFromHibernateOrmMappingProperty( collectorPropertyNode, property ) );
+			collector.property( property.getName(),
+					collectorPropertyNode -> collectMetadataFromHibernateOrmMappingProperty( collectorPropertyNode,
+							property ) );
 		}
 	}
 
@@ -121,7 +122,8 @@ public final class HibernateOrmMappingPropertiesMetadataContributor implements P
 
 		String rootPropertyName = tokenizer.nextToken();
 		PojoModelPath.Builder inverseSidePathBuilder = PojoModelPath.builder().property( rootPropertyName );
-		Property property = basicTypeMetadataProvider.getPersistentClass( inverseSideEntity ).getProperty( rootPropertyName );
+		Property property = basicTypeMetadataProvider.getPersistentClass( inverseSideEntity ).getProperty(
+				rootPropertyName );
 
 		do {
 			Value value = property.getValue();
@@ -136,8 +138,7 @@ public final class HibernateOrmMappingPropertiesMetadataContributor implements P
 			else {
 				property = null;
 			}
-		}
-		while ( property != null );
+		} while ( property != null );
 
 		return inverseSidePathBuilder.toValuePath();
 	}

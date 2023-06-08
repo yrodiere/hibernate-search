@@ -45,7 +45,8 @@ public final class LuceneGeoPointFieldCodec implements LuceneFieldCodec<GeoPoint
 		}
 
 		if ( DocValues.ENABLED == docValues ) {
-			documentBuilder.addField( new LatLonDocValuesField( absoluteFieldPath, value.latitude(), value.longitude() ) );
+			documentBuilder.addField( new LatLonDocValuesField( absoluteFieldPath, value.latitude(), value
+					.longitude() ) );
 		}
 		else {
 			// For the "exists" predicate

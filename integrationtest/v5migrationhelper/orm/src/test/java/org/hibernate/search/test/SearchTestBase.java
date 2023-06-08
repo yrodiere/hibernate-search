@@ -18,7 +18,9 @@ import org.hibernate.search.SearchFactory;
 import org.hibernate.search.test.testsupport.V5MigrationHelperOrmSetupHelper;
 import org.hibernate.search.test.util.BackendTestHelper;
 import org.hibernate.search.test.util.TestConfiguration;
+
 import org.hibernate.testing.junit4.CustomRunner;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -94,7 +96,7 @@ public abstract class SearchTestBase implements TestResourceManager, TestConfigu
 	}
 
 	@Override
-	public void configure(Map<String,Object> settings) {
+	public void configure(Map<String, Object> settings) {
 		//Empty by default
 	}
 

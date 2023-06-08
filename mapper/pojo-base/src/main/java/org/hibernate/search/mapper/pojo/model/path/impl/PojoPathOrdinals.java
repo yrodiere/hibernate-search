@@ -25,7 +25,8 @@ public final class PojoPathOrdinals {
 	@Override
 	public String toString() {
 		return "PojoPathOrdinals{"
-				+ "ordinalByPath=" + ordinalByPath
+				+ "ordinalByPath="
+				+ ordinalByPath
 				+ '}';
 	}
 

@@ -38,8 +38,10 @@ public final class LuceneBigIntegerFieldCodec extends AbstractLuceneNumericField
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "decimalScale=" + decimalScale
+		return getClass().getSimpleName()
+				+ "["
+				+ "decimalScale="
+				+ decimalScale
 				+ "]";
 	}
 

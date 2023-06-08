@@ -21,7 +21,8 @@ import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
  */
 // Keeping the deprecated interface in order to test that it works correctly (for Infinispan in particular)
 @SuppressWarnings("deprecation")
-public class StandalonePojoPathsDefinition implements org.hibernate.search.mapper.pojo.model.path.spi.PojoPathsDefinition {
+public class StandalonePojoPathsDefinition
+		implements org.hibernate.search.mapper.pojo.model.path.spi.PojoPathsDefinition {
 
 	@Override
 	public List<String> preDefinedOrdinals() {

@@ -35,10 +35,13 @@ public abstract class BackendConfiguration {
 			BACKEND_TYPE = IDE_BACKEND_TYPE;
 			IS_IDE = true;
 			log.warn( "The backend type wasn't set; tests are probably running from an IDE."
-					+ " Defaulting to backend type '" + BACKEND_TYPE + "' and setting it explicitly"
+					+ " Defaulting to backend type '"
+					+ BACKEND_TYPE
+					+ "' and setting it explicitly"
 					+ " to avoid problems with classpaths containing multiple backend types." );
 			log.warn( "To test another backend type, change the constant 'IDE_BACKEND_TYPE' in class '"
-					+ BackendConfiguration.class.getName() + "'." );
+					+ BackendConfiguration.class.getName()
+					+ "'." );
 			log.warn( "Tests of the backend type auto-detection feature will not work properly." );
 		}
 		else {

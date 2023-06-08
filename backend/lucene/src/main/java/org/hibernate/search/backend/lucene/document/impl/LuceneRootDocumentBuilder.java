@@ -9,12 +9,11 @@ package org.hibernate.search.backend.lucene.document.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.lucene.document.Document;
-
 import org.hibernate.search.backend.lucene.document.model.impl.LuceneIndexModel;
 import org.hibernate.search.backend.lucene.lowlevel.common.impl.MetadataFields;
 import org.hibernate.search.backend.lucene.multitenancy.impl.MultiTenancyStrategy;
 
+import org.apache.lucene.document.Document;
 
 public class LuceneRootDocumentBuilder extends AbstractLuceneDocumentElementBuilder {
 
@@ -41,7 +40,8 @@ public class LuceneRootDocumentBuilder extends AbstractLuceneDocumentElementBuil
 			String tenantId, String id, String routingKey) {
 		// We own the document content, so we finalize it ourselves.
 		Document document = documentContent.finalizeDocument( multiTenancyStrategy, tenantId, routingKey );
-		document.add( MetadataFields.searchableMetadataField( MetadataFields.typeFieldName(), MetadataFields.TYPE_MAIN_DOCUMENT ) );
+		document.add( MetadataFields.searchableMetadataField( MetadataFields.typeFieldName(),
+				MetadataFields.TYPE_MAIN_DOCUMENT ) );
 		document.add( MetadataFields.searchableRetrievableMetadataField( MetadataFields.idFieldName(), id ) );
 
 		// In the list of documents, a child must appear before its parent,

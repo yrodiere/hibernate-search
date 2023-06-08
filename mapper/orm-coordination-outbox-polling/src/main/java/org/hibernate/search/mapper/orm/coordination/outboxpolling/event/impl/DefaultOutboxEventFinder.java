@@ -37,10 +37,9 @@ public final class DefaultOutboxEventFinder implements OutboxEventFinder {
 		@Override
 		public DefaultOutboxEventFinder create(Optional<OutboxEventPredicate> predicate) {
 			OutboxEventPredicate combined = ( predicate.isPresent() )
-					// Put the predicate first, because it's generally about sharding
-					// and will greatly reduce the number of rows.
-					? OutboxEventAndPredicate.of( predicate.get(), BASE_PREDICATE_FILTER )
-					: BASE_PREDICATE_FILTER;
+			// Put the predicate first, because it's generally about sharding
+			// and will greatly reduce the number of rows.
+					? OutboxEventAndPredicate.of( predicate.get(), BASE_PREDICATE_FILTER ) : BASE_PREDICATE_FILTER;
 			return new DefaultOutboxEventFinder( Optional.of( combined ), order );
 		}
 
@@ -76,7 +75,8 @@ public final class DefaultOutboxEventFinder implements OutboxEventFinder {
 
 	public <T> Query<T> createOutboxEventQueryForTests(Session session,
 			Function<String, String> selectClauseFunction, Class<T> resultType, OutboxEventOrder order) {
-		String queryStringForTests = createQueryString( predicate, selectClauseFunction, order != null ? order : this.order );
+		String queryStringForTests = createQueryString( predicate, selectClauseFunction, order != null ?
+				order : this.order );
 		Query<T> query = session.createQuery( queryStringForTests, resultType );
 		if ( predicate.isPresent() ) {
 			predicate.get().setParams( query );
@@ -84,10 +84,14 @@ public final class DefaultOutboxEventFinder implements OutboxEventFinder {
 		return query;
 	}
 
-	private String createQueryString(Optional<OutboxEventPredicate> predicate, Function<String, String> selectClauseFunction,
+	private String createQueryString(Optional<OutboxEventPredicate> predicate, Function<String,
+			String> selectClauseFunction,
 			OutboxEventOrder order) {
-		return "select " + selectClauseFunction.apply( "e" )
-				+ " from " + ENTITY_NAME + " e "
+		return "select "
+				+ selectClauseFunction.apply( "e" )
+				+ " from "
+				+ ENTITY_NAME
+				+ " e "
 				+ ( predicate.isPresent() ? " where " + predicate.get().queryPart( "e" ) : "" )
 				+ order.queryPart( "e" );
 	}

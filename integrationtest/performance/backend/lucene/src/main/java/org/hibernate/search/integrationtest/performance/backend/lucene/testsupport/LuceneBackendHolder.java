@@ -37,8 +37,8 @@ public class LuceneBackendHolder extends AbstractBackendHolder {
 	private String configuration;
 
 	@Override
-	protected ConfigurationPropertySource getDefaultBackendProperties(TemporaryFileHolder temporaryFileHolder)
-			throws IOException {
+	protected ConfigurationPropertySource getDefaultBackendProperties(
+			TemporaryFileHolder temporaryFileHolder) throws IOException {
 		Map<String, Object> map = new LinkedHashMap<>();
 
 		map.put( LuceneIndexSettings.DIRECTORY_ROOT, temporaryFileHolder.getIndexesDirectory().toAbsolutePath() );

@@ -12,9 +12,9 @@ import org.hibernate.search.backend.elasticsearch.search.common.impl.Elasticsear
 import org.hibernate.search.engine.search.loading.spi.LoadingResult;
 import org.hibernate.search.engine.search.loading.spi.ProjectionHitMapper;
 import org.hibernate.search.engine.search.projection.SearchProjection;
+import org.hibernate.search.engine.search.projection.spi.CompositeProjectionBuilder;
 import org.hibernate.search.engine.search.projection.spi.ProjectionAccumulator;
 import org.hibernate.search.engine.search.projection.spi.ProjectionCompositor;
-import org.hibernate.search.engine.search.projection.spi.CompositeProjectionBuilder;
 
 import com.google.gson.JsonObject;
 
@@ -45,10 +45,14 @@ class ElasticsearchCompositeProjection<E, V, A, P>
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "inners=" + Arrays.toString( inners )
-				+ ", compositor=" + compositor
-				+ ", accumulator=" + accumulator
+		return getClass().getSimpleName()
+				+ "["
+				+ "inners="
+				+ Arrays.toString( inners )
+				+ ", compositor="
+				+ compositor
+				+ ", accumulator="
+				+ accumulator
 				+ "]";
 	}
 
@@ -70,10 +74,14 @@ class ElasticsearchCompositeProjection<E, V, A, P>
 
 		@Override
 		public String toString() {
-			return getClass().getSimpleName() + "["
-					+ "inners=" + Arrays.toString( inners )
-					+ ", compositor=" + compositor
-					+ ", accumulator=" + accumulator
+			return getClass().getSimpleName()
+					+ "["
+					+ "inners="
+					+ Arrays.toString( inners )
+					+ ", compositor="
+					+ compositor
+					+ ", accumulator="
+					+ accumulator
 					+ "]";
 		}
 
@@ -123,7 +131,7 @@ class ElasticsearchCompositeProjection<E, V, A, P>
 		public <E, V, P> SearchProjection<P> build(SearchProjection<?>[] inners, ProjectionCompositor<E, V> compositor,
 				ProjectionAccumulator.Provider<V, P> accumulatorProvider) {
 			ElasticsearchSearchProjection<?>[] typedInners =
-					new ElasticsearchSearchProjection<?>[ inners.length ];
+					new ElasticsearchSearchProjection<?>[inners.length];
 			for ( int i = 0; i < inners.length; i++ ) {
 				typedInners[i] = ElasticsearchSearchProjection.from( scope, inners[i] );
 			}

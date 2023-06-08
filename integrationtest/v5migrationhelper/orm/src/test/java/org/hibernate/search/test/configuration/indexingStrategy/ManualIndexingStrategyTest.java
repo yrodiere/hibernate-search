@@ -9,6 +9,7 @@ package org.hibernate.search.test.configuration.indexingStrategy;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -43,7 +44,7 @@ public class ManualIndexingStrategyTest extends SearchTestBase {
 	}
 
 	@Override
-	public void configure(Map<String,Object> cfg) {
+	public void configure(Map<String, Object> cfg) {
 		cfg.put( HibernateOrmMapperSettings.AUTOMATIC_INDEXING_ENABLED, false );
 	}
 

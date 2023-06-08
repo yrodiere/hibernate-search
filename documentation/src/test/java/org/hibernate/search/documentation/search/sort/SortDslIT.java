@@ -12,6 +12,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.documentation.testsupport.BackendConfigurations;
@@ -38,7 +39,8 @@ public class SortDslIT {
 	private static final int BOOK4_ID = 4;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -342,9 +344,9 @@ public class SortDslIT {
 
 	private MySearchParameters getSearchParameters() {
 		return () -> Arrays.asList(
-			new MySort( MySortType.GENRE, SortOrder.ASC ),
-			new MySort( MySortType.TITLE, SortOrder.DESC ),
-			new MySort( MySortType.PAGE_COUNT, SortOrder.DESC )
+				new MySort( MySortType.GENRE, SortOrder.ASC ),
+				new MySort( MySortType.TITLE, SortOrder.DESC ),
+				new MySort( MySortType.PAGE_COUNT, SortOrder.DESC )
 		);
 	}
 
@@ -434,8 +436,6 @@ public class SortDslIT {
 	}
 
 	private enum MySortType {
-		GENRE,
-		TITLE,
-		PAGE_COUNT
+		GENRE, TITLE, PAGE_COUNT
 	}
 }

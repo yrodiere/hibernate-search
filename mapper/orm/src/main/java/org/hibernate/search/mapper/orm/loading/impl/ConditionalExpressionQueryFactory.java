@@ -49,7 +49,13 @@ public abstract class ConditionalExpressionQueryFactory<E, I> implements TypeQue
 			return createQueryWithConditionalExpression( session, hql, returnedType, conditionalExpression );
 		}
 
-		hql += " where type(" + entityAlias + ") in (:" + TYPES_PARAM_NAME + ") and ( " + conditionalExpression.hql() + " )";
+		hql += " where type("
+				+ entityAlias
+				+ ") in (:"
+				+ TYPES_PARAM_NAME
+				+ ") and ( "
+				+ conditionalExpression.hql()
+				+ " )";
 		Query<T> query = session.createQuery( hql, returnedType );
 		query.setParameterList( TYPES_PARAM_NAME, includedTypesFilter );
 		conditionalExpression.applyParams( query );

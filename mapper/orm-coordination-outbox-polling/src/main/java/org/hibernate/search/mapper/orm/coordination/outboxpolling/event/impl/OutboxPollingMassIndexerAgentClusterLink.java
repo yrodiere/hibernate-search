@@ -41,7 +41,8 @@ public final class OutboxPollingMassIndexerAgentClusterLink
 	}
 
 	@Override
-	protected WriteAction<OutboxPollingMassIndexingInstructions> doPulse(List<Agent> allAgentsInIdOrder, Agent currentSelf) {
+	protected WriteAction<OutboxPollingMassIndexingInstructions> doPulse(List<Agent> allAgentsInIdOrder,
+			Agent currentSelf) {
 		List<Agent> eventProcessors = allAgentsInIdOrder.stream()
 				.filter( a -> AgentType.EVENT_PROCESSING.contains( a.getType() ) )
 				.collect( Collectors.toList() );

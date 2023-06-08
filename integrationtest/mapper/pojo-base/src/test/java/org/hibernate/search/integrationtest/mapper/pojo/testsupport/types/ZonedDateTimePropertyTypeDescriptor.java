@@ -42,9 +42,11 @@ public class ZonedDateTimePropertyTypeDescriptor extends PropertyTypeDescriptor<
 				.add( ZonedDateTime.of( LocalDateTime.MAX, ZoneId.of( "Europe/Paris" ) ),
 						"+999999999-12-31T23:59:59.999999999+01:00[Europe/Paris]" )
 				// Two date/times that could be ambiguous due to a daylight saving time switch
-				.add( LocalDateTime.parse( "2011-10-30T02:50:00.00" ).atZone( ZoneId.of( "CET" ) ).withEarlierOffsetAtOverlap(),
+				.add( LocalDateTime.parse( "2011-10-30T02:50:00.00" ).atZone( ZoneId.of( "CET" ) )
+						.withEarlierOffsetAtOverlap(),
 						"2011-10-30T02:50:00+02:00[CET]" )
-				.add( LocalDateTime.parse( "2011-10-30T02:50:00.00" ).atZone( ZoneId.of( "CET" ) ).withLaterOffsetAtOverlap(),
+				.add( LocalDateTime.parse( "2011-10-30T02:50:00.00" ).atZone( ZoneId.of( "CET" ) )
+						.withLaterOffsetAtOverlap(),
 						"2011-10-30T02:50:00+01:00[CET]" )
 				.build();
 	}
@@ -105,7 +107,8 @@ public class ZonedDateTimePropertyTypeDescriptor extends PropertyTypeDescriptor<
 
 			@Override
 			public ZonedDateTime getNullAsValueBridge2() {
-				return ZonedDateTime.of( LocalDateTime.of( 1999, Month.MAY, 31, 9, 30, 10 ), ZoneId.of( "America/Chicago" ) );
+				return ZonedDateTime.of( LocalDateTime.of( 1999, Month.MAY, 31, 9, 30, 10 ), ZoneId.of(
+						"America/Chicago" ) );
 			}
 		};
 	}

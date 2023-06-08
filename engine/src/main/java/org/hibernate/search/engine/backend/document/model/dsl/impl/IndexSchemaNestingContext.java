@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.engine.backend.document.model.dsl.impl;
 
-
 import org.hibernate.search.engine.backend.document.model.spi.IndexFieldInclusion;
 
 public interface IndexSchemaNestingContext {

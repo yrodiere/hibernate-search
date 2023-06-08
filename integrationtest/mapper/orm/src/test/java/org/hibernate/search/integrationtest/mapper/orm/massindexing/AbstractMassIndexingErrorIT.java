@@ -14,6 +14,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -65,13 +66,12 @@ public abstract class AbstractMassIndexingErrorIT {
 	public ThreadSpy threadSpy = new ThreadSpy();
 
 	@Test
-	@TestForIssue(jiraKey = {"HSEARCH-4218", "HSEARCH-4236"})
+	@TestForIssue(jiraKey = { "HSEARCH-4218", "HSEARCH-4236" })
 	public void identifierLoading() {
-		SessionFactory sessionFactory = setup( builder ->
-				builder.setProperty(
-						AvailableSettings.AUTO_SESSION_EVENTS_LISTENER,
-						JdbcStatementErrorOnIdLoadingThreadListener.class.getName()
-				)
+		SessionFactory sessionFactory = setup( builder -> builder.setProperty(
+				AvailableSettings.AUTO_SESSION_EVENTS_LISTENER,
+				JdbcStatementErrorOnIdLoadingThreadListener.class.getName()
+		)
 		);
 
 		String errorMessage = JdbcStatementErrorOnIdLoadingThreadListener.MESSAGE;
@@ -91,11 +91,10 @@ public abstract class AbstractMassIndexingErrorIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-4236")
 	public void entityLoading() {
-		SessionFactory sessionFactory = setup( builder ->
-				builder.setProperty(
-						AvailableSettings.AUTO_SESSION_EVENTS_LISTENER,
-						JdbcStatementErrorOnEntityLoadingThreadListener.class.getName()
-				)
+		SessionFactory sessionFactory = setup( builder -> builder.setProperty(
+				AvailableSettings.AUTO_SESSION_EVENTS_LISTENER,
+				JdbcStatementErrorOnEntityLoadingThreadListener.class.getName()
+		)
 		);
 
 		// We need more than 1000 batches in order to reproduce HSEARCH-4236.
@@ -161,7 +160,7 @@ public abstract class AbstractMassIndexingErrorIT {
 				expectIndexScaleWork( StubIndexScaleWork.Type.PURGE, ExecutionExpectation.SUCCEED ),
 				expectIndexScaleWork( StubIndexScaleWork.Type.MERGE_SEGMENTS, ExecutionExpectation.SUCCEED ),
 				expectIndexingWorks( ExecutionExpectation.STOP )
-				// no final refresh && flush
+		// no final refresh && flush
 		);
 
 		assertNoFailureHandling();
@@ -332,7 +331,7 @@ public abstract class AbstractMassIndexingErrorIT {
 	private void doMassIndexingWithError(MassIndexer massIndexer,
 			ThreadExpectation threadExpectation,
 			Consumer<Throwable> thrownExpectation,
-			Runnable ... expectationSetters) {
+			Runnable... expectationSetters) {
 		doMassIndexingWithError(
 				massIndexer,
 				threadExpectation,
@@ -346,7 +345,7 @@ public abstract class AbstractMassIndexingErrorIT {
 			ThreadExpectation threadExpectation,
 			Consumer<Throwable> thrownExpectation,
 			ExecutionExpectation book2GetIdExpectation, ExecutionExpectation book2GetTitleExpectation,
-			Runnable ... expectationSetters) {
+			Runnable... expectationSetters) {
 		Book.errorOnBook2GetId.set( ExecutionExpectation.ERROR.equals( book2GetIdExpectation ) );
 		Book.errorOnBook2GetTitle.set( ExecutionExpectation.ERROR.equals( book2GetTitleExpectation ) );
 		try {
@@ -478,7 +477,7 @@ public abstract class AbstractMassIndexingErrorIT {
 	}
 
 	private SessionFactory setup() {
-		return setup( ignored -> { } );
+		return setup( ignored -> {} );
 	}
 
 	private SessionFactory setup(Consumer<SimpleSessionFactoryBuilder> configuration) {
@@ -488,7 +487,8 @@ public abstract class AbstractMassIndexingErrorIT {
 
 		SessionFactory sessionFactory = ormSetupHelper.start()
 				.withPropertyRadical( HibernateOrmMapperSettings.Radicals.AUTOMATIC_INDEXING_ENABLED, false )
-				.withPropertyRadical( EngineSettings.Radicals.BACKGROUND_FAILURE_HANDLER, getBackgroundFailureHandlerReference() )
+				.withPropertyRadical( EngineSettings.Radicals.BACKGROUND_FAILURE_HANDLER,
+						getBackgroundFailureHandlerReference() )
 				.withPropertyRadical( EngineSpiSettings.Radicals.THREAD_PROVIDER, threadSpy.getThreadProvider() )
 				.withConfiguration( configuration )
 				.setup( Book.class );
@@ -507,14 +507,11 @@ public abstract class AbstractMassIndexingErrorIT {
 	}
 
 	private enum ExecutionExpectation {
-		SUCCEED,
-		ERROR,
-		STOP;
+		SUCCEED, ERROR, STOP;
 	}
 
 	private enum ThreadExpectation {
-		CREATED_AND_TERMINATED,
-		NOT_CREATED;
+		CREATED_AND_TERMINATED, NOT_CREATED;
 	}
 
 	@Entity(name = Book.NAME)

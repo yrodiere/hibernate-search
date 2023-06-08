@@ -34,7 +34,8 @@ public @interface MethodParameterMappingAnnotationProcessorRef {
 	 * Reference a {@link MethodParameterMappingAnnotationProcessor} by its bean type.
 	 * @return The type of the annotation processor.
 	 */
-	Class<? extends MethodParameterMappingAnnotationProcessor<?>> type() default UndefinedProcessorImplementationType.class;
+	Class<? extends MethodParameterMappingAnnotationProcessor<
+			?>> type() default UndefinedProcessorImplementationType.class;
 
 	/**
 	 * @return How to retrieve the processor. See {@link BeanRetrieval}.
@@ -44,7 +45,8 @@ public @interface MethodParameterMappingAnnotationProcessorRef {
 	/**
 	 * Class used as a marker for the default value of the {@link #type()} attribute.
 	 */
-	abstract class UndefinedProcessorImplementationType implements
+	abstract class UndefinedProcessorImplementationType
+			implements
 			MethodParameterMappingAnnotationProcessor<Annotation> {
 		private UndefinedProcessorImplementationType() {
 		}

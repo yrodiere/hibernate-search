@@ -60,7 +60,8 @@ public class ThreadSpy implements TestRule {
 
 	public List<Thread> getCreatedThreads(String stringInName) {
 		return createdThreads.stream()
-				.filter( t -> t.getName().toLowerCase( Locale.ROOT ).contains( stringInName.toLowerCase( Locale.ROOT ) ) )
+				.filter( t -> t.getName().toLowerCase( Locale.ROOT ).contains( stringInName.toLowerCase(
+						Locale.ROOT ) ) )
 				.collect( Collectors.toList() );
 	}
 

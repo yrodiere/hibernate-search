@@ -37,7 +37,7 @@ public class DocumentAssert {
 	 */
 	public static Consumer<List<? extends Document>> containsDocument(Consumer<DocumentAssert> assertions) {
 		return allDocuments -> assertThat( allDocuments ).anySatisfy(
-			document -> assertions.accept( new DocumentAssert( document ) )
+				document -> assertions.accept( new DocumentAssert( document ) )
 		);
 	}
 
@@ -53,22 +53,28 @@ public class DocumentAssert {
 		return assertThat( actual.getFields() );
 	}
 
-	public DocumentAssert hasField(String absoluteFieldPath, String ... values) {
+	public DocumentAssert hasField(String absoluteFieldPath, String... values) {
 		return hasField( "string", absoluteFieldPath, values );
 	}
 
-	public DocumentAssert hasField(String absoluteFieldPath, Number ... values) {
+	public DocumentAssert hasField(String absoluteFieldPath, Number... values) {
 		return hasField( "numeric", absoluteFieldPath, values );
 	}
 
-	public DocumentAssert hasField(String absoluteFieldPath, byte[] ... values) {
+	public DocumentAssert hasField(String absoluteFieldPath, byte[]... values) {
 		return hasField( "byte[]", absoluteFieldPath, values );
 	}
 
 	@SafeVarargs
-	private final <T> DocumentAssert hasField(String type, String absoluteFieldPath, T ... values) {
-		String fieldDescription = "field at path '" + absoluteFieldPath + "'"
-				+ " with expected type '" + type + "' and expected values '" + Arrays.deepToString( values ) + "'";
+	private final <T> DocumentAssert hasField(String type, String absoluteFieldPath, T... values) {
+		String fieldDescription = "field at path '"
+				+ absoluteFieldPath
+				+ "'"
+				+ " with expected type '"
+				+ type
+				+ "' and expected values '"
+				+ Arrays.deepToString( values )
+				+ "'";
 		Predicate<IndexableField> predicate = field -> absoluteFieldPath.equals( field.name() );
 		asFields()
 				.areAtLeastOne( new Condition<>( predicate, fieldDescription ) )
@@ -102,8 +108,11 @@ public class DocumentAssert {
 		// There is no stored internal field at the moment, we use docvalues instead.
 		asFields().are( new Condition<>(
 				field -> allowedPaths.contains( field.name() ),
-				"exclusively fields with path " + allCheckedPaths
-						+ " or prefixed with " + INTERNAL_FIELDS_PREFIX + " , and no other path"
+				"exclusively fields with path "
+						+ allCheckedPaths
+						+ " or prefixed with "
+						+ INTERNAL_FIELDS_PREFIX
+						+ " , and no other path"
 		) );
 	}
 }

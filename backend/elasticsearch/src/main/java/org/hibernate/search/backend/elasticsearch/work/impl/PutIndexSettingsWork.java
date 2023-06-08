@@ -16,7 +16,6 @@ import org.hibernate.search.backend.elasticsearch.util.spi.URLEncodedString;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-
 public class PutIndexSettingsWork extends AbstractNonBulkableWork<Void> {
 
 	protected PutIndexSettingsWork(Builder builder) {
@@ -50,9 +49,9 @@ public class PutIndexSettingsWork extends AbstractNonBulkableWork<Void> {
 		protected ElasticsearchRequest buildRequest() {
 			ElasticsearchRequest.Builder builder =
 					ElasticsearchRequest.put()
-					.pathComponent( indexName )
-					.pathComponent( Paths._SETTINGS )
-					.body( payload );
+							.pathComponent( indexName )
+							.pathComponent( Paths._SETTINGS )
+							.body( payload );
 			return builder.build();
 		}
 

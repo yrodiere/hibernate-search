@@ -46,7 +46,8 @@ public class PrefixedConfigurationPropertySource implements ConfigurationPropert
 
 	@Override
 	public ConfigurationPropertySource withPrefix(String prefix) {
-		return new PrefixedConfigurationPropertySource( propertiesToPrefix, prefix + radix.substring( 0, radix.length() - 1 ) );
+		return new PrefixedConfigurationPropertySource( propertiesToPrefix, prefix + radix.substring( 0, radix.length()
+				- 1 ) );
 	}
 
 	@Override

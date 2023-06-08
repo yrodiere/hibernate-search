@@ -29,7 +29,8 @@ public class ElasticsearchDistanceSort extends AbstractElasticsearchDocumentValu
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
-	private static final JsonObjectAccessor GEO_DISTANCE_ACCESSOR = JsonAccessor.root().property( "_geo_distance" ).asObject();
+	private static final JsonObjectAccessor GEO_DISTANCE_ACCESSOR = JsonAccessor.root().property( "_geo_distance" )
+			.asObject();
 
 	private final GeoPoint center;
 
@@ -67,7 +68,8 @@ public class ElasticsearchDistanceSort extends AbstractElasticsearchDocumentValu
 		private boolean missingFirst = false;
 		private boolean missingLast = false;
 
-		private Builder(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<GeoPoint> field) {
+		private Builder(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<
+				GeoPoint> field) {
 			super( scope, field );
 		}
 

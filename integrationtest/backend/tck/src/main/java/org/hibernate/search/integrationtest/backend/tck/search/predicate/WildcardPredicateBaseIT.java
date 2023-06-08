@@ -56,7 +56,8 @@ public class WildcardPredicateBaseIT {
 						SearchableIT.searchableYesIndex, SearchableIT.searchableNoIndex,
 						ArgumentCheckingIT.index,
 						TypeCheckingNoConversionIT.index, TypeCheckingNoConversionIT.compatibleIndex,
-						TypeCheckingNoConversionIT.rawFieldCompatibleIndex, TypeCheckingNoConversionIT.missingFieldIndex,
+						TypeCheckingNoConversionIT.rawFieldCompatibleIndex,
+						TypeCheckingNoConversionIT.missingFieldIndex,
 						TypeCheckingNoConversionIT.incompatibleIndex
 				)
 				.setup();
@@ -77,9 +78,11 @@ public class WildcardPredicateBaseIT {
 
 		final BulkIndexer typeCheckingMainIndexer = TypeCheckingNoConversionIT.index.bulkIndexer();
 		final BulkIndexer typeCheckingCompatibleIndexer = TypeCheckingNoConversionIT.compatibleIndex.bulkIndexer();
-		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex.bulkIndexer();
+		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex
+				.bulkIndexer();
 		final BulkIndexer typeCheckingMissingFieldIndexer = TypeCheckingNoConversionIT.missingFieldIndex.bulkIndexer();
-		TypeCheckingNoConversionIT.dataSets.forEach( d -> d.contribute( TypeCheckingNoConversionIT.index, typeCheckingMainIndexer,
+		TypeCheckingNoConversionIT.dataSets.forEach( d -> d.contribute( TypeCheckingNoConversionIT.index,
+				typeCheckingMainIndexer,
 				TypeCheckingNoConversionIT.compatibleIndex, typeCheckingCompatibleIndexer,
 				TypeCheckingNoConversionIT.rawFieldCompatibleIndex, typeCheckingRawFieldCompatibleIndexer,
 				TypeCheckingNoConversionIT.missingFieldIndex, typeCheckingMissingFieldIndexer ) );
@@ -168,7 +171,8 @@ public class WildcardPredicateBaseIT {
 		}
 
 		@Override
-		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths, int matchingDocOrdinal) {
+		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths,
+				int matchingDocOrdinal) {
 			return f.wildcard().fields( fieldPaths ).matching( dataSet.values.matchingArg( matchingDocOrdinal ) );
 		}
 

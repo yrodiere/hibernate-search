@@ -80,7 +80,11 @@ public class FacetManagerImpl implements FacetManager {
 		return facets;
 	}
 
-	<LOS> SearchQueryOptionsStep<?, ?, LOS, ?, ?> contributeAggregations(SearchQueryOptionsStep<?, ?, LOS, ?, ?> optionsStep) {
+	<LOS> SearchQueryOptionsStep<?, ?, LOS, ?, ?> contributeAggregations(SearchQueryOptionsStep<?,
+			?,
+			LOS,
+			?,
+			?> optionsStep) {
 		if ( !hasFacets() ) {
 			return optionsStep;
 		}
@@ -105,7 +109,11 @@ public class FacetManagerImpl implements FacetManager {
 		return facetRequests != null && !facetRequests.isEmpty();
 	}
 
-	private <LOS, A> SearchQueryOptionsStep<?, ?, LOS, ?, ?> requestAggregation(SearchQueryOptionsStep<?, ?, LOS, ?, ?> optionsStep,
+	private <LOS, A> SearchQueryOptionsStep<?, ?, LOS, ?, ?> requestAggregation(SearchQueryOptionsStep<?,
+			?,
+			LOS,
+			?,
+			?> optionsStep,
 			FacetingRequestImpl<A> facetRequest) {
 		return optionsStep.aggregation( facetRequest.getKey(), facetRequest::requestAggregation );
 	}
@@ -119,5 +127,4 @@ public class FacetManagerImpl implements FacetManager {
 		this.facetResults = null;
 	}
 }
-
 

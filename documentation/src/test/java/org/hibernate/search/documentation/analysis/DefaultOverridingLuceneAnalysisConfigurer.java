@@ -19,7 +19,7 @@ public class DefaultOverridingLuceneAnalysisConfigurer implements LuceneAnalysis
 				.tokenizer( "standard" )
 				.tokenFilter( "lowercase" )
 				.tokenFilter( "snowballPorter" )
-						.param( "language", "French" )
+				.param( "language", "French" )
 				.tokenFilter( "asciiFolding" );
 	}
 }

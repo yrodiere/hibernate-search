@@ -72,7 +72,8 @@ public final class SearchIntegrationEnvironment implements AutoCloseable {
 		beanResolver = BeanResolverImpl.create( classResolver, serviceResolver, beanProvider, propertySource );
 	}
 
-	private SearchIntegrationEnvironment(SearchIntegrationEnvironment source, ConfigurationPropertySource propertySource,
+	private SearchIntegrationEnvironment(SearchIntegrationEnvironment source,
+			ConfigurationPropertySource propertySource,
 			ConfigurationPropertyChecker checker) {
 		this.propertySource = propertySource.withMask( CONFIGURATION_PROPERTIES_MASK );
 		this.propertyChecker = checker;

@@ -13,9 +13,6 @@ import java.lang.invoke.MethodHandles;
 import org.hibernate.search.engine.backend.document.DocumentElement;
 import org.hibernate.search.engine.backend.document.IndexFieldReference;
 import org.hibernate.search.engine.environment.bean.BeanRetrieval;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.bridge.TypeBridge;
 import org.hibernate.search.mapper.pojo.bridge.binding.TypeBindingContext;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.TypeBinderRef;
@@ -28,8 +25,11 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmb
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ObjectPath;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyValue;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.TypeBinding;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -52,9 +52,8 @@ public class TypeBridgeRuntimePolymorphismHackIT {
 
 	@Test
 	public void explicitReindexing_hack_runtimePolymorphism() {
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.objectField( "contained", b2 -> b2
-						.field( "someField", String.class ) ) );
+		backendMock.expectSchema( INDEX_NAME, b -> b.objectField( "contained", b2 -> b2
+				.field( "someField", String.class ) ) );
 
 		SearchMapping mapping = setupHelper.start()
 				.setup( IndexedEntity.class, AbstractContainedEntity.class, ContainedEntity1.class );

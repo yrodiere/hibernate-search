@@ -8,9 +8,6 @@ package org.hibernate.search.documentation.mapper.orm.binding.identifierbridge.o
 
 public enum MyData {
 
-	VALUE1,
-	VALUE2,
-	VALUE3,
-	VALUE4;
+	VALUE1, VALUE2, VALUE3, VALUE4;
 
 }

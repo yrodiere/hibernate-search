@@ -57,7 +57,8 @@ public class ElasticsearchTextWildcardPredicate extends AbstractElasticsearchSin
 	private static class Builder extends AbstractBuilder implements WildcardPredicateBuilder {
 		private JsonPrimitive pattern;
 
-		private Builder(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<String> field) {
+		private Builder(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<
+				String> field) {
 			super( scope, field );
 		}
 

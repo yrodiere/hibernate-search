@@ -25,7 +25,8 @@ public interface ToDocumentFieldValueConverter<V, F> extends ToDocumentValueConv
 
 	@Override
 	default boolean isCompatibleWith(ToDocumentValueConverter<?, ?> other) {
-		return other instanceof ToDocumentFieldValueConverter && isCompatibleWith( (ToDocumentFieldValueConverter<?, ?>) other );
+		return other instanceof ToDocumentFieldValueConverter
+				&& isCompatibleWith( (ToDocumentFieldValueConverter<?, ?>) other );
 	}
 
 	/**
@@ -35,7 +36,8 @@ public interface ToDocumentFieldValueConverter<V, F> extends ToDocumentValueConv
 	 * to a more useful type, giving access to such things as a Hibernate ORM SessionFactory (if using the Hibernate ORM mapper).
 	 * @return The converted index field value.
 	 */
-	F convert(V value, org.hibernate.search.engine.backend.types.converter.runtime.ToDocumentFieldValueConvertContext context);
+	F convert(V value,
+			org.hibernate.search.engine.backend.types.converter.runtime.ToDocumentFieldValueConvertContext context);
 
 	/**
 	 * @param other Another {@link ToDocumentFieldValueConverter}, never {@code null}.

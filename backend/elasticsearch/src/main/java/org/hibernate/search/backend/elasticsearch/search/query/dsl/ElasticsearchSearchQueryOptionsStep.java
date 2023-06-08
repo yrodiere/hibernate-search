@@ -7,22 +7,21 @@
 package org.hibernate.search.backend.elasticsearch.search.query.dsl;
 
 import org.hibernate.search.backend.elasticsearch.search.aggregation.dsl.ElasticsearchSearchAggregationFactory;
-import org.hibernate.search.backend.elasticsearch.search.query.ElasticsearchSearchRequestTransformer;
-import org.hibernate.search.backend.elasticsearch.search.sort.dsl.ElasticsearchSearchSortFactory;
 import org.hibernate.search.backend.elasticsearch.search.query.ElasticsearchSearchFetchable;
 import org.hibernate.search.backend.elasticsearch.search.query.ElasticsearchSearchQuery;
+import org.hibernate.search.backend.elasticsearch.search.query.ElasticsearchSearchRequestTransformer;
+import org.hibernate.search.backend.elasticsearch.search.sort.dsl.ElasticsearchSearchSortFactory;
 import org.hibernate.search.engine.search.query.dsl.SearchQueryOptionsStep;
 import org.hibernate.search.util.common.annotation.Incubating;
 
 public interface ElasticsearchSearchQueryOptionsStep<H, LOS>
 		extends SearchQueryOptionsStep<
-						ElasticsearchSearchQueryOptionsStep<H, LOS>,
-						H,
-						LOS,
-						ElasticsearchSearchSortFactory,
-						ElasticsearchSearchAggregationFactory
-				>,
-				ElasticsearchSearchFetchable<H> {
+				ElasticsearchSearchQueryOptionsStep<H, LOS>,
+				H,
+				LOS,
+				ElasticsearchSearchSortFactory,
+				ElasticsearchSearchAggregationFactory>,
+		ElasticsearchSearchFetchable<H> {
 
 	/**
 	 * Set the {@link ElasticsearchSearchRequestTransformer} for this search query.

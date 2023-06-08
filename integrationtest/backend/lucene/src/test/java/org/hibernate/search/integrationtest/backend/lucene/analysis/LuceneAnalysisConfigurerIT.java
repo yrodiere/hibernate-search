@@ -138,7 +138,8 @@ public class LuceneAnalysisConfigurerIT {
 						.failure(
 								ANALYSIS_CONFIGURER_ERROR_MESSAGE_PREFIX,
 								"Invalid value for configuration property 'hibernate.search.backend."
-										+ LuceneBackendSettings.ANALYSIS_CONFIGURER + "': 'foobar'",
+										+ LuceneBackendSettings.ANALYSIS_CONFIGURER
+										+ "': 'foobar'",
 								"Unable to load class 'foobar'"
 						)
 				);
@@ -161,6 +162,7 @@ public class LuceneAnalysisConfigurerIT {
 
 	public static class FailingConfigurer implements LuceneAnalysisConfigurer {
 		private static final String FAILURE_MESSAGE = "Simulated failure for " + FailingConfigurer.class.getName();
+
 		@Override
 		public void configure(LuceneAnalysisConfigurationContext context) {
 			throw new SimulatedFailure( FAILURE_MESSAGE );
@@ -195,16 +197,18 @@ public class LuceneAnalysisConfigurerIT {
 		public void configure(LuceneAnalysisConfigurationContext context) {
 			context.analyzer( "analyzerName" ).custom()
 					.tokenizer( WhitespaceTokenizerFactory.class )
-							.param( "parameterName", "value1" )
-							.param( "anotherParameterName", "someValue" )
-							.param( "parameterName", "value2" );
+					.param( "parameterName", "value1" )
+					.param( "anotherParameterName", "someValue" )
+					.param( "parameterName", "value2" );
 		}
 	}
 
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-4594")
 	public void multipleConfigurers() {
-		LuceneBackend backend = setup( MultipleConfigurers1.class.getName() + "," + MultipleConfigurers2.class.getName() );
+		LuceneBackend backend = setup( MultipleConfigurers1.class.getName()
+				+ ","
+				+ MultipleConfigurers2.class.getName() );
 
 		assertThat( backend.analyzer( "analyzer1" ) ).isPresent();
 		assertThat( backend.analyzer( "analyzer2" ) ).isPresent();

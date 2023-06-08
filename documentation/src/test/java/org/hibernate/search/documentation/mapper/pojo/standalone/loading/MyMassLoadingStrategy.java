@@ -82,8 +82,7 @@ public class MyMassLoadingStrategy<E>
 			}
 
 			@Override
-			public void load(List<String> identifiers)
-					throws InterruptedException {
+			public void load(List<String> identifiers) throws InterruptedException {
 				sink.accept( // <11>
 						connection.loadEntitiesById( rootEntityType, identifiers )
 				);

@@ -5,6 +5,7 @@
  * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
  */
 package org.hibernate.search.integrationtest.backend.elasticsearch.schema.management;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.test.JsonHelper.assertJsonEquals;
 
@@ -61,53 +62,99 @@ public class ElasticsearchIndexSchemaManagerCreationCustomSettingsIT {
 		setupAndCreateIndex( null, "custom-index-settings/valid.json" );
 
 		assertJsonEquals(
-				" { " +
-				"   'analyzer': { " +
-				"   	'DefaultAnalysisDefinitions_analyzer_ngram': { " +
-				"   		'type': 'custom', " +
-				"   		'tokenizer': 'DefaultAnalysisDefinitions_analyzer_ngram_tokenizer' " +
-				"   	}, " +
-				"   	'my_standard-english': { " +
-				"   		'type': 'standard', " +
-				"   		'stopwords': '_english_' " +
-				"   	}, " +
-				"   	'DefaultAnalysisDefinitions_analyzer_whitespace': { " +
-				"   		'type': 'custom', " +
-				"   		'tokenizer': 'whitespace' " +
-				"   	}, " +
-				"   	'my_analyzer_ngram': { " +
-				"   		'type': 'custom', " +
-				"   		'tokenizer': 'my_analyzer_ngram_tokenizer' " +
-				"   	}, " +
-				"   	'DefaultAnalysisDefinitions_analyzer_whitespace_lowercase': { " +
-				"   		'type': 'custom', " +
-				"   		'tokenizer': 'whitespace', " +
-				"   		'filter': ['lowercase'] " +
-				"   	}, " +
-				"   	'DefaultAnalysisDefinitions_standard-english': { " +
-				"   		'type': 'standard', " +
-				"   		'stopwords': '_english_' " +
-				"   	} " +
-				"   }, " +
-				"   'normalizer': { " +
-				"   	'DefaultAnalysisDefinitions_lowercase': { " +
-				"   		'type': 'custom', " +
-				"   		'filter': ['lowercase'] " +
-				"   	} " +
-				"   }, " +
-				"   'tokenizer': { " +
-				"   	'DefaultAnalysisDefinitions_analyzer_ngram_tokenizer': { " +
-				"   		'type': 'ngram', " +
-				"   		'min_gram': '5', " +
-				"   		'max_gram': '6' " +
-				"   	}, " +
-				"   	'my_analyzer_ngram_tokenizer': { " +
-				"   		'type': 'ngram', " +
-				"   		'min_gram': '5', " +
-				"   		'max_gram': '6' " +
-				"   	} " +
-				"   }  " +
-				" } ",
+				" { "
+						+
+						"   'analyzer': { "
+						+
+						"   	'DefaultAnalysisDefinitions_analyzer_ngram': { "
+						+
+						"   		'type': 'custom', "
+						+
+						"   		'tokenizer': 'DefaultAnalysisDefinitions_analyzer_ngram_tokenizer' "
+						+
+						"   	}, "
+						+
+						"   	'my_standard-english': { "
+						+
+						"   		'type': 'standard', "
+						+
+						"   		'stopwords': '_english_' "
+						+
+						"   	}, "
+						+
+						"   	'DefaultAnalysisDefinitions_analyzer_whitespace': { "
+						+
+						"   		'type': 'custom', "
+						+
+						"   		'tokenizer': 'whitespace' "
+						+
+						"   	}, "
+						+
+						"   	'my_analyzer_ngram': { "
+						+
+						"   		'type': 'custom', "
+						+
+						"   		'tokenizer': 'my_analyzer_ngram_tokenizer' "
+						+
+						"   	}, "
+						+
+						"   	'DefaultAnalysisDefinitions_analyzer_whitespace_lowercase': { "
+						+
+						"   		'type': 'custom', "
+						+
+						"   		'tokenizer': 'whitespace', "
+						+
+						"   		'filter': ['lowercase'] "
+						+
+						"   	}, "
+						+
+						"   	'DefaultAnalysisDefinitions_standard-english': { "
+						+
+						"   		'type': 'standard', "
+						+
+						"   		'stopwords': '_english_' "
+						+
+						"   	} "
+						+
+						"   }, "
+						+
+						"   'normalizer': { "
+						+
+						"   	'DefaultAnalysisDefinitions_lowercase': { "
+						+
+						"   		'type': 'custom', "
+						+
+						"   		'filter': ['lowercase'] "
+						+
+						"   	} "
+						+
+						"   }, "
+						+
+						"   'tokenizer': { "
+						+
+						"   	'DefaultAnalysisDefinitions_analyzer_ngram_tokenizer': { "
+						+
+						"   		'type': 'ngram', "
+						+
+						"   		'min_gram': '5', "
+						+
+						"   		'max_gram': '6' "
+						+
+						"   	}, "
+						+
+						"   	'my_analyzer_ngram_tokenizer': { "
+						+
+						"   		'type': 'ngram', "
+						+
+						"   		'min_gram': '5', "
+						+
+						"   		'max_gram': '6' "
+						+
+						"   	} "
+						+
+						"   }  "
+						+
+						" } ",
 				elasticsearchClient.index( index.name() ).settings( "index.analysis" ).get()
 		);
 
@@ -127,40 +174,73 @@ public class ElasticsearchIndexSchemaManagerCreationCustomSettingsIT {
 		setupAndCreateIndex( null, "custom-index-settings/overlapping.json" );
 
 		assertJsonEquals(
-				" { " +
-				" 	'analyzer': { " +
-				" 		'DefaultAnalysisDefinitions_analyzer_ngram': { " +
-				" 			'type': 'custom', " +
-				" 			'tokenizer': 'DefaultAnalysisDefinitions_analyzer_ngram_tokenizer' " +
-				" 		}, " +
-				" 		'DefaultAnalysisDefinitions_analyzer_whitespace': { " +
-				" 			'type': 'custom', " +
-				" 			'tokenizer': 'whitespace' " +
-				" 		}, " +
-				" 		'DefaultAnalysisDefinitions_analyzer_whitespace_lowercase': { " +
-				" 			'type': 'custom', " +
-				" 			'tokenizer': 'whitespace', " +
-				" 			'filter': ['lowercase'] " +
-				" 		}, " +
-				" 		'DefaultAnalysisDefinitions_standard-english': { " +
-				" 			'type': 'standard', " +
-				" 			'stopwords': '_english_' " +
-				" 		} " +
-				" 	}, " +
-				" 	'normalizer': { " +
-				" 		'DefaultAnalysisDefinitions_lowercase': { " +
-				" 			'type': 'custom', " +
-				" 			'filter': ['lowercase'] " +
-				" 		} " +
-				" 	}, " +
-				" 	'tokenizer': { " +
-				" 		'DefaultAnalysisDefinitions_analyzer_ngram_tokenizer': { " +
-				" 			'type': 'ngram', " +
-				" 			'min_gram': '7', " +
-				" 			'max_gram': '8'" +
-				" 		} " +
-				" 	} " +
-				" } ",
+				" { "
+						+
+						" 	'analyzer': { "
+						+
+						" 		'DefaultAnalysisDefinitions_analyzer_ngram': { "
+						+
+						" 			'type': 'custom', "
+						+
+						" 			'tokenizer': 'DefaultAnalysisDefinitions_analyzer_ngram_tokenizer' "
+						+
+						" 		}, "
+						+
+						" 		'DefaultAnalysisDefinitions_analyzer_whitespace': { "
+						+
+						" 			'type': 'custom', "
+						+
+						" 			'tokenizer': 'whitespace' "
+						+
+						" 		}, "
+						+
+						" 		'DefaultAnalysisDefinitions_analyzer_whitespace_lowercase': { "
+						+
+						" 			'type': 'custom', "
+						+
+						" 			'tokenizer': 'whitespace', "
+						+
+						" 			'filter': ['lowercase'] "
+						+
+						" 		}, "
+						+
+						" 		'DefaultAnalysisDefinitions_standard-english': { "
+						+
+						" 			'type': 'standard', "
+						+
+						" 			'stopwords': '_english_' "
+						+
+						" 		} "
+						+
+						" 	}, "
+						+
+						" 	'normalizer': { "
+						+
+						" 		'DefaultAnalysisDefinitions_lowercase': { "
+						+
+						" 			'type': 'custom', "
+						+
+						" 			'filter': ['lowercase'] "
+						+
+						" 		} "
+						+
+						" 	}, "
+						+
+						" 	'tokenizer': { "
+						+
+						" 		'DefaultAnalysisDefinitions_analyzer_ngram_tokenizer': { "
+						+
+						" 			'type': 'ngram', "
+						+
+						" 			'min_gram': '7', "
+						+
+						" 			'max_gram': '8'"
+						+
+						" 		} "
+						+
+						" 	} "
+						+
+						" } ",
 				elasticsearchClient.index( index.name() ).settings( "index.analysis" ).get()
 		);
 
@@ -180,25 +260,43 @@ public class ElasticsearchIndexSchemaManagerCreationCustomSettingsIT {
 		setupAndCreateIndex( new EmptyElasticsearchAnalysisConfigurer(), "custom-index-settings/valid.json" );
 
 		assertJsonEquals(
-				" { " +
-				" 	'analyzer': { " +
-				" 		'my_standard-english': { " +
-				" 			'type': 'standard', " +
-				" 			'stopwords': '_english_' " +
-				" 		}, " +
-				" 		'my_analyzer_ngram': { " +
-				" 			'type': 'custom', " +
-				" 			'tokenizer': 'my_analyzer_ngram_tokenizer' " +
-				" 		} " +
-				" 	}, " +
-				" 	'tokenizer': { " +
-				" 		'my_analyzer_ngram_tokenizer': { " +
-				" 			'type': 'ngram', " +
-				" 			'min_gram': '5', " +
-				" 			'max_gram': '6' " +
-				" 		} " +
-				" 	} " +
-				" } ",
+				" { "
+						+
+						" 	'analyzer': { "
+						+
+						" 		'my_standard-english': { "
+						+
+						" 			'type': 'standard', "
+						+
+						" 			'stopwords': '_english_' "
+						+
+						" 		}, "
+						+
+						" 		'my_analyzer_ngram': { "
+						+
+						" 			'type': 'custom', "
+						+
+						" 			'tokenizer': 'my_analyzer_ngram_tokenizer' "
+						+
+						" 		} "
+						+
+						" 	}, "
+						+
+						" 	'tokenizer': { "
+						+
+						" 		'my_analyzer_ngram_tokenizer': { "
+						+
+						" 			'type': 'ngram', "
+						+
+						" 			'min_gram': '5', "
+						+
+						" 			'max_gram': '6' "
+						+
+						" 		} "
+						+
+						" 	} "
+						+
+						" } ",
 				elasticsearchClient.index( index.name() ).settings( "index.analysis" ).get()
 		);
 
@@ -215,7 +313,8 @@ public class ElasticsearchIndexSchemaManagerCreationCustomSettingsIT {
 
 		// use an empty analysis configurer,
 		// so that we have only the custom settings definitions
-		setupAndCreateIndex( new EmptyElasticsearchAnalysisConfigurer(), "custom-index-settings/max-result-window.json" );
+		setupAndCreateIndex( new EmptyElasticsearchAnalysisConfigurer(),
+				"custom-index-settings/max-result-window.json" );
 
 		assertJsonEquals(
 				"\"250\"",

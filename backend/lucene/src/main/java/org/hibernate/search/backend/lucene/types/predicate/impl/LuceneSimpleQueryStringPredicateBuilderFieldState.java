@@ -12,7 +12,7 @@ import org.hibernate.search.backend.lucene.search.common.impl.LuceneSearchIndexV
 import org.hibernate.search.engine.search.predicate.spi.SimpleQueryStringPredicateBuilder;
 
 public final class LuceneSimpleQueryStringPredicateBuilderFieldState
-	implements SimpleQueryStringPredicateBuilder.FieldState {
+		implements SimpleQueryStringPredicateBuilder.FieldState {
 
 	private final LuceneSearchIndexValueFieldContext<?> field;
 	private Float boost;
@@ -36,7 +36,8 @@ public final class LuceneSimpleQueryStringPredicateBuilderFieldState
 
 	public static class Factory
 			extends
-			AbstractLuceneValueFieldSearchQueryElementFactory<LuceneSimpleQueryStringPredicateBuilderFieldState, String> {
+			AbstractLuceneValueFieldSearchQueryElementFactory<LuceneSimpleQueryStringPredicateBuilderFieldState,
+					String> {
 		@Override
 		public LuceneSimpleQueryStringPredicateBuilderFieldState create(LuceneSearchIndexScope<?> scope,
 				LuceneSearchIndexValueFieldContext<String> field) {

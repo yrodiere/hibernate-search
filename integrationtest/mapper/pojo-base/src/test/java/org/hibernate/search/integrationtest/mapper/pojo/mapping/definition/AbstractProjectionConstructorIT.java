@@ -31,7 +31,8 @@ public abstract class AbstractProjectionConstructorIT {
 		return f.constant( null );
 	}
 
-	protected final <P> void testSuccessfulRootProjectionExecutionOnly(SearchMapping mapping, Class<?> indexedType, Class<P> projectionType,
+	protected final <P> void testSuccessfulRootProjectionExecutionOnly(SearchMapping mapping, Class<?> indexedType,
+			Class<P> projectionType,
 			List<?> rawProjectionResults, List<P> expectedProjectionResults) {
 		try ( SearchSession session = mapping.createSession() ) {
 			backendMock.expectSearchProjection(
@@ -52,7 +53,8 @@ public abstract class AbstractProjectionConstructorIT {
 		backendMock.verifyExpectationsMet();
 	}
 
-	protected final <P> void testSuccessfulRootProjection(SearchMapping mapping, Class<?> indexedType, Class<P> projectionType,
+	protected final <P> void testSuccessfulRootProjection(SearchMapping mapping, Class<?> indexedType, Class<
+			P> projectionType,
 			List<?> rawProjectionResults,
 			Function<SearchProjectionFactory<?, ?>, ProjectionFinalStep<?>> expectedProjection,
 			List<P> expectedProjectionResults) {

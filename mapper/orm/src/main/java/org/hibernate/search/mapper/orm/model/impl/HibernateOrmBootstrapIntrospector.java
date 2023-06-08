@@ -90,7 +90,8 @@ public class HibernateOrmBootstrapIntrospector extends AbstractPojoHCAnnBootstra
 		}
 
 		Set<String> typeNames = new LinkedHashSet<>( basicTypeMetadataProvider.getKnownDynamicMapTypeNames() );
-		typeNames.addAll( basicTypeMetadataProvider.getTypeIdentifierResolver().allKnownJpaOrHibernateOrmEntityNames() );
+		typeNames.addAll( basicTypeMetadataProvider.getTypeIdentifierResolver()
+				.allKnownJpaOrHibernateOrmEntityNames() );
 		throw log.unknownNamedType( name, typeNames );
 	}
 
@@ -104,11 +105,13 @@ public class HibernateOrmBootstrapIntrospector extends AbstractPojoHCAnnBootstra
 			 */
 			clazz = (Class<T>) ReflectionHelper.getPrimitiveWrapperType( clazz );
 		}
-		return (HibernateOrmClassRawTypeModel<T>) classTypeModelCache.computeIfAbsent( clazz, this::createClassTypeModel );
+		return (HibernateOrmClassRawTypeModel<T>) classTypeModelCache.computeIfAbsent( clazz,
+				this::createClassTypeModel );
 	}
 
 	@Override
-	protected <T> ValueCreateHandle<T> createValueCreateHandle(Constructor<T> constructor) throws IllegalAccessException {
+	protected <T> ValueCreateHandle<T> createValueCreateHandle(Constructor<
+			T> constructor) throws IllegalAccessException {
 		setAccessible( constructor );
 		return valueHandleFactory.createForConstructor( constructor );
 	}
@@ -140,7 +143,8 @@ public class HibernateOrmBootstrapIntrospector extends AbstractPojoHCAnnBootstra
 
 	@SuppressWarnings("rawtypes")
 	private HibernateOrmDynamicMapRawTypeModel createDynamicMapTypeModel(String name) {
-		HibernateOrmBasicDynamicMapTypeMetadata ormMetadata = basicTypeMetadataProvider.getBasicDynamicMapTypeMetadata( name );
+		HibernateOrmBasicDynamicMapTypeMetadata ormMetadata = basicTypeMetadataProvider.getBasicDynamicMapTypeMetadata(
+				name );
 		PojoRawTypeIdentifier<Map> typeIdentifier =
 				HibernateOrmRawTypeIdentifierResolver.createDynamicMapTypeIdentifier( name );
 		return new HibernateOrmDynamicMapRawTypeModel(

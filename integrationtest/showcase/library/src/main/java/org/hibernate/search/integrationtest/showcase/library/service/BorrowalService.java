@@ -82,9 +82,12 @@ public class BorrowalService {
 				.skip( copyIndex )
 				.findFirst()
 				.orElseThrow( () -> new IllegalStateException(
-						"The test setup is incorrect; could not find copy #" + copyIndex
-								+ " of document " + this
-								+ " for library " + library
+						"The test setup is incorrect; could not find copy #"
+								+ copyIndex
+								+ " of document "
+								+ this
+								+ " for library "
+								+ library
 				) );
 	}
 }

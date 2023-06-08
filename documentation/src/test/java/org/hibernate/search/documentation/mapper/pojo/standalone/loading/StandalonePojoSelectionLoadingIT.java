@@ -18,11 +18,11 @@ import org.hibernate.search.documentation.mapper.pojo.standalone.loading.mydatas
 import org.hibernate.search.documentation.mapper.pojo.standalone.loading.mydatastore.MyDatastoreConnection;
 import org.hibernate.search.documentation.testsupport.BackendConfigurations;
 import org.hibernate.search.documentation.testsupport.TestConfiguration;
-import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.mapper.pojo.standalone.mapping.CloseableSearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.mapping.StandalonePojoMappingConfigurer;
 import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
+import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.util.impl.integrationtest.common.TestConfigurationProvider;
 
 import org.junit.After;
@@ -57,9 +57,9 @@ public class StandalonePojoSelectionLoadingIT {
 						"hibernate.search.mapping.configurer",
 						(StandalonePojoMappingConfigurer) c -> {
 							c.addEntityType( Book.class, context -> // <2>
-									context.selectionLoadingStrategy(
-											new MySelectionLoadingStrategy<>( Book.class )
-									) );
+							context.selectionLoadingStrategy(
+									new MySelectionLoadingStrategy<>( Book.class )
+							) );
 						}
 				)
 				// end::setup[]
@@ -108,8 +108,7 @@ public class StandalonePojoSelectionLoadingIT {
 		// tag::search[]
 		try ( MyDatastoreConnection connection = datastore.connect(); // <3>
 				SearchSession searchSession = searchMapping.createSessionWithOptions() // <4>
-						.loading( o ->
-								o.context( MyDatastoreConnection.class, connection ) ) // <5>
+						.loading( o -> o.context( MyDatastoreConnection.class, connection ) ) // <5>
 						.build() ) { // <6>
 			List<Book> hits = searchSession.search( Book.class ) // <7>
 					.where( f -> f.matchAll() )

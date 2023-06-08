@@ -12,26 +12,26 @@ import java.lang.invoke.MethodHandles;
 import java.util.Collections;
 import java.util.Optional;
 
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.integrationtest.mapper.pojo.work.operations.AbstractPojoIndexingPlanOperationBaseIT;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.bridge.RoutingBridge;
 import org.hibernate.search.mapper.pojo.bridge.binding.RoutingBindingContext;
-import org.hibernate.search.mapper.pojo.common.annotation.Param;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.RoutingBinderRef;
 import org.hibernate.search.mapper.pojo.bridge.mapping.programmatic.RoutingBinder;
 import org.hibernate.search.mapper.pojo.bridge.runtime.RoutingBridgeRouteContext;
+import org.hibernate.search.mapper.pojo.common.annotation.Param;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.TypeMappingStep;
 import org.hibernate.search.mapper.pojo.model.PojoElementAccessor;
 import org.hibernate.search.mapper.pojo.route.DocumentRoutes;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.document.StubDocumentNode;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -53,7 +53,8 @@ public class RoutingBridgeBaseIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Test
 	public void invalidTypeForRoutingBridge() {
@@ -73,8 +74,11 @@ public class RoutingBridgeBaseIT {
 				.isInstanceOf( SearchException.class )
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
-						.failure( "Invalid routing bridge for entity type '" + IndexedEntity.class.getName()
-										+ "': '" + UnusedRoutingBridge.TOSTRING + "'",
+						.failure( "Invalid routing bridge for entity type '"
+								+ IndexedEntity.class.getName()
+								+ "': '"
+								+ UnusedRoutingBridge.TOSTRING
+								+ "'",
 								"This bridge expects an entity type extending '" + Integer.class.getName() ) );
 	}
 
@@ -105,7 +109,7 @@ public class RoutingBridgeBaseIT {
 			}
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b -> { } );
+		backendMock.expectSchema( INDEX_NAME, b -> {} );
 
 		SearchMapping mapping = setupHelper.start()
 				.withConfiguration( b -> {
@@ -165,7 +169,7 @@ public class RoutingBridgeBaseIT {
 			}
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b -> { } );
+		backendMock.expectSchema( INDEX_NAME, b -> {} );
 
 		SearchMapping mapping = setupHelper.start()
 				.withConfiguration( b -> {
@@ -241,7 +245,7 @@ public class RoutingBridgeBaseIT {
 			}
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b -> { } );
+		backendMock.expectSchema( INDEX_NAME, b -> {} );
 
 		SearchMapping mapping = setupHelper.start()
 				.withConfiguration( b -> {
@@ -282,7 +286,7 @@ public class RoutingBridgeBaseIT {
 			String stringProperty;
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b -> { } );
+		backendMock.expectSchema( INDEX_NAME, b -> {} );
 
 		SearchMapping mapping = setupHelper.start()
 				.withConfiguration( b -> {
@@ -297,7 +301,8 @@ public class RoutingBridgeBaseIT {
 											@Override
 											public void route(DocumentRoutes routes, Object entityIdentifier,
 													IndexedEntity indexedEntity, RoutingBridgeRouteContext context) {
-												routes.addRoute().routingKey( pojoPropertyAccessor.read( indexedEntity ) );
+												routes.addRoute().routingKey( pojoPropertyAccessor.read(
+														indexedEntity ) );
 											}
 
 											@Override
@@ -374,7 +379,8 @@ public class RoutingBridgeBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.failure( "'.stringProperty<no value extractors>' cannot be assigned to '"
-								+ Integer.class.getName() + "'" ) );
+								+ Integer.class.getName()
+								+ "'" ) );
 	}
 
 	/**
@@ -392,7 +398,7 @@ public class RoutingBridgeBaseIT {
 			String stringProperty;
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b -> { } );
+		backendMock.expectSchema( INDEX_NAME, b -> {} );
 
 		SearchMapping mapping = setupHelper.start()
 				.withConfiguration( b -> {
@@ -483,7 +489,8 @@ public class RoutingBridgeBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.failure( "No readable property named 'doesNotExist' on type '"
-								+ IndexedEntity.class.getName() + "'" ) );
+								+ IndexedEntity.class.getName()
+								+ "'" ) );
 	}
 
 	@Test
@@ -551,7 +558,7 @@ public class RoutingBridgeBaseIT {
 			String stringProperty;
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b -> { } );
+		backendMock.expectSchema( INDEX_NAME, b -> {} );
 
 		SearchMapping mapping = setupHelper.start()
 				.withConfiguration( b -> {
@@ -640,7 +647,7 @@ public class RoutingBridgeBaseIT {
 
 	@Test
 	public void params_annotationMapping() {
-		backendMock.expectSchema( INDEX_NAME, b -> { } );
+		backendMock.expectSchema( INDEX_NAME, b -> {} );
 		SearchMapping mapping = setupHelper.start().expectCustomBeans().setup( AnnotatedRoutedEntity.class );
 		backendMock.verifyExpectationsMet();
 
@@ -676,21 +683,22 @@ public class RoutingBridgeBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( AnnotatedRoutedSameParamTwiceEntity.class.getName() )
 						.annotationContextAnyParameters( Indexed.class )
-						.failure( "Conflicting usage of @Param annotation for parameter name: 'stringModulus'. " +
+						.failure( "Conflicting usage of @Param annotation for parameter name: 'stringModulus'. "
+								+
 								"Can't assign both value '7' and '7'" )
 				);
 	}
 
 	@Test
 	public void params_programmaticMapping() {
-		backendMock.expectSchema( INDEX_NAME, b -> { } );
+		backendMock.expectSchema( INDEX_NAME, b -> {} );
 		SearchMapping mapping = setupHelper.start().expectCustomBeans()
 				.withConfiguration( builder -> {
 					builder.addEntityType( NotAnnotatedRoutedEntity.class );
 
 					TypeMappingStep entity = builder.programmaticMapping().type( NotAnnotatedRoutedEntity.class );
 					entity.indexed().index( INDEX_NAME ).routingBinder( new ParametricBinder(),
-									Collections.singletonMap( "modulus", 7 ) );
+							Collections.singletonMap( "modulus", 7 ) );
 					entity.property( "id" ).documentId();
 				} )
 				.setup( NotAnnotatedRoutedEntity.class );

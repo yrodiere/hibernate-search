@@ -38,7 +38,8 @@ import com.google.gson.JsonObject;
 public class ElasticsearchDistanceToFieldProjection<A, P> extends AbstractElasticsearchProjection<P>
 		implements ElasticsearchSearchProjection.Extractor<A, P> {
 
-	private static final JsonObjectAccessor SCRIPT_FIELDS_ACCESSOR = JsonAccessor.root().property( "script_fields" ).asObject();
+	private static final JsonObjectAccessor SCRIPT_FIELDS_ACCESSOR = JsonAccessor.root().property( "script_fields" )
+			.asObject();
 	private static final JsonObjectAccessor FIELDS_ACCESSOR = JsonAccessor.root().property( "fields" ).asObject();
 	private static final JsonArrayAccessor SORT_ACCESSOR = JsonAccessor.root().property( "sort" ).asArray();
 	private static final ElasticsearchGeoPointFieldCodec CODEC = ElasticsearchGeoPointFieldCodec.INSTANCE;
@@ -52,11 +53,15 @@ public class ElasticsearchDistanceToFieldProjection<A, P> extends AbstractElasti
 			// Check whether the field exists first with "containsKey";
 			// in a multi-index search, it may not exist for all indexes.
 			// Use ".size() != 0" to check whether this field has a value. ".value != null" won't work on ES7+
-			" if (doc.containsKey(params.fieldPath) && doc[params.fieldPath].size() != 0) {" +
-				" return doc[params.fieldPath].arcDistance(params.lat, params.lon);" +
-			" } else {" +
-				" return null;" +
-			" }";
+			" if (doc.containsKey(params.fieldPath) && doc[params.fieldPath].size() != 0) {"
+					+
+					" return doc[params.fieldPath].arcDistance(params.lat, params.lon);"
+					+
+					" } else {"
+					+
+					" return null;"
+					+
+					" }";
 
 	private final String absoluteFieldPath;
 	private final boolean singleValuedInRoot;
@@ -95,11 +100,16 @@ public class ElasticsearchDistanceToFieldProjection<A, P> extends AbstractElasti
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "absoluteFieldPath=" + absoluteFieldPath
-				+ ", center=" + center
-				+ ", unit=" + unit
-				+ ", accumulator=" + accumulator
+		return getClass().getSimpleName()
+				+ "["
+				+ "absoluteFieldPath="
+				+ absoluteFieldPath
+				+ ", center="
+				+ center
+				+ ", unit="
+				+ unit
+				+ ", accumulator="
+				+ accumulator
 				+ "]";
 	}
 
@@ -127,7 +137,8 @@ public class ElasticsearchDistanceToFieldProjection<A, P> extends AbstractElasti
 	@Override
 	public A extract(ProjectionHitMapper<?> projectionHitMapper, JsonObject hit,
 			JsonObject source, ProjectionExtractContext context) {
-		Integer distanceSortIndex = singleValuedInRoot ? context.getDistanceSortIndex( absoluteFieldPath, center ) : null;
+		Integer distanceSortIndex = singleValuedInRoot ?
+				context.getDistanceSortIndex( absoluteFieldPath, center ) : null;
 
 		if ( distanceSortIndex != null ) {
 			A accumulated = accumulator.createInitial();
@@ -149,7 +160,8 @@ public class ElasticsearchDistanceToFieldProjection<A, P> extends AbstractElasti
 	}
 
 	private Double extractDistanceFromScriptField(JsonObject hit) {
-		Optional<JsonElement> projectedFieldElement = FIELDS_ACCESSOR.property( scriptFieldName ).asArray().element( 0 ).get( hit );
+		Optional<JsonElement> projectedFieldElement = FIELDS_ACCESSOR.property( scriptFieldName ).asArray().element( 0 )
+				.get( hit );
 		if ( !projectedFieldElement.isPresent() || projectedFieldElement.get().isJsonNull() ) {
 			return null;
 		}
@@ -238,7 +250,8 @@ public class ElasticsearchDistanceToFieldProjection<A, P> extends AbstractElasti
 		private GeoPoint center;
 		private DistanceUnit unit = DistanceUnit.METERS;
 
-		private Builder(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<GeoPoint> field) {
+		private Builder(ElasticsearchSearchIndexScope<?> scope, ElasticsearchSearchIndexValueFieldContext<
+				GeoPoint> field) {
 			super( scope );
 			this.field = field;
 		}

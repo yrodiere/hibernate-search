@@ -30,7 +30,9 @@ public class LuceneNumericRangePredicate extends AbstractLuceneLeafSingleFieldPr
 
 	public static class Factory<F, E extends Number>
 			extends
-			AbstractLuceneCodecAwareSearchQueryElementFactory<RangePredicateBuilder, F, AbstractLuceneNumericFieldCodec<F, E>> {
+			AbstractLuceneCodecAwareSearchQueryElementFactory<RangePredicateBuilder,
+					F,
+					AbstractLuceneNumericFieldCodec<F, E>> {
 		public Factory(AbstractLuceneNumericFieldCodec<F, E> codec) {
 			super( codec );
 		}
@@ -88,7 +90,8 @@ public class LuceneNumericRangePredicate extends AbstractLuceneLeafSingleFieldPr
 				return domain.getMaxValue();
 			}
 			E boundValue = boundValueOptional.get();
-			return RangeBoundInclusion.EXCLUDED.equals( inclusion ) ? domain.getPreviousValue( boundValue ) : boundValue;
+			return RangeBoundInclusion.EXCLUDED.equals( inclusion ) ?
+					domain.getPreviousValue( boundValue ) : boundValue;
 		}
 	}
 }

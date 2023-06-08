@@ -42,7 +42,8 @@ import org.junit.runners.model.Statement;
 
 public class BackendMock implements TestRule {
 
-	private final VerifyingStubBackendBehavior backendBehavior = new VerifyingStubBackendBehavior( this::indexingWorkExpectations );
+	private final VerifyingStubBackendBehavior backendBehavior = new VerifyingStubBackendBehavior(
+			this::indexingWorkExpectations );
 
 	private volatile boolean started = false;
 
@@ -148,7 +149,7 @@ public class BackendMock implements TestRule {
 	}
 
 	public BackendMock expectSchema(String indexName, Consumer<StubIndexSchemaDataNode.Builder> contributor) {
-		return expectSchema( indexName, contributor, ignored -> { } );
+		return expectSchema( indexName, contributor, ignored -> {} );
 	}
 
 	public BackendMock expectSchema(String indexName, Consumer<StubIndexSchemaDataNode.Builder> contributor,
@@ -208,10 +209,11 @@ public class BackendMock implements TestRule {
 
 	public BackendMock expectSearchReferences(Collection<String> indexNames,
 			StubSearchWorkBehavior<DocumentReference> behavior) {
-		return expectSearch( indexNames, b -> { }, behavior );
+		return expectSearch( indexNames, b -> {}, behavior );
 	}
 
-	public BackendMock expectSearchReferences(Collection<String> indexNames, Consumer<StubSearchWork.Builder> contributor,
+	public BackendMock expectSearchReferences(Collection<String> indexNames, Consumer<
+			StubSearchWork.Builder> contributor,
 			StubSearchWorkBehavior<DocumentReference> behavior) {
 		return expectSearch( indexNames, contributor, behavior );
 	}
@@ -222,7 +224,7 @@ public class BackendMock implements TestRule {
 	}
 
 	public BackendMock expectSearchObjects(String indexName, StubSearchWorkBehavior<DocumentReference> behavior) {
-		return expectSearch( Collections.singleton( indexName ), ignored -> { }, behavior );
+		return expectSearch( Collections.singleton( indexName ), ignored -> {}, behavior );
 	}
 
 	public BackendMock expectSearchObjects(Collection<String> indexNames, Consumer<StubSearchWork.Builder> contributor,
@@ -231,7 +233,7 @@ public class BackendMock implements TestRule {
 	}
 
 	public BackendMock expectSearchProjection(String indexNames, StubSearchWorkBehavior<?> behavior) {
-		return expectSearch( Collections.singleton( indexNames ), ignored -> { }, behavior );
+		return expectSearch( Collections.singleton( indexNames ), ignored -> {}, behavior );
 	}
 
 	public BackendMock expectSearchProjection(String indexNames, Consumer<StubSearchWork.Builder> contributor,
@@ -240,10 +242,11 @@ public class BackendMock implements TestRule {
 	}
 
 	public BackendMock expectSearchProjection(Collection<String> indexNames, StubSearchWorkBehavior<?> behavior) {
-		return expectSearch( indexNames, ignored -> { }, behavior );
+		return expectSearch( indexNames, ignored -> {}, behavior );
 	}
 
-	public BackendMock expectSearchProjection(Collection<String> indexNames, Consumer<StubSearchWork.Builder> contributor,
+	public BackendMock expectSearchProjection(Collection<String> indexNames, Consumer<
+			StubSearchWork.Builder> contributor,
 			StubSearchWorkBehavior<?> behavior) {
 		return expectSearch( indexNames, contributor, behavior );
 	}
@@ -288,7 +291,8 @@ public class BackendMock implements TestRule {
 		CallQueue<ScrollWorkCall<?>> callQueue = backendBehavior().getScrollCalls();
 		StubSearchWork.Builder builder = StubSearchWork.builder();
 		contributor.accept( builder );
-		callQueue.expectInOrder( new ScrollWorkCall<>( new LinkedHashSet<>( indexNames ), builder.build(), chunkSize ) );
+		callQueue.expectInOrder( new ScrollWorkCall<>( new LinkedHashSet<>( indexNames ), builder.build(),
+				chunkSize ) );
 		return this;
 	}
 
@@ -318,7 +322,8 @@ public class BackendMock implements TestRule {
 			return work( type, CompletableFuture.completedFuture( null ) );
 		}
 
-		public SchemaManagementWorkCallListContext work(StubSchemaManagementWork.Type type, CompletableFuture<?> future) {
+		public SchemaManagementWorkCallListContext work(StubSchemaManagementWork.Type type, CompletableFuture<
+				?> future) {
 			return work( type, failureCollector -> future );
 		}
 
@@ -332,12 +337,7 @@ public class BackendMock implements TestRule {
 	}
 
 	private enum DocumentWorkCallKind {
-		CREATE,
-		DISCARD,
-		EXECUTE,
-		CREATE_AND_DISCARD,
-		CREATE_AND_EXECUTE,
-		CREATE_AND_EXECUTE_OUT_OF_ORDER;
+		CREATE, DISCARD, EXECUTE, CREATE_AND_DISCARD, CREATE_AND_EXECUTE, CREATE_AND_EXECUTE_OUT_OF_ORDER;
 	}
 
 	public class DocumentWorkCallListContext {
@@ -397,7 +397,8 @@ public class BackendMock implements TestRule {
 			return newContext( kind, CompletableFuture.completedFuture( null ) );
 		}
 
-		private DocumentWorkCallListContext newContext(DocumentWorkCallKind kind, CompletableFuture<?> executionFuture) {
+		private DocumentWorkCallListContext newContext(DocumentWorkCallKind kind, CompletableFuture<
+				?> executionFuture) {
 			return new DocumentWorkCallListContext( indexName, tenantId,
 					commitStrategyForDocumentWorks, refreshStrategyForDocumentWorks,
 					kind, executionFuture );
@@ -415,7 +416,8 @@ public class BackendMock implements TestRule {
 			return documentWork( StubDocumentWork.Type.ADD_OR_UPDATE, contributor );
 		}
 
-		public DocumentWorkCallListContext addOrUpdate(String id, Consumer<StubDocumentNode.Builder> documentContributor) {
+		public DocumentWorkCallListContext addOrUpdate(String id, Consumer<
+				StubDocumentNode.Builder> documentContributor) {
 			return documentWork( StubDocumentWork.Type.ADD_OR_UPDATE, id, documentContributor );
 		}
 

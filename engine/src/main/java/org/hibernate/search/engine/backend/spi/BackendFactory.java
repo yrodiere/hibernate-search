@@ -6,10 +6,9 @@
  */
 package org.hibernate.search.engine.backend.spi;
 
-import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
 import org.hibernate.search.engine.cfg.BackendSettings;
+import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
 import org.hibernate.search.util.common.reporting.EventContext;
-
 
 public interface BackendFactory {
 
@@ -24,6 +23,7 @@ public interface BackendFactory {
 	 * are reserved for use by the engine.
 	 * @return A backend.
 	 */
-	BackendImplementor create(EventContext eventContext, BackendBuildContext context, ConfigurationPropertySource propertySource);
+	BackendImplementor create(EventContext eventContext, BackendBuildContext context,
+			ConfigurationPropertySource propertySource);
 
 }

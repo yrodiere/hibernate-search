@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchRequest;
 import org.hibernate.search.backend.elasticsearch.search.query.ElasticsearchSearchRequestTransformer;
 import org.hibernate.search.backend.elasticsearch.search.query.ElasticsearchSearchRequestTransformerContext;
-import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchRequest;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.impl.Contracts;
 
@@ -85,8 +85,8 @@ final class ElasticsearchSearchRequestTransformerContextImpl
 
 		builder.wholeEncodedPath( path );
 
-		Map<String, String> parameters = potentiallyTransformedParametersMap != null
-				? potentiallyTransformedParametersMap : originalRequest.parameters();
+		Map<String, String> parameters = potentiallyTransformedParametersMap != null ?
+				potentiallyTransformedParametersMap : originalRequest.parameters();
 		parameters.forEach( builder::param );
 
 		JsonObject body = potentiallyTransformedBody != null ? potentiallyTransformedBody : originalBody;

@@ -15,7 +15,8 @@ import org.hibernate.search.backend.lucene.types.codec.impl.LuceneZonedDateTimeF
 import org.hibernate.search.backend.lucene.types.codec.impl.Storage;
 
 class LuceneZonedDateTimeIndexFieldTypeOptionsStep
-		extends AbstractLuceneTemporalIndexFieldTypeOptionsStep<LuceneZonedDateTimeIndexFieldTypeOptionsStep, ZonedDateTime> {
+		extends AbstractLuceneTemporalIndexFieldTypeOptionsStep<LuceneZonedDateTimeIndexFieldTypeOptionsStep,
+				ZonedDateTime> {
 
 	LuceneZonedDateTimeIndexFieldTypeOptionsStep(LuceneIndexFieldTypeBuildContext buildContext) {
 		super( buildContext, ZonedDateTime.class );

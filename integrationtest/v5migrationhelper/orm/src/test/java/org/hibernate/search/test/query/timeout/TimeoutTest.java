@@ -14,6 +14,7 @@ import static org.junit.Assert.fail;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
 import javax.persistence.QueryTimeoutException;
 
 import org.hibernate.ScrollableResults;
@@ -207,7 +208,7 @@ public class TimeoutTest extends SearchTestBase {
 	}
 
 	@Override
-	public void configure(Map<String,Object> cfg) {
+	public void configure(Map<String, Object> cfg) {
 		cfg.put( "hibernate.jdbc.batch_size", "1000" );
 	}
 

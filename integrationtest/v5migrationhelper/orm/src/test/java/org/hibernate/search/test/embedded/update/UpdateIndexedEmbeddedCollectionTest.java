@@ -6,9 +6,13 @@
  */
 package org.hibernate.search.test.embedded.update;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,11 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.TermQuery;
-
 import org.hibernate.Transaction;
-
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -32,10 +32,11 @@ import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexingDependency;
 import org.hibernate.search.test.SearchTestBase;
 import org.hibernate.search.testsupport.TestForIssue;
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.TermQuery;
 
 /**
  * Unit test about updating an entity with collection marked with @IndexedEmbedded annotation
@@ -145,26 +146,52 @@ public class UpdateIndexedEmbeddedCollectionTest extends SearchTestBase {
 		public Driver() {
 		}
 
-		@Id @GeneratedValue @DocumentId
-		public Long getId() { return id; }
-		public void setId(Long id) { this.id = id; }
+		@Id
+		@GeneratedValue
+		@DocumentId
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
 		private Long id;
 
 		@Field
-		public String getFirstName() { return firstName; }
-		public void setFirstName(String firstName) { this.firstName = firstName; }
+		public String getFirstName() {
+			return firstName;
+		}
+
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+
 		private String firstName;
 
 		@Field
-		public String getLastName() { return lastName; }
-		public void setLastName(String lastName) { this.lastName = lastName; }
+		public String getLastName() {
+			return lastName;
+		}
+
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+
 		private String lastName;
 
 		@IndexedEmbedded(includeEmbeddedObjectId = true)
 		@OneToOne(cascade = CascadeType.ALL)
 		@IndexingDependency(reindexOnUpdate = ReindexOnUpdate.SHALLOW)
-		public Truck getTruck() { return truck; }
-		public void setTruck(Truck truck) { this.truck = truck; }
+		public Truck getTruck() {
+			return truck;
+		}
+
+		public void setTruck(Truck truck) {
+			this.truck = truck;
+		}
+
 		private Truck truck;
 	}
 
@@ -182,19 +209,38 @@ public class UpdateIndexedEmbeddedCollectionTest extends SearchTestBase {
 
 		@Id
 		@GeneratedValue
-		public Long getId() { return id; }
-		public void setId(Long id) { this.id = id; }
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
 		private Long id;
 
 		@Field
-		public String getNumberPlate() { return numberPlate; }
-		public void setNumberPlate(String numberPlate) { this.numberPlate = numberPlate; }
+		public String getNumberPlate() {
+			return numberPlate;
+		}
+
+		public void setNumberPlate(String numberPlate) {
+			this.numberPlate = numberPlate;
+		}
+
 		private String numberPlate;
 
-		@IndexedEmbedded @OneToMany(cascade = CascadeType.ALL)
+		@IndexedEmbedded
+		@OneToMany(cascade = CascadeType.ALL)
 		@IndexingDependency(reindexOnUpdate = ReindexOnUpdate.SHALLOW)
-		public Set<Item> getItems() { return items; }
-		public void setItems(Set<Item> items) { this.items = items; }
+		public Set<Item> getItems() {
+			return items;
+		}
+
+		public void setItems(Set<Item> items) {
+			this.items = items;
+		}
+
 		private Set<Item> items;
 	}
 
@@ -210,19 +256,39 @@ public class UpdateIndexedEmbeddedCollectionTest extends SearchTestBase {
 		public Item() {
 		}
 
-		@Id @GeneratedValue @DocumentId
-		public Long getId() { return id; }
-		public void setId(Long id) { this.id = id; }
+		@Id
+		@GeneratedValue
+		@DocumentId
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
 		private Long id;
 
 		@Field
-		public String getDescription() { return description; }
-		public void setDescription(String description) { this.description = description; }
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
+
 		private String description;
 
 		@Field
-		public Integer getQuantity() { return quantity; }
-		public void setQuantity(Integer quantity) { this.quantity = quantity; }
+		public Integer getQuantity() {
+			return quantity;
+		}
+
+		public void setQuantity(Integer quantity) {
+			this.quantity = quantity;
+		}
+
 		private Integer quantity;
 	}
 

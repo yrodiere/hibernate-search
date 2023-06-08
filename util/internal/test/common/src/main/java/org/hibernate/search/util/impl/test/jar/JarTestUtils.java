@@ -36,14 +36,15 @@ public final class JarTestUtils {
 	}
 
 	public static Path toJar(TemporaryFolder temporaryFolder, URL codeSourceLocation) {
-			return toJar( temporaryFolder, toPath( codeSourceLocation ) );
+		return toJar( temporaryFolder, toPath( codeSourceLocation ) );
 	}
 
 	public static Path toJar(TemporaryFolder temporaryFolder, Path jarOrDirectoryPath) {
 		return toJar( temporaryFolder, jarOrDirectoryPath, null );
 	}
 
-	public static Path toJar(TemporaryFolder temporaryFolder, Path jarOrDirectoryPath, Map<String, String> additionalZipFsEnv) {
+	public static Path toJar(TemporaryFolder temporaryFolder, Path jarOrDirectoryPath, Map<String,
+			String> additionalZipFsEnv) {
 		if ( Files.isRegularFile( jarOrDirectoryPath ) ) {
 			return jarOrDirectoryPath;
 		}

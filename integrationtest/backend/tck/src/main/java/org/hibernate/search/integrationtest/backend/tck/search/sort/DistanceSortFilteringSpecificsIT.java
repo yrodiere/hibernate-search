@@ -75,7 +75,8 @@ public class DistanceSortFilteringSpecificsIT {
 				.hasMessageContainingAll( "Invalid search predicate",
 						"This predicate targets fields [" + fieldInParentPath + "]",
 						"only fields that are contained in the nested object with path '"
-								+ index.binding().nestedObject1.relativeFieldName + "'"
+								+ index.binding().nestedObject1.relativeFieldName
+								+ "'"
 								+ " are allowed here." );
 	}
 
@@ -92,7 +93,8 @@ public class DistanceSortFilteringSpecificsIT {
 				.hasMessageContainingAll( "Invalid search predicate",
 						"This predicate targets fields [" + fieldInSiblingPath + "]",
 						"only fields that are contained in the nested object with path '"
-								+ index.binding().nestedObject1.relativeFieldName + "'"
+								+ index.binding().nestedObject1.relativeFieldName
+								+ "'"
 								+ " are allowed here." );
 	}
 

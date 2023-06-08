@@ -14,8 +14,8 @@ import java.util.List;
 import org.hibernate.search.engine.backend.common.DocumentReference;
 import org.hibernate.search.engine.backend.work.execution.DocumentCommitStrategy;
 import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrategy;
-import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
+import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.integrationtest.backend.lucene.sharding.AbstractSettingsPerShardIT;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
@@ -36,7 +36,8 @@ public class LuceneIndexReaderRefreshSettingsPerShardIT extends AbstractSettings
 	 */
 	private static final int NON_ZERO_DELAY = 2000;
 
-	public LuceneIndexReaderRefreshSettingsPerShardIT(String ignoredLabel, SearchSetupHelper setupHelper, List<String> shardIds) {
+	public LuceneIndexReaderRefreshSettingsPerShardIT(String ignoredLabel, SearchSetupHelper setupHelper, List<
+			String> shardIds) {
 		super( ignoredLabel, setupHelper, shardIds );
 	}
 
@@ -57,7 +58,7 @@ public class LuceneIndexReaderRefreshSettingsPerShardIT extends AbstractSettings
 				DocumentRefreshStrategy.NONE // The refresh should be executed regardless of this parameter
 		);
 		for ( int i = 0; i < 400; i++ ) {
-			plan.add( referenceProvider( String.valueOf( i ), routingKey( i ) ), document -> { } );
+			plan.add( referenceProvider( String.valueOf( i ), routingKey( i ) ), document -> {} );
 		}
 		plan.execute( OperationSubmitter.blocking() ).join();
 

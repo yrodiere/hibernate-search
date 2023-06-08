@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.backend.lucene.cfg.LuceneBackendSettings;
@@ -26,7 +27,10 @@ import org.hibernate.search.util.impl.integrationtest.mapper.orm.HibernateOrmMap
 import org.hibernate.search.util.impl.integrationtest.mapper.orm.SimpleEntityManagerFactoryBuilder;
 
 public final class V5MigrationHelperJPASetupHelper
-		extends MappingSetupHelper<V5MigrationHelperJPASetupHelper.SetupContext, SimpleEntityManagerFactoryBuilder, SimpleEntityManagerFactoryBuilder, EntityManagerFactory> {
+		extends MappingSetupHelper<V5MigrationHelperJPASetupHelper.SetupContext,
+				SimpleEntityManagerFactoryBuilder,
+				SimpleEntityManagerFactoryBuilder,
+				EntityManagerFactory> {
 
 	public static V5MigrationHelperJPASetupHelper create() {
 		return new V5MigrationHelperJPASetupHelper(
@@ -49,7 +53,10 @@ public final class V5MigrationHelperJPASetupHelper
 	}
 
 	public final class SetupContext
-			extends MappingSetupHelper<SetupContext, SimpleEntityManagerFactoryBuilder, SimpleEntityManagerFactoryBuilder, EntityManagerFactory>.AbstractSetupContext {
+			extends MappingSetupHelper<SetupContext,
+					SimpleEntityManagerFactoryBuilder,
+					SimpleEntityManagerFactoryBuilder,
+					EntityManagerFactory>.AbstractSetupContext {
 
 		// Use a LinkedHashMap for deterministic iteration
 		private final Map<String, Object> overriddenProperties = new LinkedHashMap<>();

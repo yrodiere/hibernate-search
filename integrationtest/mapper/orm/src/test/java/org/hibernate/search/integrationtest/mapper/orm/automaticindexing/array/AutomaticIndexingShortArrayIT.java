@@ -8,6 +8,7 @@ package org.hibernate.search.integrationtest.mapper.orm.automaticindexing.array;
 
 import java.util.Arrays;
 import java.util.List;
+
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,9 +19,11 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 @TestForIssue(jiraKey = "HSEARCH-3997")
-public class AutomaticIndexingShortArrayIT extends AbstractAutomaticIndexingArrayIT<
-				AutomaticIndexingShortArrayIT.IndexedEntity, short[], Short
-		> {
+public class AutomaticIndexingShortArrayIT
+		extends AbstractAutomaticIndexingArrayIT<
+				AutomaticIndexingShortArrayIT.IndexedEntity,
+				short[],
+				Short> {
 
 	public AutomaticIndexingShortArrayIT() {
 		super( new ShortArrayModelPrimitives() );

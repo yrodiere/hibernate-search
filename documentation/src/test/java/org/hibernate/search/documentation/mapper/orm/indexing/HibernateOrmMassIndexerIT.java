@@ -15,6 +15,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.LocalDate;
 import java.util.concurrent.Future;
 import java.util.function.Function;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -39,7 +40,8 @@ public class HibernateOrmMassIndexerIT {
 	static final int INIT_DATA_TRANSACTION_SIZE = 500;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -63,7 +65,7 @@ public class HibernateOrmMassIndexerIT {
 				SearchSession searchSession = /* ... */ // <1>
 						// end::simple[]
 						Search.session( entityManager );
-						// tag::simple[]
+				// tag::simple[]
 				searchSession.massIndexer() // <2>
 						.startAndWait(); // <3>
 				// end::simple[]
@@ -199,7 +201,7 @@ public class HibernateOrmMassIndexerIT {
 				.isEqualTo( expectedCount );
 	}
 
-	static void initData( EntityManagerFactory entityManagerFactory, Function<Integer, Author> authorInit ) {
+	static void initData(EntityManagerFactory entityManagerFactory, Function<Integer, Author> authorInit) {
 		with( entityManagerFactory ).runNoTransaction( entityManager -> {
 			try {
 				int i = 0;

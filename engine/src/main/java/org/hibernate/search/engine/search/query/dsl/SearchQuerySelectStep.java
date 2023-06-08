@@ -12,10 +12,10 @@ import java.util.function.Function;
 
 import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.search.predicate.SearchPredicate;
-import org.hibernate.search.engine.search.projection.SearchProjection;
 import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
-import org.hibernate.search.engine.search.projection.dsl.SearchProjectionFactory;
+import org.hibernate.search.engine.search.projection.SearchProjection;
 import org.hibernate.search.engine.search.projection.dsl.ProjectionFinalStep;
+import org.hibernate.search.engine.search.projection.dsl.SearchProjectionFactory;
 import org.hibernate.search.util.common.SearchException;
 
 /**
@@ -40,13 +40,12 @@ import org.hibernate.search.util.common.SearchException;
  * @param <PDF> The type of factory used to create predicates in {@link #where(Function)}.
  */
 public interface SearchQuerySelectStep<
-				N extends SearchQueryOptionsStep<?, E, LOS, ?, ?>,
-				R,
-				E,
-				LOS,
-				PJF extends SearchProjectionFactory<R, E>,
-				PDF extends SearchPredicateFactory
-		>
+		N extends SearchQueryOptionsStep<?, E, LOS, ?, ?>,
+		R,
+		E,
+		LOS,
+		PJF extends SearchProjectionFactory<R, E>,
+		PDF extends SearchPredicateFactory>
 		extends SearchQueryWhereStep<N, E, LOS, PDF> {
 
 	/**

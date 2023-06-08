@@ -18,7 +18,8 @@ import org.hibernate.search.engine.mapper.mapping.building.spi.IndexFieldTypeDef
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
 class ElasticsearchBigDecimalIndexFieldTypeOptionsStep
-		extends AbstractElasticsearchNumericFieldTypeOptionsStep<ElasticsearchBigDecimalIndexFieldTypeOptionsStep, BigDecimal>
+		extends AbstractElasticsearchNumericFieldTypeOptionsStep<ElasticsearchBigDecimalIndexFieldTypeOptionsStep,
+				BigDecimal>
 		implements ScaledNumberIndexFieldTypeOptionsStep<ElasticsearchBigDecimalIndexFieldTypeOptionsStep, BigDecimal> {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -27,7 +28,8 @@ class ElasticsearchBigDecimalIndexFieldTypeOptionsStep
 
 	private Integer decimalScale = null;
 
-	ElasticsearchBigDecimalIndexFieldTypeOptionsStep(ElasticsearchIndexFieldTypeBuildContext buildContext, IndexFieldTypeDefaultsProvider defaultsProvider) {
+	ElasticsearchBigDecimalIndexFieldTypeOptionsStep(ElasticsearchIndexFieldTypeBuildContext buildContext,
+			IndexFieldTypeDefaultsProvider defaultsProvider) {
 		super( buildContext, BigDecimal.class, DataTypes.SCALED_FLOAT );
 		this.defaultsProvider = defaultsProvider;
 	}

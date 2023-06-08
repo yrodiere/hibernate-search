@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.Dependent;
@@ -70,7 +71,8 @@ public class CdiExtendedBeanManagerBootstrapShutdownIT {
 		List<BeanHolder<DependentBean>> retrievedBeans = new ArrayList<>();
 
 		backendMock.onCreate( context -> {
-			BeanHolder<DependentBean> retrievedBean = context.beanResolver().resolve( BeanReference.of( DependentBean.class ) );
+			BeanHolder<DependentBean> retrievedBean = context.beanResolver().resolve( BeanReference.of(
+					DependentBean.class ) );
 			retrievedBeans.add( retrievedBean );
 		} );
 		backendMock.onStop( () -> {
@@ -79,7 +81,8 @@ public class CdiExtendedBeanManagerBootstrapShutdownIT {
 			}
 		} );
 
-		try ( @SuppressWarnings("unused") SessionFactory sessionFactory = ormSetupHelper.start()
+		try ( @SuppressWarnings("unused")
+		SessionFactory sessionFactory = ormSetupHelper.start()
 				.withProperty( AvailableSettings.CDI_BEAN_MANAGER, extendedBeanManager )
 				.setup( IndexedEntity.class ) ) {
 			// Hibernate Search should not have booted yet.
@@ -124,7 +127,8 @@ public class CdiExtendedBeanManagerBootstrapShutdownIT {
 		SearchException bootFailedException = new SearchException( "Simulated boot failure" );
 
 		backendMock.onCreate( context -> {
-			BeanHolder<DependentBean> retrievedBean = context.beanResolver().resolve( BeanReference.of( DependentBean.class ) );
+			BeanHolder<DependentBean> retrievedBean = context.beanResolver().resolve( BeanReference.of(
+					DependentBean.class ) );
 			retrievedBeans.add( retrievedBean );
 			throw bootFailedException;
 		} );
@@ -134,7 +138,8 @@ public class CdiExtendedBeanManagerBootstrapShutdownIT {
 			}
 		} );
 
-		try ( @SuppressWarnings("unused") SessionFactory sessionFactory = ormSetupHelper.start()
+		try ( @SuppressWarnings("unused")
+		SessionFactory sessionFactory = ormSetupHelper.start()
 				.withProperty( AvailableSettings.CDI_BEAN_MANAGER, extendedBeanManager )
 				.setup( IndexedEntity.class ) ) {
 			// Hibernate Search should not have booted yet.
@@ -179,7 +184,8 @@ public class CdiExtendedBeanManagerBootstrapShutdownIT {
 		List<BeanHolder<DependentBean>> retrievedBeans = new ArrayList<>();
 
 		backendMock.onCreate( context -> {
-			BeanHolder<DependentBean> retrievedBean = context.beanResolver().resolve( BeanReference.of( DependentBean.class ) );
+			BeanHolder<DependentBean> retrievedBean = context.beanResolver().resolve( BeanReference.of(
+					DependentBean.class ) );
 			retrievedBeans.add( retrievedBean );
 		} );
 		backendMock.onStop( () -> {
@@ -188,7 +194,8 @@ public class CdiExtendedBeanManagerBootstrapShutdownIT {
 			}
 		} );
 
-		try ( @SuppressWarnings("unused") SessionFactory sessionFactory = ormSetupHelper.start()
+		try ( @SuppressWarnings("unused")
+		SessionFactory sessionFactory = ormSetupHelper.start()
 				.withProperty( AvailableSettings.CDI_BEAN_MANAGER, extendedBeanManager )
 				.setup( IndexedEntity.class ) ) {
 			// Hibernate Search should not have booted yet.
@@ -219,7 +226,8 @@ public class CdiExtendedBeanManagerBootstrapShutdownIT {
 		SearchException bootFailedException = new SearchException( "Simulated shutdown failure" );
 
 		backendMock.onCreate( context -> {
-			BeanHolder<DependentBean> retrievedBean = context.beanResolver().resolve( BeanReference.of( DependentBean.class ) );
+			BeanHolder<DependentBean> retrievedBean = context.beanResolver().resolve( BeanReference.of(
+					DependentBean.class ) );
 			retrievedBeans.add( retrievedBean );
 		} );
 		backendMock.onStop( () -> {
@@ -229,7 +237,8 @@ public class CdiExtendedBeanManagerBootstrapShutdownIT {
 			throw bootFailedException;
 		} );
 
-		try ( @SuppressWarnings("unused") SessionFactory sessionFactory = ormSetupHelper.start()
+		try ( @SuppressWarnings("unused")
+		SessionFactory sessionFactory = ormSetupHelper.start()
 				.withProperty( AvailableSettings.CDI_BEAN_MANAGER, extendedBeanManager )
 				.setup( IndexedEntity.class ) ) {
 			// Hibernate Search should not have booted yet.

@@ -81,6 +81,7 @@ public interface PojoAdditionalMetadataCollectorTypeNode extends PojoAdditionalM
 	 */
 	PojoAdditionalMetadataCollectorIndexedTypeNode markAsIndexed(boolean enabled);
 
-	void property(String propertyName, Consumer<PojoAdditionalMetadataCollectorPropertyNode> propertyMetadataContributor);
+	void property(String propertyName, Consumer<
+			PojoAdditionalMetadataCollectorPropertyNode> propertyMetadataContributor);
 
 }

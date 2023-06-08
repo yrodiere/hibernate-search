@@ -52,7 +52,8 @@ public class ConnectedMultiFieldsRangeQueryBuilder
 				.range(
 						Range.between(
 								rangeContext.getFrom(),
-								rangeContext.isExcludeFrom() ? RangeBoundInclusion.EXCLUDED : RangeBoundInclusion.INCLUDED,
+								rangeContext.isExcludeFrom() ?
+										RangeBoundInclusion.EXCLUDED : RangeBoundInclusion.INCLUDED,
 								rangeContext.getTo(),
 								rangeContext.isExcludeTo() ? RangeBoundInclusion.EXCLUDED : RangeBoundInclusion.INCLUDED
 						),

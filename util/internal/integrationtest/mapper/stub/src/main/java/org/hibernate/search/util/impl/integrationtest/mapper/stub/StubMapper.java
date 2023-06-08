@@ -29,7 +29,8 @@ import org.hibernate.search.engine.reporting.spi.ContextualFailureCollector;
 import org.hibernate.search.engine.reporting.spi.EventContexts;
 import org.hibernate.search.engine.tenancy.spi.TenancyMode;
 
-class StubMapper implements Mapper<StubMappingPartialBuildState>, IndexedEntityBindingMapperContext, BackendMapperContext {
+class StubMapper
+		implements Mapper<StubMappingPartialBuildState>, IndexedEntityBindingMapperContext, BackendMapperContext {
 
 	private final ContextualFailureCollector failureCollector;
 	private final TypeMetadataContributorProvider<StubMappedIndex> contributorProvider;
@@ -106,7 +107,8 @@ class StubMapper implements Mapper<StubMappingPartialBuildState>, IndexedEntityB
 			return Optional.empty();
 		}
 		if ( stubMappedIndices.size() > 1 ) {
-			throw new IllegalStateException( "Multiple type mappings for type " + type
+			throw new IllegalStateException( "Multiple type mappings for type "
+					+ type
 					+ ". Only one mapping per type is not supported for the stub mapper." );
 		}
 		return Optional.of( stubMappedIndices.iterator().next() );

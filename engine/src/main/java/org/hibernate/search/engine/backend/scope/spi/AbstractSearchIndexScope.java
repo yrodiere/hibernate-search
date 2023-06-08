@@ -17,9 +17,9 @@ import org.hibernate.search.engine.backend.mapping.spi.BackendMappingContext;
 import org.hibernate.search.engine.backend.types.converter.runtime.ToDocumentValueConvertContext;
 import org.hibernate.search.engine.logging.impl.Log;
 import org.hibernate.search.engine.reporting.spi.EventContexts;
+import org.hibernate.search.engine.search.common.spi.MultiIndexSearchIndexIdentifierContext;
 import org.hibernate.search.engine.search.common.spi.SearchIndexCompositeNodeContext;
 import org.hibernate.search.engine.search.common.spi.SearchIndexIdentifierContext;
-import org.hibernate.search.engine.search.common.spi.MultiIndexSearchIndexIdentifierContext;
 import org.hibernate.search.engine.search.common.spi.SearchIndexNodeContext;
 import org.hibernate.search.engine.search.common.spi.SearchIndexScope;
 import org.hibernate.search.engine.search.common.spi.SearchQueryElementTypeKey;
@@ -32,11 +32,10 @@ import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 import org.hibernate.search.util.common.reporting.EventContext;
 
 public abstract class AbstractSearchIndexScope<
-				S extends SearchQueryIndexScope<?>,
-				M extends AbstractIndexModel<?, ? extends C, ? extends N>,
-				N extends SearchIndexNodeContext<? super S>,
-				C extends SearchIndexCompositeNodeContext<? super S>
-		>
+		S extends SearchQueryIndexScope<?>,
+		M extends AbstractIndexModel<?, ? extends C, ? extends N>,
+		N extends SearchIndexNodeContext<? super S>,
+		C extends SearchIndexCompositeNodeContext<? super S>>
 		implements SearchIndexScope<S>, SearchQueryIndexScope<S> {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );

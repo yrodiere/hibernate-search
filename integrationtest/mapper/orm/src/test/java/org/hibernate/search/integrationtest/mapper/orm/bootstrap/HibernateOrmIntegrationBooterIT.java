@@ -17,6 +17,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -154,7 +155,7 @@ public class HibernateOrmIntegrationBooterIT {
 	}
 
 	private HibernateOrmIntegrationBooter createBooter(CompletableFuture<BackendMappingHandle> mappingHandlePromise,
-			Class<?> ... entityClasses) {
+			Class<?>... entityClasses) {
 		StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
 
 		// Configure the backend
@@ -174,7 +175,8 @@ public class HibernateOrmIntegrationBooterIT {
 		MetadataBuilder metadataBuilderImplementor = metadataSources.getMetadataBuilder();
 		// This seems to be the right way to access BootstrapContext
 		// https://hibernate.zulipchat.com/#narrow/stream/132094-hibernate-orm-dev/topic/BootstrapContext
-		BootstrapContext bootstrapContext = ((MetadataBuilderImplementor) metadataBuilderImplementor).getBootstrapContext();
+		BootstrapContext bootstrapContext = ( (MetadataBuilderImplementor) metadataBuilderImplementor )
+				.getBootstrapContext();
 		Metadata metadata = metadataBuilderImplementor.build();
 
 		return HibernateOrmIntegrationBooter.builder( metadata, bootstrapContext )

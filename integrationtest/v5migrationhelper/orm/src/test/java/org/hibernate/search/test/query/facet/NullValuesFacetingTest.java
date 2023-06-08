@@ -8,6 +8,7 @@ package org.hibernate.search.test.query.facet;
 
 import org.hibernate.Session;
 import org.hibernate.search.testsupport.TestForIssue;
+
 import org.junit.Test;
 
 public class NullValuesFacetingTest extends AbstractFacetTest {
@@ -35,7 +36,7 @@ public class NullValuesFacetingTest extends AbstractFacetTest {
 
 	@Override
 	public Class<?>[] getAnnotatedClasses() {
-		return new Class[]{
+		return new Class[] {
 				Car.class
 		};
 	}

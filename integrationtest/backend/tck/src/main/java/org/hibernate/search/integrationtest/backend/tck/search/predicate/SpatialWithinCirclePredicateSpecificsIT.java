@@ -41,7 +41,8 @@ public class SpatialWithinCirclePredicateSpecificsIT extends AbstractSpatialWith
 		assertThatQuery( mainIndex.query()
 				.where( f -> f.spatial().within()
 						.field( "geoPoint" )
-						.circle( METRO_GARIBALDI.latitude(), METRO_GARIBALDI.longitude(), 1.5, DistanceUnit.KILOMETERS ) ) )
+						.circle( METRO_GARIBALDI.latitude(), METRO_GARIBALDI.longitude(), 1.5,
+								DistanceUnit.KILOMETERS ) ) )
 				.hasDocRefHitsAnyOrder( mainIndex.typeName(), CHEZ_MARGOTTE_ID, IMOUTO_ID );
 
 		assertThatQuery( mainIndex.query()

@@ -12,18 +12,18 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 import java.util.function.Function;
 
+import org.hibernate.search.engine.backend.common.DocumentReference;
 import org.hibernate.search.engine.backend.document.IndexFieldReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
 import org.hibernate.search.engine.backend.types.Sortable;
-import org.hibernate.search.engine.backend.common.DocumentReference;
 import org.hibernate.search.engine.search.predicate.dsl.PredicateFinalStep;
-import org.hibernate.search.engine.search.sort.dsl.SortFinalStep;
-import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
+import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.engine.search.sort.dsl.SearchSortFactory;
+import org.hibernate.search.engine.search.sort.dsl.SortFinalStep;
 import org.hibernate.search.integrationtest.backend.tck.search.predicate.RangePredicateSpecificsIT;
-import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 import org.hibernate.search.integrationtest.backend.tck.search.sort.FieldSortBaseIT;
+import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.BulkIndexer;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMappingScope;
@@ -69,7 +69,8 @@ public class BooleanSortAndRangePredicateIT {
 				.toQuery();
 	}
 
-	private SearchQuery<DocumentReference> rangeQuery(Function<SearchPredicateFactory, PredicateFinalStep> rangePredicate) {
+	private SearchQuery<DocumentReference> rangeQuery(Function<SearchPredicateFactory,
+			PredicateFinalStep> rangePredicate) {
 		StubMappingScope scope = index.createScope();
 		return scope.query()
 				.where( rangePredicate )
@@ -125,7 +126,8 @@ public class BooleanSortAndRangePredicateIT {
 		assertHasHitsWithBooleanProperties( query, Boolean.FALSE, Boolean.FALSE, Boolean.TRUE, Boolean.TRUE );
 	}
 
-	private void assertHasHitsWithBooleanProperties(SearchQuery<DocumentReference> query, Boolean... expectedPropertyValues) {
+	private void assertHasHitsWithBooleanProperties(SearchQuery<DocumentReference> query,
+			Boolean... expectedPropertyValues) {
 		List<DocumentReference> hits = query.fetchAll().hits();
 		assertEquals( expectedPropertyValues.length, hits.size() );
 

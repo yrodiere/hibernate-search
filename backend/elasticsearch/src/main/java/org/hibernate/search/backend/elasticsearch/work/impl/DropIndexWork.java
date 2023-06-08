@@ -10,7 +10,6 @@ import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchReques
 import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchResponse;
 import org.hibernate.search.backend.elasticsearch.util.spi.URLEncodedString;
 
-
 public class DropIndexWork extends AbstractNonBulkableWork<Void> {
 
 	protected DropIndexWork(Builder builder) {
@@ -43,7 +42,7 @@ public class DropIndexWork extends AbstractNonBulkableWork<Void> {
 		protected ElasticsearchRequest buildRequest() {
 			ElasticsearchRequest.Builder builder =
 					ElasticsearchRequest.delete()
-					.pathComponent( indexName );
+							.pathComponent( indexName );
 
 			return builder.build();
 		}

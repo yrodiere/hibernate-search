@@ -36,14 +36,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-@RunWith( Parameterized.class )
+@RunWith(Parameterized.class)
 public class ElasticsearchDialectFactoryTest {
 
 	private enum ExpectedOutcome {
-		UNSUPPORTED,
-		AMBIGUOUS,
-		SUCCESS_WITH_WARNING,
-		SUCCESS
+		UNSUPPORTED, AMBIGUOUS, SUCCESS_WITH_WARNING, SUCCESS
 	}
 
 	@Parameterized.Parameters(name = "{0} {1}/{2} => {3}")
@@ -575,18 +572,24 @@ public class ElasticsearchDialectFactoryTest {
 	private void testAmbiguous() {
 		assertThatThrownBy(
 				() -> {
-					dialectFactory.createModelDialect( ElasticsearchVersion.of( distributionName, configuredVersionString ) );
+					dialectFactory.createModelDialect( ElasticsearchVersion.of( distributionName,
+							configuredVersionString ) );
 				},
 				"Test ambiguous version " + configuredVersionString
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContaining( "HSEARCH400561" )
-				.hasMessageContaining( "Ambiguous Elasticsearch version: '" + distributionName + ":" + configuredVersionString + "'." )
+				.hasMessageContaining( "Ambiguous Elasticsearch version: '"
+						+ distributionName
+						+ ":"
+						+ configuredVersionString
+						+ "'." )
 				.hasMessageContaining( "Please use a more precise version to remove the ambiguity" );
 	}
 
 	private void testSuccessWithWarning() {
-		ElasticsearchVersion parsedConfiguredVersion = ElasticsearchVersion.of( distributionName, configuredVersionString );
+		ElasticsearchVersion parsedConfiguredVersion = ElasticsearchVersion.of( distributionName,
+				configuredVersionString );
 		ElasticsearchVersion parsedActualVersion = ElasticsearchVersion.of( distributionName, actualVersionString );
 
 		logged.expectMessage( "HSEARCH400085", "'" + parsedActualVersion + "'" );
@@ -599,7 +602,8 @@ public class ElasticsearchDialectFactoryTest {
 	}
 
 	private void testSuccess() {
-		ElasticsearchVersion parsedConfiguredVersion = ElasticsearchVersion.of( distributionName, configuredVersionString );
+		ElasticsearchVersion parsedConfiguredVersion = ElasticsearchVersion.of( distributionName,
+				configuredVersionString );
 		ElasticsearchVersion parsedActualVersion = ElasticsearchVersion.of( distributionName, actualVersionString );
 
 		logged.expectMessage( "HSEARCH400085" ).never();

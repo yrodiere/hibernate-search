@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
-import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexingPlan;
 import org.hibernate.search.mapper.pojo.route.DocumentRouteDescriptor;
 import org.hibernate.search.mapper.pojo.route.DocumentRoutesDescriptor;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
+import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexingPlan;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
@@ -64,7 +64,8 @@ public abstract class AbstractPojoIndexingPlanOperationContainedNullEntityIT ext
 	public void nullProvidedId() {
 		try ( SearchSession session = createSession() ) {
 			SearchIndexingPlan indexingPlan = session.indexingPlan();
-			assertThatThrownBy( () -> scenario().addWithoutInstanceTo( indexingPlan, ContainedEntity.class, null, null ) )
+			assertThatThrownBy( () -> scenario().addWithoutInstanceTo( indexingPlan, ContainedEntity.class, null,
+					null ) )
 					.isInstanceOf( SearchException.class )
 					.hasMessageContainingAll( "Invalid indexing request",
 							"if the entity is null, the identifier must be provided explicitly" );
@@ -78,7 +79,8 @@ public abstract class AbstractPojoIndexingPlanOperationContainedNullEntityIT ext
 		try ( SearchSession session = createSession() ) {
 			SearchIndexingPlan indexingPlan = session.indexingPlan();
 
-			expectContainedEntityLoadingIfRelevant( Collections.singletonList( 42 ), Collections.singletonList( ContainedEntity.of( 1 ) ) );
+			expectContainedEntityLoadingIfRelevant( Collections.singletonList( 42 ), Collections.singletonList(
+					ContainedEntity.of( 1 ) ) );
 			if ( !isDelete() ) {
 				// Deletes don't trigger reindexing, so we don't expect anything for those.
 				expectUpdateCausedByContained( futureFromBackend, 1, "1", "contained1" );
@@ -86,8 +88,8 @@ public abstract class AbstractPojoIndexingPlanOperationContainedNullEntityIT ext
 			scenario().addWithoutInstanceTo( indexingPlan, ContainedEntity.class, 42,
 					DocumentRoutesDescriptor.of( DocumentRouteDescriptor.of( "UE-123" ),
 							Arrays.asList( DocumentRouteDescriptor.of( "UE-121" ),
-							DocumentRouteDescriptor.of( "UE-122" ),
-							DocumentRouteDescriptor.of( "UE-123" ) ) ) );
+									DocumentRouteDescriptor.of( "UE-122" ),
+									DocumentRouteDescriptor.of( "UE-123" ) ) ) );
 			// The session will wait for completion of the indexing plan upon closing,
 			// so we need to complete it now.
 			futureFromBackend.complete( null );
@@ -117,7 +119,7 @@ public abstract class AbstractPojoIndexingPlanOperationContainedNullEntityIT ext
 
 	private void assumeImplicitLoading() {
 		assumeTrue( "This test only makes sense when "
-						+ "the operation automatically loads entities",
+				+ "the operation automatically loads entities",
 				!isDelete() );
 	}
 

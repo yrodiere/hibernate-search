@@ -15,8 +15,7 @@ import com.google.gson.reflect.TypeToken;
 class AbstractTypeMappingJsonAdapterFactory extends AbstractConfiguredExtraPropertiesJsonAdapterFactory {
 
 	private static final TypeToken<Map<String, PropertyMapping>> PROPERTY_MAP_TYPE_TOKEN =
-			new TypeToken<Map<String, PropertyMapping>>() {
-			};
+			new TypeToken<Map<String, PropertyMapping>>() {};
 
 	@Override
 	protected <T> void addFields(Builder<T> builder) {

@@ -9,7 +9,6 @@ package org.hibernate.search.backend.elasticsearch.document.impl;
 import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexObjectField;
 import org.hibernate.search.engine.backend.document.IndexObjectFieldReference;
 
-
 public class ElasticsearchIndexObjectFieldReference implements IndexObjectFieldReference {
 
 	private ElasticsearchIndexObjectField schemaNode;
@@ -17,7 +16,9 @@ public class ElasticsearchIndexObjectFieldReference implements IndexObjectFieldR
 	@Override
 	public String toString() {
 		return getClass().getSimpleName()
-				+ "[absolutePath=" + ( schemaNode == null ? null : schemaNode.absolutePath() ) + "]";
+				+ "[absolutePath="
+				+ ( schemaNode == null ? null : schemaNode.absolutePath() )
+				+ "]";
 	}
 
 	public void setSchemaNode(ElasticsearchIndexObjectField schemaNode) {

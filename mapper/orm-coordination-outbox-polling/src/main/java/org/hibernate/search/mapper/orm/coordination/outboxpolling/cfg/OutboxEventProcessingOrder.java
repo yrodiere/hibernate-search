@@ -24,7 +24,7 @@ public enum OutboxEventProcessingOrder {
 	 *     <li>Otherwise, use {@link #TIME} order.</li>
 	 * </ul>
 	 */
-	AUTO( "auto" ),
+	AUTO("auto"),
 	/**
 	 * Process outbox events in no particular order.
 	 * <p>
@@ -39,7 +39,7 @@ public enum OutboxEventProcessingOrder {
 	 * due to newer events being processed before that particular event,
 	 * which can be a problem in write-intensive scenarios where the event queue is never empty.
 	 */
-	NONE( "none" ),
+	NONE("none"),
 	/**
 	 * Process outbox events in "time" order, i.e. in the order events are created.
 	 * <p>
@@ -52,7 +52,7 @@ public enum OutboxEventProcessingOrder {
 	 * which does not technically break event processing (those failures are handled automatically by trying again anyway),
 	 * but may reduce performance and lead to unnecessary noise in logs.
 	 */
-	TIME( "time" ),
+	TIME("time"),
 	/**
 	 * Process outbox events in identifier order.
 	 * <p>
@@ -62,7 +62,7 @@ public enum OutboxEventProcessingOrder {
 	 * If outbox event identifiers are {@link UuidGenerationStrategy#RANDOM random UUIDs},
 	 * this behaves similarly to {@link #NONE}.
 	 */
-	ID( "id" );
+	ID("id");
 
 	private final String externalRepresentation;
 

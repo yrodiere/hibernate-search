@@ -17,7 +17,7 @@ import org.hibernate.search.integrationtest.backend.tck.testsupport.types.FieldT
 public class SimpleFieldModel<F> {
 
 	public static <F> StandardFieldMapper<F, SimpleFieldModel<F>> mapper(FieldTypeDescriptor<F> typeDescriptor) {
-		return mapper( typeDescriptor, ignored -> { } );
+		return mapper( typeDescriptor, ignored -> {} );
 	}
 
 	public static <F> StandardFieldMapper<F, SimpleFieldModel<F>> mapper(FieldTypeDescriptor<F> typeDescriptor,
@@ -29,7 +29,8 @@ public class SimpleFieldModel<F> {
 		);
 	}
 
-	public static <F> StandardFieldMapper<F, SimpleFieldModel<F>> mapperWithOverride(FieldTypeDescriptor<F> typeDescriptor,
+	public static <F> StandardFieldMapper<F, SimpleFieldModel<F>> mapperWithOverride(FieldTypeDescriptor<
+			F> typeDescriptor,
 			Function<IndexFieldTypeFactory, StandardIndexFieldTypeOptionsStep<?, F>> initialConfiguration) {
 		return StandardFieldMapper.of(
 				initialConfiguration,
@@ -51,8 +52,10 @@ public class SimpleFieldModel<F> {
 	@Override
 	public String toString() {
 		return "SimpleFieldModel["
-				+ "typeDescriptor=" + typeDescriptor
-				+ ", relativeFieldName=" + relativeFieldName
+				+ "typeDescriptor="
+				+ typeDescriptor
+				+ ", relativeFieldName="
+				+ relativeFieldName
 				+ "]";
 	}
 }

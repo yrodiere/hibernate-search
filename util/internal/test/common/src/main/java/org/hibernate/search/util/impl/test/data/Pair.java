@@ -21,8 +21,10 @@ public class Pair<T0, T1> {
 	@Override
 	public String toString() {
 		return "Pair["
-				+ "elem0=" + elem0
-				+ ", elem1=" + elem1
+				+ "elem0="
+				+ elem0
+				+ ", elem1="
+				+ elem1
 				+ "]";
 	}
 

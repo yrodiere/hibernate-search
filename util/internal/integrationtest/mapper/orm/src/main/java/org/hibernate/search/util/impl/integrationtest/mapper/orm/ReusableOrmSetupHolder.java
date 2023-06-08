@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -50,6 +51,7 @@ import org.hibernate.search.util.impl.test.function.ThrowingConsumer;
 import org.hibernate.search.util.impl.test.function.ThrowingFunction;
 
 import org.hibernate.testing.junit4.CustomParameterized;
+
 import org.junit.rules.MethodRule;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -146,7 +148,7 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 
 	public interface DataClearConfig {
 
-		DataClearConfig tenants(String ... tenantIds);
+		DataClearConfig tenants(String... tenantIds);
 
 		DataClearConfig preClear(Consumer<Session> preClear);
 
@@ -205,7 +207,8 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 		};
 	}
 
-	public ReusableOrmSetupHolder coordinationStrategy(CoordinationStrategyExpectations coordinationStrategyExpectations) {
+	public ReusableOrmSetupHolder coordinationStrategy(
+			CoordinationStrategyExpectations coordinationStrategyExpectations) {
 		setupHelper.coordinationStrategy( coordinationStrategyExpectations );
 		return this;
 	}
@@ -220,12 +223,17 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 
 	public SessionFactoryImplementor sessionFactory() {
 		if ( !inMethodStatement ) {
-			throw new Error( "The session factory cannot be used outside of methods annotated with @Test, @Before, @After."
-					+ " In particular, you cannot use it in a method annotated with " + Setup.class.getName() + ";"
-					+ " use a @Before method instead." );
+			throw new Error(
+					"The session factory cannot be used outside of methods annotated with @Test, @Before, @After."
+							+ " In particular, you cannot use it in a method annotated with "
+							+ Setup.class.getName()
+							+ ";"
+							+ " use a @Before method instead." );
 		}
 		if ( sessionFactory == null ) {
-			throw new Error( "The session factory in " + getClass().getSimpleName() + " was not created."
+			throw new Error( "The session factory in "
+					+ getClass().getSimpleName()
+					+ " was not created."
 					+ " Did you use the rule as explained in the javadoc, with both a @ClassRule and a @Rule,"
 					+ " on two separate fields?" );
 		}
@@ -250,7 +258,10 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 	}
 
 	@Override
-	public <R, E extends Throwable> R applyInTransaction(ThrowingBiFunction<? super Session, ? super Transaction, R, E> action) throws E {
+	public <R, E extends Throwable> R applyInTransaction(ThrowingBiFunction<? super Session,
+			? super Transaction,
+			R,
+			E> action) throws E {
 		return with().applyInTransaction( action );
 	}
 
@@ -313,7 +324,9 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 
 	private void setupSessionFactory(Object testInstance) {
 		if ( !inClassStatement ) {
-			throw new Error( "This usage of " + getClass().getSimpleName() + " is invalid and may result"
+			throw new Error( "This usage of "
+					+ getClass().getSimpleName()
+					+ " is invalid and may result"
 					+ " in the session factory not being closed."
 					+ " Did you use the rule as explained in the javadoc, with both a @ClassRule and a @Rule,"
 					+ " on two separate fields?" );
@@ -323,7 +336,8 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 
 		if ( sessionFactory != null ) {
 			if ( testParams.equals( testParamsForSessionFactory ) ) {
-				log.infof( "Test parameters did not change (%s vs %s). Clearing data and reusing the same session factory.",
+				log.infof(
+						"Test parameters did not change (%s vs %s). Clearing data and reusing the same session factory.",
 						testParamsForSessionFactory, testParams );
 				try {
 					clearAllData( sessionFactory );
@@ -338,7 +352,8 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 				return;
 			}
 			else {
-				log.infof( "Test parameters changed (%s vs %s). Closing the current session factory and creating another one.",
+				log.infof(
+						"Test parameters changed (%s vs %s). Closing the current session factory and creating another one.",
 						testParamsForSessionFactory, testParams );
 				tearDownSessionFactory();
 			}
@@ -370,15 +385,20 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 		List<TestPluggableMethod<Collection>> setupParamsMethods = TestPluggableMethod.createAll( SetupParams.class,
 				testInstance.getClass(), Collection.class, Collections.emptyList() );
 		if ( setupParamsMethods.size() > 1 ) {
-			throw new Error( "Test class " + testInstance.getClass()
-					+ " must not declare more than one method annotated with " + SetupParams.class.getName() );
+			throw new Error( "Test class "
+					+ testInstance.getClass()
+					+ " must not declare more than one method annotated with "
+					+ SetupParams.class.getName() );
 		}
 		if ( setupParamsMethods.isEmpty() ) {
 			Class<?> runnerClass = runnerClass( testInstance.getClass() );
 			if ( Parameterized.class.equals( runnerClass ) || CustomParameterized.class.equals( runnerClass ) ) {
-				throw new Error( "Test class " + testInstance.getClass()
-						+ " must declare one method annotated with " + SetupParams.class.getName()
-						+ " because it uses runner " + runnerClass.getSimpleName() );
+				throw new Error( "Test class "
+						+ testInstance.getClass()
+						+ " must declare one method annotated with "
+						+ SetupParams.class.getName()
+						+ " because it uses runner "
+						+ runnerClass.getSimpleName() );
 			}
 			else {
 				return Collections.emptyList();
@@ -490,8 +510,8 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 			return;
 		}
 		if (
-				// Workaround until https://hibernate.atlassian.net/browse/HHH-5529 gets implemented
-				hasPotentiallyJoinTable( sessionFactory, entityType )
+			// Workaround until https://hibernate.atlassian.net/browse/HHH-5529 gets implemented
+		hasPotentiallyJoinTable( sessionFactory, entityType )
 				// Workaround until https://hibernate.atlassian.net/browse/HHH-14814 gets fixed
 				|| hasEntitySubclass( sessionFactory, entityType )
 		) {
@@ -508,7 +528,11 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 					}
 					catch (RuntimeException e) {
 						throw new RuntimeException( "Failed to delete all entity instances returned by "
-								+ query.getQueryString() + " on type " + entityType + ": " + e.getMessage(), e );
+								+ query.getQueryString()
+								+ " on type "
+								+ entityType
+								+ ": "
+								+ e.getMessage(), e );
 					}
 				} );
 			}
@@ -527,8 +551,12 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 					query.executeUpdate();
 				}
 				catch (RuntimeException e) {
-					throw new RuntimeException( "Failed to execute " + query.getQueryString() + " on type " + entityType
-							+ ": " + e.getMessage(), e );
+					throw new RuntimeException( "Failed to execute "
+							+ query.getQueryString()
+							+ " on type "
+							+ entityType
+							+ ": "
+							+ e.getMessage(), e );
 				}
 			} );
 		}
@@ -543,8 +571,7 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 	}
 
 	enum QueryType {
-		SELECT,
-		DELETE
+		SELECT, DELETE
 	}
 
 	private static Query<?> createSelectOrDeleteAllOfSpecificTypeQuery(EntityType<?> entityType, Session session,
@@ -561,9 +588,9 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 			builder.append( " where type( e ) in (:type)" );
 			typeArg = entityType.getJavaType();
 		}
-		Query<?> query = QueryType.SELECT.equals( queryType )
-				? session.createQuery( builder.toString(), entityType.getJavaType() )
-				: session.createQuery( builder.toString() );
+		Query<?> query = QueryType.SELECT.equals( queryType ) ?
+				session.createQuery( builder.toString(), entityType.getJavaType() ) : session.createQuery( builder
+						.toString() );
 		if ( typeArg != null ) {
 			query.setParameter( "type", typeArg );
 		}
@@ -640,7 +667,7 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 		private final List<ThrowingConsumer<Session, RuntimeException>> preClear = new ArrayList<>();
 
 		@Override
-		public DataClearConfig tenants(String ... tenantIds) {
+		public DataClearConfig tenants(String... tenantIds) {
 			Collections.addAll( this.tenantsIds, tenantIds );
 			return this;
 		}
@@ -677,8 +704,7 @@ public class ReusableOrmSetupHolder implements TestRule, PersistenceRunner<Sessi
 	}
 
 	private enum IndexDataClearStrategy {
-		NONE,
-		DROP_AND_CREATE_SCHEMA
+		NONE, DROP_AND_CREATE_SCHEMA
 	}
 
 }

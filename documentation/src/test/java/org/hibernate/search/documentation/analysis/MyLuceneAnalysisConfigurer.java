@@ -18,7 +18,7 @@ public class MyLuceneAnalysisConfigurer implements LuceneAnalysisConfigurer {
 				.charFilter( "htmlStrip" ) // <3>
 				.tokenFilter( "lowercase" ) // <4>
 				.tokenFilter( "snowballPorter" ) // <4>
-						.param( "language", "English" ) // <5>
+				.param( "language", "English" ) // <5>
 				.tokenFilter( "asciiFolding" );
 
 		context.normalizer( "lowercase" ).custom() // <6>
@@ -30,7 +30,7 @@ public class MyLuceneAnalysisConfigurer implements LuceneAnalysisConfigurer {
 				.charFilter( "htmlStrip" )
 				.tokenFilter( "lowercase" )
 				.tokenFilter( "snowballPorter" )
-						.param( "language", "French" )
+				.param( "language", "French" )
 				.tokenFilter( "asciiFolding" );
 	}
 }

@@ -59,10 +59,12 @@ public class DirtyCheckingTest extends SearchTestBase {
 	}
 
 	private void assertExists(FullTextSession s, String keyword, String expectedProjection) {
-		QueryBuilder queryBuilder = s.getSearchFactory().buildQueryBuilder().forEntity( CheeseRollingCompetitor.class ).get();
+		QueryBuilder queryBuilder = s.getSearchFactory().buildQueryBuilder().forEntity( CheeseRollingCompetitor.class )
+				.get();
 		Query q = queryBuilder.keyword().onField( "Nickname" ).matching( keyword ).createQuery();
 
-		FullTextQuery fullTextQuery = s.createFullTextQuery( q, CheeseRollingCompetitor.class ).setProjection( "Nickname" );
+		FullTextQuery fullTextQuery = s.createFullTextQuery( q, CheeseRollingCompetitor.class ).setProjection(
+				"Nickname" );
 		List list = fullTextQuery.list();
 		assertEquals( 1, list.size() );
 		assertEquals( expectedProjection, ( (Object[]) list.get( 0 ) )[0] );
@@ -72,6 +74,6 @@ public class DirtyCheckingTest extends SearchTestBase {
 
 	@Override
 	public Class<?>[] getAnnotatedClasses() {
-		return new Class<?>[]{ CheeseRollingCompetitor.class };
+		return new Class<?>[] { CheeseRollingCompetitor.class };
 	}
 }

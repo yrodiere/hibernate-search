@@ -50,7 +50,8 @@ public abstract class AbstractMappingAnnotationProcessorContext
 	@Override
 	public <T> Optional<BeanReference<? extends T>> toBeanReference(Class<T> expectedType, Class<?> undefinedTypeMarker,
 			Class<? extends T> type, String name, BeanRetrieval retrieval) {
-		return MappingAnnotationProcessorUtils.toBeanReference( expectedType, undefinedTypeMarker, type, name, retrieval );
+		return MappingAnnotationProcessorUtils.toBeanReference( expectedType, undefinedTypeMarker, type, name,
+				retrieval );
 	}
 
 	@Override

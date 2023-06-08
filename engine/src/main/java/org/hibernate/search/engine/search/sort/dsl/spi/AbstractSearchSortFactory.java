@@ -15,24 +15,22 @@ import org.hibernate.search.engine.search.sort.dsl.CompositeSortComponentsStep;
 import org.hibernate.search.engine.search.sort.dsl.DistanceSortOptionsStep;
 import org.hibernate.search.engine.search.sort.dsl.ExtendedSearchSortFactory;
 import org.hibernate.search.engine.search.sort.dsl.FieldSortOptionsStep;
-import org.hibernate.search.engine.search.sort.dsl.SortThenStep;
 import org.hibernate.search.engine.search.sort.dsl.ScoreSortOptionsStep;
 import org.hibernate.search.engine.search.sort.dsl.SearchSortFactoryExtension;
+import org.hibernate.search.engine.search.sort.dsl.SearchSortFactoryExtensionIfSupportedStep;
+import org.hibernate.search.engine.search.sort.dsl.SortThenStep;
 import org.hibernate.search.engine.search.sort.dsl.impl.CompositeSortComponentsStepImpl;
 import org.hibernate.search.engine.search.sort.dsl.impl.DistanceSortOptionsStepImpl;
 import org.hibernate.search.engine.search.sort.dsl.impl.FieldSortOptionsStepImpl;
 import org.hibernate.search.engine.search.sort.dsl.impl.ScoreSortOptionsStepImpl;
 import org.hibernate.search.engine.search.sort.dsl.impl.SearchSortFactoryExtensionStep;
-import org.hibernate.search.engine.search.sort.dsl.SearchSortFactoryExtensionIfSupportedStep;
 import org.hibernate.search.engine.search.sort.spi.SearchSortIndexScope;
 import org.hibernate.search.engine.spatial.GeoPoint;
 
-
 public abstract class AbstractSearchSortFactory<
-				S extends ExtendedSearchSortFactory<S, PDF>,
-				SC extends SearchSortIndexScope<?>,
-				PDF extends SearchPredicateFactory
-		>
+		S extends ExtendedSearchSortFactory<S, PDF>,
+		SC extends SearchSortIndexScope<?>,
+		PDF extends SearchPredicateFactory>
 		implements ExtendedSearchSortFactory<S, PDF> {
 
 	protected final SearchSortDslContext<SC, PDF> dslContext;

@@ -12,8 +12,8 @@ import java.util.Optional;
 import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
 import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
-import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathValueNode;
+import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.util.common.data.impl.LinkedNode;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
@@ -81,8 +81,9 @@ public class PojoIndexingDependencyCollectorMonomorphicDirectValueNode<P, V>
 
 	@Override
 	void doCollectDependency(LinkedNode<DerivedDependencyWalkingInfo> derivedDependencyPath) {
-		ReindexOnUpdate composedReindexOnUpdate = derivedDependencyPath == null ? metadata.reindexOnUpdate
-				: derivedDependencyPath.last.value.node.composeReindexOnUpdate( lastEntityNode(), metadata.reindexOnUpdate );
+		ReindexOnUpdate composedReindexOnUpdate = derivedDependencyPath == null ?
+				metadata.reindexOnUpdate : derivedDependencyPath.last.value.node.composeReindexOnUpdate(
+						lastEntityNode(), metadata.reindexOnUpdate );
 		if ( ReindexOnUpdate.NO.equals( composedReindexOnUpdate ) ) {
 			// Updates are ignored
 			return;
@@ -110,8 +111,9 @@ public class PojoIndexingDependencyCollectorMonomorphicDirectValueNode<P, V>
 					checkForDerivedDependencyCycle( derivedDependencyPath, newDerivedDependencyInfo );
 				}
 				LinkedNode<DerivedDependencyWalkingInfo> updatedDerivedDependencyPath =
-						derivedDependencyPath == null ? LinkedNode.of( newDerivedDependencyInfo )
-								: derivedDependencyPath.withHead( newDerivedDependencyInfo );
+						derivedDependencyPath == null ?
+								LinkedNode.of( newDerivedDependencyInfo ) : derivedDependencyPath.withHead(
+										newDerivedDependencyInfo );
 				PojoModelPathBinder.bind(
 						lastTypeNode, path,
 						PojoIndexingDependencyCollectorNode.walker( updatedDerivedDependencyPath )

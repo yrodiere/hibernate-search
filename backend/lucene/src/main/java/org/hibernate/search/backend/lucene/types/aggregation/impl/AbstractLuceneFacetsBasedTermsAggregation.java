@@ -64,7 +64,7 @@ public abstract class AbstractLuceneFacetsBasedTermsAggregation<F, T, K>
 
 		List<Bucket<T>> buckets = getTopBuckets( context );
 
-		if ( BucketOrder.COUNT_DESC.equals( order ) && (minDocCount > 0 || buckets.size() >= maxTermCount ) ) {
+		if ( BucketOrder.COUNT_DESC.equals( order ) && ( minDocCount > 0 || buckets.size() >= maxTermCount ) ) {
 			/*
 			 * Optimization: in this case, minDocCount and sorting can be safely ignored.
 			 * We already have all the buckets we need, and they are already sorted.
@@ -73,7 +73,8 @@ public abstract class AbstractLuceneFacetsBasedTermsAggregation<F, T, K>
 		}
 
 		if ( minDocCount <= 0 ) {
-			Set<T> firstTerms = collectFirstTerms( context.getIndexReader(), order.isTermOrderDescending(), maxTermCount );
+			Set<T> firstTerms = collectFirstTerms( context.getIndexReader(), order.isTermOrderDescending(),
+					maxTermCount );
 			// If some of the first terms are already in non-zero buckets, ignore them in the next step
 			for ( Bucket<T> bucket : buckets ) {
 				firstTerms.remove( bucket.term );
@@ -96,8 +97,7 @@ public abstract class AbstractLuceneFacetsBasedTermsAggregation<F, T, K>
 	abstract FacetResult getTopChildren(IndexReader reader, FacetsCollector facetsCollector,
 			NestedDocsProvider nestedDocsProvider, int limit) throws IOException;
 
-	abstract Set<T> collectFirstTerms(IndexReader reader, boolean descending, int limit)
-			throws IOException;
+	abstract Set<T> collectFirstTerms(IndexReader reader, boolean descending, int limit) throws IOException;
 
 	abstract Comparator<T> getAscendingTermComparator();
 
@@ -121,7 +121,8 @@ public abstract class AbstractLuceneFacetsBasedTermsAggregation<F, T, K>
 		 *  To improve on this, we would need to re-implement the facet collections.
 		 */
 		int limit = maxTermCount;
-		FacetResult facetResult = getTopChildren( context.getIndexReader(), facetsCollector, nestedDocsProvider, limit );
+		FacetResult facetResult = getTopChildren( context.getIndexReader(), facetsCollector, nestedDocsProvider,
+				limit );
 
 		List<Bucket<T>> buckets = new ArrayList<>();
 

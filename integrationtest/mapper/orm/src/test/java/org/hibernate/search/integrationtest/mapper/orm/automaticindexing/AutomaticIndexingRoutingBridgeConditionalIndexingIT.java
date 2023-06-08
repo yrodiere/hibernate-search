@@ -209,9 +209,7 @@ public class AutomaticIndexingRoutingBridgeConditionalIndexingIT {
 
 	public enum Status {
 
-		DRAFT,
-		PUBLISHED,
-		ARCHIVED
+		DRAFT, PUBLISHED, ARCHIVED
 
 	}
 }

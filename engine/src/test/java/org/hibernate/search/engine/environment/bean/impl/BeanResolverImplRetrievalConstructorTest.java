@@ -111,7 +111,8 @@ public class BeanResolverImplRetrievalConstructorTest {
 
 		// resolve(Class, String) through BeanReference
 		doReturn( ReflectionType2.class ).when( classResolverMock ).classForName( ReflectionType2.class.getName() );
-		assertThat( beanResolver.resolve( BeanReference.of( Object.class, ReflectionType2.class.getName(), BeanRetrieval.CONSTRUCTOR ) ) )
+		assertThat( beanResolver.resolve( BeanReference.of( Object.class, ReflectionType2.class.getName(),
+				BeanRetrieval.CONSTRUCTOR ) ) )
 				.extracting( BeanHolder::get ).isInstanceOf( ReflectionType2.class );
 		verifyNoOtherInteractionsAndReset();
 
@@ -134,14 +135,19 @@ public class BeanResolverImplRetrievalConstructorTest {
 		// resolve(Class)
 		assertThatThrownBy( () -> beanResolver.resolve( InvalidType.class, BeanRetrieval.CONSTRUCTOR ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "'",
 						"missing constructor" );
 		verifyNoOtherInteractionsAndReset();
 
 		// resolve(Class) through BeanReference
-		assertThatThrownBy( () -> beanResolver.resolve( BeanReference.of( InvalidType.class, BeanRetrieval.CONSTRUCTOR ) ) )
+		assertThatThrownBy( () -> beanResolver.resolve( BeanReference.of( InvalidType.class,
+				BeanRetrieval.CONSTRUCTOR ) ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "'",
 						"missing constructor" );
 		verifyNoOtherInteractionsAndReset();
 
@@ -150,17 +156,22 @@ public class BeanResolverImplRetrievalConstructorTest {
 				.thenThrow( classNotFoundException );
 		assertThatThrownBy( () -> beanResolver.resolve( InvalidType.class, "someName", BeanRetrieval.CONSTRUCTOR ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName()
-								+ "' and name 'someName'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "' and name 'someName'",
 						classNotFoundException.getMessage() );
 		verifyNoOtherInteractionsAndReset();
 
 		// resolve(Class, String) => Missing constructor
 		doReturn( InvalidType.class ).when( classResolverMock ).classForName( InvalidType.class.getName() );
-		assertThatThrownBy( () -> beanResolver.resolve( InvalidType.class, InvalidType.class.getName(), BeanRetrieval.CONSTRUCTOR ) )
+		assertThatThrownBy( () -> beanResolver.resolve( InvalidType.class, InvalidType.class.getName(),
+				BeanRetrieval.CONSTRUCTOR ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName()
-								+ "' and name '" + InvalidType.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "' and name '"
+						+ InvalidType.class.getName()
+						+ "'",
 						"missing constructor" );
 		verifyNoOtherInteractionsAndReset();
 
@@ -170,7 +181,9 @@ public class BeanResolverImplRetrievalConstructorTest {
 						BeanReference.of( Object.class, InvalidType.class.getName(), BeanRetrieval.CONSTRUCTOR ) )
 		) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "'",
 						"missing constructor" );
 		verifyNoOtherInteractionsAndReset();
 	}
@@ -185,14 +198,11 @@ public class BeanResolverImplRetrievalConstructorTest {
 				type3InternalBean1FactoryMock, type3InternalBean2FactoryMock );
 	}
 
-	public static class ReflectionType1 {
-	}
+	public static class ReflectionType1 {}
 
-	public static class ReflectionType2 {
-	}
+	public static class ReflectionType2 {}
 
-	public static class ReflectionType3 {
-	}
+	public static class ReflectionType3 {}
 
 	private static class InvalidType {
 		// No public, no-arg constructor

@@ -16,10 +16,10 @@ import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaObjectField;
 import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.engine.search.predicate.SearchPredicate;
-import org.hibernate.search.engine.search.predicate.dsl.PredicateFinalStep;
-import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.engine.search.predicate.definition.PredicateDefinition;
 import org.hibernate.search.engine.search.predicate.definition.PredicateDefinitionContext;
+import org.hibernate.search.engine.search.predicate.dsl.PredicateFinalStep;
+import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.types.FieldTypeDescriptor;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.SimpleFieldModelsByType;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
@@ -223,10 +223,12 @@ public abstract class AbstractPredicateInObjectFieldIT {
 			DocumentElement flattenedNestedDocument = flattenedDocument.addObject( flattened.nested.reference );
 			addValue( flattenedNestedDocument, flattened.nested, fieldType, fieldValue );
 
-			DocumentElement flattenedX2NestedDocument = flattenedX2Document.addObject( flattened.flattened.nested.reference );
+			DocumentElement flattenedX2NestedDocument = flattenedX2Document.addObject(
+					flattened.flattened.nested.reference );
 			addValue( flattenedX2NestedDocument, flattened.flattened.nested, fieldType, fieldValue );
 
-			DocumentElement flattenedX3Document = flattenedX2Document.addObject( flattened.flattened.flattened.reference );
+			DocumentElement flattenedX3Document = flattenedX2Document.addObject(
+					flattened.flattened.flattened.reference );
 			addValue( flattenedX3Document, flattened.flattened.flattened, fieldType, fieldValue );
 
 			addValue( nestedFlattenedDocument, nested.flattened, fieldType, fieldValue );
@@ -237,7 +239,8 @@ public abstract class AbstractPredicateInObjectFieldIT {
 			DocumentElement nestedX4Document = nestedX3Document.addObject( nested.nested.nested.nested.reference );
 			addValue( nestedX4Document, nested.nested.nested.nested, fieldType, fieldValue );
 
-			DocumentElement nestedX3FlattenedDocument = nestedX3Document.addObject( nested.nested.nested.flattened.reference );
+			DocumentElement nestedX3FlattenedDocument = nestedX3Document.addObject(
+					nested.nested.nested.flattened.reference );
 			addValue( nestedX3FlattenedDocument, nested.nested.nested.flattened, fieldType, fieldValue );
 
 			DocumentElement nestedFlattenedNestedNestedDocument = nestedFlattenedNestedDocument
@@ -246,7 +249,8 @@ public abstract class AbstractPredicateInObjectFieldIT {
 
 			DocumentElement nestedFlattenedNestedFlattenedDocument = nestedFlattenedNestedDocument
 					.addObject( nested.flattened.nested.flattened.reference );
-			addValue( nestedFlattenedNestedFlattenedDocument, nested.flattened.nested.flattened, fieldType, fieldValue );
+			addValue( nestedFlattenedNestedFlattenedDocument, nested.flattened.nested.flattened, fieldType,
+					fieldValue );
 		}
 
 		protected <F> void addValue(DocumentElement object, AbstractObjectBinding binding,
@@ -282,7 +286,8 @@ public abstract class AbstractPredicateInObjectFieldIT {
 
 		ObjectFieldBinding(IndexSchemaObjectField objectField, String parentAbsolutePath, String relativeFieldName,
 				Collection<? extends FieldTypeDescriptor<?>> fieldTypes, int depth) {
-			super( objectField, parentAbsolutePath == null ? relativeFieldName : parentAbsolutePath + "." + relativeFieldName, fieldTypes );
+			super( objectField, parentAbsolutePath == null ?
+					relativeFieldName : parentAbsolutePath + "." + relativeFieldName, fieldTypes );
 			relativeName = relativeFieldName;
 			reference = objectField.toReference();
 			objectField.namedPredicate( StubPredicateDefinition.NAME, new StubPredicateDefinition() );

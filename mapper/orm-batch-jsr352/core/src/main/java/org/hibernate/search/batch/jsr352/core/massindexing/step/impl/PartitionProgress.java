@@ -47,7 +47,12 @@ public class PartitionProgress implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PartitionProgress [workDone=" + workDone + ", entityName=" + entityName
-				+ ", partitionId=" + partitionId + "]";
+		return "PartitionProgress [workDone="
+				+ workDone
+				+ ", entityName="
+				+ entityName
+				+ ", partitionId="
+				+ partitionId
+				+ "]";
 	}
 }

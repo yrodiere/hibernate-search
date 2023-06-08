@@ -11,6 +11,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -89,8 +90,10 @@ public class OutboxPollingAutomaticIndexingStaticShardingUnevenShardsIT {
 				.with( indexingCountHelper::bind );
 
 		if ( processingEnabled ) {
-			context = context.withProperty( "hibernate.search.coordination.event_processor.shards.total_count", TOTAL_SHARD_COUNT )
-					.withProperty( "hibernate.search.coordination.event_processor.shards.assigned", assignedShardIndices );
+			context = context.withProperty( "hibernate.search.coordination.event_processor.shards.total_count",
+					TOTAL_SHARD_COUNT )
+					.withProperty( "hibernate.search.coordination.event_processor.shards.assigned",
+							assignedShardIndices );
 		}
 		else {
 			// If processing is disabled, sharding is irrelevant: we don't need to configure it.
@@ -141,7 +144,7 @@ public class OutboxPollingAutomaticIndexingStaticShardingUnevenShardsIT {
 			int idStart = i;
 			int idEnd = Math.min( i + batchSize, entityCount );
 			with( sessionFactory ).runInTransaction( session -> {
-				for ( int j = idStart; j < idEnd ; j++ ) {
+				for ( int j = idStart; j < idEnd; j++ ) {
 					IndexedEntity entity = session.getReference( IndexedEntity.class, j );
 					entity.setText( "updated" );
 

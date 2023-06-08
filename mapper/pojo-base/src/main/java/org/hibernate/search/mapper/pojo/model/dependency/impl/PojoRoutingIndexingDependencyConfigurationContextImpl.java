@@ -15,10 +15,10 @@ import org.hibernate.search.mapper.pojo.extractor.impl.ContainerExtractorBinder;
 import org.hibernate.search.mapper.pojo.model.additionalmetadata.building.impl.PojoTypeAdditionalMetadataProvider;
 import org.hibernate.search.mapper.pojo.model.dependency.PojoRoutingIndexingDependencyConfigurationContext;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
-import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathTypeNode;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathValueNode;
+import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.spi.PojoBootstrapIntrospector;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 
@@ -28,7 +28,8 @@ public class PojoRoutingIndexingDependencyConfigurationContextImpl<T>
 
 	private final BoundPojoModelPathTypeNode<T> modelPath;
 	private final List<BoundPojoModelPathValueNode<?, ?, ?>> usedPaths = new ArrayList<>();
-	private final List<PojoOtherEntityIndexingDependencyConfigurationContextImpl<?>> otherEntityDependencyContexts = new ArrayList<>();
+	private final List<PojoOtherEntityIndexingDependencyConfigurationContextImpl<?>> otherEntityDependencyContexts =
+			new ArrayList<>();
 
 	public PojoRoutingIndexingDependencyConfigurationContextImpl(PojoBootstrapIntrospector introspector,
 			ContainerExtractorBinder containerExtractorBinder,
@@ -44,7 +45,8 @@ public class PojoRoutingIndexingDependencyConfigurationContextImpl<T>
 	}
 
 	@Override
-	public PojoRoutingIndexingDependencyConfigurationContext use(PojoModelPathValueNode pathFromBridgedTypeToUsedValue) {
+	public PojoRoutingIndexingDependencyConfigurationContext use(
+			PojoModelPathValueNode pathFromBridgedTypeToUsedValue) {
 		BoundPojoModelPathValueNode<?, ?, ?> boundPath = PojoModelPathBinder.bind(
 				modelPath, pathFromBridgedTypeToUsedValue, bindingPathWalker
 		);
@@ -60,7 +62,8 @@ public class PojoRoutingIndexingDependencyConfigurationContextImpl<T>
 					PojoIndexingDependencyCollectorNode.walker()
 			);
 		}
-		for ( PojoOtherEntityIndexingDependencyConfigurationContextImpl<?> otherEntityDependencyContext : otherEntityDependencyContexts ) {
+		for ( PojoOtherEntityIndexingDependencyConfigurationContextImpl<
+				?> otherEntityDependencyContext : otherEntityDependencyContexts ) {
 			otherEntityDependencyContext.contributeDependencies( dependencyCollector );
 		}
 	}

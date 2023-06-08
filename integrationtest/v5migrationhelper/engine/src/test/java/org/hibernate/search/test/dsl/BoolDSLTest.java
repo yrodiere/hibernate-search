@@ -9,11 +9,11 @@ package org.hibernate.search.test.dsl;
 import org.hibernate.search.annotations.DocumentId;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.query.engine.spi.HSQuery;
 import org.hibernate.search.testsupport.junit.SearchFactoryHolder;
 import org.hibernate.search.testsupport.junit.SearchITHelper;
+import org.hibernate.search.util.common.SearchException;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -74,7 +74,7 @@ public class BoolDSLTest {
 		HSQuery query = helper.hsQuery(
 				queryBuilder.bool()
 						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -84,7 +84,7 @@ public class BoolDSLTest {
 				queryBuilder.bool()
 						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
 						.must( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE2 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query ).matchesNone();
@@ -93,7 +93,7 @@ public class BoolDSLTest {
 				queryBuilder.bool()
 						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
 						.must( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE1 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -107,7 +107,7 @@ public class BoolDSLTest {
 		HSQuery query = helper.hsQuery(
 				queryBuilder.bool()
 						.should( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -117,7 +117,7 @@ public class BoolDSLTest {
 				queryBuilder.bool()
 						.should( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE2 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -130,8 +130,9 @@ public class BoolDSLTest {
 
 		HSQuery query = helper.hsQuery(
 				queryBuilder.bool()
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() ).not()
-				.createQuery()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
+						.not()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -139,9 +140,11 @@ public class BoolDSLTest {
 
 		query = helper.hsQuery(
 				queryBuilder.bool()
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() ).not()
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE3 ).createQuery() ).not()
-				.createQuery()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
+						.not()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE3 ).createQuery() )
+						.not()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -156,8 +159,9 @@ public class BoolDSLTest {
 				queryBuilder.bool()
 						.should( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE3 ).createQuery() )
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() ).not()
-				.createQuery()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
+						.not()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -171,8 +175,9 @@ public class BoolDSLTest {
 		HSQuery query = helper.hsQuery(
 				queryBuilder.bool()
 						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() ).not()
-				.createQuery()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
+						.not()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query ).matchesNone();
@@ -180,8 +185,9 @@ public class BoolDSLTest {
 		query = helper.hsQuery(
 				queryBuilder.bool()
 						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE2 ).createQuery() ).not()
-				.createQuery()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE2 ).createQuery() )
+						.not()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -201,7 +207,7 @@ public class BoolDSLTest {
 						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE2 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -213,7 +219,7 @@ public class BoolDSLTest {
 						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE2 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -230,10 +236,11 @@ public class BoolDSLTest {
 		// Non-matching "should" clauses
 		HSQuery query = helper.hsQuery(
 				queryBuilder.bool()
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() ).disableScoring()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
+						.disableScoring()
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE2 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -242,10 +249,11 @@ public class BoolDSLTest {
 		// One matching and one non-matching "should" clause
 		query = helper.hsQuery(
 				queryBuilder.bool()
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() ).disableScoring()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
+						.disableScoring()
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -262,11 +270,13 @@ public class BoolDSLTest {
 		// Non-matching "should" clauses
 		HSQuery query = helper.hsQuery(
 				queryBuilder.bool()
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE2 ).createQuery() ).not()
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE3 ).createQuery() ).not()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE2 ).createQuery() )
+						.not()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE3 ).createQuery() )
+						.not()
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE2 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -275,11 +285,13 @@ public class BoolDSLTest {
 		// One matching and one non-matching "should" clause
 		query = helper.hsQuery(
 				queryBuilder.bool()
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() ).not()
-						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE3 ).createQuery() ).not()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
+						.not()
+						.must( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE3 ).createQuery() )
+						.not()
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE2 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -296,7 +308,7 @@ public class BoolDSLTest {
 						.minimumShouldMatchNumber( 1 )
 						.should( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -309,7 +321,7 @@ public class BoolDSLTest {
 						.minimumShouldMatchNumber( 1 )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE2 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -319,10 +331,11 @@ public class BoolDSLTest {
 		query = helper.hsQuery(
 				queryBuilder.bool()
 						.minimumShouldMatchNumber( 2 )
-						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 ).createQuery() )
+						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 )
+								.createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -332,9 +345,10 @@ public class BoolDSLTest {
 		query = helper.hsQuery(
 				queryBuilder.bool()
 						.minimumShouldMatchNumber( 2 )
-						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 ).createQuery() )
+						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 )
+								.createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE1 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -351,7 +365,7 @@ public class BoolDSLTest {
 						.minimumShouldMatchNumber( -1 )
 						.should( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -364,7 +378,7 @@ public class BoolDSLTest {
 						.minimumShouldMatchNumber( -1 )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE2 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -374,10 +388,11 @@ public class BoolDSLTest {
 		query = helper.hsQuery(
 				queryBuilder.bool()
 						.minimumShouldMatchNumber( -1 )
-						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 ).createQuery() )
+						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 )
+								.createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -394,7 +409,7 @@ public class BoolDSLTest {
 						.minimumShouldMatchPercent( 50 )
 						.should( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -407,7 +422,7 @@ public class BoolDSLTest {
 						.minimumShouldMatchPercent( 50 )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE2 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -417,10 +432,11 @@ public class BoolDSLTest {
 		query = helper.hsQuery(
 				queryBuilder.bool()
 						.minimumShouldMatchPercent( 70 ) // The minimum should be rounded down to 2
-						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 ).createQuery() )
+						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 )
+								.createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -430,9 +446,10 @@ public class BoolDSLTest {
 		query = helper.hsQuery(
 				queryBuilder.bool()
 						.minimumShouldMatchPercent( 100 )
-						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 ).createQuery() )
+						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 )
+								.createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE1 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -449,7 +466,7 @@ public class BoolDSLTest {
 						.minimumShouldMatchPercent( -50 )
 						.should( queryBuilder.keyword().onField( "field1" ).matching( FIELD1_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -462,7 +479,7 @@ public class BoolDSLTest {
 						.minimumShouldMatchPercent( -50 )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE2 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )
@@ -472,10 +489,11 @@ public class BoolDSLTest {
 		query = helper.hsQuery(
 				queryBuilder.bool()
 						.minimumShouldMatchPercent( -40 ) // The minimum should be rounded up to 2
-						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 ).createQuery() )
+						.should( queryBuilder.keyword().onField( "field4" ).matching( FIELD4_VALUE1AND2 )
+								.createQuery() )
 						.should( queryBuilder.keyword().onField( "field2" ).matching( FIELD2_VALUE1 ).createQuery() )
 						.should( queryBuilder.keyword().onField( "field3" ).matching( FIELD3_VALUE3 ).createQuery() )
-				.createQuery()
+						.createQuery()
 		);
 
 		helper.assertThatQuery( query )

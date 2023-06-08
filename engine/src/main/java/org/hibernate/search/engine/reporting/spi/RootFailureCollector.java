@@ -157,7 +157,8 @@ public final class RootFailureCollector implements FailureCollector {
 		}
 	}
 
-	private static class ContextualFailureCollectorImpl extends NonRootFailureCollector implements ContextualFailureCollector {
+	private static class ContextualFailureCollectorImpl extends NonRootFailureCollector
+			implements ContextualFailureCollector {
 		private final NonRootFailureCollector parent;
 		private final EventContextElement context;
 

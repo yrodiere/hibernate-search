@@ -6,11 +6,11 @@
  */
 package org.hibernate.search.documentation.search.converter;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.EntityManagerFactory;
@@ -34,7 +34,8 @@ import org.junit.Test;
 
 public class DslConverterIT {
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -131,8 +132,7 @@ public class DslConverterIT {
 	}
 
 	private enum AuthenticationOutcome {
-		USER_NOT_FOUND( "User not found" ),
-		INVALID_PASSWORD( "Invalid password" );
+		USER_NOT_FOUND("User not found"), INVALID_PASSWORD("Invalid password");
 
 		private final String text;
 

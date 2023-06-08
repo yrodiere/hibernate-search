@@ -6,10 +6,8 @@
  */
 package org.hibernate.search.test.proxy;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.Proxy;
-import org.hibernate.search.annotations.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Proxy;
+import org.hibernate.search.annotations.Field;
 
 /**
  * @author Emmanuel Bernard
@@ -43,6 +44,7 @@ public class Comment implements IComment {
 	public Integer getId() {
 		return id;
 	}
+
 	@Override
 	public void setId(Integer id) {
 		this.id = id;
@@ -69,6 +71,7 @@ public class Comment implements IComment {
 	public String getContent() {
 		return name;
 	}
+
 	@Override
 	public void setContent(String name) {
 		this.name = name;
@@ -80,6 +83,7 @@ public class Comment implements IComment {
 	public IComment getRootComment() {
 		return root;
 	}
+
 	@Override
 	public void setRootComment(IComment root) {
 		this.root = root;

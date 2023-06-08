@@ -57,7 +57,8 @@ class VerifyingStubBackendBehavior extends StubBackendBehavior {
 
 	private final Map<IndexFieldKey, CallBehavior<Void>> indexFieldAddBehaviors = new ConcurrentHashMap<>();
 
-	private final List<ParameterizedCallBehavior<BackendBuildContext, Void>> createBackendBehaviors = Collections.synchronizedList( new ArrayList<>() );
+	private final List<ParameterizedCallBehavior<BackendBuildContext, Void>> createBackendBehaviors = Collections
+			.synchronizedList( new ArrayList<>() );
 
 	private final List<CallBehavior<Void>> stopBackendBehaviors = Collections.synchronizedList( new ArrayList<>() );
 
@@ -67,9 +68,12 @@ class VerifyingStubBackendBehavior extends StubBackendBehavior {
 
 	private final Map<String, CallQueue<SchemaManagementWorkCall>> schemaManagementWorkCall = new ConcurrentHashMap<>();
 
-	private final Map<DocumentKey, CallQueue<DocumentWorkCreateCall>> documentWorkCreateCalls = new ConcurrentHashMap<>();
-	private final Map<DocumentKey, CallQueue<DocumentWorkDiscardCall>> documentWorkDiscardCalls = new ConcurrentHashMap<>();
-	private final Map<DocumentKey, CallQueue<DocumentWorkExecuteCall>> documentWorkExecuteCalls = new ConcurrentHashMap<>();
+	private final Map<DocumentKey, CallQueue<DocumentWorkCreateCall>> documentWorkCreateCalls =
+			new ConcurrentHashMap<>();
+	private final Map<DocumentKey, CallQueue<DocumentWorkDiscardCall>> documentWorkDiscardCalls =
+			new ConcurrentHashMap<>();
+	private final Map<DocumentKey, CallQueue<DocumentWorkExecuteCall>> documentWorkExecuteCalls =
+			new ConcurrentHashMap<>();
 
 	private final CallQueue<SearchWorkCall<?>> searchCalls;
 	private final CallQueue<CountWorkCall> countCalls;
@@ -232,9 +236,12 @@ class VerifyingStubBackendBehavior extends StubBackendBehavior {
 			closer.push(
 					expectations -> expectations.awaitIndexingAssertions( () -> {
 						try ( Closer<RuntimeException> indexingCloser = new Closer<>() ) {
-							indexingCloser.pushAll( CallQueue::verifyExpectationsMet, documentWorkCreateCalls.values() );
-							indexingCloser.pushAll( CallQueue::verifyExpectationsMet, documentWorkDiscardCalls.values() );
-							indexingCloser.pushAll( CallQueue::verifyExpectationsMet, documentWorkExecuteCalls.values() );
+							indexingCloser.pushAll( CallQueue::verifyExpectationsMet, documentWorkCreateCalls
+									.values() );
+							indexingCloser.pushAll( CallQueue::verifyExpectationsMet, documentWorkDiscardCalls
+									.values() );
+							indexingCloser.pushAll( CallQueue::verifyExpectationsMet, documentWorkExecuteCalls
+									.values() );
 						}
 					} ),
 					indexingWorkExpectations
@@ -415,9 +422,8 @@ class VerifyingStubBackendBehavior extends StubBackendBehavior {
 				new NextScrollWorkCall<>( indexNames, work, projectionContext, loadingContext, rootProjection,
 						deadline ),
 				(call1, call2) -> call1.verify( call2 ),
-				noExpectationsBehavior( () ->
-						new SimpleSearchScrollResult<>( SimpleSearchResultTotal.exact( 0L ),
-								false, Collections.emptyList(), Duration.ZERO, false ) )
+				noExpectationsBehavior( () -> new SimpleSearchScrollResult<>( SimpleSearchResultTotal.exact( 0L ),
+						false, Collections.emptyList(), Duration.ZERO, false ) )
 		);
 	}
 
@@ -432,7 +438,9 @@ class VerifyingStubBackendBehavior extends StubBackendBehavior {
 
 	private static <C, T> Function<C, T> strictNoExpectationsBehavior() {
 		return call -> {
-			fail( "No call expected, but got: " + call + "; details:\n"
+			fail( "No call expected, but got: "
+					+ call
+					+ "; details:\n"
 					+ new ToStringTreeBuilder( ToStringStyle.multilineDelimiterStructure() ).value( call ) );
 			// Dead code, we throw an exception above
 			return null;
@@ -450,7 +458,7 @@ class VerifyingStubBackendBehavior extends StubBackendBehavior {
 
 		@Override
 		public boolean equals(Object obj) {
-			if ( ! (obj instanceof IndexFieldKey ) ) {
+			if ( !( obj instanceof IndexFieldKey ) ) {
 				return false;
 			}
 			IndexFieldKey other = (IndexFieldKey) obj;

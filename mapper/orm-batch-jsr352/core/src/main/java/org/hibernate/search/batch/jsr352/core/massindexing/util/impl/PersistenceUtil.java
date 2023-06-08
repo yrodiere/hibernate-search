@@ -9,6 +9,7 @@ package org.hibernate.search.batch.jsr352.core.massindexing.util.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.FlushMode;
@@ -92,7 +93,8 @@ public final class PersistenceUtil {
 		}
 	}
 
-	public static List<EntityTypeDescriptor> createDescriptors(EntityManagerFactory entityManagerFactory, Set<Class<?>> types) {
+	public static List<EntityTypeDescriptor> createDescriptors(EntityManagerFactory entityManagerFactory, Set<Class<
+			?>> types) {
 		SessionFactoryImplementor sessionFactory = entityManagerFactory.unwrap( SessionFactoryImplementor.class );
 		List<EntityTypeDescriptor> result = new ArrayList<>( types.size() );
 		MetamodelImplementor metamodel = sessionFactory.getMetamodel();

@@ -18,29 +18,28 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.engine.search.query.SearchResult;
 import org.hibernate.search.integrationtest.mapper.pojo.smoke.bridge.CustomPropertyBridge;
 import org.hibernate.search.integrationtest.mapper.pojo.smoke.bridge.CustomTypeBridge;
 import org.hibernate.search.integrationtest.mapper.pojo.smoke.bridge.IntegerAsStringValueBridge;
 import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.engine.common.EntityReference;
-import org.hibernate.search.mapper.pojo.standalone.scope.SearchScope;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.extractor.builtin.BuiltinContainerExtractors;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.ProgrammaticMappingConfigurationContext;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.TypeMappingStep;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPath;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.scope.SearchScope;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.impl.CollectionHelper;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.StubSearchWorkBehavior;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 
 public class ProgrammaticMappingSmokeIT {
 
@@ -48,7 +47,8 @@ public class ProgrammaticMappingSmokeIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private SearchMapping mapping;
 
@@ -139,19 +139,20 @@ public class ProgrammaticMappingSmokeIT {
 					indexedEntityMapping.indexed().index( IndexedEntity.INDEX );
 					indexedEntityMapping.binder(
 							new CustomTypeBridge.Binder()
-							.objectName( "customBridgeOnClass" )
+									.objectName( "customBridgeOnClass" )
 					);
 					indexedEntityMapping.property( "id" ).documentId();
 					indexedEntityMapping.property( "text" )
 							.genericField( "myTextField" );
 					indexedEntityMapping.property( "embedded" )
 							.indexedEmbedded( "myEmbedded" )
-									.includeDepth( 1 )
-									.includePaths( "customBridgeOnClass.text", "myEmbedded.customBridgeOnClass.text" );
+							.includeDepth( 1 )
+							.includePaths( "customBridgeOnClass.text", "myEmbedded.customBridgeOnClass.text" );
 
 					ProgrammaticMappingConfigurationContext secondMappingDefinition = builder.programmaticMapping();
 
-					TypeMappingStep parentIndexedEntityMapping = secondMappingDefinition.type( ParentIndexedEntity.class );
+					TypeMappingStep parentIndexedEntityMapping = secondMappingDefinition.type(
+							ParentIndexedEntity.class );
 					parentIndexedEntityMapping.property( "localDate" )
 							.genericField( "myLocalDateField" );
 					parentIndexedEntityMapping.property( "embedded" )
@@ -160,10 +161,11 @@ public class ProgrammaticMappingSmokeIT {
 							)
 							.binder(
 									new CustomPropertyBridge.Binder()
-									.objectName( "customBridgeOnProperty" )
+											.objectName( "customBridgeOnProperty" )
 							);
 
-					TypeMappingStep otherIndexedEntityMapping = secondMappingDefinition.type( OtherIndexedEntity.class );
+					TypeMappingStep otherIndexedEntityMapping = secondMappingDefinition.type(
+							OtherIndexedEntity.class );
 					otherIndexedEntityMapping.indexed().index( OtherIndexedEntity.INDEX );
 					otherIndexedEntityMapping.property( "id" )
 							.documentId();
@@ -171,7 +173,8 @@ public class ProgrammaticMappingSmokeIT {
 							.genericField()
 							.genericField( "numericAsString" ).valueBridge( IntegerAsStringValueBridge.class );
 
-					TypeMappingStep yetAnotherIndexedEntityMapping = secondMappingDefinition.type( YetAnotherIndexedEntity.class );
+					TypeMappingStep yetAnotherIndexedEntityMapping = secondMappingDefinition.type(
+							YetAnotherIndexedEntity.class );
 					yetAnotherIndexedEntityMapping.indexed().index( YetAnotherIndexedEntity.INDEX );
 					yetAnotherIndexedEntityMapping.property( "id" ).documentId();
 					yetAnotherIndexedEntityMapping.property( "numeric" ).genericField();
@@ -185,7 +188,7 @@ public class ProgrammaticMappingSmokeIT {
 									PojoModelPath.ofValue( "embeddingAsList" )
 							)
 							.indexedEmbedded( "myEmbeddedList" )
-									.includePaths( "myEmbedded.customBridgeOnClass.text" );
+							.includePaths( "myEmbedded.customBridgeOnClass.text" );
 					yetAnotherIndexedEntityMapping.property( "embeddedArrayList" )
 							.associationInverseSide(
 									PojoModelPath.ofValue( "embeddingAsArrayList" )
@@ -365,7 +368,7 @@ public class ProgrammaticMappingSmokeIT {
 											)
 									)
 							)
-							.objectField( "myEmbeddedList", b2 -> { } )
+							.objectField( "myEmbeddedList", b2 -> {} )
 							.objectField( "embeddedArrayList", b2 -> b2
 									.objectField( "myEmbedded", b3 -> b3
 											.objectField( "customBridgeOnProperty", b4 -> b4

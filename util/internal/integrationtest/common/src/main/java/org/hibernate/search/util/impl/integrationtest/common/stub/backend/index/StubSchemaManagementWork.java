@@ -12,12 +12,7 @@ import org.hibernate.search.util.common.spi.ToStringTreeAppender;
 public final class StubSchemaManagementWork implements ToStringTreeAppendable {
 
 	public enum Type {
-		CREATE_IF_MISSING,
-		CREATE_OR_VALIDATE,
-		CREATE_OR_UPDATE,
-		DROP_IF_EXISTING,
-		DROP_AND_CREATE,
-		VALIDATE
+		CREATE_IF_MISSING, CREATE_OR_VALIDATE, CREATE_OR_UPDATE, DROP_IF_EXISTING, DROP_AND_CREATE, VALIDATE
 	}
 
 	public static Builder builder(Type type) {

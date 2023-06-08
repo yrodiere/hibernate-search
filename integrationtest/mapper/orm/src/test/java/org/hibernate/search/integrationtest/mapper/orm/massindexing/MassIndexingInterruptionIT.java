@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -109,7 +110,8 @@ public class MassIndexingInterruptionIT {
 				.hasSize( 1 )
 				.allSatisfy( t -> assertThat( t )
 						.asInstanceOf( InstanceOfAssertFactories.THROWABLE )
-						.hasMessageContaining( "Mass indexing received interrupt signal. The index is left in an unknown state!" ) );
+						.hasMessageContaining(
+								"Mass indexing received interrupt signal. The index is left in an unknown state!" ) );
 		// Most JDK methods unset the interrupt flag when they throw an InterruptedException:
 		// the MassIndexer should do the same.
 		assertThat( interruptFlagAfterInterruption ).isFalse();
@@ -149,7 +151,8 @@ public class MassIndexingInterruptionIT {
 
 		assertThat( thrown.get() )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContaining( "Mass indexing received interrupt signal. The index is left in an unknown state!" )
+				.hasMessageContaining(
+						"Mass indexing received interrupt signal. The index is left in an unknown state!" )
 				.hasCauseInstanceOf( InterruptedException.class );
 
 		// The interrupt didn't occur on the mass indexing thread, so the interrupt flag shouldn't be set on that thread.

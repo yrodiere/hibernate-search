@@ -35,7 +35,8 @@ public final class SimpleSessionFactoryBuilder {
 	private static final Logger log = Logger.getLogger( SimpleSessionFactoryBuilder.class.getName() );
 
 	private boolean cleanUpSchemaOnBuildFailure = true;
-	private final List<Consumer<BootstrapServiceRegistryBuilder>> bootstrapServiceRegistryBuilderContributors = new ArrayList<>();
+	private final List<Consumer<BootstrapServiceRegistryBuilder>> bootstrapServiceRegistryBuilderContributors =
+			new ArrayList<>();
 	private final List<Consumer<StandardServiceRegistryBuilder>> serviceRegistryBuilderContributors = new ArrayList<>();
 	private final List<Consumer<MetadataSources>> metadataSourcesContributors = new ArrayList<>();
 	private final List<Consumer<MetadataImplementor>> metadataContributors = new ArrayList<>();
@@ -48,7 +49,8 @@ public final class SimpleSessionFactoryBuilder {
 	@SuppressForbiddenApis(reason = "Strangely, this API involves the internal TcclLookupPrecedence class,"
 			+ " and there's nothing we can do about it")
 	public SimpleSessionFactoryBuilder setTcclLookupPrecedenceBefore() {
-		return onBootstrapServiceRegistryBuilder( builder -> builder.applyTcclLookupPrecedence( TcclLookupPrecedence.BEFORE ) );
+		return onBootstrapServiceRegistryBuilder( builder -> builder.applyTcclLookupPrecedence(
+				TcclLookupPrecedence.BEFORE ) );
 	}
 
 	public SimpleSessionFactoryBuilder setProperty(String key, Object value) {
@@ -66,7 +68,7 @@ public final class SimpleSessionFactoryBuilder {
 		return onMetadataSources( sources -> sources.addAnnotatedClass( clazz ) );
 	}
 
-	public SimpleSessionFactoryBuilder addAnnotatedClasses(Class<?> firstClass, Class<?> ... otherClasses) {
+	public SimpleSessionFactoryBuilder addAnnotatedClasses(Class<?> firstClass, Class<?>... otherClasses) {
 		return addAnnotatedClasses( CollectionHelper.asList( firstClass, otherClasses ) );
 	}
 
@@ -74,7 +76,7 @@ public final class SimpleSessionFactoryBuilder {
 		return onMetadataSources( sources -> classes.forEach( sources::addAnnotatedClass ) );
 	}
 
-	public SimpleSessionFactoryBuilder addHbmFromClassPath(String firstPath, String ... otherPaths) {
+	public SimpleSessionFactoryBuilder addHbmFromClassPath(String firstPath, String... otherPaths) {
 		return addHbmFromClassPath( CollectionHelper.asList( firstPath, otherPaths ) );
 	}
 
@@ -82,7 +84,8 @@ public final class SimpleSessionFactoryBuilder {
 		return onMetadataSources( sources -> paths.forEach( sources::addResource ) );
 	}
 
-	public SimpleSessionFactoryBuilder onBootstrapServiceRegistryBuilder(Consumer<BootstrapServiceRegistryBuilder> contributor) {
+	public SimpleSessionFactoryBuilder onBootstrapServiceRegistryBuilder(Consumer<
+			BootstrapServiceRegistryBuilder> contributor) {
 		bootstrapServiceRegistryBuilderContributors.add( contributor );
 		return this;
 	}
@@ -112,7 +115,8 @@ public final class SimpleSessionFactoryBuilder {
 		bootstrapServiceRegistryBuilderContributors.forEach( c -> c.accept( bootstrapServiceRegistryBuilder ) );
 		state.bootstrapServiceRegistry = bootstrapServiceRegistryBuilder.build();
 
-		StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder( state.bootstrapServiceRegistry );
+		StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder(
+				state.bootstrapServiceRegistry );
 		serviceRegistryBuilderContributors.forEach( c -> c.accept( registryBuilder ) );
 		state.serviceRegistry = registryBuilder.build();
 

@@ -6,22 +6,22 @@
  */
 package org.hibernate.search.test.engine.indexapi;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.lucene.search.MatchAllDocsQuery;
-
 import org.hibernate.Transaction;
-
 import org.hibernate.query.Query;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.test.SearchTestBase;
 import org.hibernate.search.testsupport.TestForIssue;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import org.apache.lucene.search.MatchAllDocsQuery;
 
 /**
  * Test {@link FullTextSession#purge(Class, java.io.Serializable)} and  {@link FullTextSession#purgeAll(Class)}.
@@ -168,7 +168,8 @@ public class PurgeTest extends SearchTestBase {
 			org.hibernate.query.Query query = fullTextSession.createFullTextQuery( new MatchAllDocsQuery(), types );
 			@SuppressWarnings("unchecked")
 			List<Object> results = (List<Object>) query.list();
-			assertEquals( "Incorrect document count for type: " + Arrays.toString( types ), expectedCount, results.size() );
+			assertEquals( "Incorrect document count for type: " + Arrays.toString( types ), expectedCount, results
+					.size() );
 
 			tx.commit();
 		}

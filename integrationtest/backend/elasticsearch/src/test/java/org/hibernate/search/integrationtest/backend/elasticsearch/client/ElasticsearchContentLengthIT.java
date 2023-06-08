@@ -33,9 +33,9 @@ import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchReques
 import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchResponse;
 import org.hibernate.search.backend.elasticsearch.gson.spi.GsonProvider;
 import org.hibernate.search.backend.elasticsearch.util.spi.URLEncodedString;
-import org.hibernate.search.engine.common.execution.spi.DelegatingSimpleScheduledExecutor;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
 import org.hibernate.search.engine.cfg.spi.AllAwareConfigurationPropertySource;
+import org.hibernate.search.engine.common.execution.spi.DelegatingSimpleScheduledExecutor;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanResolver;
 import org.hibernate.search.engine.environment.thread.impl.EmbeddedThreadProvider;
@@ -123,7 +123,7 @@ public class ElasticsearchContentLengthIT {
 					postRequestedFor( urlPathLike( "/myIndex/myType" ) )
 							.withoutHeader( "Transfer-Encoding" )
 							.withHeader( "Content-length", equalTo( String.valueOf( BODY_PART_BYTE_SIZE ) ) )
-					);
+			);
 		}
 	}
 
@@ -139,8 +139,9 @@ public class ElasticsearchContentLengthIT {
 			wireMockRule.verify(
 					postRequestedFor( urlPathLike( "/myIndex/myType" ) )
 							.withoutHeader( "Transfer-Encoding" )
-							.withHeader( "Content-length", equalTo( String.valueOf( bodyPartCount * BODY_PART_BYTE_SIZE ) ) )
-					);
+							.withHeader( "Content-length", equalTo( String.valueOf(
+									bodyPartCount * BODY_PART_BYTE_SIZE ) ) )
+			);
 		}
 	}
 
@@ -151,7 +152,8 @@ public class ElasticsearchContentLengthIT {
 	@Test
 	public void payloadJustAboveBufferSize_noRequestPostProcessing() throws Exception {
 		assumeFalse(
-				"This test only is only relevant if Elasticsearch request are *NOT* post-processed." +
+				"This test only is only relevant if Elasticsearch request are *NOT* post-processed."
+						+
 						" Elasticsearch requests are post-processed by the AWS integration in particular.",
 				ElasticsearchTestHostConnectionConfiguration.get().isAws()
 		);
@@ -179,7 +181,8 @@ public class ElasticsearchContentLengthIT {
 	@Test
 	public void payloadJustAboveBufferSize_requestPostProcessing() throws Exception {
 		assumeTrue(
-				"This test only is only relevant if Elasticsearch request are post-processed." +
+				"This test only is only relevant if Elasticsearch request are post-processed."
+						+
 						" Elasticsearch requests are post-processed by the AWS integration in particular.",
 				ElasticsearchTestHostConnectionConfiguration.get().isAws()
 		);
@@ -193,8 +196,9 @@ public class ElasticsearchContentLengthIT {
 			wireMockRule.verify(
 					postRequestedFor( urlPathLike( "/myIndex/myType" ) )
 							.withoutHeader( "Transfer-Encoding" )
-							.withHeader( "Content-length", equalTo( String.valueOf( bodyPartCount * BODY_PART_BYTE_SIZE ) ) )
-					);
+							.withHeader( "Content-length", equalTo( String.valueOf(
+									bodyPartCount * BODY_PART_BYTE_SIZE ) ) )
+			);
 		}
 	}
 
@@ -213,7 +217,8 @@ public class ElasticsearchContentLengthIT {
 		// Target the Wiremock server using HTTP
 		clientProperties.put( ElasticsearchBackendSettings.URIS, httpUriFor( wireMockRule ) );
 
-		ConfigurationPropertySource clientPropertySource = AllAwareConfigurationPropertySource.fromMap( clientProperties );
+		ConfigurationPropertySource clientPropertySource = AllAwareConfigurationPropertySource.fromMap(
+				clientProperties );
 
 		BeanResolver beanResolver = testConfigurationProvider.createBeanResolverForTest();
 		return new ElasticsearchClientFactoryImpl().create( beanResolver, clientPropertySource,
@@ -226,7 +231,8 @@ public class ElasticsearchContentLengthIT {
 		return client.submit( buildRequest( ElasticsearchRequest.post(), path, bodyParts ) ).join();
 	}
 
-	private ElasticsearchRequest buildRequest(ElasticsearchRequest.Builder builder, String path, Collection<JsonObject> bodyParts) {
+	private ElasticsearchRequest buildRequest(ElasticsearchRequest.Builder builder, String path, Collection<
+			JsonObject> bodyParts) {
 		for ( String pathComponent : path.split( "/" ) ) {
 			if ( !pathComponent.isEmpty() ) {
 				URLEncodedString fromString = URLEncodedString.fromString( pathComponent );

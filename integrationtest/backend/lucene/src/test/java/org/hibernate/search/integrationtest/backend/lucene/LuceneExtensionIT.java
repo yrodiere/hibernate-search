@@ -21,6 +21,55 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import org.hibernate.search.backend.lucene.LuceneBackend;
+import org.hibernate.search.backend.lucene.LuceneExtension;
+import org.hibernate.search.backend.lucene.index.LuceneIndexManager;
+import org.hibernate.search.backend.lucene.lowlevel.common.impl.MetadataFields;
+import org.hibernate.search.backend.lucene.search.predicate.dsl.LuceneSearchPredicateFactory;
+import org.hibernate.search.backend.lucene.search.query.LuceneSearchQuery;
+import org.hibernate.search.backend.lucene.search.query.LuceneSearchResult;
+import org.hibernate.search.backend.lucene.search.query.LuceneSearchScroll;
+import org.hibernate.search.backend.lucene.search.query.LuceneSearchScrollResult;
+import org.hibernate.search.backend.lucene.search.query.dsl.LuceneSearchQueryOptionsStep;
+import org.hibernate.search.backend.lucene.search.query.dsl.LuceneSearchQuerySelectStep;
+import org.hibernate.search.backend.lucene.search.query.dsl.LuceneSearchQueryWhereStep;
+import org.hibernate.search.backend.lucene.search.sort.dsl.LuceneSearchSortFactory;
+import org.hibernate.search.engine.backend.Backend;
+import org.hibernate.search.engine.backend.common.DocumentReference;
+import org.hibernate.search.engine.backend.document.DocumentElement;
+import org.hibernate.search.engine.backend.document.IndexFieldReference;
+import org.hibernate.search.engine.backend.document.IndexObjectFieldReference;
+import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
+import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaObjectField;
+import org.hibernate.search.engine.backend.index.IndexManager;
+import org.hibernate.search.engine.backend.types.Aggregable;
+import org.hibernate.search.engine.backend.types.ObjectStructure;
+import org.hibernate.search.engine.backend.types.Projectable;
+import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.engine.common.EntityReference;
+import org.hibernate.search.engine.common.spi.SearchIntegration;
+import org.hibernate.search.engine.reporting.spi.EventContexts;
+import org.hibernate.search.engine.search.aggregation.AggregationKey;
+import org.hibernate.search.engine.search.common.ValueConvert;
+import org.hibernate.search.engine.search.loading.spi.SearchLoadingContext;
+import org.hibernate.search.engine.search.predicate.SearchPredicate;
+import org.hibernate.search.engine.search.projection.SearchProjection;
+import org.hibernate.search.engine.search.query.SearchQuery;
+import org.hibernate.search.engine.search.sort.SearchSort;
+import org.hibernate.search.engine.spatial.GeoPoint;
+import org.hibernate.search.integrationtest.backend.tck.testsupport.util.ValueWrapper;
+import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
+import org.hibernate.search.util.common.SearchException;
+import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
+import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
+import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubLoadingOptionsStep;
+import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMappingScope;
+import org.hibernate.search.util.impl.test.annotation.TestForIssue;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.DoublePoint;
 import org.apache.lucene.document.Field.Store;
@@ -41,55 +90,6 @@ import org.apache.lucene.search.SortedSetSortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 
-import org.hibernate.search.backend.lucene.LuceneBackend;
-import org.hibernate.search.backend.lucene.index.LuceneIndexManager;
-import org.hibernate.search.backend.lucene.search.predicate.dsl.LuceneSearchPredicateFactory;
-import org.hibernate.search.backend.lucene.search.query.LuceneSearchScroll;
-import org.hibernate.search.backend.lucene.search.query.LuceneSearchScrollResult;
-import org.hibernate.search.backend.lucene.search.query.dsl.LuceneSearchQueryOptionsStep;
-import org.hibernate.search.backend.lucene.search.query.dsl.LuceneSearchQueryWhereStep;
-import org.hibernate.search.backend.lucene.search.query.dsl.LuceneSearchQuerySelectStep;
-import org.hibernate.search.backend.lucene.search.query.LuceneSearchQuery;
-import org.hibernate.search.backend.lucene.search.query.LuceneSearchResult;
-import org.hibernate.search.backend.lucene.lowlevel.common.impl.MetadataFields;
-import org.hibernate.search.backend.lucene.search.sort.dsl.LuceneSearchSortFactory;
-import org.hibernate.search.engine.backend.Backend;
-import org.hibernate.search.engine.backend.document.DocumentElement;
-import org.hibernate.search.engine.backend.document.IndexFieldReference;
-import org.hibernate.search.engine.backend.document.IndexObjectFieldReference;
-import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
-import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaObjectField;
-import org.hibernate.search.engine.backend.types.ObjectStructure;
-import org.hibernate.search.engine.backend.types.Aggregable;
-import org.hibernate.search.engine.backend.types.Projectable;
-import org.hibernate.search.engine.backend.types.Sortable;
-import org.hibernate.search.engine.backend.index.IndexManager;
-import org.hibernate.search.engine.common.EntityReference;
-import org.hibernate.search.engine.common.spi.SearchIntegration;
-import org.hibernate.search.engine.search.aggregation.AggregationKey;
-import org.hibernate.search.engine.search.common.ValueConvert;
-import org.hibernate.search.engine.search.projection.SearchProjection;
-import org.hibernate.search.engine.search.loading.spi.SearchLoadingContext;
-import org.hibernate.search.integrationtest.backend.tck.testsupport.util.ValueWrapper;
-import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
-import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubLoadingOptionsStep;
-import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMappingScope;
-import org.hibernate.search.backend.lucene.LuceneExtension;
-import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
-import org.hibernate.search.engine.reporting.spi.EventContexts;
-import org.hibernate.search.engine.backend.common.DocumentReference;
-import org.hibernate.search.engine.search.predicate.SearchPredicate;
-import org.hibernate.search.engine.search.query.SearchQuery;
-import org.hibernate.search.engine.search.sort.SearchSort;
-import org.hibernate.search.engine.spatial.GeoPoint;
-import org.hibernate.search.util.common.SearchException;
-import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
-import org.hibernate.search.util.impl.test.annotation.TestForIssue;
-
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-
 public class LuceneExtensionIT {
 
 	private static final String FIRST_ID = "1";
@@ -102,7 +102,8 @@ public class LuceneExtensionIT {
 	public final SearchSetupHelper setupHelper = new SearchSetupHelper();
 
 	private final SimpleMappedIndex<IndexBinding> mainIndex = SimpleMappedIndex.of( IndexBinding::new ).name( "main" );
-	private final SimpleMappedIndex<IndexBinding> otherIndex = SimpleMappedIndex.of( IndexBinding::new ).name( "other" );
+	private final SimpleMappedIndex<IndexBinding> otherIndex = SimpleMappedIndex.of( IndexBinding::new ).name(
+			"other" );
 
 	private SearchIntegration integration;
 
@@ -174,7 +175,8 @@ public class LuceneExtensionIT {
 
 		// Unsupported extension
 		assertThatThrownBy(
-				() -> query.extension( (SearchQuery<DocumentReference> original, SearchLoadingContext<?> loadingContext) -> Optional.empty() )
+				() -> query.extension( (SearchQuery<DocumentReference> original, SearchLoadingContext<
+						?> loadingContext) -> Optional.empty() )
 		)
 				.isInstanceOf( SearchException.class );
 	}
@@ -275,7 +277,10 @@ public class LuceneExtensionIT {
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid mapped type name: 'NotAMappedName'",
 						"This type is not among the mapped types targeted by this query: ["
-								+ mainIndex.typeName() + ", " + otherIndex.typeName() + "]" );
+								+ mainIndex.typeName()
+								+ ", "
+								+ otherIndex.typeName()
+								+ "]" );
 	}
 
 	@Test
@@ -349,10 +354,10 @@ public class LuceneExtensionIT {
 		SearchPredicate predicate3 = scope.predicate().extension( LuceneExtension.get() )
 				.fromLuceneQuery( LatLonPoint.newDistanceQuery( "geoPoint", 40, -70, 200_000 ) ).toPredicate();
 		SearchPredicate booleanPredicate = scope.predicate().or(
-						predicate1,
-						predicate2,
-						predicate3
-				).toPredicate();
+				predicate1,
+				predicate2,
+				predicate3
+		).toPredicate();
 
 		SearchQuery<DocumentReference> query = scope.query()
 				.where( booleanPredicate )
@@ -367,9 +372,11 @@ public class LuceneExtensionIT {
 	public void predicate_fromLuceneQuery_withRoot() {
 		SearchQuery<DocumentReference> query = mainIndex.query()
 				.where( f -> {
-					LuceneSearchPredicateFactory f2 = f.extension( LuceneExtension.get() ).withRoot( "flattenedObject" );
+					LuceneSearchPredicateFactory f2 = f.extension( LuceneExtension.get() ).withRoot(
+							"flattenedObject" );
 					return f2.or(
-							f2.fromLuceneQuery( new TermQuery( new Term( f2.toAbsolutePath( "stringInObject" ), "text 2" ) ) ),
+							f2.fromLuceneQuery( new TermQuery( new Term( f2.toAbsolutePath( "stringInObject" ),
+									"text 2" ) ) ),
 							f2.fromLuceneQuery( IntPoint.newExactQuery( f2.toAbsolutePath( "integerInObject" ), 3 ) ) );
 				} )
 				.toQuery();
@@ -386,11 +393,11 @@ public class LuceneExtensionIT {
 				.where( f -> f.matchAll() )
 				.sort( f -> f
 						.extension( LuceneExtension.get() )
-								.fromLuceneSortField( new SortedSetSortField( "sort1", false ) )
+						.fromLuceneSortField( new SortedSetSortField( "sort1", false ) )
 						.then().extension( LuceneExtension.get() )
-								.fromLuceneSortField( new SortedSetSortField( "sort2", false ) )
+						.fromLuceneSortField( new SortedSetSortField( "sort2", false ) )
 						.then().extension( LuceneExtension.get() )
-								.fromLuceneSortField( new SortedSetSortField( "sort3", false ) )
+						.fromLuceneSortField( new SortedSetSortField( "sort3", false ) )
 				)
 				.toQuery();
 		assertThatQuery( query ).hasDocRefHitsExactOrder(
@@ -407,7 +414,7 @@ public class LuceneExtensionIT {
 										new SortedSetSortField( "sort3", false ),
 										new SortedSetSortField( "sort2", false ),
 										new SortedSetSortField( "sort1", false )
-									)
+								)
 								)
 						)
 						.orElseFail()
@@ -424,11 +431,11 @@ public class LuceneExtensionIT {
 		StubMappingScope scope = mainIndex.createScope();
 
 		SearchSort sort1 = scope.sort().extension()
-						.ifSupported(
-								LuceneExtension.get(),
-								c2 -> c2.fromLuceneSortField( new SortedSetSortField( "sort1", false ) )
-						)
-						.orElseFail()
+				.ifSupported(
+						LuceneExtension.get(),
+						c2 -> c2.fromLuceneSortField( new SortedSetSortField( "sort1", false ) )
+				)
+				.orElseFail()
 				.toSort();
 		SearchSort sort2 = scope.sort().extension( LuceneExtension.get() )
 				.fromLuceneSortField( new SortedSetSortField( "sort2", false ) )
@@ -453,7 +460,7 @@ public class LuceneExtensionIT {
 						new SortedSetSortField( "sort3", false ),
 						new SortedSetSortField( "sort2", false ),
 						new SortedSetSortField( "sort1", false )
-					)
+				)
 				)
 				.toSort();
 
@@ -472,7 +479,8 @@ public class LuceneExtensionIT {
 				.where( f -> f.matchAll() )
 				.sort( f -> {
 					LuceneSearchSortFactory f2 = f.extension( LuceneExtension.get() ).withRoot( "flattenedObject" );
-					return f2.fromLuceneSortField( new SortedSetSortField( f2.toAbsolutePath( "sortInObject" ), false ) );
+					return f2.fromLuceneSortField( new SortedSetSortField( f2.toAbsolutePath( "sortInObject" ),
+							false ) );
 				} ) )
 				.hasDocRefHitsExactOrder( mainIndex.typeName(),
 						FIRST_ID, SECOND_ID, THIRD_ID, FOURTH_ID, FIFTH_ID );
@@ -481,7 +489,8 @@ public class LuceneExtensionIT {
 				.where( f -> f.matchAll() )
 				.sort( f -> {
 					LuceneSearchSortFactory f2 = f.extension( LuceneExtension.get() ).withRoot( "flattenedObject" );
-					return f2.fromLuceneSortField( new SortedSetSortField( f2.toAbsolutePath( "sortInObject" ), true ) );
+					return f2.fromLuceneSortField( new SortedSetSortField( f2.toAbsolutePath( "sortInObject" ),
+							true ) );
 				} ) )
 				.hasDocRefHitsExactOrder( mainIndex.typeName(),
 						FIFTH_ID, FOURTH_ID, THIRD_ID, SECOND_ID, FIRST_ID );
@@ -607,7 +616,8 @@ public class LuceneExtensionIT {
 
 		SearchQuery<DocumentReference> query = scope.query()
 				.where( f -> f.matchAll() )
-				.sort( f -> f.extension( LuceneExtension.get() ).fromLuceneSortField( new SortField( "nativeField", Type.LONG ) ) )
+				.sort( f -> f.extension( LuceneExtension.get() ).fromLuceneSortField( new SortField( "nativeField",
+						Type.LONG ) ) )
 				.toQuery();
 
 		assertThatQuery( query )
@@ -740,11 +750,10 @@ public class LuceneExtensionIT {
 		StubMappingScope scope = mainIndex.createScope();
 
 		SearchQuery<List<?>> query = scope.query()
-				.select( f ->
-						f.composite(
-								f.extension( LuceneExtension.get() ).document(),
-								f.field( "string" )
-						)
+				.select( f -> f.composite(
+						f.extension( LuceneExtension.get() ).document(),
+						f.field( "string" )
+				)
 				)
 				.where( f -> f.id().matching( FIRST_ID ) )
 				.toQuery();
@@ -810,11 +819,12 @@ public class LuceneExtensionIT {
 
 	@Test
 	public void nativeField_invalidFieldPath() {
-		assertThatThrownBy( () -> mainIndex.index( FIRST_ID, document ->
-			document.addValue( mainIndex.binding().nativeField_invalidFieldPath, 45 )
+		assertThatThrownBy( () -> mainIndex.index( FIRST_ID, document -> document.addValue( mainIndex
+				.binding().nativeField_invalidFieldPath, 45 )
 		) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContaining( "Invalid field path; expected path 'nativeField_invalidFieldPath', got 'not the expected path'." );
+				.hasMessageContaining(
+						"Invalid field path; expected path 'nativeField_invalidFieldPath', got 'not the expected path'." );
 	}
 
 	@Test
@@ -852,7 +862,8 @@ public class LuceneExtensionIT {
 				.hasMessageContainingAll(
 						"Invalid requested type for this index manager: '" + String.class.getName() + "'",
 						"Lucene index managers can only be unwrapped to '"
-								+ LuceneIndexManager.class.getName() + "'"
+								+ LuceneIndexManager.class.getName()
+								+ "'"
 				);
 	}
 
@@ -879,8 +890,8 @@ public class LuceneExtensionIT {
 	public void documentProjectionInsideNested() {
 		assertThatThrownBy( () -> mainIndex.createScope().query()
 				.select( f -> f.object( "nestedObject" ).from(
-								f.extension( LuceneExtension.get() ).document()
-						).asList().multi()
+						f.extension( LuceneExtension.get() ).document()
+				).asList().multi()
 				)
 				.where( f -> f.matchAll() )
 				.toQuery()
@@ -895,8 +906,8 @@ public class LuceneExtensionIT {
 	public void explanationProjectionInsideNested() {
 		assertThatThrownBy( () -> mainIndex.createScope().query()
 				.select( f -> f.object( "nestedObject" ).from(
-								f.extension( LuceneExtension.get() ).explanation()
-						).asList().multi()
+						f.extension( LuceneExtension.get() ).explanation()
+				).asList().multi()
 				)
 				.where( f -> f.matchAll() )
 				.toQuery()
@@ -1088,13 +1099,15 @@ public class LuceneExtensionIT {
 			nativeField = root.field(
 					"nativeField",
 					f -> f.extension( LuceneExtension.get() )
-							.asNative( Integer.class, LuceneExtensionIT::contributeNativeField, LuceneExtensionIT::fromNativeField )
+							.asNative( Integer.class, LuceneExtensionIT::contributeNativeField,
+									LuceneExtensionIT::fromNativeField )
 			)
 					.toReference();
 			nativeField_converted = root.field(
 					"nativeField_converted",
 					f -> f.extension( LuceneExtension.get() )
-							.asNative( Integer.class, LuceneExtensionIT::contributeNativeField, LuceneExtensionIT::fromNativeField )
+							.asNative( Integer.class, LuceneExtensionIT::contributeNativeField,
+									LuceneExtensionIT::fromNativeField )
 							.projectionConverter( ValueWrapper.class, ValueWrapper.fromDocumentValueConverter() )
 			)
 					.toReference();
@@ -1164,7 +1177,8 @@ public class LuceneExtensionIT {
 		}
 	}
 
-	private static void contributeNativeField(String absoluteFieldPath, Integer value, Consumer<IndexableField> collector) {
+	private static void contributeNativeField(String absoluteFieldPath, Integer value, Consumer<
+			IndexableField> collector) {
 		collector.accept( new StringField( absoluteFieldPath, value.toString(), Store.YES ) );
 		collector.accept( new NumericDocValuesField( absoluteFieldPath, value.longValue() ) );
 	}
@@ -1173,7 +1187,8 @@ public class LuceneExtensionIT {
 		return Integer.parseInt( field.stringValue() );
 	}
 
-	private static void contributeNativeFieldInvalidFieldPath(String absoluteFieldPath, Integer value, Consumer<IndexableField> collector) {
+	private static void contributeNativeFieldInvalidFieldPath(String absoluteFieldPath, Integer value, Consumer<
+			IndexableField> collector) {
 		collector.accept( new StringField( "not the expected path", value.toString(), Store.YES ) );
 	}
 }

@@ -96,10 +96,14 @@ public class PojoMassIndexingIndexedTypeGroup<E> {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "commonSuperType=" + commonSuperType
-				+ ", loadingStrategy=" + includedTypes
-				+ ", includedSubTypes=" + includedTypes
+		return getClass().getSimpleName()
+				+ "["
+				+ "commonSuperType="
+				+ commonSuperType
+				+ ", loadingStrategy="
+				+ includedTypes
+				+ ", includedSubTypes="
+				+ includedTypes
 				+ "]";
 	}
 
@@ -158,10 +162,10 @@ public class PojoMassIndexingIndexedTypeGroup<E> {
 		// If one is the supertype of the other, make sure to load them in the same group:
 		// if all subtypes are included in a group, it should perform better.
 		if ( isFirstSuperTypeOfSecond( commonSuperType, other.commonSuperType ) ) {
-			return withAdditionalTypes( ((PojoMassIndexingIndexedTypeGroup<? extends E>) other).includedTypes );
+			return withAdditionalTypes( ( (PojoMassIndexingIndexedTypeGroup<? extends E>) other ).includedTypes );
 		}
 		else if ( isFirstSuperTypeOfSecond( other.commonSuperType, commonSuperType ) ) {
-			return ((PojoMassIndexingIndexedTypeGroup<? super E>) other).withAdditionalTypes( includedTypes );
+			return ( (PojoMassIndexingIndexedTypeGroup<? super E>) other ).withAdditionalTypes( includedTypes );
 		}
 		else {
 			return null;
@@ -177,10 +181,11 @@ public class PojoMassIndexingIndexedTypeGroup<E> {
 
 	private PojoMassIndexingIndexedTypeGroup<E> withAdditionalTypes(
 			Set<? extends PojoMassIndexingIndexedTypeContext<? extends E>> otherIncludedSubTypes) {
-		Set<PojoMassIndexingIndexedTypeContext<? extends E>> mergedIncludedSubTypes
-				= new LinkedHashSet<>( includedTypes );
+		Set<PojoMassIndexingIndexedTypeContext<? extends E>> mergedIncludedSubTypes = new LinkedHashSet<>(
+				includedTypes );
 		mergedIncludedSubTypes.addAll( otherIncludedSubTypes );
-		return new PojoMassIndexingIndexedTypeGroup<>( loadingStrategy, commonSuperType, indexingContext, mappingContext,
+		return new PojoMassIndexingIndexedTypeGroup<>( loadingStrategy, commonSuperType, indexingContext,
+				mappingContext,
 				typeContextProvider, mergedIncludedSubTypes );
 	}
 }

@@ -59,7 +59,8 @@ public class ElasticsearchSearchScrollImpl<H> implements ElasticsearchSearchScro
 	public ElasticsearchSearchScrollResult<H> next() {
 		timeoutManager.start();
 
-		NonBulkableWork<ElasticsearchLoadableSearchResult<H>> scroll = ( scrollId == null ) ? firstScroll.build() :
+		NonBulkableWork<ElasticsearchLoadableSearchResult<H>> scroll = ( scrollId == null ) ?
+				firstScroll.build() :
 				workFactory.scroll( scrollId, scrollTimeoutString, searchResultExtractor )
 						.deadline( timeoutManager.deadlineOrNull(), timeoutManager.hasHardTimeout() )
 						.build();

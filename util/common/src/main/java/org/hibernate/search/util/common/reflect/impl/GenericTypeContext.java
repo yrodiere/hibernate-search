@@ -139,7 +139,8 @@ public final class GenericTypeContext {
 			throw log.cannotRequestTypeParameterOfUnparameterizedType( resolvedType, rawSuperType, typeParameterIndex );
 		}
 		else if ( typeParametersLength <= typeParameterIndex ) {
-			throw log.typeParameterIndexOutOfBound( resolvedType, rawSuperType, typeParameterIndex, typeParametersLength );
+			throw log.typeParameterIndexOutOfBound( resolvedType, rawSuperType, typeParameterIndex,
+					typeParametersLength );
 		}
 		else if ( typeParameterIndex < 0 ) {
 			throw log.invalidTypeParameterIndex( resolvedType, rawSuperType, typeParameterIndex );
@@ -248,7 +249,8 @@ public final class GenericTypeContext {
 	// Try to infer subclass type variables from the castBase
 	// E.g. if we are creating List<T>, casted from Iterable<Integer>, we can infer that T = Integer.
 	// Similarly, if we are creating Iterable<T>, casted from List<Integer>, we can infer that T = Integer.
-	private static void inferTypeMappingsFromCastBase(Map<TypeVariable<?>, Type> typeMappings, GenericTypeContext castBase) {
+	private static void inferTypeMappingsFromCastBase(Map<TypeVariable<?>, Type> typeMappings,
+			GenericTypeContext castBase) {
 		for ( Map.Entry<TypeVariable<?>, Type> baseMapping : castBase.typeMappings.entrySet() ) {
 			TypeVariable<?> baseVariable = baseMapping.getKey();
 			Type baseVariableValue = castBase.resolveType( baseVariable );

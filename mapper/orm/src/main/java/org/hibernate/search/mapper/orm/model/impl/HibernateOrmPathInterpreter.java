@@ -33,9 +33,9 @@ import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.Container
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathPropertyNode;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
+import org.hibernate.search.mapper.pojo.model.path.spi.BindablePojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathWalker;
-import org.hibernate.search.mapper.pojo.model.path.spi.BindablePojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.spi.PojoPathDefinition;
 import org.hibernate.search.mapper.pojo.model.path.spi.PojoPathDefinitionProvider;
 import org.hibernate.search.mapper.pojo.model.path.spi.PojoPathEntityStateRepresentation;
@@ -195,7 +195,7 @@ final class HibernateOrmPathInterpreter
 			this.wholePath = wholePath;
 		}
 
-		public void resolvedStringRepresentation(String ... stringRepresentationArray) {
+		public void resolvedStringRepresentation(String... stringRepresentationArray) {
 			found = true;
 			Collections.addAll( stringRepresentations, stringRepresentationArray );
 		}
@@ -246,9 +246,14 @@ final class HibernateOrmPathInterpreter
 				// (whatever the whole path points to) from the root component.
 				PojoModelPathValueNode rootComponentPath = PojoModelPath.ofValue(
 						rootComponentPropertyName, ContainerExtractorPath.noExtractors() );
-				Optional<PojoModelPathValueNode> unboundPathFromRootComponent = wholePath.relativize( rootComponentPath );
+				Optional<PojoModelPathValueNode> unboundPathFromRootComponent = wholePath.relativize(
+						rootComponentPath );
 				if ( !unboundPathFromRootComponent.isPresent() ) {
-					throw new AssertionFailure( "Cannot relativize '" + rootComponentPath + "' to '" + wholePath + "'." );
+					throw new AssertionFailure( "Cannot relativize '"
+							+ rootComponentPath
+							+ "' to '"
+							+ wholePath
+							+ "'." );
 				}
 				pathFromStateArrayElement = Optional.of( new BindablePojoModelPath(
 						typeModel.property( rootComponentPropertyName ).typeModel(),
@@ -256,11 +261,14 @@ final class HibernateOrmPathInterpreter
 				) );
 			}
 
-			int ordinalInStateArray = propertyStringRepresentationByOrdinal.indexOf( propertyStringRepresentationForOrdinal );
+			int ordinalInStateArray = propertyStringRepresentationByOrdinal.indexOf(
+					propertyStringRepresentationForOrdinal );
 			if ( ordinalInStateArray < 0 ) {
 				throw new AssertionFailure( "Cannot find ordinal in state array for path '"
 						+ propertyStringRepresentationForOrdinal
-						+ "'. Available paths are: " + propertyStringRepresentationByOrdinal + "." );
+						+ "'. Available paths are: "
+						+ propertyStringRepresentationByOrdinal
+						+ "." );
 			}
 
 			this.entityStateRepresentation = new PojoPathEntityStateRepresentation( ordinalInStateArray,
@@ -329,7 +337,8 @@ final class HibernateOrmPathInterpreter
 		if ( extractorPath.isDefault() ) {
 			throw new AssertionFailure(
 					"Expected a non-default extractor path as per the "
-					+ PojoPathDefinitionProvider.class.getSimpleName() + " contract"
+							+ PojoPathDefinitionProvider.class.getSimpleName()
+							+ " contract"
 			);
 		}
 
@@ -408,8 +417,7 @@ final class HibernateOrmPathInterpreter
 			catch (SearchException e) {
 				throw log.unknownPathForDirtyChecking( path, e );
 			}
-		}
-		while ( extractorNameIterator.hasNext() && containedValue instanceof org.hibernate.mapping.Collection );
+		} while ( extractorNameIterator.hasNext() && containedValue instanceof org.hibernate.mapping.Collection );
 
 		if ( !extractorNameIterator.hasNext() ) {
 			// We managed to resolve the whole container value extractor list

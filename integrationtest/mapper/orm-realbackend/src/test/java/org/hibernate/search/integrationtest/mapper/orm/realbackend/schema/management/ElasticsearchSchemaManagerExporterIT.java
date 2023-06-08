@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.integrationtest.mapper.orm.realbackend.testsupport.BackendConfigurations;
@@ -65,26 +66,46 @@ public class ElasticsearchSchemaManagerExporterIT {
 		Search.mapping( entityManagerFactory ).scope( Object.class ).schemaManager().exportExpectedSchema( directory );
 
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"aliases\": {" +
-						"    \"book-write\": {" +
-						"      \"is_write_index\": true" +
-						"    }," +
-						"    \"book-read\": {" +
-						"      \"is_write_index\": false" +
-						"    }" +
-						"  }," +
-						"  \"mappings\": {" +
-						"    \"properties\": {" +
-						"      \"_entity_type\": {" +
-						"        \"type\": \"keyword\"," +
-						"        \"index\": false," +
-						"        \"doc_values\": true" +
-						"      }" +
-						"    }," +
-						"    \"dynamic\": \"strict\"" +
-						"  }," +
-						"  \"settings\": {}" +
+				"{"
+						+
+						"  \"aliases\": {"
+						+
+						"    \"book-write\": {"
+						+
+						"      \"is_write_index\": true"
+						+
+						"    },"
+						+
+						"    \"book-read\": {"
+						+
+						"      \"is_write_index\": false"
+						+
+						"    }"
+						+
+						"  },"
+						+
+						"  \"mappings\": {"
+						+
+						"    \"properties\": {"
+						+
+						"      \"_entity_type\": {"
+						+
+						"        \"type\": \"keyword\","
+						+
+						"        \"index\": false,"
+						+
+						"        \"doc_values\": true"
+						+
+						"      }"
+						+
+						"    },"
+						+
+						"    \"dynamic\": \"strict\""
+						+
+						"  },"
+						+
+						"  \"settings\": {}"
+						+
 						"}",
 				readString(
 						directory.resolve( "backend" ) // as we are using the default backend
@@ -103,33 +124,60 @@ public class ElasticsearchSchemaManagerExporterIT {
 		);
 
 		assertJsonEquals(
-				"{" +
-						"  \"aliases\": {" +
-						"    \"article-write\": {" +
-						"      \"is_write_index\": true" +
-						"    }," +
-						"    \"article-read\": {" +
-						"      \"is_write_index\": false" +
-						"    }" +
-						"  }," +
-						"  \"mappings\": {" +
-						"    \"properties\": {" +
-						"      \"_entity_type\": {" +
-						"        \"type\": \"keyword\"," +
-						"        \"index\": false," +
-						"        \"doc_values\": true" +
-						"      }," +
-						"      \"title\": {" +
-						"        \"type\": \"text\"," +
-						"        \"index\": true," +
-						"        \"norms\": true," +
-						"        \"analyzer\": \"default\"," +
-						"        \"term_vector\": \"no\"" +
-						"      }" +
-						"    }," +
-						"    \"dynamic\": \"strict\"" +
-						"  }," +
-						"  \"settings\": {}" +
+				"{"
+						+
+						"  \"aliases\": {"
+						+
+						"    \"article-write\": {"
+						+
+						"      \"is_write_index\": true"
+						+
+						"    },"
+						+
+						"    \"article-read\": {"
+						+
+						"      \"is_write_index\": false"
+						+
+						"    }"
+						+
+						"  },"
+						+
+						"  \"mappings\": {"
+						+
+						"    \"properties\": {"
+						+
+						"      \"_entity_type\": {"
+						+
+						"        \"type\": \"keyword\","
+						+
+						"        \"index\": false,"
+						+
+						"        \"doc_values\": true"
+						+
+						"      },"
+						+
+						"      \"title\": {"
+						+
+						"        \"type\": \"text\","
+						+
+						"        \"index\": true,"
+						+
+						"        \"norms\": true,"
+						+
+						"        \"analyzer\": \"default\","
+						+
+						"        \"term_vector\": \"no\""
+						+
+						"      }"
+						+
+						"    },"
+						+
+						"    \"dynamic\": \"strict\""
+						+
+						"  },"
+						+
+						"  \"settings\": {}"
+						+
 						"}",
 				readString(
 						directory.resolve( "backends" ) // as we are not using the default backend

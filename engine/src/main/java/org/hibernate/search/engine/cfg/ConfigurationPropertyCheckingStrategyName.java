@@ -18,11 +18,11 @@ public enum ConfigurationPropertyCheckingStrategyName {
 	 * Ignore the result of configuration property checking.
 	 * Do not do anything if a Hibernate Search configuration property is set, but never used.
 	 */
-	IGNORE( "ignore" ),
+	IGNORE("ignore"),
 	/**
 	 * Log a warning if a Hibernate Search configuration property is set, but never used.
 	 */
-	WARN( "warn" );
+	WARN("warn");
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 

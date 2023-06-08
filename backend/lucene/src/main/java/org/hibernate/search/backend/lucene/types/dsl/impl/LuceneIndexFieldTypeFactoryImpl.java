@@ -36,8 +36,6 @@ import org.hibernate.search.engine.spatial.GeoPoint;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 import org.hibernate.search.util.common.reporting.EventContext;
 
-
-
 public class LuceneIndexFieldTypeFactoryImpl
 		implements LuceneIndexFieldTypeFactory, LuceneIndexFieldTypeBuildContext {
 
@@ -49,7 +47,8 @@ public class LuceneIndexFieldTypeFactoryImpl
 	private final IndexFieldTypeDefaultsProvider typeDefaultsProvider;
 
 	public LuceneIndexFieldTypeFactoryImpl(EventContext eventContext,
-			BackendMapperContext backendMapperContext, LuceneAnalysisDefinitionRegistry analysisDefinitionRegistry, IndexFieldTypeDefaultsProvider typeDefaultsProvider) {
+			BackendMapperContext backendMapperContext, LuceneAnalysisDefinitionRegistry analysisDefinitionRegistry,
+			IndexFieldTypeDefaultsProvider typeDefaultsProvider) {
 		this.eventContext = eventContext;
 		this.backendMapperContext = backendMapperContext;
 		this.analysisDefinitionRegistry = analysisDefinitionRegistry;

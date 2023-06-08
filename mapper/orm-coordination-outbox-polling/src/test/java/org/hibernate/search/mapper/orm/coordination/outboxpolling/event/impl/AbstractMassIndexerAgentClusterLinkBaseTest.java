@@ -67,12 +67,12 @@ abstract class AbstractMassIndexerAgentClusterLinkBaseTest extends AbstractMassI
 	protected final MassIndexerAgentClusterLinkPulseExpectations expectInitialStateAndPulseAfterDelay(Duration delay) {
 		return expect().pulseAgain( NOW.plus( delay ) )
 				.agent( SELF_ID, repositoryMockHelper.selfInitialState() != null
-						// If self created before this pulse:
+				// If self created before this pulse:
 						? repositoryMockHelper.selfInitialState()
 						// If self created by this pulse:
 						: AgentState.SUSPENDED )
 				.expiration( repositoryMockHelper.selfInitialExpiration() != null
-						// If self created before this pulse:
+				// If self created before this pulse:
 						? repositoryMockHelper.selfInitialExpiration()
 						// If self created by this pulse:
 						: NOW.plus( PULSE_EXPIRATION ) )
@@ -92,7 +92,9 @@ abstract class AbstractMassIndexerAgentClusterLinkBaseTest extends AbstractMassI
 	}
 
 	protected abstract UUID other1Id();
+
 	protected abstract UUID other2Id();
+
 	protected abstract UUID other3Id();
 
 	protected abstract AgentType otherType();
@@ -110,7 +112,9 @@ abstract class AbstractMassIndexerAgentClusterLinkBaseTest extends AbstractMassI
 			case 3:
 				return new ShardAssignmentDescriptor( 4, 3 );
 			default:
-				throw new IllegalArgumentException( "Other with number " + otherNumber + " is not in the 4 node cluster." );
+				throw new IllegalArgumentException( "Other with number "
+						+ otherNumber
+						+ " is not in the 4 node cluster." );
 		}
 	}
 

@@ -48,12 +48,11 @@ public class DecimalScaleIT {
 
 	@Test
 	public void noDecimalScale_bigDecimal() {
-		assertThatThrownBy( () ->
-				setupHelper.start()
-						.withIndex( StubMappedIndex.ofNonRetrievable(
-								root -> root.field( "noScaled", f -> f.asBigDecimal() ).toReference()
-						) )
-						.setup()
+		assertThatThrownBy( () -> setupHelper.start()
+				.withIndex( StubMappedIndex.ofNonRetrievable(
+						root -> root.field( "noScaled", f -> f.asBigDecimal() ).toReference()
+				) )
+				.setup()
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid index field type: missing decimal scale",
@@ -62,12 +61,11 @@ public class DecimalScaleIT {
 
 	@Test
 	public void noDecimalScale_bigInteger() {
-		assertThatThrownBy( () ->
-				setupHelper.start()
-						.withIndex( StubMappedIndex.ofNonRetrievable(
-								root -> root.field( "noScaled", f -> f.asBigInteger() ).toReference()
-						) )
-						.setup()
+		assertThatThrownBy( () -> setupHelper.start()
+				.withIndex( StubMappedIndex.ofNonRetrievable(
+						root -> root.field( "noScaled", f -> f.asBigInteger() ).toReference()
+				) )
+				.setup()
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid index field type: missing decimal scale",
@@ -76,12 +74,11 @@ public class DecimalScaleIT {
 
 	@Test
 	public void positiveDecimalScale_bigInteger() {
-		assertThatThrownBy( () ->
-				setupHelper.start()
-						.withIndex( StubMappedIndex.ofNonRetrievable(
-								root -> root.field( "positiveScaled", f -> f.asBigInteger().decimalScale( 3 ) ).toReference()
-						) )
-						.setup()
+		assertThatThrownBy( () -> setupHelper.start()
+				.withIndex( StubMappedIndex.ofNonRetrievable(
+						root -> root.field( "positiveScaled", f -> f.asBigInteger().decimalScale( 3 ) ).toReference()
+				) )
+				.setup()
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid index field type: decimal scale '3' is positive",
@@ -189,8 +186,10 @@ public class DecimalScaleIT {
 		 */
 		BigDecimal originalValue = bigDecimalWithOnes( INDEX_PRECISION, 50, schemaDecimalScale );
 		BigDecimal estimatedIndexedValue = bigDecimalWithOnes( INDEX_PRECISION, 0, schemaDecimalScale );
-		BigDecimal indexedValueLowerBound = estimatedIndexedValue.subtract( new BigDecimal( BigInteger.ONE, schemaDecimalScale ) );
-		BigDecimal indexedValueUpperBound = estimatedIndexedValue.add( new BigDecimal( BigInteger.ONE, schemaDecimalScale ) );
+		BigDecimal indexedValueLowerBound = estimatedIndexedValue.subtract( new BigDecimal( BigInteger.ONE,
+				schemaDecimalScale ) );
+		BigDecimal indexedValueUpperBound = estimatedIndexedValue.add( new BigDecimal( BigInteger.ONE,
+				schemaDecimalScale ) );
 		assertThat( originalValue )
 				.isBetween( indexedValueLowerBound, indexedValueUpperBound );
 
@@ -226,8 +225,10 @@ public class DecimalScaleIT {
 		 */
 		BigDecimal originalValue = bigDecimalWithOnes( INDEX_PRECISION, 5, schemaDecimalScale );
 		BigDecimal estimatedIndexedValue = bigDecimalWithOnes( INDEX_PRECISION, 0, schemaDecimalScale );
-		BigDecimal indexedValueLowerBound = estimatedIndexedValue.subtract( new BigDecimal( BigInteger.ONE, schemaDecimalScale ) );
-		BigDecimal indexedValueUpperBound = estimatedIndexedValue.add( new BigDecimal( BigInteger.ONE, schemaDecimalScale ) );
+		BigDecimal indexedValueLowerBound = estimatedIndexedValue.subtract( new BigDecimal( BigInteger.ONE,
+				schemaDecimalScale ) );
+		BigDecimal indexedValueUpperBound = estimatedIndexedValue.add( new BigDecimal( BigInteger.ONE,
+				schemaDecimalScale ) );
 		assertThat( originalValue )
 				.isBetween( indexedValueLowerBound, indexedValueUpperBound );
 
@@ -262,9 +263,12 @@ public class DecimalScaleIT {
 		 * 111111111111(...)111112.0 * 10^275
 		 */
 		BigInteger originalValue = bigDecimalWithOnes( INDEX_PRECISION, 100, schemaDecimalScale ).toBigIntegerExact();
-		BigInteger estimatedIndexedValue = bigDecimalWithOnes( INDEX_PRECISION, 0, schemaDecimalScale ).toBigIntegerExact();
-		BigInteger indexedValueLowerBound = estimatedIndexedValue.subtract( new BigDecimal( BigInteger.ONE, schemaDecimalScale ).toBigIntegerExact() );
-		BigInteger indexedValueUpperBound = estimatedIndexedValue.add( new BigDecimal( BigInteger.ONE, schemaDecimalScale ).toBigIntegerExact() );
+		BigInteger estimatedIndexedValue = bigDecimalWithOnes( INDEX_PRECISION, 0, schemaDecimalScale )
+				.toBigIntegerExact();
+		BigInteger indexedValueLowerBound = estimatedIndexedValue.subtract( new BigDecimal( BigInteger.ONE,
+				schemaDecimalScale ).toBigIntegerExact() );
+		BigInteger indexedValueUpperBound = estimatedIndexedValue.add( new BigDecimal( BigInteger.ONE,
+				schemaDecimalScale ).toBigIntegerExact() );
 		assertThat( originalValue )
 				.isBetween( indexedValueLowerBound, indexedValueUpperBound );
 
@@ -396,8 +400,8 @@ public class DecimalScaleIT {
 		);
 
 		assertThatThrownBy( () -> index.createScope()
-			.query().selectEntityReference()
-			.where( p -> p.range().field( "scaled" ).atMost( tooLargeDecimal ) )
+				.query().selectEntityReference()
+				.where( p -> p.range().field( "scaled" ).atMost( tooLargeDecimal ) )
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Unable to encode value '" + tooLargeDecimal.toString() + "'",
@@ -482,8 +486,8 @@ public class DecimalScaleIT {
 		);
 
 		assertThatThrownBy( () -> index.createScope()
-			.query().selectEntityReference()
-			.where( p -> p.range().field( "scaled" ).atLeast( tooLargeInteger ) )
+				.query().selectEntityReference()
+				.where( p -> p.range().field( "scaled" ).atLeast( tooLargeInteger ) )
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Unable to encode value '" + tooLargeInteger.toString() + "'",
@@ -523,7 +527,7 @@ public class DecimalScaleIT {
 		BigDecimal tooLargeDecimal = BigDecimal.valueOf( Long.MIN_VALUE ).divide( BigDecimal.TEN );
 
 		assertThatThrownBy( () -> index.index(
-					"1", doc -> doc.addValue( index.binding().scaled, tooLargeDecimal )
+				"1", doc -> doc.addValue( index.binding().scaled, tooLargeDecimal )
 		) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Unable to encode value '" + tooLargeDecimal.toString() + "'",
@@ -790,7 +794,8 @@ public class DecimalScaleIT {
 		IndexFieldReference<BigDecimal> scaled;
 
 		DecimalScaleIndexBinding(IndexSchemaElement root, int decimalScale) {
-			scaled = root.field( "scaled", f -> f.asBigDecimal().projectable( Projectable.YES ).decimalScale( decimalScale ) ).toReference();
+			scaled = root.field( "scaled", f -> f.asBigDecimal().projectable( Projectable.YES ).decimalScale(
+					decimalScale ) ).toReference();
 		}
 	}
 
@@ -799,7 +804,8 @@ public class DecimalScaleIT {
 
 		DefaultDecimalScaleIndexBinding(IndexedEntityBindingContext ctx) {
 			scaled = ctx.schemaElement()
-					.field( "scaled", ctx.createTypeFactory( new IndexFieldTypeDefaultsProvider( 2 ) ).asBigDecimal() ).toReference();
+					.field( "scaled", ctx.createTypeFactory( new IndexFieldTypeDefaultsProvider( 2 ) ).asBigDecimal() )
+					.toReference();
 		}
 	}
 
@@ -819,7 +825,8 @@ public class DecimalScaleIT {
 		IndexFieldReference<BigInteger> scaled;
 
 		IntegerScaleIndexBinding(IndexSchemaElement root, int decimalScale) {
-			scaled = root.field( "scaled", f -> f.asBigInteger().projectable( Projectable.YES ).decimalScale( decimalScale ) ).toReference();
+			scaled = root.field( "scaled", f -> f.asBigInteger().projectable( Projectable.YES ).decimalScale(
+					decimalScale ) ).toReference();
 		}
 	}
 
@@ -828,7 +835,8 @@ public class DecimalScaleIT {
 
 		DefaultIntegerScaleIndexBinding(IndexedEntityBindingContext ctx) {
 			scaled = ctx.schemaElement()
-					.field( "scaled", ctx.createTypeFactory( new IndexFieldTypeDefaultsProvider( -2 ) ).asBigInteger() ).toReference();
+					.field( "scaled", ctx.createTypeFactory( new IndexFieldTypeDefaultsProvider( -2 ) ).asBigInteger() )
+					.toReference();
 		}
 	}
 

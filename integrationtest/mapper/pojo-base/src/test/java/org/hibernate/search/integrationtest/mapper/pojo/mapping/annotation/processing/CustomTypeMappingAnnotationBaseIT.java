@@ -17,8 +17,6 @@ import java.lang.annotation.Target;
 import java.lang.invoke.MethodHandles;
 import java.util.Optional;
 
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.MappingAnnotatedType;
@@ -27,10 +25,12 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.TypeMappingAnnotationProcessorContext;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.TypeMappingAnnotationProcessorRef;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.TypeMappingStep;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.common.reporting.EventContext;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -49,7 +49,8 @@ public class CustomTypeMappingAnnotationBaseIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	/**
 	 * Basic test checking that a simple type mapping will be applied as expected.
@@ -64,8 +65,7 @@ public class CustomTypeMappingAnnotationBaseIT {
 			String text;
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.field( "myText", String.class )
+		backendMock.expectSchema( INDEX_NAME, b -> b.field( "myText", String.class )
 		);
 
 		SearchMapping mapping = setupHelper.start().expectCustomBeans()
@@ -74,7 +74,7 @@ public class CustomTypeMappingAnnotationBaseIT {
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.TYPE})
+	@Target({ ElementType.TYPE })
 	@TypeMapping(processor = @TypeMappingAnnotationProcessorRef(type = WorkingAnnotation.Processor.class))
 	private @interface WorkingAnnotation {
 		class Processor implements TypeMappingAnnotationProcessor<WorkingAnnotation> {
@@ -102,7 +102,8 @@ public class CustomTypeMappingAnnotationBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.annotationTypeContext( AnnotationWithEmptyProcessorRef.class )
 						.failure( "Empty annotation processor reference in meta-annotation '"
-								+ TypeMapping.class.getName() + "'" ) );
+								+ TypeMapping.class.getName()
+								+ "'" ) );
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
@@ -125,7 +126,8 @@ public class CustomTypeMappingAnnotationBaseIT {
 						.annotationTypeContext( AnnotationWithProcessorWithDifferentAnnotationType.class )
 						.failure( "Invalid annotation processor: '" + DifferentAnnotationType.Processor.TO_STRING + "'",
 								"This processor expects annotations of a different type: '"
-										+ DifferentAnnotationType.class.getName() + "'" ) );
+										+ DifferentAnnotationType.class.getName()
+										+ "'" ) );
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
@@ -137,11 +139,13 @@ public class CustomTypeMappingAnnotationBaseIT {
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.TYPE)
 	private @interface DifferentAnnotationType {
-		class Processor implements TypeMappingAnnotationProcessor<CustomTypeMappingAnnotationBaseIT.DifferentAnnotationType> {
+		class Processor
+				implements TypeMappingAnnotationProcessor<CustomTypeMappingAnnotationBaseIT.DifferentAnnotationType> {
 			public static final String TO_STRING = "DifferentAnnotationType.Processor";
 
 			@Override
-			public void process(TypeMappingStep mapping, CustomTypeMappingAnnotationBaseIT.DifferentAnnotationType annotation,
+			public void process(TypeMappingStep mapping,
+					CustomTypeMappingAnnotationBaseIT.DifferentAnnotationType annotation,
 					TypeMappingAnnotationProcessorContext context) {
 				throw new UnsupportedOperationException( "This should not be called" );
 			}
@@ -228,7 +232,7 @@ public class CustomTypeMappingAnnotationBaseIT {
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.TYPE})
+	@Target({ ElementType.TYPE })
 	@TypeMapping(processor = @TypeMappingAnnotationProcessorRef(type = AnnotatedElementAwareAnnotation.Processor.class))
 	private @interface AnnotatedElementAwareAnnotation {
 		class Processor implements TypeMappingAnnotationProcessor<AnnotatedElementAwareAnnotation> {
@@ -258,17 +262,17 @@ public class CustomTypeMappingAnnotationBaseIT {
 				}
 				else if ( annotatedElement.javaClass().getName().endsWith( "IndexedEntityType4" )
 						|| annotatedElement.javaClass().getName().endsWith( "IndexedEntityType5" ) ) {
-					annotatedElement.allAnnotations()
-							.filter( a -> MultiFieldAnnotation.class.equals( a.annotationType() ) )
-							.map( a -> ( (MultiFieldAnnotation) a ).name() )
-							.forEach( name -> mapping.property( "longProperty" ).genericField( name ) );
-				}
+							annotatedElement.allAnnotations()
+									.filter( a -> MultiFieldAnnotation.class.equals( a.annotationType() ) )
+									.map( a -> ( (MultiFieldAnnotation) a ).name() )
+									.forEach( name -> mapping.property( "longProperty" ).genericField( name ) );
+						}
 			}
 		}
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.TYPE})
+	@Target({ ElementType.TYPE })
 	private @interface AnalyzerAnnotation {
 
 		String name();
@@ -276,7 +280,7 @@ public class CustomTypeMappingAnnotationBaseIT {
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.TYPE})
+	@Target({ ElementType.TYPE })
 	@Repeatable(MultiFieldAnnotation.List.class)
 	// Must be public in order for Hibernate Search to be able to access List#value
 	public @interface MultiFieldAnnotation {
@@ -284,7 +288,7 @@ public class CustomTypeMappingAnnotationBaseIT {
 		String name();
 
 		@Retention(RetentionPolicy.RUNTIME)
-		@Target({ElementType.TYPE})
+		@Target({ ElementType.TYPE })
 		@interface List {
 			MultiFieldAnnotation[] value();
 		}
@@ -298,10 +302,12 @@ public class CustomTypeMappingAnnotationBaseIT {
 		class IndexedEntityType {
 			Integer id;
 			String text;
+
 			@DocumentId
 			public Integer getId() {
 				return id;
 			}
+
 			public String getText() {
 				return text;
 			}
@@ -319,12 +325,15 @@ public class CustomTypeMappingAnnotationBaseIT {
 		// but the annotation can be rendered differently depending on the JDK in use...
 		// See https://bugs.openjdk.java.net/browse/JDK-8282230
 		assertThat( EventContextAwareAnnotation.Processor.lastProcessedContext.render() )
-				.matches( "\\Qtype '" + IndexedEntityType.class.getName() + "', annotation '@\\E.*"
-						+ EventContextAwareAnnotation.class.getSimpleName() + "\\Q()\\E'" );
+				.matches( "\\Qtype '"
+						+ IndexedEntityType.class.getName()
+						+ "', annotation '@\\E.*"
+						+ EventContextAwareAnnotation.class.getSimpleName()
+						+ "\\Q()\\E'" );
 	}
 
 	@Retention(RetentionPolicy.RUNTIME)
-	@Target({ElementType.TYPE})
+	@Target({ ElementType.TYPE })
 	@TypeMapping(processor = @TypeMappingAnnotationProcessorRef(type = EventContextAwareAnnotation.Processor.class))
 	private @interface EventContextAwareAnnotation {
 

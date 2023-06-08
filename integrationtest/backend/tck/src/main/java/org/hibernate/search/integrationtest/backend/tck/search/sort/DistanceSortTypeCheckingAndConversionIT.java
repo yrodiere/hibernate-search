@@ -89,7 +89,8 @@ public class DistanceSortTypeCheckingAndConversionIT {
 	@BeforeClass
 	public static void setup() {
 		setupHelper.start()
-				.withIndexes( mainIndex, compatibleIndex, rawFieldCompatibleIndex, missingFieldIndex, incompatibleIndex )
+				.withIndexes( mainIndex, compatibleIndex, rawFieldCompatibleIndex, missingFieldIndex,
+						incompatibleIndex )
 				.setup();
 
 		initData();
@@ -105,7 +106,7 @@ public class DistanceSortTypeCheckingAndConversionIT {
 		String fieldPath = getNonSortableFieldPath();
 
 		assertThatThrownBy( () -> {
-				scope.sort().distance( fieldPath, CENTER_POINT );
+			scope.sort().distance( fieldPath, CENTER_POINT );
 		} )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
@@ -188,7 +189,8 @@ public class DistanceSortTypeCheckingAndConversionIT {
 	public void multiIndex_withMissingFieldIndex_nested() {
 		assumeTrue(
 				"This backend doesn't support distance sorts on a nested field that is missing from some of the target indexes.",
-				TckConfiguration.get().getBackendFeatures().supportsDistanceSortWhenNestedFieldMissingInSomeTargetIndexes()
+				TckConfiguration.get().getBackendFeatures()
+						.supportsDistanceSortWhenNestedFieldMissingInSomeTargetIndexes()
 		);
 
 		StubMappingScope scope = mainIndex.createScope( missingFieldIndex );
@@ -225,7 +227,9 @@ public class DistanceSortTypeCheckingAndConversionIT {
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Inconsistent support for 'sort:distance'"
 				)
 				.satisfies( FailureReportUtils.hasContext(
@@ -275,7 +279,8 @@ public class DistanceSortTypeCheckingAndConversionIT {
 		addValue( indexBinding.nested.fieldWithDslConverterModel, nested, ordinal );
 	}
 
-	private static void addValue(SimpleFieldModel<GeoPoint> fieldModel, DocumentElement documentElement, Integer ordinal) {
+	private static void addValue(SimpleFieldModel<GeoPoint> fieldModel, DocumentElement documentElement,
+			Integer ordinal) {
 		if ( ordinal == null ) {
 			return;
 		}
@@ -300,9 +305,10 @@ public class DistanceSortTypeCheckingAndConversionIT {
 				} );
 		BulkIndexer rawFieldCompatibleIndexer = rawFieldCompatibleIndex.bulkIndexer()
 				.add( RAW_FIELD_COMPATIBLE_INDEX_DOCUMENT_1,
-						document -> initDocument( rawFieldCompatibleIndex.binding(), document, BETWEEN_DOCUMENT_1_AND_2_ORDINAL ) );
+						document -> initDocument( rawFieldCompatibleIndex.binding(), document,
+								BETWEEN_DOCUMENT_1_AND_2_ORDINAL ) );
 		BulkIndexer missingFieldIndexer = missingFieldIndex.bulkIndexer()
-				.add( MISSING_FIELD_INDEX_DOCUMENT_1, document -> { } );
+				.add( MISSING_FIELD_INDEX_DOCUMENT_1, document -> {} );
 		mainIndexer.join( compatibleIndexer, rawFieldCompatibleIndexer, missingFieldIndexer );
 	}
 
@@ -333,7 +339,7 @@ public class DistanceSortTypeCheckingAndConversionIT {
 		private final FirstLevelObjectMapping nested;
 
 		IndexBinding(IndexSchemaElement root) {
-			this( root, ignored -> { } );
+			this( root, ignored -> {} );
 		}
 
 		IndexBinding(IndexSchemaElement root,
@@ -368,7 +374,7 @@ public class DistanceSortTypeCheckingAndConversionIT {
 		final SimpleFieldModel<GeoPoint> fieldWithDslConverterModel;
 
 		CompatibleIndexBinding(IndexSchemaElement root) {
-			this( root, ignored -> { } );
+			this( root, ignored -> {} );
 		}
 
 		CompatibleIndexBinding(IndexSchemaElement root,

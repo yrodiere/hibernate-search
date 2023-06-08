@@ -67,7 +67,8 @@ public class LuceneSimpleQueryStringPredicate extends AbstractLuceneNestablePred
 		private final LuceneAnalysisDefinitionRegistry analysisDefinitionRegistry;
 
 		private LuceneSimpleQueryStringPredicateBuilderFieldState firstFieldState;
-		private final Map<String, LuceneSimpleQueryStringPredicateBuilderFieldState> fieldStates = new LinkedHashMap<>();
+		private final Map<String, LuceneSimpleQueryStringPredicateBuilderFieldState> fieldStates =
+				new LinkedHashMap<>();
 		private Occur defaultOperator = Occur.SHOULD;
 		private String simpleQueryString;
 		private Analyzer overrideAnalyzer;
@@ -105,7 +106,8 @@ public class LuceneSimpleQueryStringPredicate extends AbstractLuceneNestablePred
 					firstFieldState = fieldState;
 				}
 				else {
-					SearchIndexSchemaElementContextHelper.checkNestedDocumentPathCompatibility( firstFieldState.field(), fieldState.field() );
+					SearchIndexSchemaElementContextHelper.checkNestedDocumentPathCompatibility( firstFieldState.field(),
+							fieldState.field() );
 				}
 				fieldStates.put( fieldPath, fieldState );
 			}
@@ -121,7 +123,8 @@ public class LuceneSimpleQueryStringPredicate extends AbstractLuceneNestablePred
 		public void analyzer(String analyzerName) {
 			this.overrideAnalyzer = analysisDefinitionRegistry.getAnalyzerDefinition( analyzerName );
 			if ( overrideAnalyzer == null ) {
-				throw log.unknownAnalyzer( analyzerName, EventContexts.fromIndexNames( scope.hibernateSearchIndexNames() ) );
+				throw log.unknownAnalyzer( analyzerName, EventContexts.fromIndexNames( scope
+						.hibernateSearchIndexNames() ) );
 			}
 		}
 

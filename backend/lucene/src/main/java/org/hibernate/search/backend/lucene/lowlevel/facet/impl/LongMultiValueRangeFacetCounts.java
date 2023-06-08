@@ -9,8 +9,12 @@ package org.hibernate.search.backend.lucene.lowlevel.facet.impl;
 import java.io.IOException;
 import java.util.List;
 
+import org.hibernate.search.backend.lucene.lowlevel.docvalues.impl.LongMultiValues;
+import org.hibernate.search.backend.lucene.lowlevel.docvalues.impl.LongMultiValuesSource;
+
 import com.carrotsearch.hppc.IntHashSet;
 import com.carrotsearch.hppc.procedures.IntProcedure;
+
 import org.apache.lucene.facet.FacetsCollector;
 import org.apache.lucene.facet.range.LongRange;
 import org.apache.lucene.index.IndexReaderContext;
@@ -22,9 +26,6 @@ import org.apache.lucene.search.ScoreMode;
 import org.apache.lucene.search.Scorer;
 import org.apache.lucene.search.Weight;
 
-import org.hibernate.search.backend.lucene.lowlevel.docvalues.impl.LongMultiValues;
-import org.hibernate.search.backend.lucene.lowlevel.docvalues.impl.LongMultiValuesSource;
-
 /**
  * <p>
  * Copied with some changes from {@code org.apache.lucene.facet.range.LongRangeFacetCounts}
@@ -32,16 +33,19 @@ import org.hibernate.search.backend.lucene.lowlevel.docvalues.impl.LongMultiValu
  */
 public class LongMultiValueRangeFacetCounts extends MultiValueRangeFacetCounts {
 
-	public LongMultiValueRangeFacetCounts(String field, LongMultiValuesSource valueSource, FacetsCollector hits, LongRange... ranges) throws IOException {
+	public LongMultiValueRangeFacetCounts(String field, LongMultiValuesSource valueSource, FacetsCollector hits,
+			LongRange... ranges) throws IOException {
 		this( field, valueSource, hits, null, ranges );
 	}
 
-	public LongMultiValueRangeFacetCounts(String field, LongMultiValuesSource valueSource, FacetsCollector hits, Query fastMatchQuery, LongRange... ranges) throws IOException {
+	public LongMultiValueRangeFacetCounts(String field, LongMultiValuesSource valueSource, FacetsCollector hits,
+			Query fastMatchQuery, LongRange... ranges) throws IOException {
 		super( field, ranges, fastMatchQuery );
 		count( valueSource, hits.getMatchingDocs() );
 	}
 
-	private void count(LongMultiValuesSource valueSource, List<FacetsCollector.MatchingDocs> matchingDocs) throws IOException {
+	private void count(LongMultiValuesSource valueSource, List<
+			FacetsCollector.MatchingDocs> matchingDocs) throws IOException {
 		LongRange[] longRanges = (LongRange[]) this.ranges;
 
 		IntHashSet uniqueLeafIndicesForDocument = new IntHashSet();
@@ -58,7 +62,8 @@ public class LongMultiValueRangeFacetCounts extends MultiValueRangeFacetCounts {
 				final IndexReaderContext topLevelContext = ReaderUtil.getTopLevelContext( hits.context );
 				final IndexSearcher searcher = new IndexSearcher( topLevelContext );
 				searcher.setQueryCache( null );
-				final Weight fastMatchWeight = searcher.createWeight( searcher.rewrite( fastMatchQuery ), ScoreMode.COMPLETE_NO_SCORES, 1 );
+				final Weight fastMatchWeight = searcher.createWeight( searcher.rewrite( fastMatchQuery ),
+						ScoreMode.COMPLETE_NO_SCORES, 1 );
 				Scorer s = fastMatchWeight.scorer( hits.context );
 				if ( s == null ) {
 					continue;

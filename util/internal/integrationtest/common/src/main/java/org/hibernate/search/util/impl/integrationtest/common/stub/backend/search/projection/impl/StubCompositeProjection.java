@@ -50,7 +50,8 @@ class StubCompositeProjection<E, V, A, P> extends StubSearchProjection<P> {
 			E extractedData = compositor.createInitial();
 			Iterator<?> innerProjectionFromIndex = ( (List<?>) innerProjectionsFromIndex ).iterator();
 			for ( int i = 0; i < inners.length; i++ ) {
-				Object extractedDataForInner = inners[i].extract( projectionHitMapper, innerProjectionFromIndex, context );
+				Object extractedDataForInner = inners[i].extract( projectionHitMapper, innerProjectionFromIndex,
+						context );
 				extractedData = compositor.set( extractedData, i, extractedDataForInner );
 			}
 			accumulated = accumulator.accumulate( accumulated, extractedData );
@@ -97,10 +98,11 @@ class StubCompositeProjection<E, V, A, P> extends StubSearchProjection<P> {
 		}
 
 		@Override
-		public final <E, V, P> SearchProjection<P> build(SearchProjection<?>[] inners, ProjectionCompositor<E, V> compositor,
+		public final <E, V, P> SearchProjection<P> build(SearchProjection<?>[] inners, ProjectionCompositor<E,
+				V> compositor,
 				ProjectionAccumulator.Provider<V, P> accumulatorProvider) {
 			StubSearchProjection<?>[] typedInners =
-					new StubSearchProjection<?>[ inners.length ];
+					new StubSearchProjection<?>[inners.length];
 			for ( int i = 0; i < inners.length; i++ ) {
 				typedInners[i] = StubSearchProjection.from( inners[i] );
 			}

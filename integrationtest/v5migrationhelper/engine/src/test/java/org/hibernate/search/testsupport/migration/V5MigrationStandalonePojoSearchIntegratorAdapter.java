@@ -20,6 +20,7 @@ public class V5MigrationStandalonePojoSearchIntegratorAdapter implements SearchI
 
 	@Override
 	public V5MigrationSearchScope scope(Class<?>... targetTypes) {
-		return new V5MigrationStandalonePojoSearchScopeAdapter( delegate.scope( CollectionHelper.asSet( targetTypes ) ) );
+		return new V5MigrationStandalonePojoSearchScopeAdapter( delegate.scope( CollectionHelper.asSet(
+				targetTypes ) ) );
 	}
 }

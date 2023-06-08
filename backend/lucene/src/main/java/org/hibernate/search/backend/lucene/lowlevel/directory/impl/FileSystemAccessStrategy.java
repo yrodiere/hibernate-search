@@ -27,8 +27,7 @@ enum FileSystemAccessStrategy {
 	/**
 	 * @deprecated This strategy will be removed in a future version of Lucene.
 	 */
-	@Deprecated
-	SIMPLE {
+	@Deprecated SIMPLE {
 		@Override
 		public FSDirectory createDirectory(Path indexDir, LockFactory factory) throws IOException {
 			return new org.apache.lucene.store.SimpleFSDirectory( indexDir, factory );

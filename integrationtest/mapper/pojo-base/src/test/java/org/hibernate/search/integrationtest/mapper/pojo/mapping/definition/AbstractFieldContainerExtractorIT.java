@@ -24,13 +24,13 @@ import java.util.TreeSet;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.bridge.ValueBridge;
 import org.hibernate.search.mapper.pojo.bridge.runtime.ValueBridgeToIndexedValueContext;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.impl.CollectionHelper;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -54,7 +54,8 @@ public abstract class AbstractFieldContainerExtractorIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private final TestModelProvider testModelProvider;
 
@@ -144,7 +145,8 @@ public abstract class AbstractFieldContainerExtractorIT {
 		doTest(
 				testModelProvider.floatArray(),
 				Float.class, true,
-				new float[] { 0.0f, 14.48f, Float.MAX_VALUE, -55454.0f, Float.MIN_VALUE, -Float.MAX_VALUE, -Float.MIN_VALUE },
+				new float[] { 0.0f, 14.48f, Float.MAX_VALUE, -55454.0f, Float.MIN_VALUE, -Float.MAX_VALUE,
+						-Float.MIN_VALUE },
 				0.0f, 14.48f, Float.MAX_VALUE, -55454.0f, Float.MIN_VALUE, -Float.MAX_VALUE, -Float.MIN_VALUE
 		);
 	}
@@ -155,7 +157,8 @@ public abstract class AbstractFieldContainerExtractorIT {
 		doTest(
 				testModelProvider.doubleArray(),
 				Double.class, true,
-				new double[] { 0.0, 14.48, Double.MAX_VALUE, -55454.0, Double.MIN_VALUE, -Double.MAX_VALUE, -Double.MIN_VALUE },
+				new double[] { 0.0, 14.48, Double.MAX_VALUE, -55454.0, Double.MIN_VALUE, -Double.MAX_VALUE,
+						-Double.MIN_VALUE },
 				0.0, 14.48, Double.MAX_VALUE, -55454.0, Double.MIN_VALUE, -Double.MAX_VALUE, -Double.MIN_VALUE
 		);
 	}
@@ -385,7 +388,7 @@ public abstract class AbstractFieldContainerExtractorIT {
 
 	@SafeVarargs
 	final <E, P, F> void doTest(Supplier<StandalonePojoMappingSetupHelper.SetupContext> startSetup,
-				TestModel<E, P> testModel, Class<F> indexedFieldType, boolean multiValued,
+			TestModel<E, P> testModel, Class<F> indexedFieldType, boolean multiValued,
 			P propertyValue, F firstIndexedFieldValues, F... otherIndexedFieldValues) {
 		// Schema
 		backendMock.expectSchema( INDEX_NAME, b -> b
@@ -421,7 +424,7 @@ public abstract class AbstractFieldContainerExtractorIT {
 			session.indexingPlan().add( entity1 );
 
 			backendMock.expectWorks( INDEX_NAME )
-					.add( "2", b -> { } );
+					.add( "2", b -> {} );
 		}
 		backendMock.verifyExpectationsMet();
 	}
@@ -447,7 +450,7 @@ public abstract class AbstractFieldContainerExtractorIT {
 			session.indexingPlan().add( entity1 );
 
 			backendMock.expectWorks( INDEX_NAME )
-					.add( "1", b -> { } );
+					.add( "1", b -> {} );
 		}
 		backendMock.verifyExpectationsMet();
 
@@ -456,12 +459,12 @@ public abstract class AbstractFieldContainerExtractorIT {
 	}
 
 	public enum MyEnum {
-		VALUE1,
-		VALUE2
+		VALUE1, VALUE2
 	}
 
 	public static class PrefixedStringBridge implements ValueBridge<String, String> {
 		public static final String PREFIX = "Prefix - ";
+
 		@Override
 		public String toIndexedValue(String value,
 				ValueBridgeToIndexedValueContext context) {
@@ -471,27 +474,49 @@ public abstract class AbstractFieldContainerExtractorIT {
 
 	interface TestModelProvider {
 		TestModel<?, String[]> objectArray();
+
 		TestModel<?, char[]> charArray();
+
 		TestModel<?, boolean[]> booleanArray();
+
 		TestModel<?, byte[]> byteArray();
+
 		TestModel<?, short[]> shortArray();
+
 		TestModel<?, int[]> intArray();
+
 		TestModel<?, long[]> longArray();
+
 		TestModel<?, float[]> floatArray();
+
 		TestModel<?, double[]> doubleArray();
+
 		TestModel<?, Iterable<String>> iterable();
+
 		TestModel<?, Collection<String>> collection();
+
 		TestModel<?, List<String>> list();
+
 		TestModel<?, Set<String>> set();
+
 		TestModel<?, SortedSet<String>> sortedSet();
+
 		TestModel<?, Map<String, String>> mapValues();
+
 		TestModel<?, SortedMap<String, String>> sortedMapValues();
+
 		TestModel<?, Map<String, List<String>>> mapListValues();
+
 		TestModel<?, Optional<String>> optional();
+
 		TestModel<?, OptionalDouble> optionalDouble();
+
 		TestModel<?, OptionalInt> optionalInt();
+
 		TestModel<?, OptionalLong> optionalLong();
+
 		TestModel<?, List<String>> list_explicitPrefixedStringBridge();
+
 		TestModel<?, List<MyEnum>> list_implicitEnumBridge();
 	}
 

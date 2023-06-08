@@ -88,7 +88,6 @@ import org.hibernate.search.mapper.pojo.model.typepattern.impl.TypePatternMatche
 import org.hibernate.search.mapper.pojo.model.typepattern.impl.TypePatternMatcherFactory;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
-
 public final class BridgeResolver {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -172,10 +171,12 @@ public final class BridgeResolver {
 		private final PojoBootstrapIntrospector introspector;
 		private final TypePatternMatcherFactory typePatternMatcherFactory;
 
-		private final Map<PojoRawTypeIdentifier<?>, IdentifierBinder> exactRawTypeIdentifierBridgeMappings = new HashMap<>();
+		private final Map<PojoRawTypeIdentifier<?>, IdentifierBinder> exactRawTypeIdentifierBridgeMappings =
+				new HashMap<>();
 		private final Map<PojoRawTypeIdentifier<?>, ValueBinder> exactRawTypeValueBridgeMappings = new HashMap<>();
 
-		private final List<TypePatternBinderMapping<IdentifierBinder>> typePatternIdentifierBridgeMappings = new ArrayList<>();
+		private final List<TypePatternBinderMapping<IdentifierBinder>> typePatternIdentifierBridgeMappings =
+				new ArrayList<>();
 		private final List<TypePatternBinderMapping<ValueBinder>> typePatternValueBridgeMappings = new ArrayList<>();
 
 		public Builder(PojoBootstrapIntrospector introspector, TypePatternMatcherFactory typePatternMatcherFactory) {

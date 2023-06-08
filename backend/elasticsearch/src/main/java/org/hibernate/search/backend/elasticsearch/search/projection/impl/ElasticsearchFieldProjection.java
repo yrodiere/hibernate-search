@@ -59,8 +59,8 @@ public class ElasticsearchFieldProjection<F, V, P> extends AbstractElasticsearch
 		super( scope );
 		this.absoluteFieldPath = field.absolutePath();
 		this.absoluteFieldPathComponents = field.absolutePathComponents();
-		this.requiredContextAbsoluteFieldPath = accumulatorProvider.isSingleValued()
-				? field.closestMultiValuedParentAbsolutePath() : null;
+		this.requiredContextAbsoluteFieldPath = accumulatorProvider.isSingleValued() ?
+				field.closestMultiValuedParentAbsolutePath() : null;
 		this.decodeFunction = decodeFunction;
 		this.converter = converter;
 		this.accumulatorProvider = accumulatorProvider;
@@ -68,9 +68,12 @@ public class ElasticsearchFieldProjection<F, V, P> extends AbstractElasticsearch
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "absoluteFieldPath=" + absoluteFieldPath
-				+ ", accumulatorProvider=" + accumulatorProvider
+		return getClass().getSimpleName()
+				+ "["
+				+ "absoluteFieldPath="
+				+ absoluteFieldPath
+				+ ", accumulatorProvider="
+				+ accumulatorProvider
 				+ "]";
 	}
 
@@ -84,7 +87,8 @@ public class ElasticsearchFieldProjection<F, V, P> extends AbstractElasticsearch
 		}
 		JsonPrimitive fieldPathJson = new JsonPrimitive( absoluteFieldPath );
 		AccumulatingSourceExtractor.REQUEST_SOURCE_ACCESSOR.addElementIfAbsent( requestBody, fieldPathJson );
-		return new ValueFieldExtractor<>( innerContext.relativeCurrentFieldPathComponents(), accumulatorProvider.get() );
+		return new ValueFieldExtractor<>( innerContext.relativeCurrentFieldPathComponents(), accumulatorProvider
+				.get() );
 	}
 
 	/**
@@ -97,9 +101,12 @@ public class ElasticsearchFieldProjection<F, V, P> extends AbstractElasticsearch
 
 		@Override
 		public String toString() {
-			return getClass().getSimpleName() + "["
-					+ "absoluteFieldPath=" + absoluteFieldPath
-					+ ", accumulator=" + accumulator
+			return getClass().getSimpleName()
+					+ "["
+					+ "absoluteFieldPath="
+					+ absoluteFieldPath
+					+ ", accumulator="
+					+ accumulator
 					+ "]";
 		}
 

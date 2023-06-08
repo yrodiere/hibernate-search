@@ -100,7 +100,8 @@ public class SavedState implements AutoCloseable {
 					entry.getValue().close();
 				}
 				catch (RuntimeException e) {
-					throw log.unableToCloseSavedValue( Throwables.safeToString( e, entry.toString() ), e.getMessage(), e );
+					throw log.unableToCloseSavedValue( Throwables.safeToString( e, entry.toString() ), e.getMessage(),
+							e );
 				}
 			}, map.entrySet() );
 		}

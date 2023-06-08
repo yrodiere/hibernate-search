@@ -15,13 +15,14 @@ import org.hibernate.search.engine.ProjectionConstants;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.AssociationInverseSide;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ObjectPath;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyValue;
-import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.testsupport.TestForIssue;
 import org.hibernate.search.testsupport.concurrency.ConcurrentRunner;
 import org.hibernate.search.testsupport.concurrency.ConcurrentRunner.TaskFactory;
 import org.hibernate.search.testsupport.junit.ElasticsearchSupportInProgress;
 import org.hibernate.search.testsupport.junit.SearchFactoryHolder;
 import org.hibernate.search.testsupport.junit.SearchITHelper;
+import org.hibernate.search.util.common.SearchException;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -93,7 +94,8 @@ public class ProjectionConversionTest {
 	public void projectingUnstoredField() {
 		thrown.expect( SearchException.class );
 		thrown.expectMessage( "Cannot use 'projection:field' on field 'unstoredField'" );
-		thrown.expectMessage( "Make sure the field is marked as searchable/sortable/projectable/aggregable/highlightable (whichever is relevant)" );
+		thrown.expectMessage(
+				"Make sure the field is marked as searchable/sortable/projectable/aggregable/highlightable (whichever is relevant)" );
 
 		projectionTestHelper( "unstoredField", null );
 	}
@@ -117,22 +119,22 @@ public class ProjectionConversionTest {
 	public void concurrentMixedProjections() throws Exception {
 		//The point of this test is to "simultaneously" project multiple different types
 		new ConcurrentRunner( 1000, 20,
-			new TaskFactory() {
-				@Override
-				public Runnable createRunnable(int i) throws Exception {
-					return new Runnable() {
-						@Override
-						public void run() {
-							projectingExplicitId();
-							projectingIdOnOverloadedMapping();
-							projectingIntegerField();
-							projectingEmbeddedIdByPropertyName();
-							projectingEmbeddedIdOnOverloadedMapping();
-							projectingOnConflictingMappedIdField();
-						}
-					};
+				new TaskFactory() {
+					@Override
+					public Runnable createRunnable(int i) throws Exception {
+						return new Runnable() {
+							@Override
+							public void run() {
+								projectingExplicitId();
+								projectingIdOnOverloadedMapping();
+								projectingIntegerField();
+								projectingEmbeddedIdByPropertyName();
+								projectingEmbeddedIdOnOverloadedMapping();
+								projectingOnConflictingMappedIdField();
+							}
+						};
+					}
 				}
-			}
 		).execute();
 	}
 
@@ -146,7 +148,8 @@ public class ProjectionConversionTest {
 	@Indexed
 	public static class ExampleEntity {
 
-		@DocumentId @Field(name = "stringTypedId", store = Store.YES)
+		@DocumentId
+		@Field(name = "stringTypedId", store = Store.YES)
 		Long id;
 
 		@Field(store = Store.YES)
@@ -160,7 +163,7 @@ public class ProjectionConversionTest {
 
 		@IndexedEmbedded(
 				includePaths = {
-					"id", "stringTypedId"
+						"id", "stringTypedId"
 				},
 				includeEmbeddedObjectId = true
 		)

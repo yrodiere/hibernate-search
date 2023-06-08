@@ -71,10 +71,13 @@ public abstract class AbstractPojoHCAnnBootstrapIntrospector implements PojoBoot
 		return typeOrdering.descendingSuperTypes( xClass ).map( this::toClass );
 	}
 
-	protected <T> ValueCreateHandle<T> createValueCreateHandle(Constructor<T> constructor)
-			throws IllegalAccessException {
-		throw new AssertionFailure( this + " doesn't support constructor handles."
-				+ " '" + getClass().getName() + " should be updated to implement createValueCreateHandle(Constructor)." );
+	protected <T> ValueCreateHandle<T> createValueCreateHandle(Constructor<
+			T> constructor) throws IllegalAccessException {
+		throw new AssertionFailure( this
+				+ " doesn't support constructor handles."
+				+ " '"
+				+ getClass().getName()
+				+ " should be updated to implement createValueCreateHandle(Constructor)." );
 	}
 
 	public Class<?> toClass(XClass xClass) {

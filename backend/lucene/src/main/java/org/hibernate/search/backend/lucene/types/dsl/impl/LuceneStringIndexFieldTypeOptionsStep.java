@@ -51,7 +51,6 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.index.IndexOptions;
 
-
 class LuceneStringIndexFieldTypeOptionsStep
 		extends AbstractLuceneStandardIndexFieldTypeOptionsStep<LuceneStringIndexFieldTypeOptionsStep, String>
 		implements StringIndexFieldTypeOptionsStep<LuceneStringIndexFieldTypeOptionsStep> {
@@ -163,11 +162,13 @@ class LuceneStringIndexFieldTypeOptionsStep
 			}
 
 			if ( normalizer != null ) {
-				throw log.cannotApplyAnalyzerAndNormalizer( analyzerName, normalizerName, buildContext.getEventContext() );
+				throw log.cannotApplyAnalyzerAndNormalizer( analyzerName, normalizerName, buildContext
+						.getEventContext() );
 			}
 
 			if ( indexNullAsValue != null ) {
-				throw log.cannotUseIndexNullAsAndAnalyzer( analyzerName, indexNullAsValue, buildContext.getEventContext() );
+				throw log.cannotUseIndexNullAsAndAnalyzer( analyzerName, indexNullAsValue, buildContext
+						.getEventContext() );
 			}
 
 			if ( resolvedAggregable ) {
@@ -192,7 +193,8 @@ class LuceneStringIndexFieldTypeOptionsStep
 		}
 
 		LuceneStringFieldCodec codec = new LuceneStringFieldCodec(
-				getFieldType( resolvedProjectable, resolvedSearchable, analyzer != null, resolvedNorms, resolvedTermVector ),
+				getFieldType( resolvedProjectable, resolvedSearchable, analyzer != null, resolvedNorms,
+						resolvedTermVector ),
 				docValues,
 				indexNullAsValue,
 				builder.indexingAnalyzerOrNormalizer()
@@ -209,8 +211,9 @@ class LuceneStringIndexFieldTypeOptionsStep
 			}
 			else {
 				builder.queryElementFactory( PredicateTypeKeys.EXISTS,
-						DocValues.ENABLED.equals( docValues ) ? new LuceneExistsPredicate.DocValuesBasedFactory<>()
-								: new LuceneExistsPredicate.DefaultFactory<>() );
+						DocValues.ENABLED.equals( docValues ) ?
+								new LuceneExistsPredicate.DocValuesBasedFactory<>() :
+								new LuceneExistsPredicate.DefaultFactory<>() );
 			}
 			builder.queryElementFactory( PredicateTypeKeys.PHRASE, new LuceneTextPhrasePredicate.Factory<>() );
 			builder.queryElementFactory( PredicateTypeKeys.WILDCARD, new LuceneTextWildcardPredicate.Factory<>() );
@@ -261,15 +264,16 @@ class LuceneStringIndexFieldTypeOptionsStep
 
 	private ResolvedTermVector resolveTermVector() {
 		TermVector localTermVector = termVector;
-		if ( highlightable != null && ( highlightable.contains( Highlightable.ANY )
-				|| highlightable.contains( Highlightable.FAST_VECTOR ) ) ) {
+		if ( highlightable != null
+				&& ( highlightable.contains( Highlightable.ANY )
+						|| highlightable.contains( Highlightable.FAST_VECTOR ) ) ) {
 			if ( TermVector.DEFAULT.equals( termVector ) ) {
 				localTermVector = TermVector.WITH_POSITIONS_OFFSETS;
 			}
 			else if ( TermVector.WITH_POSITIONS_OFFSETS.equals( termVector )
 					|| TermVector.WITH_POSITIONS_OFFSETS_PAYLOADS.equals( termVector ) ) {
-				localTermVector = termVector;
-			}
+						localTermVector = termVector;
+					}
 			else {
 				throw log.termVectorDontAllowFastVectorHighlighter( termVector );
 			}
@@ -297,7 +301,8 @@ class LuceneStringIndexFieldTypeOptionsStep
 		}
 	}
 
-	private static FieldType getFieldType(boolean projectable, boolean searchable, boolean analyzed, boolean norms, ResolvedTermVector termVector) {
+	private static FieldType getFieldType(boolean projectable, boolean searchable, boolean analyzed, boolean norms,
+			ResolvedTermVector termVector) {
 		FieldType fieldType = new FieldType();
 
 		if ( !searchable ) {
@@ -345,7 +350,7 @@ class LuceneStringIndexFieldTypeOptionsStep
 			this.payloads = payloads;
 		}
 
-		private void applyTo( FieldType fieldType ) {
+		private void applyTo(FieldType fieldType) {
 			fieldType.setStoreTermVectors( store );
 			fieldType.setStoreTermVectorPositions( positions );
 			fieldType.setStoreTermVectorOffsets( offsets );
@@ -374,7 +379,8 @@ class LuceneStringIndexFieldTypeOptionsStep
 		if ( highlightable.contains( Highlightable.DEFAULT ) ) {
 			// means we have the default case, so let's check if either plain or unified highlighters can be applied:
 			if ( Projectable.YES.equals( projectable ) ) {
-				if ( TermVector.WITH_POSITIONS_OFFSETS.equals( termVector ) ||
+				if ( TermVector.WITH_POSITIONS_OFFSETS.equals( termVector )
+						||
 						TermVector.WITH_POSITIONS_OFFSETS_PAYLOADS.equals( termVector ) ) {
 					highlightable = EnumSet.of( Highlightable.ANY );
 				}
@@ -393,7 +399,8 @@ class LuceneStringIndexFieldTypeOptionsStep
 			}
 		}
 		if ( highlightable.contains( Highlightable.ANY ) ) {
-			return EnumSet.of( SearchHighlighterType.PLAIN, SearchHighlighterType.UNIFIED, SearchHighlighterType.FAST_VECTOR );
+			return EnumSet.of( SearchHighlighterType.PLAIN, SearchHighlighterType.UNIFIED,
+					SearchHighlighterType.FAST_VECTOR );
 		}
 		Set<SearchHighlighterType> highlighters = new HashSet<>();
 		if ( highlightable.contains( Highlightable.PLAIN ) ) {

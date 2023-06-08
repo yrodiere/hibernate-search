@@ -12,6 +12,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 
 import java.util.Arrays;
 import java.util.Optional;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -162,8 +163,12 @@ public class EnversIT {
 				assertions.assertThat( findLastRevisionForEntity( auditReader, type ) )
 						.as( "Last revision for entity type " + type )
 						.isEqualTo( expectedLastRevisionForType );
-				assertions.assertThat( howManyEntitiesChangedAtRevisionNumber( auditReader, type, lastRevisionOverall ) )
-						.as( "Number of entity changed at revision " + lastRevisionOverall + " for entity type " + type )
+				assertions.assertThat( howManyEntitiesChangedAtRevisionNumber( auditReader, type,
+						lastRevisionOverall ) )
+						.as( "Number of entity changed at revision "
+								+ lastRevisionOverall
+								+ " for entity type "
+								+ type )
 						.isEqualTo( expectedEntityChangeCountAtLastRevisionOverall );
 				assertions.assertThat( howManyAuditedObjectsSoFar( auditReader, type ) )
 						.as( "Number of audited objects so far for entity type " + type )

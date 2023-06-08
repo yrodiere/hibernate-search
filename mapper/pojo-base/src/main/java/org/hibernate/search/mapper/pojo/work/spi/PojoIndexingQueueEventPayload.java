@@ -23,9 +23,14 @@ public final class PojoIndexingQueueEventPayload implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PojoIndexingQueueEventPayload{" +
-				"routes=" + routes +
-				", updateCause=" + dirtiness +
+		return "PojoIndexingQueueEventPayload{"
+				+
+				"routes="
+				+ routes
+				+
+				", updateCause="
+				+ dirtiness
+				+
 				'}';
 	}
 }

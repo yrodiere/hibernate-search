@@ -32,7 +32,8 @@ public class StubDocumentElement implements DocumentElement {
 		StubIndexFieldReference<F> stubFieldReference = (StubIndexFieldReference<F>) fieldReference;
 		if ( IndexFieldInclusion.EXCLUDED.equals( stubFieldReference.getInclusion() ) ) {
 			log.tracev(
-					"Ignoring write on document element {}, field '{}' with value '{}'" +
+					"Ignoring write on document element {}, field '{}' with value '{}'"
+							+
 							" because the field was excluded during bootstrap.",
 					this, stubFieldReference.getAbsolutePath(), value
 			);
@@ -46,7 +47,8 @@ public class StubDocumentElement implements DocumentElement {
 		StubIndexObjectFieldReference stubFieldReference = (StubIndexObjectFieldReference) fieldReference;
 		if ( IndexFieldInclusion.EXCLUDED.equals( stubFieldReference.getInclusion() ) ) {
 			log.tracev(
-					"Ignoring add on document element {}, object field '{}'" +
+					"Ignoring add on document element {}, object field '{}'"
+							+
 							" because the field was excluded during bootstrap.",
 					this, stubFieldReference.getAbsolutePath()
 			);
@@ -60,7 +62,8 @@ public class StubDocumentElement implements DocumentElement {
 		StubIndexObjectFieldReference stubFieldReference = (StubIndexObjectFieldReference) fieldReference;
 		if ( IndexFieldInclusion.EXCLUDED.equals( stubFieldReference.getInclusion() ) ) {
 			log.tracev(
-					"Ignoring add missing on document element {}, object field '{}'" +
+					"Ignoring add missing on document element {}, object field '{}'"
+							+
 							" because the field was excluded during bootstrap.",
 					this, stubFieldReference.getAbsolutePath()
 			);

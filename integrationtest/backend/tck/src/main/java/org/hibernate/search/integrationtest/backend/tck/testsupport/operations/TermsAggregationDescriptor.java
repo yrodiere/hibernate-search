@@ -43,9 +43,9 @@ public class TermsAggregationDescriptor extends AggregationDescriptor {
 
 	@Override
 	public <F> ExpectationsAlternative<
-					SupportedSingleFieldAggregationExpectations<F>,
-					UnsupportedSingleFieldAggregationExpectations
-			> getSingleFieldAggregationExpectations(FieldTypeDescriptor<F> typeDescriptor) {
+			SupportedSingleFieldAggregationExpectations<F>,
+			UnsupportedSingleFieldAggregationExpectations> getSingleFieldAggregationExpectations(FieldTypeDescriptor<
+					F> typeDescriptor) {
 		if ( AnalyzedStringFieldTypeDescriptor.class.equals( typeDescriptor.getClass() )
 				|| GeoPoint.class.equals( typeDescriptor.getJavaType() ) ) {
 			// Terms aggregations are not supported on analyzed or GeoPoint fields
@@ -120,7 +120,8 @@ public class TermsAggregationDescriptor extends AggregationDescriptor {
 			}
 
 			@Override
-			public <T> AggregationScenario<Map<T, Long>> withFieldTypeOnMainAndOtherIndex(TypeAssertionHelper<F, T> helper) {
+			public <T> AggregationScenario<Map<T, Long>> withFieldTypeOnMainAndOtherIndex(TypeAssertionHelper<F,
+					T> helper) {
 				return doCreate( mainAndOtherIndexExpected, helper );
 			}
 
@@ -151,7 +152,8 @@ public class TermsAggregationDescriptor extends AggregationDescriptor {
 					}
 
 					@Override
-					public AggregationFinalStep<Map<T, Long>> setupWithConverterSetting(SearchAggregationFactory factory,
+					public AggregationFinalStep<Map<T, Long>> setupWithConverterSetting(
+							SearchAggregationFactory factory,
 							String fieldPath, ValueConvert convert) {
 						return factory.terms().field( fieldPath, helper.getJavaClass(), convert );
 					}
@@ -177,7 +179,8 @@ public class TermsAggregationDescriptor extends AggregationDescriptor {
 		} );
 	}
 
-	private <F> UnsupportedSingleFieldAggregationExpectations unsupportedExpectations(FieldTypeDescriptor<F> typeDescriptor) {
+	private <F> UnsupportedSingleFieldAggregationExpectations unsupportedExpectations(FieldTypeDescriptor<
+			F> typeDescriptor) {
 		return new UnsupportedSingleFieldAggregationExpectations() {
 			@Override
 			public String aggregationName() {

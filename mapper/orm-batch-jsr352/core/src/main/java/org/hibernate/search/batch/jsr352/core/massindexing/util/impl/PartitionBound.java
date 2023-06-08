@@ -56,7 +56,14 @@ public class PartitionBound {
 
 	@Override
 	public String toString() {
-		return "PartitionBound [entityType=" + entityType + ", lowerBound=" + lowerBound + ", upperBound=" + upperBound
-				+ ", indexScope=" + indexScope + "]";
+		return "PartitionBound [entityType="
+				+ entityType
+				+ ", lowerBound="
+				+ lowerBound
+				+ ", upperBound="
+				+ upperBound
+				+ ", indexScope="
+				+ indexScope
+				+ "]";
 	}
 }

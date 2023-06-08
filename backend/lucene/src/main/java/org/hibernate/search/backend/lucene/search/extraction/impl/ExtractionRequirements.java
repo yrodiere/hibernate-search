@@ -46,8 +46,7 @@ public final class ExtractionRequirements {
 
 	public LuceneCollectors createCollectors(IndexSearcher indexSearcher, Query originalLuceneQuery, Sort sort,
 			IndexReaderMetadataResolver metadataResolver, int maxDocs, TimeoutManager timeoutManager,
-			int requestedTotalHitCountThreshold)
-			throws IOException {
+			int requestedTotalHitCountThreshold) throws IOException {
 		// Necessary to unwrap boolean queries with a single clause, in particular:
 		// we have optimizations in place when there is a single query and this query is a MatchAllDocsQuery.
 		Query rewrittenLuceneQuery = indexSearcher.rewrite( originalLuceneQuery );
@@ -181,7 +180,8 @@ public final class ExtractionRequirements {
 				return null;
 			}
 
-			return new StoredFieldsValuesDelegate.Factory( storedFieldVisitor, requiredNestedDocumentPathsForStoredFields );
+			return new StoredFieldsValuesDelegate.Factory( storedFieldVisitor,
+					requiredNestedDocumentPathsForStoredFields );
 		}
 	}
 }

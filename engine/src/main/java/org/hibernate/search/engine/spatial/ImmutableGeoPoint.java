@@ -21,8 +21,10 @@ final class ImmutableGeoPoint implements GeoPoint {
 	@Override
 	public String toString() {
 		return "ImmutableGeoPoint["
-				+ "latitude=" + latitude
-				+ ", longitude=" + longitude
+				+ "latitude="
+				+ latitude
+				+ ", longitude="
+				+ longitude
 				+ "]";
 	}
 
@@ -35,7 +37,8 @@ final class ImmutableGeoPoint implements GeoPoint {
 			return false;
 		}
 		ImmutableGeoPoint that = (ImmutableGeoPoint) o;
-		return that.latitude == latitude &&
+		return that.latitude == latitude
+				&&
 				that.longitude == longitude;
 	}
 

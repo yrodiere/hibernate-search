@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
 import javax.batch.api.BatchProperty;
 import javax.batch.api.chunk.AbstractItemWriter;
 import javax.batch.runtime.context.JobContext;
@@ -165,7 +166,6 @@ public class EntityWriter extends AbstractItemWriter {
 	}
 
 	private enum WriteMode {
-		ADD,
-		UPDATE;
+		ADD, UPDATE;
 	}
 }

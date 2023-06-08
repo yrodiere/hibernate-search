@@ -10,16 +10,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.hibernate.search.engine.common.timing.Deadline;
-import org.hibernate.search.mapper.pojo.loading.spi.PojoSelectionLoadingContext;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoLoadingTypeContext;
+import org.hibernate.search.mapper.pojo.loading.spi.PojoSelectionLoadingContext;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoSelectionLoadingStrategy;
 
 public final class PojoMultiLoaderLoadingPlan<T> implements PojoLoadingPlan<T> {
 
 	private final PojoSelectionLoadingContext context;
 
-	private final Map<PojoLoadingTypeContext<? extends T>, PojoSingleLoaderLoadingPlan<?>> planByType = new LinkedHashMap<>();
-	private final Map<PojoSelectionLoadingStrategy<?>, PojoSingleLoaderLoadingPlan<?>> planByLoadingStrategy = new LinkedHashMap<>();
+	private final Map<PojoLoadingTypeContext<? extends T>, PojoSingleLoaderLoadingPlan<?>> planByType =
+			new LinkedHashMap<>();
+	private final Map<PojoSelectionLoadingStrategy<?>, PojoSingleLoaderLoadingPlan<?>> planByLoadingStrategy =
+			new LinkedHashMap<>();
 
 	public PojoMultiLoaderLoadingPlan(PojoSelectionLoadingContext context) {
 		this.context = context;
@@ -51,7 +53,8 @@ public final class PojoMultiLoaderLoadingPlan<T> implements PojoLoadingPlan<T> {
 
 	@SuppressWarnings("unchecked")
 	private <T2 extends T> PojoSingleLoaderLoadingPlan<? super T2> delegate(PojoLoadingTypeContext<T2> type) {
-		PojoSingleLoaderLoadingPlan<? super T2> delegate = (PojoSingleLoaderLoadingPlan<? super T2>) planByType.get( type );
+		PojoSingleLoaderLoadingPlan<? super T2> delegate = (PojoSingleLoaderLoadingPlan<? super T2>) planByType.get(
+				type );
 		if ( delegate != null ) {
 			return delegate;
 		}

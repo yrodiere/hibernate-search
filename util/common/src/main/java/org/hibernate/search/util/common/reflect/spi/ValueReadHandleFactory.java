@@ -21,8 +21,11 @@ public interface ValueReadHandleFactory extends ValueHandleFactory {
 
 	@Override
 	default <T> ValueCreateHandle<T> createForConstructor(Constructor<T> constructor) throws IllegalAccessException {
-		throw new AssertionFailure( this + " doesn't support constructor handles."
-				+ " '" + getClass().getName() + " should be updated to implement createForConstructor(Constructor)." );
+		throw new AssertionFailure( this
+				+ " doesn't support constructor handles."
+				+ " '"
+				+ getClass().getName()
+				+ " should be updated to implement createForConstructor(Constructor)." );
 	}
 
 	/**

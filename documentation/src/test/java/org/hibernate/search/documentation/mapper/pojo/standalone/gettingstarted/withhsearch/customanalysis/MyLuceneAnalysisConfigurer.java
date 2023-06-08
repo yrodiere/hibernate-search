@@ -17,7 +17,7 @@ public class MyLuceneAnalysisConfigurer implements LuceneAnalysisConfigurer {
 				.tokenizer( "standard" ) // <2>
 				.tokenFilter( "lowercase" ) // <3>
 				.tokenFilter( "snowballPorter" ) // <3>
-						.param( "language", "English" ) // <4>
+				.param( "language", "English" ) // <4>
 				.tokenFilter( "asciiFolding" );
 
 		context.analyzer( "name" ).custom() // <5>

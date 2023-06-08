@@ -21,7 +21,7 @@ public enum UuidGenerationStrategy {
 	/**
 	 * Defaults to {@link #RANDOM}
 	 */
-	AUTO( "auto" ) {
+	AUTO("auto") {
 		@Override
 		public String strategy() {
 			return RANDOM.strategy();
@@ -30,7 +30,7 @@ public enum UuidGenerationStrategy {
 	/**
 	 * Uses {@link UUID#randomUUID()} to generate values
 	 */
-	RANDOM( "random" ) {
+	RANDOM("random") {
 		@Override
 		public String strategy() {
 			return StandardRandomStrategy.class.getName();
@@ -43,7 +43,7 @@ public enum UuidGenerationStrategy {
 	 * NOTE : Can be a bottleneck due to the need to synchronize in order to increment an
 	 * internal count as part of the algorithm.
 	 */
-	TIME( "time" ) {
+	TIME("time") {
 		@Override
 		public String strategy() {
 			return CustomVersionOneStrategy.class.getName();

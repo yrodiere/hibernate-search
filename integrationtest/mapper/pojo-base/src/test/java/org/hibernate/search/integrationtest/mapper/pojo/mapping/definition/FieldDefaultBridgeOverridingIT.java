@@ -17,15 +17,15 @@ import org.hibernate.search.engine.backend.types.converter.spi.DslConverter;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.types.PropertyTypeDescriptor;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.types.expectations.DefaultValueBridgeExpectations;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.bridge.ValueBridge;
 import org.hibernate.search.mapper.pojo.bridge.runtime.ValueBridgeFromIndexedValueContext;
 import org.hibernate.search.mapper.pojo.bridge.runtime.ValueBridgeToIndexedValueContext;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.StubSearchWorkBehavior;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.document.model.impl.StubIndexNode;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Before;
@@ -42,7 +42,8 @@ import org.junit.runners.Parameterized;
 @TestForIssue(jiraKey = "HSEARCH-3096")
 public class FieldDefaultBridgeOverridingIT<V, F> {
 	private static final String FIELD_NAME = DefaultValueBridgeExpectations.TYPE_WITH_VALUE_BRIDGE_FIELD_NAME;
-	private static final String FIELD_INDEXNULLAS_NAME = DefaultValueBridgeExpectations.TYPE_WITH_VALUE_BRIDGE_FIELD_INDEXNULLAS_NAME;
+	private static final String FIELD_INDEXNULLAS_NAME =
+			DefaultValueBridgeExpectations.TYPE_WITH_VALUE_BRIDGE_FIELD_INDEXNULLAS_NAME;
 
 	@Parameterized.Parameters(name = "{0}")
 	public static Object[] types() {
@@ -55,14 +56,16 @@ public class FieldDefaultBridgeOverridingIT<V, F> {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private final PropertyTypeDescriptor<V, F> typeDescriptor;
 	private final DefaultValueBridgeExpectations<V, F> expectations;
 	private SearchMapping mapping;
 	private StubIndexNode indexField;
 
-	public FieldDefaultBridgeOverridingIT(PropertyTypeDescriptor<V, F> typeDescriptor, DefaultValueBridgeExpectations<V, F> expectations) {
+	public FieldDefaultBridgeOverridingIT(PropertyTypeDescriptor<V, F> typeDescriptor, DefaultValueBridgeExpectations<V,
+			F> expectations) {
 		this.typeDescriptor = typeDescriptor;
 		this.expectations = expectations;
 	}
@@ -167,8 +170,9 @@ public class FieldDefaultBridgeOverridingIT<V, F> {
 
 		@Override
 		public boolean equals(Object o) {
-			return getClass() == o.getClass() && Objects.equals( originalPropertyValue,
-					( (FieldTypeForOverridingDefaultBridge) o ).originalPropertyValue );
+			return getClass() == o.getClass()
+					&& Objects.equals( originalPropertyValue,
+							( (FieldTypeForOverridingDefaultBridge) o ).originalPropertyValue );
 		}
 
 		@Override

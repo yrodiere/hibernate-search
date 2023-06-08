@@ -14,6 +14,7 @@ import static org.hibernate.search.documentation.mapper.orm.indexing.HibernateOr
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.Properties;
+
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchRuntime;
 import javax.batch.runtime.BatchStatus;
@@ -103,8 +104,8 @@ public class HibernateOrmBatchJsr352IT {
 		return author;
 	}
 
-	private static JobExecution waitForTermination(JobOperator jobOperator, JobExecution jobExecution, int timeoutInMs)
-			throws InterruptedException {
+	private static JobExecution waitForTermination(JobOperator jobOperator, JobExecution jobExecution,
+			int timeoutInMs) throws InterruptedException {
 		long endTime = System.currentTimeMillis() + timeoutInMs;
 
 		while ( !jobExecution.getBatchStatus().equals( BatchStatus.COMPLETED )

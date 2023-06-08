@@ -8,9 +8,9 @@ package org.hibernate.search.backend.lucene.document.model.dsl.impl;
 
 import java.util.Map;
 
-import org.hibernate.search.backend.lucene.document.model.impl.LuceneIndexField;
 import org.hibernate.search.backend.lucene.document.model.impl.AbstractLuceneIndexFieldTemplate;
 import org.hibernate.search.backend.lucene.document.model.impl.LuceneIndexCompositeNode;
+import org.hibernate.search.backend.lucene.document.model.impl.LuceneIndexField;
 import org.hibernate.search.engine.backend.common.spi.FieldPaths;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaFieldTemplateOptionsStep;
 import org.hibernate.search.engine.backend.document.model.dsl.spi.IndexSchemaBuildContext;
@@ -20,9 +20,8 @@ import org.hibernate.search.util.common.pattern.spi.SimpleGlobPattern;
 import org.hibernate.search.util.common.reporting.EventContext;
 
 abstract class AbstractLuceneIndexFieldTemplateBuilder<
-				S extends AbstractLuceneIndexFieldTemplateBuilder<S, T>,
-				T extends AbstractLuceneIndexFieldTemplate<?>
-		>
+		S extends AbstractLuceneIndexFieldTemplateBuilder<S, T>,
+		T extends AbstractLuceneIndexFieldTemplate<?>>
 		implements IndexSchemaFieldTemplateOptionsStep<S>,
 		LuceneIndexNodeContributor, IndexSchemaBuildContext {
 

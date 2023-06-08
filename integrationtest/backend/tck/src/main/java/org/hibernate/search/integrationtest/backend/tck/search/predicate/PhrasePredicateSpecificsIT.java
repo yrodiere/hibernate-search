@@ -38,8 +38,10 @@ public class PhrasePredicateSpecificsIT {
 	private static final String PHRASE_1 = "quick fox";
 	private static final String PHRASE_1_UNIQUE_TERM = "fox";
 	private static final String PHRASE_1_TEXT_EXACT_MATCH = "Once upon a time, there was a quick fox in a big house.";
-	private static final String PHRASE_1_TEXT_SLOP_1_MATCH = "Once upon a time, there was a quick brown fox in a big house.";
-	private static final String PHRASE_1_TEXT_SLOP_2_MATCH = "Once upon a time, there was a quick, sad brown fox in a big house.";
+	private static final String PHRASE_1_TEXT_SLOP_1_MATCH =
+			"Once upon a time, there was a quick brown fox in a big house.";
+	private static final String PHRASE_1_TEXT_SLOP_2_MATCH =
+			"Once upon a time, there was a quick, sad brown fox in a big house.";
 	private static final String PHRASE_1_TEXT_SLOP_3_MATCH = "In the big house, the fox was quick.";
 	private static final String PHRASE_1_TEXT_SLOP_NO_MATCH = "Completely unrelated phrase.";
 
@@ -135,9 +137,9 @@ public class PhrasePredicateSpecificsIT {
 
 		public void contribute(BulkIndexer indexer) {
 			indexer.add( DOCUMENT_1, document -> {
-						document.addValue( index.binding().analyzedStringField1.reference, PHRASE_1_TEXT_EXACT_MATCH );
-						document.addValue( index.binding().nonAnalyzedField.reference, PHRASE_1_TEXT_EXACT_MATCH );
-					} )
+				document.addValue( index.binding().analyzedStringField1.reference, PHRASE_1_TEXT_EXACT_MATCH );
+				document.addValue( index.binding().nonAnalyzedField.reference, PHRASE_1_TEXT_EXACT_MATCH );
+			} )
 					.add( DOCUMENT_2, document -> {
 						document.addValue( index.binding().analyzedStringField1.reference, PHRASE_1_TEXT_SLOP_1_MATCH );
 						document.addValue( index.binding().nonAnalyzedField.reference, PHRASE_1_TEXT_SLOP_1_MATCH );
@@ -150,9 +152,10 @@ public class PhrasePredicateSpecificsIT {
 						document.addValue( index.binding().analyzedStringField1.reference, PHRASE_1_TEXT_SLOP_3_MATCH );
 					} )
 					.add( DOCUMENT_5, document -> {
-						document.addValue( index.binding().analyzedStringField1.reference, PHRASE_1_TEXT_SLOP_NO_MATCH );
+						document.addValue( index.binding().analyzedStringField1.reference,
+								PHRASE_1_TEXT_SLOP_NO_MATCH );
 					} )
-					.add( EMPTY, document -> { } );
+					.add( EMPTY, document -> {} );
 		}
 	}
 }

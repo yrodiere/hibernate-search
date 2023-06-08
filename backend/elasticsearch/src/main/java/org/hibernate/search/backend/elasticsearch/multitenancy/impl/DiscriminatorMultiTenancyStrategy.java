@@ -123,7 +123,8 @@ public class DiscriminatorMultiTenancyStrategy implements MultiTenancyStrategy {
 		@Override
 		public String toElasticsearchId(String tenantId, String id) {
 			return UNDERSCORE_PATTERN.matcher( tenantId ).replaceAll( ESCAPED_UNDERSCORE )
-					+ "_" + UNDERSCORE_PATTERN.matcher( id ).replaceAll( ESCAPED_UNDERSCORE );
+					+ "_"
+					+ UNDERSCORE_PATTERN.matcher( id ).replaceAll( ESCAPED_UNDERSCORE );
 		}
 	}
 
@@ -140,7 +141,8 @@ public class DiscriminatorMultiTenancyStrategy implements MultiTenancyStrategy {
 		}
 	}
 
-	private static final class DiscriminatorMultiTenancyIdProjectionExtractionHelper implements ProjectionExtractionHelper<String> {
+	private static final class DiscriminatorMultiTenancyIdProjectionExtractionHelper
+			implements ProjectionExtractionHelper<String> {
 		private static final JsonAccessor<String> HIT_ID_ACCESSOR =
 				JsonAccessor.root().property( "fields" ).asObject()
 						.property( ID_FIELD_NAME ).asArray()

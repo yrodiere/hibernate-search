@@ -35,7 +35,8 @@ public abstract class AbstractLuceneBucketAggregation<K, V> extends AbstractLuce
 		return indexNames;
 	}
 
-	public abstract static class AbstractBuilder<K, V> extends AbstractLuceneNestableAggregation.AbstractBuilder<Map<K, V>>
+	public abstract static class AbstractBuilder<K, V>
+			extends AbstractLuceneNestableAggregation.AbstractBuilder<Map<K, V>>
 			implements SearchAggregationBuilder<Map<K, V>> {
 
 		public AbstractBuilder(LuceneSearchIndexScope<?> scope, LuceneSearchIndexValueFieldContext<?> field) {

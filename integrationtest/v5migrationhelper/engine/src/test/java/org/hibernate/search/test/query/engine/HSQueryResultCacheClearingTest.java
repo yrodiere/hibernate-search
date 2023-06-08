@@ -19,6 +19,7 @@ import org.hibernate.search.query.engine.spi.HSQuery;
 import org.hibernate.search.query.facet.FacetingRequest;
 import org.hibernate.search.testsupport.junit.SearchFactoryHolder;
 import org.hibernate.search.testsupport.junit.SearchITHelper;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,7 +75,7 @@ public class HSQueryResultCacheClearingTest {
 
 		hsQuery.projection( ProjectionConstants.ID, "field" );
 		helper.assertThatQuery( hsQuery ).matchesExactlyProjections(
-				new Object[][]{
+				new Object[][] {
 						{ 0, "zero" },
 						{ 1, "one" },
 						{ 2, "two" },

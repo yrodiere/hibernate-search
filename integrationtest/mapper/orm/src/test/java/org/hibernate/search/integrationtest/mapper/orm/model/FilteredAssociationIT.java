@@ -11,6 +11,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -47,8 +48,7 @@ public class FilteredAssociationIT {
 		backendMock.expectSchema( IndexedEntity.NAME, b -> b
 				.objectField( "contained", b2 -> b2
 						.multiValued( true )
-						.field( "text", String.class, b3 -> {
-						} ) ) );
+						.field( "text", String.class, b3 -> {} ) ) );
 
 		SessionFactory sessionFactory = ormSetupHelper.start()
 				.setup( IndexedEntity.class, ContainedEntity.class );
@@ -159,7 +159,7 @@ public class FilteredAssociationIT {
 
 		@IndexedEmbedded(name = "contained")
 		@IndexingDependency(derivedFrom = {
-				@ObjectPath({@PropertyValue(propertyName = "contained"), @PropertyValue(propertyName = "status")})
+				@ObjectPath({ @PropertyValue(propertyName = "contained"), @PropertyValue(propertyName = "status") })
 		})
 		@AssociationInverseSide(inversePath = @ObjectPath(@PropertyValue(propertyName = "containing")))
 		public List<ContainedEntity> getContainedNotDeleted() {
@@ -219,7 +219,6 @@ public class FilteredAssociationIT {
 	}
 
 	private enum Status {
-		ACTIVE,
-		DELETED;
+		ACTIVE, DELETED;
 	}
 }

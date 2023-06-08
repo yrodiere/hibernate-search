@@ -39,7 +39,8 @@ import org.jboss.jandex.DotName;
 import org.jboss.jandex.Index;
 import org.jboss.jandex.IndexView;
 
-public class AnnotationMappingConfigurationContextImpl implements AnnotationMappingConfigurationContext,
+public class AnnotationMappingConfigurationContextImpl
+		implements AnnotationMappingConfigurationContext,
 		PojoMappingConfigurationContributor {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -170,9 +171,9 @@ public class AnnotationMappingConfigurationContextImpl implements AnnotationMapp
 				// Optimization: if a class is already in the Jandex index,
 				// there's no need to discover the Jandex index of its JAR.
 				if ( compositeOfExplicitJandexIndexes.getClassByName( dotName ) == null ) {
-					Set<URL> targetSet = isJandexBuildingAllowed( annotatedType )
-							? discoveredBuildingAllowedCodeSourceLocations
-							: discoveredBuildingForbiddenCodeSourceLocations;
+					Set<URL> targetSet = isJandexBuildingAllowed( annotatedType ) ?
+							discoveredBuildingAllowedCodeSourceLocations :
+							discoveredBuildingForbiddenCodeSourceLocations;
 					JarUtils.codeSourceLocation( annotatedType ).ifPresent( targetSet::add );
 				}
 			}
@@ -218,7 +219,8 @@ public class AnnotationMappingConfigurationContextImpl implements AnnotationMapp
 	 * A type metadata discoverer that will provide annotation-based metadata
 	 * for types that were not explicitly requested .
 	 */
-	private static class PojoAnnotationTypeMetadataDiscoverer implements TypeMetadataDiscoverer<PojoTypeMetadataContributor> {
+	private static class PojoAnnotationTypeMetadataDiscoverer
+			implements TypeMetadataDiscoverer<PojoTypeMetadataContributor> {
 		private final AnnotationPojoTypeMetadataContributorFactory contributorFactory;
 		private final Set<PojoRawTypeModel<?>> alreadyContributedTypes;
 

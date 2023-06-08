@@ -32,7 +32,8 @@ public class LuceneIndexWorkspace implements IndexWorkspace {
 
 	@Override
 	public CompletableFuture<?> mergeSegments(OperationSubmitter operationSubmitter) {
-		return doSubmit( indexManagerContext.allManagementOrchestrators(), factory.mergeSegments(), false, operationSubmitter );
+		return doSubmit( indexManagerContext.allManagementOrchestrators(), factory.mergeSegments(), false,
+				operationSubmitter );
 	}
 
 	@Override
@@ -51,7 +52,8 @@ public class LuceneIndexWorkspace implements IndexWorkspace {
 
 	@Override
 	public CompletableFuture<?> refresh(OperationSubmitter operationSubmitter) {
-		return doSubmit( indexManagerContext.allManagementOrchestrators(), factory.refresh(), false, operationSubmitter );
+		return doSubmit( indexManagerContext.allManagementOrchestrators(), factory.refresh(), false,
+				operationSubmitter );
 	}
 
 	private <T> CompletableFuture<?> doSubmit(List<LuceneParallelWorkOrchestrator> orchestrators,

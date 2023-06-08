@@ -99,7 +99,8 @@ import org.hibernate.search.util.common.annotation.Search5DeprecatedAPI;
 @Repeatable(IndexedEmbedded.List.class)
 @Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(type = IndexedEmbeddedProcessor.class, retrieval = BeanRetrieval.CONSTRUCTOR))
+@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(type = IndexedEmbeddedProcessor.class,
+		retrieval = BeanRetrieval.CONSTRUCTOR))
 public @interface IndexedEmbedded {
 
 	/**

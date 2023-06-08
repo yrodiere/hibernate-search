@@ -58,7 +58,8 @@ public class IndexSchemaElementTypeIT {
 						.indexContext( index.name() )
 						.failure(
 								"Invalid index field type",
-								"both analyzer '" + DefaultAnalysisDefinitions.ANALYZER_STANDARD_ENGLISH.name
+								"both analyzer '"
+										+ DefaultAnalysisDefinitions.ANALYZER_STANDARD_ENGLISH.name
 										+ "' and sorts are enabled",
 								"Sorts are not supported on analyzed fields",
 								"If you need an analyzer simply to transform the text (lowercasing, ...)"
@@ -149,7 +150,8 @@ public class IndexSchemaElementTypeIT {
 						.indexContext( index.name() )
 						.failure(
 								"Invalid index field type: search analyzer '"
-										+ DefaultAnalysisDefinitions.ANALYZER_STANDARD_ENGLISH.name + "'"
+										+ DefaultAnalysisDefinitions.ANALYZER_STANDARD_ENGLISH.name
+										+ "'"
 										+ " is assigned to this type, but the indexing analyzer is missing.",
 								"Assign an indexing analyzer and a search analyzer, or remove the search analyzer"
 						) );

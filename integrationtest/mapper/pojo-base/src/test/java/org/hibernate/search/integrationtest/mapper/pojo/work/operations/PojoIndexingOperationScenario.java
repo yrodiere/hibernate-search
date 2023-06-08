@@ -8,9 +8,9 @@ package org.hibernate.search.integrationtest.mapper.pojo.work.operations;
 
 import java.util.concurrent.CompletionStage;
 
+import org.hibernate.search.mapper.pojo.route.DocumentRoutesDescriptor;
 import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexer;
 import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexingPlan;
-import org.hibernate.search.mapper.pojo.route.DocumentRoutesDescriptor;
 
 public abstract class PojoIndexingOperationScenario {
 
@@ -44,7 +44,8 @@ public abstract class PojoIndexingOperationScenario {
 		return execute( indexer, providedId, null, entity );
 	}
 
-	abstract CompletionStage<?> execute(SearchIndexer indexer, Object providedId, DocumentRoutesDescriptor providedRoutes,
+	abstract CompletionStage<?> execute(SearchIndexer indexer, Object providedId,
+			DocumentRoutesDescriptor providedRoutes,
 			IndexedEntity entity);
 
 	final CompletionStage<?> execute(SearchIndexer indexer, Object providedId) {

@@ -18,8 +18,7 @@ import org.apache.lucene.search.Collector;
 public interface CollectorKey<C extends Collector> {
 
 	static <C extends Collector> CollectorKey<C> create() {
-		return new CollectorKey<C>() {
-		};
+		return new CollectorKey<C>() {};
 	}
 
 }

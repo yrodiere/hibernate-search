@@ -24,7 +24,8 @@ final class FieldModelContributorContextImpl<F> implements FieldModelContributor
 	private final ValueBridge<?, F> bridge;
 	private final IndexFieldTypeOptionsStep<?, ? super F> fieldTypeOptionsStep;
 
-	FieldModelContributorContextImpl(ValueBridge<?, F> bridge, IndexFieldTypeOptionsStep<?, ? super F> fieldTypeOptionsStep) {
+	FieldModelContributorContextImpl(ValueBridge<?, F> bridge, IndexFieldTypeOptionsStep<?,
+			? super F> fieldTypeOptionsStep) {
 		this.bridge = bridge;
 		this.fieldTypeOptionsStep = fieldTypeOptionsStep;
 	}

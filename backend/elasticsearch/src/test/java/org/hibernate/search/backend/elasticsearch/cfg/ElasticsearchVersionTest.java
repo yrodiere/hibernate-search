@@ -146,7 +146,8 @@ public class ElasticsearchVersionTest {
 				.hasMessageContainingAll( "Invalid Elasticsearch version",
 						"'1_0'",
 						"Expected format is 'x.y.z-qualifier'" );
-		assertThatThrownBy( () -> ElasticsearchVersion.of( ElasticsearchDistributionName.OPENSEARCH, "opensearch:1.0" ) )
+		assertThatThrownBy( () -> ElasticsearchVersion.of( ElasticsearchDistributionName.OPENSEARCH,
+				"opensearch:1.0" ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll( "Invalid Elasticsearch version",
 						"'opensearch:1.0'",
@@ -330,7 +331,12 @@ public class ElasticsearchVersionTest {
 		ElasticsearchVersion actualVersion = ElasticsearchVersion.of( actualDistribution, actualVersionString );
 
 		return assertThat( configuredVersion.matches( actualVersion ) )
-				.as( "ESVersion(" + configuredVersionString + ").matches( ESVersion("
-						+ actualDistribution + "," + actualVersionString + ") )" );
+				.as( "ESVersion("
+						+ configuredVersionString
+						+ ").matches( ESVersion("
+						+ actualDistribution
+						+ ","
+						+ actualVersionString
+						+ ") )" );
 	}
 }

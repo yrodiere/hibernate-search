@@ -65,9 +65,13 @@ public class RangeFacetRequest<T> extends FacetingRequestImpl<Map<Range<T>, Long
 
 	@Override
 	public String toString() {
-		return "RangeFacetRequest{" +
-				"facetRangeList=" + facetRangeList +
-				"} " + super.toString();
+		return "RangeFacetRequest{"
+				+
+				"facetRangeList="
+				+ facetRangeList
+				+
+				"} "
+				+ super.toString();
 	}
 
 	private Class<T> getFacetValueType() {

@@ -33,7 +33,7 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
 @RunWith(Parameterized.class)
-@SuppressWarnings({"unchecked", "rawtypes"}) // Raw types are the only way to mock parameterized types
+@SuppressWarnings({ "unchecked", "rawtypes" }) // Raw types are the only way to mock parameterized types
 public class ConfigurationPropertyInvalidSimpleValuesTest<T> {
 
 	@Parameterized.Parameters(name = "{1}")
@@ -85,7 +85,8 @@ public class ConfigurationPropertyInvalidSimpleValuesTest<T> {
 				params(
 						c -> c.as( MyPropertyType.class, MyPropertyType::new ),
 						MyPropertyType.INVALID_VALUE, new MyPropertyType( "foobar" ),
-						"Invalid value: expected either an instance of '" + MyPropertyType.class.getName()
+						"Invalid value: expected either an instance of '"
+								+ MyPropertyType.class.getName()
 								+ "' or a String that can be parsed into that type.",
 						MyPropertyType.INVALID_VALUE_ERROR_MESSAGE
 				)
@@ -153,8 +154,11 @@ public class ConfigurationPropertyInvalidSimpleValuesTest<T> {
 		when( sourceMock.resolve( key ) ).thenReturn( Optional.of( resolvedKey ) );
 		assertThatThrownBy( () -> property.get( sourceMock ) )
 				.hasMessageContaining(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + invalidStringValue + "'."
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ invalidStringValue
+								+ "'."
 				)
 				.hasMessageContaining( expectedInvalidValueStringMessagePrefix )
 				.hasMessageContaining( expectedInvalidStringMessage );
@@ -165,8 +169,11 @@ public class ConfigurationPropertyInvalidSimpleValuesTest<T> {
 		when( sourceMock.resolve( key ) ).thenReturn( Optional.of( resolvedKey ) );
 		assertThatThrownBy( () -> property.get( sourceMock ) )
 				.hasMessageContaining(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + invalidTypeValue + "'."
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ invalidTypeValue
+								+ "'."
 				)
 				.hasMessageContaining( expectedInvalidValueTypeMessagePrefix );
 		verifyNoOtherSourceInteractionsAndReset();
@@ -186,8 +193,11 @@ public class ConfigurationPropertyInvalidSimpleValuesTest<T> {
 		when( sourceMock.resolve( key ) ).thenReturn( Optional.of( resolvedKey ) );
 		assertThatThrownBy( () -> property.get( sourceMock ) )
 				.hasMessageContaining(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + invalidStringValue + "'."
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ invalidStringValue
+								+ "'."
 				)
 				.hasMessageContaining( expectedInvalidValueStringMessagePrefix )
 				.hasMessageContaining( expectedInvalidStringMessage );
@@ -198,8 +208,11 @@ public class ConfigurationPropertyInvalidSimpleValuesTest<T> {
 		when( sourceMock.resolve( key ) ).thenReturn( Optional.of( resolvedKey ) );
 		assertThatThrownBy( () -> property.get( sourceMock ) )
 				.hasMessageContaining(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + invalidTypeValue + "'."
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ invalidTypeValue
+								+ "'."
 				)
 				.hasMessageContaining( expectedInvalidValueTypeMessagePrefix );
 		verifyNoOtherSourceInteractionsAndReset();
@@ -221,8 +234,11 @@ public class ConfigurationPropertyInvalidSimpleValuesTest<T> {
 		when( sourceMock.resolve( key ) ).thenReturn( Optional.of( resolvedKey ) );
 		assertThatThrownBy( () -> property.get( sourceMock ) )
 				.hasMessageContaining(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + invalidStringValue + "'."
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ invalidStringValue
+								+ "'."
 				)
 				.hasMessageContaining( expectedInvalidValueStringMessagePrefix )
 				.hasMessageContaining( expectedInvalidStringMessage );
@@ -234,8 +250,11 @@ public class ConfigurationPropertyInvalidSimpleValuesTest<T> {
 		when( sourceMock.resolve( key ) ).thenReturn( Optional.of( resolvedKey ) );
 		assertThatThrownBy( () -> property.get( sourceMock ) )
 				.hasMessageContaining(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + commaSeparatedStringValue + "'."
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ commaSeparatedStringValue
+								+ "'."
 				)
 				.hasMessageContaining( expectedInvalidValueStringMessagePrefix )
 				.hasMessageContaining( expectedInvalidStringMessage );
@@ -247,8 +266,11 @@ public class ConfigurationPropertyInvalidSimpleValuesTest<T> {
 		when( sourceMock.resolve( key ) ).thenReturn( Optional.of( resolvedKey ) );
 		assertThatThrownBy( () -> property.get( sourceMock ) )
 				.hasMessageContaining(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + invalidTypeValueCollection + "'."
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ invalidTypeValueCollection
+								+ "'."
 				)
 				.hasMessageContaining( expectedInvalidValueTypeMessagePrefix );
 		verifyNoOtherSourceInteractionsAndReset();
@@ -259,8 +281,11 @@ public class ConfigurationPropertyInvalidSimpleValuesTest<T> {
 		when( sourceMock.resolve( key ) ).thenReturn( Optional.of( resolvedKey ) );
 		assertThatThrownBy( () -> property.get( sourceMock ) )
 				.hasMessageContainingAll(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + invalidTypeValue + "'.",
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ invalidTypeValue
+								+ "'.",
 						"Invalid multi value: expected either a single value of the correct type, a Collection, or a String",
 						"interpreting as a single value failed with the following exception",
 						expectedInvalidValueTypeMessagePrefix )

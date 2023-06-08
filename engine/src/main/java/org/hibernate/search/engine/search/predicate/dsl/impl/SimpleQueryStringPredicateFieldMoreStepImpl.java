@@ -21,12 +21,10 @@ import org.hibernate.search.engine.search.predicate.dsl.spi.SearchPredicateDslCo
 import org.hibernate.search.engine.search.predicate.spi.SimpleQueryStringPredicateBuilder;
 import org.hibernate.search.util.common.impl.Contracts;
 
-
 class SimpleQueryStringPredicateFieldMoreStepImpl
 		implements SimpleQueryStringPredicateFieldMoreStep<
 				SimpleQueryStringPredicateFieldMoreStepImpl,
-				SimpleQueryStringPredicateOptionsStep<?>
-		> {
+				SimpleQueryStringPredicateOptionsStep<?>> {
 
 	private final CommonState commonState;
 

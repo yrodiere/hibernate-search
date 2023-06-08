@@ -33,7 +33,8 @@ public final class PredicateTypeKeys {
 			key( "spatial:within-circle" );
 	public static final SearchQueryElementTypeKey<SpatialWithinPolygonPredicateBuilder> SPATIAL_WITHIN_POLYGON =
 			key( "spatial:within-polygon" );
-	public static final SearchQueryElementTypeKey<SpatialWithinBoundingBoxPredicateBuilder> SPATIAL_WITHIN_BOUNDING_BOX =
-			key( "spatial:within-bounding-box" );
+	public static final SearchQueryElementTypeKey<
+			SpatialWithinBoundingBoxPredicateBuilder> SPATIAL_WITHIN_BOUNDING_BOX =
+					key( "spatial:within-bounding-box" );
 
 }

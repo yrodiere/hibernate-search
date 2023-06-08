@@ -9,9 +9,7 @@ package org.hibernate.search.documentation.mapper.orm.alternative.alternativebin
 //tag::include[]
 public enum Language { // <1>
 
-	ENGLISH( "en" ),
-	FRENCH( "fr" ),
-	GERMAN( "de" );
+	ENGLISH("en"), FRENCH("fr"), GERMAN("de");
 
 	public final String code;
 

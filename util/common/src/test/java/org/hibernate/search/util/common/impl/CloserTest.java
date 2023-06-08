@@ -18,7 +18,6 @@ import java.util.function.Supplier;
 
 import org.junit.Test;
 
-
 public class CloserTest {
 
 	@Test
@@ -213,9 +212,11 @@ public class CloserTest {
 		List<Closeable> closeables = Arrays.asList(
 				() -> { throw exception1; },
 				() -> { throw exception2; },
-				() -> { throw exception3; },
+				() -> {
+					throw exception3;
+				},
 				() -> { throw exception4; }
-				);
+		);
 
 		assertThatThrownBy( () -> {
 			try ( Closer<IOException> closer = new Closer<>() ) {
@@ -246,10 +247,12 @@ public class CloserTest {
 		RuntimeException exception4 = new UnsupportedOperationException();
 		List<Supplier<Closeable>> closeableSuppliers = Arrays.asList(
 				() -> () -> { throw exception1; },
-				() -> () -> { throw exception2; },
+				() -> () -> {
+					throw exception2;
+				},
 				() -> () -> { throw exception3; },
 				() -> () -> { throw exception4; }
-				);
+		);
 
 		assertThatThrownBy( () -> {
 			try ( Closer<IOException> closer = new Closer<>() ) {
@@ -325,15 +328,13 @@ public class CloserTest {
 				.hasSuppressedException( exception3 );
 	}
 
-	private static class MyException1 extends Exception {
-	}
+	private static class MyException1 extends Exception {}
 
 	private interface MyException1Closeable extends AutoCloseable {
 		@Override
 		void close() throws MyException1;
 	}
 
-	private static class MyException2 extends Exception {
-	}
+	private static class MyException2 extends Exception {}
 
 }

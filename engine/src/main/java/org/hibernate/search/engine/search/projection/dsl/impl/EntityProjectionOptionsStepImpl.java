@@ -21,7 +21,6 @@ import org.hibernate.search.engine.search.projection.spi.ProjectionMappedTypeCon
 import org.hibernate.search.engine.search.projection.spi.SearchProjectionIndexScope;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
-
 public final class EntityProjectionOptionsStepImpl<E>
 		implements EntityProjectionOptionsStep<EntityProjectionOptionsStepImpl<E>, E> {
 
@@ -44,8 +43,8 @@ public final class EntityProjectionOptionsStepImpl<E>
 		boolean canUseProjectionFromFirst = true;
 		ProjectionMappedTypeContext first = mappedTypeContexts.get( 0 );
 		for ( ProjectionMappedTypeContext mappedTypeContext : mappedTypeContexts ) {
-			boolean willYieldSameProjectionAsFirst = first.loadingAvailable() ? mappedTypeContext.loadingAvailable()
-					: first.javaClass().equals( mappedTypeContext.javaClass() );
+			boolean willYieldSameProjectionAsFirst = first.loadingAvailable() ?
+					mappedTypeContext.loadingAvailable() : first.javaClass().equals( mappedTypeContext.javaClass() );
 			if ( !willYieldSameProjectionAsFirst ) {
 				canUseProjectionFromFirst = false;
 				break;

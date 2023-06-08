@@ -31,7 +31,6 @@ public class Eagle extends Bird {
 	}
 
 	public enum WingType {
-		BROAD,
-		LONG
+		BROAD, LONG
 	}
 }

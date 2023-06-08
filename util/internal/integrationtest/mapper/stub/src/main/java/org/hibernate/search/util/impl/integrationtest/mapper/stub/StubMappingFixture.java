@@ -61,7 +61,8 @@ public final class StubMappingFixture {
 		if ( this.typeContexts != null ) {
 			ProjectionMappedTypeContext context = typeContexts.get( name );
 			if ( context == null ) {
-				throw new AssertionFailure( "Missing custom type context for name '" + name
+				throw new AssertionFailure( "Missing custom type context for name '"
+						+ name
 						+ "' in stub mapping fixture (mapping.with().[...])" );
 			}
 			return context;

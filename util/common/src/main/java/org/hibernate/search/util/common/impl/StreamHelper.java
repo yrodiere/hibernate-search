@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 import org.hibernate.search.util.common.AssertionFailure;
 
-
 public final class StreamHelper {
 
 	private StreamHelper() {
@@ -61,7 +60,7 @@ public final class StreamHelper {
 	}
 
 	private static <T> BinaryOperator<T> throwingMerger() {
-		return (u,v) -> { throw new AssertionFailure( "Unexpected duplicate key: " + u ); };
+		return (u, v) -> { throw new AssertionFailure( "Unexpected duplicate key: " + u ); };
 	}
 
 }

@@ -14,12 +14,10 @@ import org.hibernate.search.engine.backend.types.spi.AbstractIndexCompositeNodeT
 import org.hibernate.search.engine.search.common.spi.SearchIndexCompositeNodeContext;
 import org.hibernate.search.engine.search.common.spi.SearchIndexScope;
 
-
 public interface IndexCompositeNode<
-				SC extends SearchIndexScope<?>,
-				NT extends AbstractIndexCompositeNodeType<SC, ?>,
-				F extends IndexField<SC, ?>
-		>
+		SC extends SearchIndexScope<?>,
+		NT extends AbstractIndexCompositeNodeType<SC, ?>,
+		F extends IndexField<SC, ?>>
 		extends IndexNode<SC>, IndexCompositeElementDescriptor, SearchIndexCompositeNodeContext<SC> {
 
 	@Override

@@ -44,7 +44,11 @@ public abstract class AbstractPredicateInvalidFieldIT {
 
 		assertThatThrownBy( () -> tryPredicate( f, fieldPath ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContaining( "Cannot use '" + predicateNameInErrorMessage() + "' on field '" + fieldPath + "'" );
+				.hasMessageContaining( "Cannot use '"
+						+ predicateNameInErrorMessage()
+						+ "' on field '"
+						+ fieldPath
+						+ "'" );
 	}
 
 	@Test
@@ -55,7 +59,11 @@ public abstract class AbstractPredicateInvalidFieldIT {
 
 		assertThatThrownBy( () -> tryPredicate( f, fieldPath ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContaining( "Cannot use '" + predicateNameInErrorMessage() + "' on field '" + fieldPath + "'" );
+				.hasMessageContaining( "Cannot use '"
+						+ predicateNameInErrorMessage()
+						+ "' on field '"
+						+ fieldPath
+						+ "'" );
 	}
 
 	protected abstract void tryPredicate(SearchPredicateFactory f, String fieldPath);

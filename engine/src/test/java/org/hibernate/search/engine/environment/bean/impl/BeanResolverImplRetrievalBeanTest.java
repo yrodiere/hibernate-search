@@ -139,14 +139,17 @@ public class BeanResolverImplRetrievalBeanTest {
 
 	@Test
 	public void resolve_noMatch() {
-		BeanNotFoundException beanManagerNotFoundException = new BeanNotFoundException( "cannot find from beanManager" );
+		BeanNotFoundException beanManagerNotFoundException = new BeanNotFoundException(
+				"cannot find from beanManager" );
 
 		// resolve(Class)
 		when( beanManagerBeanProviderMock.forType( InvalidType.class ) )
 				.thenThrow( beanManagerNotFoundException );
 		assertThatThrownBy( () -> beanResolver.resolve( InvalidType.class, BeanRetrieval.BEAN ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "'",
 						beanManagerNotFoundException.getMessage() )
 				.hasCause( beanManagerNotFoundException );
 		verifyNoOtherInteractionsAndReset();
@@ -156,7 +159,9 @@ public class BeanResolverImplRetrievalBeanTest {
 				.thenThrow( beanManagerNotFoundException );
 		assertThatThrownBy( () -> beanResolver.resolve( BeanReference.of( InvalidType.class, BeanRetrieval.BEAN ) ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "'",
 						beanManagerNotFoundException.getMessage() )
 				.hasCause( beanManagerNotFoundException );
 		verifyNoOtherInteractionsAndReset();
@@ -166,8 +171,9 @@ public class BeanResolverImplRetrievalBeanTest {
 				.thenThrow( beanManagerNotFoundException );
 		assertThatThrownBy( () -> beanResolver.resolve( InvalidType.class, "someName", BeanRetrieval.BEAN ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName()
-								+ "' and name 'someName'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "' and name 'someName'",
 						beanManagerNotFoundException.getMessage() )
 				.hasCause( beanManagerNotFoundException );
 		verifyNoOtherInteractionsAndReset();
@@ -175,10 +181,12 @@ public class BeanResolverImplRetrievalBeanTest {
 		// resolve(Class, String) through BeanReference
 		when( beanManagerBeanProviderMock.forTypeAndName( InvalidType.class, "someName" ) )
 				.thenThrow( beanManagerNotFoundException );
-		assertThatThrownBy( () -> beanResolver.resolve( BeanReference.of( InvalidType.class, "someName", BeanRetrieval.BEAN ) ) )
+		assertThatThrownBy( () -> beanResolver.resolve( BeanReference.of( InvalidType.class, "someName",
+				BeanRetrieval.BEAN ) ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName()
-								+ "' and name 'someName'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "' and name 'someName'",
 						beanManagerNotFoundException.getMessage() )
 				.hasCause( beanManagerNotFoundException );
 		verifyNoOtherInteractionsAndReset();
@@ -193,7 +201,9 @@ public class BeanResolverImplRetrievalBeanTest {
 						BeanReference.of( Object.class, InvalidType.class.getName(), BeanRetrieval.BEAN ) )
 		) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "'",
 						beanManagerNotFoundException.getMessage() )
 				.hasCause( beanManagerNotFoundException );
 		verifyNoOtherInteractionsAndReset();

@@ -276,7 +276,8 @@ public class IndexFieldDescriptorIT {
 				return binding.nestedObject.relativeFieldName;
 			case IN_NESTED_TWICE:
 				return binding.nestedObject.relativeFieldName
-						+ "." + binding.nestedObject.nestedObject.relativeFieldName;
+						+ "."
+						+ binding.nestedObject.nestedObject.relativeFieldName;
 			default:
 				throw new IllegalStateException( "Unexpected value: " + fieldStructure.location );
 		}

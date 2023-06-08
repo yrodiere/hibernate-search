@@ -9,6 +9,7 @@ package org.hibernate.search.integrationtest.mapper.orm.automaticindexing.associ
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -62,7 +63,8 @@ public class AutomaticIndexingAssociationDeletionIT {
 	public MethodRule setupHolderMethodRule = setupHolder.methodRule();
 
 	@ReusableOrmSetupHolder.Setup
-	public void setup(OrmSetupHelper.SetupContext setupContext, ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
+	public void setup(OrmSetupHelper.SetupContext setupContext,
+			ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
 		backendMock.expectAnySchema( AssociationOwner.NAME );
 		backendMock.expectAnySchema( AssociationNonOwner.NAME );
 		setupContext.withAnnotatedTypes( AssociationOwner.class, AssociationNonOwner.class );
@@ -367,9 +369,9 @@ public class AutomaticIndexingAssociationDeletionIT {
 
 			backendMock.expectWorks( AssociationNonOwner.NAME )
 					.delete( "2" );
-					// We don't expect any update of the containing entity (id 4),
-					// since its association to 1 was not updated
-					// (the code above is technically incorrect).
+			// We don't expect any update of the containing entity (id 4),
+			// since its association to 1 was not updated
+			// (the code above is technically incorrect).
 		} );
 		backendMock.verifyExpectationsMet();
 	}
@@ -451,16 +453,16 @@ public class AutomaticIndexingAssociationDeletionIT {
 		@OrderBy
 		private List<Integer> elementCollection;
 
-		@IndexedEmbedded(includePaths = {"basic", "elementCollection"})
+		@IndexedEmbedded(includePaths = { "basic", "elementCollection" })
 		@OneToOne(fetch = FetchType.LAZY, // Will be ignored except in the test extending this one and using bytecode enhancement.
 				optional = true)
 		private AssociationNonOwner optionalOneToOne;
 
-		@IndexedEmbedded(includePaths = {"basic", "elementCollection"})
+		@IndexedEmbedded(includePaths = { "basic", "elementCollection" })
 		@ManyToOne
 		private AssociationNonOwner manyToOne;
 
-		@IndexedEmbedded(includePaths = {"basic", "elementCollection"})
+		@IndexedEmbedded(includePaths = { "basic", "elementCollection" })
 		@ManyToMany
 		@JoinTable(joinColumns = @JoinColumn(name = "nonowner_id"),
 				inverseJoinColumns = @JoinColumn(name = "owner_id"))
@@ -531,17 +533,17 @@ public class AutomaticIndexingAssociationDeletionIT {
 		@OrderBy
 		private List<Integer> elementCollection;
 
-		@IndexedEmbedded(includePaths = {"basic", "elementCollection"})
+		@IndexedEmbedded(includePaths = { "basic", "elementCollection" })
 		@OneToOne(fetch = FetchType.LAZY, // Will be ignored except in the test extending this one and using bytecode enhancement.
 				mappedBy = "optionalOneToOne", optional = true)
 		private AssociationOwner optionalOneToOne;
 
-		@IndexedEmbedded(includePaths = {"basic", "elementCollection"})
+		@IndexedEmbedded(includePaths = { "basic", "elementCollection" })
 		@OneToMany(mappedBy = "manyToOne")
 		@OrderColumn(name = "idx")
 		private List<AssociationOwner> oneToMany = new ArrayList<>();
 
-		@IndexedEmbedded(includePaths = {"basic", "elementCollection"})
+		@IndexedEmbedded(includePaths = { "basic", "elementCollection" })
 		@ManyToMany(mappedBy = "manyToMany")
 		@OrderBy("id")
 		private List<AssociationOwner> manyToMany = new ArrayList<>();

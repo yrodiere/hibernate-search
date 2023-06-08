@@ -54,33 +54,40 @@ public class OutboxPollingCoordinationStrategy implements CoordinationStrategy {
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
 	private static final ConfigurationProperty<Boolean> EVENT_PROCESSOR_ENABLED =
-			ConfigurationProperty.forKey( HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.EVENT_PROCESSOR_ENABLED )
+			ConfigurationProperty.forKey(
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.EVENT_PROCESSOR_ENABLED )
 					.asBoolean()
-					.withDefault( HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_EVENT_PROCESSOR_ENABLED )
+					.withDefault(
+							HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_EVENT_PROCESSOR_ENABLED )
 					.build();
 
 	private static final OptionalConfigurationProperty<Integer> EVENT_PROCESSOR_SHARDS_TOTAL_COUNT =
-			ConfigurationProperty.forKey( HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.EVENT_PROCESSOR_SHARDS_TOTAL_COUNT )
+			ConfigurationProperty.forKey(
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.EVENT_PROCESSOR_SHARDS_TOTAL_COUNT )
 					.asIntegerStrictlyPositive()
 					.build();
 
 	private static final OptionalConfigurationProperty<List<Integer>> EVENT_PROCESSOR_SHARDS_ASSIGNED =
-			ConfigurationProperty.forKey( HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.EVENT_PROCESSOR_SHARDS_ASSIGNED )
+			ConfigurationProperty.forKey(
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.EVENT_PROCESSOR_SHARDS_ASSIGNED )
 					.asIntegerPositiveOrZero()
 					.multivalued()
 					.build();
 
 	private static final ConfigurationProperty<OutboxEventProcessingOrder> EVENT_PROCESSOR_ORDER =
-			ConfigurationProperty.forKey( HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.EVENT_PROCESSOR_ORDER )
+			ConfigurationProperty.forKey(
+					HibernateOrmMapperOutboxPollingSettings.CoordinationRadicals.EVENT_PROCESSOR_ORDER )
 					.as( OutboxEventProcessingOrder.class, OutboxEventProcessingOrder::of )
 					.withDefault( HibernateOrmMapperOutboxPollingSettings.Defaults.COORDINATION_EVENT_PROCESSOR_ORDER )
 					.build();
 
-	private static final ConfigurationProperty<BeanReference<? extends OutboxPollingInternalConfigurer>> INTERNAL_CONFIGURER =
-			ConfigurationProperty.forKey( HibernateOrmMapperOutboxPollingImplSettings.CoordinationRadicals.INTERNAL_CONFIGURER )
-					.asBeanReference( OutboxPollingInternalConfigurer.class )
-					.withDefault( BeanReference.ofInstance( OutboxPollingInternalConfigurer.DEFAULT ) )
-					.build();
+	private static final ConfigurationProperty<BeanReference<
+			? extends OutboxPollingInternalConfigurer>> INTERNAL_CONFIGURER =
+					ConfigurationProperty.forKey(
+							HibernateOrmMapperOutboxPollingImplSettings.CoordinationRadicals.INTERNAL_CONFIGURER )
+							.asBeanReference( OutboxPollingInternalConfigurer.class )
+							.withDefault( BeanReference.ofInstance( OutboxPollingInternalConfigurer.DEFAULT ) )
+							.build();
 
 	private OutboxEventFinderProvider finderProvider;
 	private AgentRepositoryProvider agentRepositoryProvider;
@@ -93,7 +100,8 @@ public class OutboxPollingCoordinationStrategy implements CoordinationStrategy {
 	public void configure(CoordinationConfigurationContext context) {
 		context.mappingProducer( new OutboxPollingOutboxEventAdditionalJaxbMappingProducer() );
 		context.mappingProducer( new OutboxPollingAgentAdditionalJaxbMappingProducer() );
-		context.sendIndexingEventsTo( ctx -> new OutboxPollingOutboxEventSendingPlan( ctx.entityReferenceFactory(), ctx.session() ), true );
+		context.sendIndexingEventsTo( ctx -> new OutboxPollingOutboxEventSendingPlan( ctx.entityReferenceFactory(), ctx
+				.session() ), true );
 	}
 
 	@Override
@@ -141,6 +149,7 @@ public class OutboxPollingCoordinationStrategy implements CoordinationStrategy {
 		outboxPollingSearchMapping = new OutboxPollingSearchMappingImpl( context, tenancyConfiguration );
 		return CompletableFuture.completedFuture( null );
 	}
+
 	@Override
 	public PojoMassIndexerAgent createMassIndexerAgent(PojoMassIndexerAgentCreateContext context) {
 		return tenantDelegate( context.tenantIdentifier() ).massIndexerAgentFactory
@@ -266,7 +275,8 @@ public class OutboxPollingCoordinationStrategy implements CoordinationStrategy {
 			return totalShardCount;
 		}
 
-		private List<ShardAssignmentDescriptor> toStaticShardAssignments(ConfigurationPropertySource configurationPropertySource,
+		private List<ShardAssignmentDescriptor> toStaticShardAssignments(
+				ConfigurationPropertySource configurationPropertySource,
 				int totalShardCount, List<Integer> shardIndices) {
 			// Remove duplicates
 			Set<Integer> uniqueShardIndices = new HashSet<>( shardIndices );

@@ -46,7 +46,8 @@ public class ExistsPredicateBaseIT {
 						InvalidFieldIT.index,
 						SearchableIT.searchableYesIndex, SearchableIT.searchableNoIndex,
 						TypeCheckingNoConversionIT.index, TypeCheckingNoConversionIT.compatibleIndex,
-						TypeCheckingNoConversionIT.rawFieldCompatibleIndex, TypeCheckingNoConversionIT.missingFieldIndex,
+						TypeCheckingNoConversionIT.rawFieldCompatibleIndex,
+						TypeCheckingNoConversionIT.missingFieldIndex,
 						TypeCheckingNoConversionIT.incompatibleIndex,
 						ScaleCheckingIT.index, ScaleCheckingIT.compatibleIndex, ScaleCheckingIT.incompatibleIndex
 				)
@@ -65,9 +66,11 @@ public class ExistsPredicateBaseIT {
 
 		final BulkIndexer typeCheckingMainIndexer = TypeCheckingNoConversionIT.index.bulkIndexer();
 		final BulkIndexer typeCheckingCompatibleIndexer = TypeCheckingNoConversionIT.compatibleIndex.bulkIndexer();
-		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex.bulkIndexer();
+		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex
+				.bulkIndexer();
 		final BulkIndexer typeCheckingMissingFieldIndexer = TypeCheckingNoConversionIT.missingFieldIndex.bulkIndexer();
-		TypeCheckingNoConversionIT.dataSets.forEach( d -> d.contribute( TypeCheckingNoConversionIT.index, typeCheckingMainIndexer,
+		TypeCheckingNoConversionIT.dataSets.forEach( d -> d.contribute( TypeCheckingNoConversionIT.index,
+				typeCheckingMainIndexer,
 				TypeCheckingNoConversionIT.compatibleIndex, typeCheckingCompatibleIndexer,
 				TypeCheckingNoConversionIT.rawFieldCompatibleIndex, typeCheckingRawFieldCompatibleIndexer,
 				TypeCheckingNoConversionIT.missingFieldIndex, typeCheckingMissingFieldIndexer ) );
@@ -214,8 +217,7 @@ public class ExistsPredicateBaseIT {
 				scoreIndexer.add( docId( 1 ), routingKey, document -> {
 					document.addValue( binding.field1.get( fieldType ).reference, values.value() );
 				} );
-				scoreIndexer.add( docId( 2 ), routingKey, document -> {
-				} );
+				scoreIndexer.add( docId( 2 ), routingKey, document -> {} );
 			}
 		}
 	}
@@ -318,7 +320,8 @@ public class ExistsPredicateBaseIT {
 
 		@Override
 		public void unsearchable() {
-			throw new AssumptionViolatedException( "The 'exists' predicate actually can be used on unsearchable fields" );
+			throw new AssumptionViolatedException(
+					"The 'exists' predicate actually can be used on unsearchable fields" );
 		}
 
 		@Override
@@ -334,7 +337,8 @@ public class ExistsPredicateBaseIT {
 
 	@Nested
 	@RunWith(Parameterized.class)
-	public static class TypeCheckingNoConversionIT<F> extends AbstractPredicateTypeCheckingNoConversionIT<ExistsPredicateTestValues<F>> {
+	public static class TypeCheckingNoConversionIT<F>
+			extends AbstractPredicateTypeCheckingNoConversionIT<ExistsPredicateTestValues<F>> {
 		private static final List<DataSet<?, ?>> dataSets = new ArrayList<>();
 		private static final List<Object[]> parameters = new ArrayList<>();
 		static {
@@ -354,7 +358,8 @@ public class ExistsPredicateBaseIT {
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
 						.name( "typeChecking_main" );
 		private static final SimpleMappedIndex<CompatibleIndexBinding> compatibleIndex =
-				SimpleMappedIndex.<CompatibleIndexBinding>of( root -> new CompatibleIndexBinding( root, supportedFieldTypes ) {
+				SimpleMappedIndex.<CompatibleIndexBinding>of( root -> new CompatibleIndexBinding( root,
+						supportedFieldTypes ) {
 					@Override
 					protected void addIrrelevantOptions(FieldTypeDescriptor<?> fieldType,
 							StandardIndexFieldTypeOptionsStep<?, ?> c) {

@@ -24,8 +24,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import org.hibernate.search.backend.lucene.logging.impl.Log;
-import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
+import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.spi.OptionalConfigurationProperty;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 import org.hibernate.search.util.common.reporting.EventContext;
@@ -66,32 +66,34 @@ public final class IndexWriterSettings implements Serializable {
 
 		registerSetting( Extractor.fromBoolean( IO_WRITER_INFOSTREAM,
 				enabled -> Boolean.TRUE.equals( enabled ) ? new LoggerInfoStream() : null,
-				IndexWriterConfig::setInfoStream, (logByteSizeMergePolicy, integer) -> { } ) );
+				IndexWriterConfig::setInfoStream, (logByteSizeMergePolicy, integer) -> {} ) );
 
 		registerIntegerMergePolicySetting( IO_MERGE_MAX_DOCS, LogByteSizeMergePolicy::setMaxMergeDocs );
 		registerIntegerMergePolicySetting( IO_MERGE_FACTOR, LogByteSizeMergePolicy::setMergeFactor );
 		registerIntegerMergePolicySetting( IO_MERGE_MIN_SIZE, LogByteSizeMergePolicy::setMinMergeMB );
 		registerIntegerMergePolicySetting( IO_MERGE_MAX_SIZE, LogByteSizeMergePolicy::setMaxMergeMB );
-		registerIntegerMergePolicySetting( IO_MERGE_MAX_FORCED_SIZE, LogByteSizeMergePolicy::setMaxMergeMBForForcedMerge );
-		registerBooleanMergePolicySetting( IO_MERGE_CALIBRATE_BY_DELETES, LogByteSizeMergePolicy::setCalibrateSizeByDeletes );
+		registerIntegerMergePolicySetting( IO_MERGE_MAX_FORCED_SIZE,
+				LogByteSizeMergePolicy::setMaxMergeMBForForcedMerge );
+		registerBooleanMergePolicySetting( IO_MERGE_CALIBRATE_BY_DELETES,
+				LogByteSizeMergePolicy::setCalibrateSizeByDeletes );
 	}
 
 	private static void registerIntegerWriterSetting(String propertyKey,
 			BiConsumer<IndexWriterConfig, Integer> writerSettingApplier) {
 		EXTRACTORS.add( Extractor.fromInteger( propertyKey, Function.identity(),
-				writerSettingApplier, (logByteSizeMergePolicy, integer) -> { } ) );
+				writerSettingApplier, (logByteSizeMergePolicy, integer) -> {} ) );
 	}
 
 	private static void registerIntegerMergePolicySetting(String propertyKey,
 			BiConsumer<LogByteSizeMergePolicy, Integer> mergePolicySettingApplier) {
 		EXTRACTORS.add( Extractor.fromInteger( propertyKey, Function.identity(),
-				(writer, integer) -> { }, mergePolicySettingApplier ) );
+				(writer, integer) -> {}, mergePolicySettingApplier ) );
 	}
 
 	private static void registerBooleanMergePolicySetting(String propertyKey,
 			BiConsumer<LogByteSizeMergePolicy, Boolean> mergePolicySettingApplier) {
 		EXTRACTORS.add( Extractor.fromBoolean( propertyKey, Function.identity(),
-				(writer, integer) -> { }, mergePolicySettingApplier ) );
+				(writer, integer) -> {}, mergePolicySettingApplier ) );
 	}
 
 	private static void registerSetting(Extractor<?, ?> extractor) {

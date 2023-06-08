@@ -19,13 +19,13 @@ public enum IOStrategyName {
 	 * where index readers are based on the index writer to get up-to-date search results,
 	 * the index writer is committed periodically.
 	 */
-	NEAR_REAL_TIME( "near-real-time" ),
+	NEAR_REAL_TIME("near-real-time"),
 	/**
 	 * A simple, low-performance strategy mainly useful for debugging,
 	 * where index readers are created on each search query execution
 	 * and the index writer is committed after each write.
 	 */
-	DEBUG( "debug" );
+	DEBUG("debug");
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 

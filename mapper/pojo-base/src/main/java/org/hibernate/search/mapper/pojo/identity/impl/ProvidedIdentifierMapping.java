@@ -17,7 +17,6 @@ import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.util.common.impl.Closer;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
-
 public final class ProvidedIdentifierMapping implements IdentifierMappingImplementor<Object, Object> {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -25,7 +24,8 @@ public final class ProvidedIdentifierMapping implements IdentifierMappingImpleme
 	private final BeanHolder<? extends IdentifierBridge<Object>> bridgeHolder;
 
 	@SuppressWarnings("unchecked") // This class is bivariant in E
-	public static <E> IdentifierMappingImplementor<Object, E> get(BeanHolder<? extends IdentifierBridge<Object>> bridgeHolder) {
+	public static <E> IdentifierMappingImplementor<Object, E> get(BeanHolder<? extends IdentifierBridge<
+			Object>> bridgeHolder) {
 		return (IdentifierMappingImplementor<Object, E>) new ProvidedIdentifierMapping( bridgeHolder );
 	}
 
@@ -35,8 +35,10 @@ public final class ProvidedIdentifierMapping implements IdentifierMappingImpleme
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "bridgeHolder=" + bridgeHolder
+		return getClass().getSimpleName()
+				+ "["
+				+ "bridgeHolder="
+				+ bridgeHolder
 				+ "]";
 	}
 
@@ -63,12 +65,14 @@ public final class ProvidedIdentifierMapping implements IdentifierMappingImpleme
 
 	@Override
 	public String toDocumentIdentifier(Object identifier, BridgeMappingContext context) {
-		return bridgeHolder.get().toDocumentIdentifier( identifier, context.identifierBridgeToDocumentIdentifierContext() );
+		return bridgeHolder.get().toDocumentIdentifier( identifier, context
+				.identifierBridgeToDocumentIdentifierContext() );
 	}
 
 	@Override
 	public Object fromDocumentIdentifier(String documentId, BridgeSessionContext context) {
-		return bridgeHolder.get().fromDocumentIdentifier( documentId, context.identifierBridgeFromDocumentIdentifierContext() );
+		return bridgeHolder.get().fromDocumentIdentifier( documentId, context
+				.identifierBridgeFromDocumentIdentifierContext() );
 	}
 
 }

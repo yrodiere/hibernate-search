@@ -16,12 +16,14 @@ import java.util.TimeZone;
 
 import javax.persistence.EntityTransaction;
 
-import org.apache.lucene.search.Sort;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.test.jpa.JPATestCase;
 import org.hibernate.search.test.query.ProductArticle;
+
 import org.junit.Test;
+
+import org.apache.lucene.search.Sort;
 
 /**
  * @author Davide D'Alto
@@ -63,7 +65,8 @@ public class SortUsingEntityManagerTest extends JPATestCase {
 		tx.begin();
 
 		QueryBuilder builder = em.getSearchFactory().buildQueryBuilder().forEntity( ProductArticle.class ).get();
-		org.apache.lucene.search.Query query = builder.keyword().wildcard().onField( "header" ).matching( "hib*" ).createQuery();
+		org.apache.lucene.search.Query query = builder.keyword().wildcard().onField( "header" ).matching( "hib*" )
+				.createQuery();
 		Sort dateDescending = builder.sort().byField( "creationDate" ).desc().createSort();
 		List<ProductArticle> result = em.createFullTextQuery( query, ProductArticle.class )
 				.setSort( dateDescending ).setFirstResult( 3 ).getResultList();

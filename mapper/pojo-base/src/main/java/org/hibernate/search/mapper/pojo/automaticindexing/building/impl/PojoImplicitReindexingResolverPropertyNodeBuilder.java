@@ -16,9 +16,9 @@ import java.util.Set;
 
 import org.hibernate.search.mapper.pojo.automaticindexing.impl.PojoImplicitReindexingResolverNode;
 import org.hibernate.search.mapper.pojo.automaticindexing.impl.PojoImplicitReindexingResolverPropertyNode;
-import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.ContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.extractor.impl.BoundContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.extractor.impl.ContainerExtractorHolder;
+import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.ContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathPropertyNode;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathValueNode;
@@ -31,8 +31,9 @@ class PojoImplicitReindexingResolverPropertyNodeBuilder<T, P>
 	private final BoundPojoModelPathPropertyNode<T, P> modelPath;
 	private final PojoImplicitReindexingResolverValueNodeBuilderDelegate<P> valueWithoutExtractorsBuilderDelegate;
 	// Use a LinkedHashMap for deterministic iteration
-	private final Map<ContainerExtractorPath, PojoImplicitReindexingResolverContainerElementNodeBuilder<? super P, ?>>
-			containerElementNodeBuilders = new LinkedHashMap<>();
+	private final Map<ContainerExtractorPath,
+			PojoImplicitReindexingResolverContainerElementNodeBuilder<? super P, ?>> containerElementNodeBuilders =
+					new LinkedHashMap<>();
 
 	PojoImplicitReindexingResolverPropertyNodeBuilder(BoundPojoModelPathPropertyNode<T, P> modelPath,
 			PojoImplicitReindexingResolverBuildingHelper buildingHelper) {
@@ -55,9 +56,11 @@ class PojoImplicitReindexingResolverPropertyNodeBuilder<T, P>
 	@Override
 	void closeOnFailure() {
 		try ( Closer<RuntimeException> closer = new Closer<>() ) {
-			closer.push( PojoImplicitReindexingResolverValueNodeBuilderDelegate::closeOnFailure, valueWithoutExtractorsBuilderDelegate );
+			closer.push( PojoImplicitReindexingResolverValueNodeBuilderDelegate::closeOnFailure,
+					valueWithoutExtractorsBuilderDelegate );
 			closer.pushAll(
-					AbstractPojoImplicitReindexingResolverNodeBuilder::closeOnFailure, containerElementNodeBuilders.values()
+					AbstractPojoImplicitReindexingResolverNodeBuilder::closeOnFailure, containerElementNodeBuilders
+							.values()
 			);
 		}
 	}
@@ -93,8 +96,8 @@ class PojoImplicitReindexingResolverPropertyNodeBuilder<T, P>
 	@Override
 	protected void onFreeze(Set<PojoModelPathValueNode> dirtyPathsTriggeringReindexingCollector) {
 		valueWithoutExtractorsBuilderDelegate.freeze( dirtyPathsTriggeringReindexingCollector );
-		for ( PojoImplicitReindexingResolverContainerElementNodeBuilder<?, ?> builder
-				: containerElementNodeBuilders.values() ) {
+		for ( PojoImplicitReindexingResolverContainerElementNodeBuilder<?, ?> builder : containerElementNodeBuilders
+				.values() ) {
 			if ( builder != null ) { // May happen if the empty container value extractor path was used
 				builder.freeze();
 				dirtyPathsTriggeringReindexingCollector.addAll(
@@ -140,8 +143,8 @@ class PojoImplicitReindexingResolverPropertyNodeBuilder<T, P>
 	 * This generic method is necessary to make it clear to the compiler
 	 * that the extracted type and extractor have compatible generic arguments.
 	 */
-	private <V> PojoImplicitReindexingResolverContainerElementNodeBuilder<? super P, V>
-			createContainerBuilder(BoundContainerExtractorPath<P, V> boundExtractorPath) {
+	private <V> PojoImplicitReindexingResolverContainerElementNodeBuilder<? super P, V> createContainerBuilder(
+			BoundContainerExtractorPath<P, V> boundExtractorPath) {
 		ContainerExtractorHolder<P, V> extractorHolder =
 				buildingHelper.createExtractors( boundExtractorPath );
 		BoundPojoModelPathValueNode<T, P, V> containerElementPath = modelPath.value( boundExtractorPath );

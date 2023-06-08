@@ -79,7 +79,8 @@ public class IndexWriterDelegatorImpl implements IndexWriterDelegator {
 	}
 
 	@Override
-	public long updateDocuments(Term term, Iterable<? extends Iterable<? extends IndexableField>> docs) throws IOException {
+	public long updateDocuments(Term term, Iterable<? extends Iterable<
+			? extends IndexableField>> docs) throws IOException {
 		return delegate.updateDocuments( term, docs );
 	}
 
@@ -159,7 +160,8 @@ public class IndexWriterDelegatorImpl implements IndexWriterDelegator {
 	}
 
 	void closeAfterFailure(Throwable throwable, Object failingOperation) {
-		Exception exceptionToReport = log.uncommittedOperationsBecauseOfFailure( throwable.getMessage(), eventContext, throwable );
+		Exception exceptionToReport = log.uncommittedOperationsBecauseOfFailure( throwable.getMessage(), eventContext,
+				throwable );
 		try {
 			close();
 		}

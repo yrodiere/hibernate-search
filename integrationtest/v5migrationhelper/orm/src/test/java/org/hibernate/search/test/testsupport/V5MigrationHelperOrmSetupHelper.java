@@ -21,14 +21,17 @@ import org.hibernate.search.mapper.orm.schema.management.SchemaManagementStrateg
 import org.hibernate.search.testsupport.TestConstants;
 import org.hibernate.search.testsupport.configuration.V5MigrationHelperTestLuceneBackendConfiguration;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendSetupStrategy;
-import org.hibernate.search.util.impl.integrationtest.common.stub.backend.BackendMappingHandle;
 import org.hibernate.search.util.impl.integrationtest.common.rule.MappingSetupHelper;
+import org.hibernate.search.util.impl.integrationtest.common.stub.backend.BackendMappingHandle;
 import org.hibernate.search.util.impl.integrationtest.mapper.orm.HibernateOrmMappingHandle;
 import org.hibernate.search.util.impl.integrationtest.mapper.orm.SimpleSessionFactoryBuilder;
 import org.hibernate.search.util.impl.integrationtest.mapper.orm.multitenancy.impl.MultitenancyTestHelper;
 
 public final class V5MigrationHelperOrmSetupHelper
-		extends MappingSetupHelper<V5MigrationHelperOrmSetupHelper.SetupContext, SimpleSessionFactoryBuilder, SimpleSessionFactoryBuilder, SessionFactory> {
+		extends MappingSetupHelper<V5MigrationHelperOrmSetupHelper.SetupContext,
+				SimpleSessionFactoryBuilder,
+				SimpleSessionFactoryBuilder,
+				SessionFactory> {
 
 	public static V5MigrationHelperOrmSetupHelper create() {
 		return new V5MigrationHelperOrmSetupHelper(
@@ -51,7 +54,10 @@ public final class V5MigrationHelperOrmSetupHelper
 	}
 
 	public final class SetupContext
-			extends MappingSetupHelper<SetupContext, SimpleSessionFactoryBuilder, SimpleSessionFactoryBuilder, SessionFactory>.AbstractSetupContext {
+			extends MappingSetupHelper<SetupContext,
+					SimpleSessionFactoryBuilder,
+					SimpleSessionFactoryBuilder,
+					SessionFactory>.AbstractSetupContext {
 
 		// Use a LinkedHashMap for deterministic iteration
 		private final Map<String, Object> overriddenProperties = new LinkedHashMap<>();
@@ -79,12 +85,12 @@ public final class V5MigrationHelperOrmSetupHelper
 			return thisAsC();
 		}
 
-		public SetupContext tenants(String ... tenants) {
+		public SetupContext tenants(String... tenants) {
 			withConfiguration( b -> MultitenancyTestHelper.enable( b, tenants ) );
 			return thisAsC();
 		}
 
-		public SessionFactory setup(Class<?> ... annotatedTypes) {
+		public SessionFactory setup(Class<?>... annotatedTypes) {
 			return withConfiguration( builder -> builder.addAnnotatedClasses( Arrays.asList( annotatedTypes ) ) )
 					.setup();
 		}
@@ -99,6 +105,7 @@ public final class V5MigrationHelperOrmSetupHelper
 				List<Consumer<SimpleSessionFactoryBuilder>> consumers) {
 			consumers.forEach( c -> c.accept( builder ) );
 		}
+
 		@Override
 		protected SessionFactory build(SimpleSessionFactoryBuilder builder) {
 			return builder.build();

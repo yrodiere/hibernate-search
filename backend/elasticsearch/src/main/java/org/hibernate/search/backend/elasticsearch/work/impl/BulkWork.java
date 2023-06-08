@@ -18,7 +18,6 @@ import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrateg
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-
 public class BulkWork extends AbstractNonBulkableWork<BulkResult> {
 
 	private static final JsonAccessor<JsonArray> BULK_ITEMS = JsonAccessor.root().property( "items" ).asArray();
@@ -53,7 +52,7 @@ public class BulkWork extends AbstractNonBulkableWork<BulkResult> {
 		protected ElasticsearchRequest buildRequest() {
 			ElasticsearchRequest.Builder builder =
 					ElasticsearchRequest.post()
-					.pathComponent( Paths._BULK );
+							.pathComponent( Paths._BULK );
 			switch ( refreshStrategy ) {
 				case FORCE:
 					builder.param( "refresh", true );

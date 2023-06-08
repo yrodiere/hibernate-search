@@ -18,9 +18,6 @@ import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaObjectF
 import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.engine.search.predicate.definition.PredicateDefinition;
 import org.hibernate.search.integrationtest.mapper.pojo.mapping.annotation.processing.CustomPropertyMappingAnnotationBaseIT;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.bridge.PropertyBridge;
 import org.hibernate.search.mapper.pojo.bridge.binding.PropertyBindingContext;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.PropertyBinderRef;
@@ -38,10 +35,13 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyBi
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyValue;
 import org.hibernate.search.mapper.pojo.model.PojoElementAccessor;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPath;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -63,7 +63,9 @@ public class PropertyBridgeBaseIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
+
 	/**
 	 * Basic test checking that a "normal" custom property bridge will work as expected
 	 * when relying on accessors.
@@ -71,7 +73,7 @@ public class PropertyBridgeBaseIT {
 	 * Note that reindexing is tested in depth in the ORM mapper integration tests.
 	 */
 	@Test
-	@TestForIssue(jiraKey = {"HSEARCH-2055", "HSEARCH-2641"})
+	@TestForIssue(jiraKey = { "HSEARCH-2055", "HSEARCH-2641" })
 	public void accessors() {
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
@@ -80,10 +82,9 @@ public class PropertyBridgeBaseIT {
 			String stringProperty;
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.field( "someField", String.class, b2 -> {
-					b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
-				} )
+		backendMock.expectSchema( INDEX_NAME, b -> b.field( "someField", String.class, b2 -> {
+			b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
+		} )
 		);
 
 		SearchMapping mapping = setupHelper.start().withConfiguration(
@@ -97,9 +98,10 @@ public class PropertyBridgeBaseIT {
 									f -> f.asString().analyzer( "myAnalyzer" )
 							)
 									.toReference();
-							context.bridge( (DocumentElement target, Object bridgedElement, PropertyBridgeWriteContext context1) -> {
+							context.bridge( (DocumentElement target, Object bridgedElement,
+									PropertyBridgeWriteContext context1) -> {
 								target.addValue(
-									indexFieldReference, pojoPropertyAccessor.read( bridgedElement )
+										indexFieldReference, pojoPropertyAccessor.read( bridgedElement )
 								);
 							} );
 						} )
@@ -148,10 +150,9 @@ public class PropertyBridgeBaseIT {
 			Contained contained;
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.field( "someField", String.class, b2 -> {
-					b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
-				} )
+		backendMock.expectSchema( INDEX_NAME, b -> b.field( "someField", String.class, b2 -> {
+			b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
+		} )
 		);
 
 		SearchMapping mapping = setupHelper.start().withConfiguration(
@@ -222,10 +223,9 @@ public class PropertyBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3297")
 	public void explicitDependencies_inacessibleObject() {
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.field( "someField", String.class, b2 -> {
-					b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
-				} )
+		backendMock.expectSchema( INDEX_NAME, b -> b.field( "someField", String.class, b2 -> {
+			b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
+		} )
 		);
 
 		SearchMapping mapping = setupHelper.start().withConfiguration(
@@ -273,6 +273,7 @@ public class PropertyBridgeBaseIT {
 			Integer id;
 			MyEnum myEnum;
 		}
+
 		enum MyEnum {
 			VALUE1, VALUE2
 		}
@@ -308,7 +309,8 @@ public class PropertyBridgeBaseIT {
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".contained" )
 						.failure( "No readable property named 'doesNotExist' on type '"
-								+ Contained.class.getName() + "'" ) );
+								+ Contained.class.getName()
+								+ "'" ) );
 	}
 
 	@Test
@@ -331,7 +333,8 @@ public class PropertyBridgeBaseIT {
 								.binder( context -> {
 									context.dependencies()
 											.use(
-													ContainerExtractorPath.explicitExtractor( BuiltinContainerExtractors.COLLECTION ),
+													ContainerExtractorPath.explicitExtractor(
+															BuiltinContainerExtractors.COLLECTION ),
 													"stringProperty"
 											);
 									context.bridge( new UnusedPropertyBridge() );
@@ -343,9 +346,13 @@ public class PropertyBridgeBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".contained" )
-						.failure( "Invalid container extractor for type '" + Contained.class.getName() + "': '"
+						.failure( "Invalid container extractor for type '"
+								+ Contained.class.getName()
+								+ "': '"
 								+ BuiltinContainerExtractors.COLLECTION
-								+ "' (implementation class: '" + CollectionElementExtractor.class.getName() + "')" ) );
+								+ "' (implementation class: '"
+								+ CollectionElementExtractor.class.getName()
+								+ "')" ) );
 	}
 
 	/**
@@ -357,10 +364,9 @@ public class PropertyBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3297")
 	public void explicitReindexing() {
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.field( "someField", String.class, b2 -> {
-					b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
-				} )
+		backendMock.expectSchema( INDEX_NAME, b -> b.field( "someField", String.class, b2 -> {
+			b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
+		} )
 		);
 
 		SearchMapping mapping = setupHelper.start().withConfiguration(
@@ -368,7 +374,8 @@ public class PropertyBridgeBaseIT {
 						.property( "child" )
 						.binder( context -> {
 							context.dependencies()
-									.fromOtherEntity( PropertyBridgeExplicitIndexingClasses.ContainedLevel2Entity.class, "parent" )
+									.fromOtherEntity( PropertyBridgeExplicitIndexingClasses.ContainedLevel2Entity.class,
+											"parent" )
 									.use( "stringProperty" );
 							IndexFieldReference<String> indexFieldReference = context.indexSchemaElement().field(
 									"someField",
@@ -436,18 +443,20 @@ public class PropertyBridgeBaseIT {
 			ContainedLevel1Entity child;
 			NotEntity notEntity;
 		}
+
 		static class ContainedLevel1Entity {
 			IndexedEntity parent;
 		}
+
 		static class ContainedLevel2Entity {
 			ContainedLevel1Entity parent;
 			DifferentEntity associationToDifferentEntity;
 			String stringProperty;
 		}
-		static class DifferentEntity {
-		}
-		static class NotEntity {
-		}
+
+		static class DifferentEntity {}
+
+		static class NotEntity {}
 	}
 
 	@Test
@@ -478,7 +487,8 @@ public class PropertyBridgeBaseIT {
 						.typeContext( PropertyBridgeExplicitIndexingClasses.IndexedEntity.class.getName() )
 						.pathContext( ".child" )
 						.failure( "No readable property named 'doesNotExist' on type '"
-								+ PropertyBridgeExplicitIndexingClasses.ContainedLevel2Entity.class.getName() + "'" ) );
+								+ PropertyBridgeExplicitIndexingClasses.ContainedLevel2Entity.class.getName()
+								+ "'" ) );
 	}
 
 	@Test
@@ -508,7 +518,8 @@ public class PropertyBridgeBaseIT {
 						.typeContext( PropertyBridgeExplicitIndexingClasses.IndexedEntity.class.getName() )
 						.pathContext( ".child" )
 						.failure( "No readable property named 'doesNotExist' on type '"
-								+ PropertyBridgeExplicitIndexingClasses.ContainedLevel2Entity.class.getName() + "'" ) );
+								+ PropertyBridgeExplicitIndexingClasses.ContainedLevel2Entity.class.getName()
+								+ "'" ) );
 	}
 
 	@Test
@@ -521,7 +532,8 @@ public class PropertyBridgeBaseIT {
 								.binder( context -> {
 									context.dependencies()
 											.fromOtherEntity(
-													ContainerExtractorPath.explicitExtractor( BuiltinContainerExtractors.COLLECTION ),
+													ContainerExtractorPath.explicitExtractor(
+															BuiltinContainerExtractors.COLLECTION ),
 													PropertyBridgeExplicitIndexingClasses.ContainedLevel2Entity.class,
 													PojoModelPath.parse( "parent" )
 											);
@@ -539,9 +551,12 @@ public class PropertyBridgeBaseIT {
 						.typeContext( PropertyBridgeExplicitIndexingClasses.IndexedEntity.class.getName() )
 						.pathContext( ".child" )
 						.failure( "Invalid container extractor for type '"
-								+ PropertyBridgeExplicitIndexingClasses.ContainedLevel1Entity.class.getName() + "': '"
+								+ PropertyBridgeExplicitIndexingClasses.ContainedLevel1Entity.class.getName()
+								+ "': '"
 								+ BuiltinContainerExtractors.COLLECTION
-								+ "' (implementation class: '" + CollectionElementExtractor.class.getName() + "')" ) );
+								+ "' (implementation class: '"
+								+ CollectionElementExtractor.class.getName()
+								+ "')" ) );
 	}
 
 	@Test
@@ -573,8 +588,10 @@ public class PropertyBridgeBaseIT {
 						.pathContext( ".notEntity" )
 						.failure(
 								"Invalid use of 'fromOtherEntity': this method can only be used when the bridged element has an entity type,"
-								+ " but the bridged element has type '" + PropertyBridgeExplicitIndexingClasses.NotEntity.class.getName() + "',"
-								+ " which is not an entity type."
+										+ " but the bridged element has type '"
+										+ PropertyBridgeExplicitIndexingClasses.NotEntity.class.getName()
+										+ "',"
+										+ " which is not an entity type."
 						) );
 	}
 
@@ -607,7 +624,8 @@ public class PropertyBridgeBaseIT {
 						.pathContext( ".child" )
 						.failure(
 								"Invalid type passed to 'fromOtherEntity': the type must be an entity type",
-								"Type '" + PropertyBridgeExplicitIndexingClasses.NotEntity.class.getName()
+								"Type '"
+										+ PropertyBridgeExplicitIndexingClasses.NotEntity.class.getName()
 										+ "' is not an entity type."
 						) );
 	}
@@ -640,8 +658,12 @@ public class PropertyBridgeBaseIT {
 						.typeContext( PropertyBridgeExplicitIndexingClasses.IndexedEntity.class.getName() )
 						.pathContext( ".child" )
 						.failure(
-								"The inverse association targets type '" + PropertyBridgeExplicitIndexingClasses.DifferentEntity.class.getName() + "',"
-								+ " but a supertype or subtype of '" + PropertyBridgeExplicitIndexingClasses.ContainedLevel1Entity.class.getName() + "' was expected."
+								"The inverse association targets type '"
+										+ PropertyBridgeExplicitIndexingClasses.DifferentEntity.class.getName()
+										+ "',"
+										+ " but a supertype or subtype of '"
+										+ PropertyBridgeExplicitIndexingClasses.ContainedLevel1Entity.class.getName()
+										+ "' was expected."
 						) );
 	}
 
@@ -730,10 +752,9 @@ public class PropertyBridgeBaseIT {
 			List<String> stringProperty = new ArrayList<>();
 		}
 
-		backendMock.expectSchema( INDEX_NAME, b ->
-				b.field( "someField", String.class, b2 -> {
-					b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
-				} )
+		backendMock.expectSchema( INDEX_NAME, b -> b.field( "someField", String.class, b2 -> {
+			b2.analyzerName( "myAnalyzer" ); // For HSEARCH-2641
+		} )
 		);
 
 		SearchMapping mapping = setupHelper.start().withConfiguration(
@@ -787,8 +808,7 @@ public class PropertyBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3324")
 	public void field() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -827,8 +847,7 @@ public class PropertyBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3324")
 	public void objectField() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -877,8 +896,7 @@ public class PropertyBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3273")
 	public void fieldTemplate() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -922,8 +940,7 @@ public class PropertyBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3273")
 	public void objectFieldTemplate() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -998,7 +1015,8 @@ public class PropertyBridgeBaseIT {
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".stringProperty" )
 						.failure( "'.stringProperty<no value extractors>' cannot be assigned to '"
-								+ Integer.class.getName() + "'" ) );
+								+ Integer.class.getName()
+								+ "'" ) );
 	}
 
 	private static class UnusedPropertyBridge implements PropertyBridge<Object> {
@@ -1022,17 +1040,22 @@ public class PropertyBridgeBaseIT {
 				.satisfies( FailureReportUtils.hasFailureReport()
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".id" )
-						.failure( "Invalid bridge for input type '" + Integer.class.getName()
-										+ "': '" + MyStringBridge.TOSTRING + "'",
+						.failure( "Invalid bridge for input type '"
+								+ Integer.class.getName()
+								+ "': '"
+								+ MyStringBridge.TOSTRING
+								+ "'",
 								"This bridge expects an input of type '" + String.class.getName() + "'" ) );
 	}
 
 	public static class MyStringBridge implements PropertyBridge<String> {
 		private static final String TOSTRING = "<MyStringPropertyBridge toString() result>";
+
 		@Override
 		public void write(DocumentElement target, String bridgedElement, PropertyBridgeWriteContext context) {
 			throw new UnsupportedOperationException( "Should not be called" );
 		}
+
 		@Override
 		public String toString() {
 			return TOSTRING;
@@ -1107,8 +1130,7 @@ public class PropertyBridgeBaseIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-4166")
 	public void namedPredicate() {
-		class Contained {
-		}
+		class Contained {}
 		@Indexed(index = INDEX_NAME)
 		class IndexedEntity {
 			@DocumentId
@@ -1121,7 +1143,7 @@ public class PropertyBridgeBaseIT {
 		};
 
 		backendMock.expectSchema( INDEX_NAME, b -> b
-				.field( "string", String.class, b2 -> { } )
+				.field( "string", String.class, b2 -> {} )
 				.namedPredicate( "named", b2 -> b2
 						.predicateDefinition( predicateDefinition )
 				)

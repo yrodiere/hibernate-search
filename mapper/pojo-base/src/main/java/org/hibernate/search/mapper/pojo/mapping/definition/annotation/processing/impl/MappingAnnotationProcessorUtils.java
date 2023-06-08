@@ -64,12 +64,13 @@ public final class MappingAnnotationProcessorUtils {
 				}
 			default:
 				throw new AssertionFailure(
-					"Unexpected " + ContainerExtract.class.getSimpleName() + " value: " + extract
+						"Unexpected " + ContainerExtract.class.getSimpleName() + " value: " + extract
 				);
 		}
 	}
 
-	public static <T> Optional<BeanReference<? extends T>> toBeanReference(Class<T> expectedType, Class<?> undefinedTypeMarker,
+	public static <T> Optional<BeanReference<? extends T>> toBeanReference(Class<T> expectedType, Class<
+			?> undefinedTypeMarker,
 			Class<? extends T> type, String name, BeanRetrieval retrieval) {
 		String cleanedUpName = name.isEmpty() ? null : name;
 		Class<? extends T> cleanedUpType = undefinedTypeMarker.equals( type ) ? null : type;

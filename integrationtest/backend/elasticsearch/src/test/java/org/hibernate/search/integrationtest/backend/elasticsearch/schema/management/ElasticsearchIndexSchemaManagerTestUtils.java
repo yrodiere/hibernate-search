@@ -76,6 +76,7 @@ class ElasticsearchIndexSchemaManagerTestUtils {
 	static FailureReportChecker hasValidationFailureReport() {
 		return FailureReportUtils.hasFailureReport()
 				.contextLiteral( STUB_CONTEXT_LITERAL )
-				.failure( "Validation of the existing index in the Elasticsearch cluster failed. See below for details." );
+				.failure(
+						"Validation of the existing index in the Elasticsearch cluster failed. See below for details." );
 	}
 }

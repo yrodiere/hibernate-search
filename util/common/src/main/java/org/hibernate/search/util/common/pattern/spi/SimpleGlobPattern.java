@@ -28,7 +28,8 @@ public abstract class SimpleGlobPattern {
 		while ( endIndexInclusive >= 0 ) {
 			int lastWildcardIndex = patternString.lastIndexOf( WILDCARD_MANY, endIndexInclusive );
 			if ( lastWildcardIndex < endIndexInclusive ) {
-				pattern = pattern.prependLiteral( patternString.substring( lastWildcardIndex + 1, endIndexInclusive + 1 ) );
+				pattern = pattern.prependLiteral( patternString.substring( lastWildcardIndex + 1, endIndexInclusive
+						+ 1 ) );
 			}
 			if ( 0 <= lastWildcardIndex ) {
 				pattern = pattern.prependMany();
@@ -130,7 +131,7 @@ public abstract class SimpleGlobPattern {
 		@Override
 		protected boolean matches(String candidate, int startIndex) {
 			return literal.regionMatches( 0, candidate, startIndex, literal.length() )
-					&& next.matches( candidate,startIndex + literal.length() );
+					&& next.matches( candidate, startIndex + literal.length() );
 		}
 
 		@Override

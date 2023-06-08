@@ -77,25 +77,44 @@ public class ElasticsearchSchemaManagerExporterIT {
 		mapping.scope( Object.class ).schemaManager().exportExpectedSchema( directory );
 
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"aliases\": {" +
-						"    \"book-write\": {" +
-						"      \"is_write_index\": true" +
-						"    }," +
-						"    \"book-read\": {" +
-						"      \"is_write_index\": false" +
-						"    }" +
-						"  }," +
-						"  \"mappings\": {" +
-						"    \"properties\": {" +
-						"      \"_entity_type\": {" +
-						"        \"type\": \"keyword\"," +
-						"        \"index\": false," +
-						"        \"doc_values\": true" +
-						"      }" +
-						"    }" +
-						"  }," +
-						"  \"settings\": {}" +
+				"{"
+						+
+						"  \"aliases\": {"
+						+
+						"    \"book-write\": {"
+						+
+						"      \"is_write_index\": true"
+						+
+						"    },"
+						+
+						"    \"book-read\": {"
+						+
+						"      \"is_write_index\": false"
+						+
+						"    }"
+						+
+						"  },"
+						+
+						"  \"mappings\": {"
+						+
+						"    \"properties\": {"
+						+
+						"      \"_entity_type\": {"
+						+
+						"        \"type\": \"keyword\","
+						+
+						"        \"index\": false,"
+						+
+						"        \"doc_values\": true"
+						+
+						"      }"
+						+
+						"    }"
+						+
+						"  },"
+						+
+						"  \"settings\": {}"
+						+
 						"}",
 				readString(
 						directory.resolve( "backend" ) // as we are using the default backend
@@ -114,32 +133,58 @@ public class ElasticsearchSchemaManagerExporterIT {
 		);
 
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"aliases\": {" +
-						"    \"article-write\": {" +
-						"      \"is_write_index\": true" +
-						"    }," +
-						"    \"article-read\": {" +
-						"      \"is_write_index\": false" +
-						"    }" +
-						"  }," +
-						"  \"mappings\": {" +
-						"    \"properties\": {" +
-						"      \"_entity_type\": {" +
-						"        \"type\": \"keyword\"," +
-						"        \"index\": false," +
-						"        \"doc_values\": true" +
-						"      }," +
-						"      \"title\": {" +
-						"        \"type\": \"text\"," +
-						"        \"index\": true," +
-						"        \"norms\": true," +
-						"        \"analyzer\": \"default\"," +
-						"        \"term_vector\": \"no\"" +
-						"      }" +
-						"    }" +
-						"  }," +
-						"  \"settings\": {}" +
+				"{"
+						+
+						"  \"aliases\": {"
+						+
+						"    \"article-write\": {"
+						+
+						"      \"is_write_index\": true"
+						+
+						"    },"
+						+
+						"    \"article-read\": {"
+						+
+						"      \"is_write_index\": false"
+						+
+						"    }"
+						+
+						"  },"
+						+
+						"  \"mappings\": {"
+						+
+						"    \"properties\": {"
+						+
+						"      \"_entity_type\": {"
+						+
+						"        \"type\": \"keyword\","
+						+
+						"        \"index\": false,"
+						+
+						"        \"doc_values\": true"
+						+
+						"      },"
+						+
+						"      \"title\": {"
+						+
+						"        \"type\": \"text\","
+						+
+						"        \"index\": true,"
+						+
+						"        \"norms\": true,"
+						+
+						"        \"analyzer\": \"default\","
+						+
+						"        \"term_vector\": \"no\""
+						+
+						"      }"
+						+
+						"    }"
+						+
+						"  },"
+						+
+						"  \"settings\": {}"
+						+
 						"}",
 				readString(
 						directory.resolve( "backends" ) // as we are not using the default backend
@@ -173,8 +218,7 @@ public class ElasticsearchSchemaManagerExporterIT {
 				"{}"
 		);
 
-		assertThatThrownBy( () ->
-				mapping.scope( Object.class ).schemaManager().exportExpectedSchema( directory )
+		assertThatThrownBy( () -> mapping.scope( Object.class ).schemaManager().exportExpectedSchema( directory )
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
@@ -196,8 +240,7 @@ public class ElasticsearchSchemaManagerExporterIT {
 				"{}"
 		);
 
-		assertThatThrownBy( () ->
-				mapping.scope( Object.class ).schemaManager().exportExpectedSchema( directory )
+		assertThatThrownBy( () -> mapping.scope( Object.class ).schemaManager().exportExpectedSchema( directory )
 		)
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(

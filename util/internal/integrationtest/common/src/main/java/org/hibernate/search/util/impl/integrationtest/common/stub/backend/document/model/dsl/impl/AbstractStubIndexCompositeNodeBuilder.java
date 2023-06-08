@@ -14,8 +14,8 @@ import org.hibernate.search.engine.backend.document.IndexFieldReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaFieldOptionsStep;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaFieldTemplateOptionsStep;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaNamedPredicateOptionsStep;
-import org.hibernate.search.engine.backend.document.model.dsl.spi.IndexObjectFieldBuilder;
 import org.hibernate.search.engine.backend.document.model.dsl.spi.IndexCompositeNodeBuilder;
+import org.hibernate.search.engine.backend.document.model.dsl.spi.IndexObjectFieldBuilder;
 import org.hibernate.search.engine.backend.document.model.spi.IndexFieldInclusion;
 import org.hibernate.search.engine.backend.types.IndexFieldType;
 import org.hibernate.search.engine.backend.types.ObjectStructure;
@@ -38,7 +38,8 @@ abstract class AbstractStubIndexCompositeNodeBuilder implements IndexCompositeNo
 	@Override
 	public <F> IndexSchemaFieldOptionsStep<?, IndexFieldReference<F>> addField(String relativeFieldName,
 			IndexFieldInclusion inclusion, IndexFieldType<F> indexFieldType) {
-		StubIndexSchemaDataNode.Builder childSchemaNodeBuilder = StubIndexSchemaDataNode.field( schemaDataNodeBuilder, relativeFieldName );
+		StubIndexSchemaDataNode.Builder childSchemaNodeBuilder = StubIndexSchemaDataNode.field( schemaDataNodeBuilder,
+				relativeFieldName );
 		StubIndexValueFieldType<F> stubType = (StubIndexValueFieldType<F>) indexFieldType;
 		stubType.apply( childSchemaNodeBuilder );
 		if ( IndexFieldInclusion.INCLUDED.equals( inclusion ) ) {

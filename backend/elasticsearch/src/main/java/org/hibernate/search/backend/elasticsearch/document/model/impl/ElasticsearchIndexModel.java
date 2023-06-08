@@ -61,9 +61,8 @@ public class ElasticsearchIndexModel
 
 	@Override
 	public int maxResultWindow() {
-		return ( customIndexSettings == null || customIndexSettings.getMaxResultWindow() == null )
-				? IndexSettings.MAX_RESULT_WINDOW_DEFAULT
-				: customIndexSettings.getMaxResultWindow();
+		return ( customIndexSettings == null || customIndexSettings.getMaxResultWindow() == null ) ?
+				IndexSettings.MAX_RESULT_WINDOW_DEFAULT : customIndexSettings.getMaxResultWindow();
 	}
 
 	public void contributeLowLevelMetadata(LowLevelIndexMetadataBuilder builder) {

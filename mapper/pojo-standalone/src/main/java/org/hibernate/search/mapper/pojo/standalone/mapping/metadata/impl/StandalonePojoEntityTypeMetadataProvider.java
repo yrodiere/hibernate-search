@@ -12,13 +12,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.search.engine.mapper.model.spi.TypeMetadataContributorProvider;
+import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 import org.hibernate.search.mapper.pojo.standalone.loading.MassLoadingStrategy;
 import org.hibernate.search.mapper.pojo.standalone.loading.SelectionLoadingStrategy;
 import org.hibernate.search.mapper.pojo.standalone.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.standalone.mapping.metadata.EntityConfigurationContext;
 import org.hibernate.search.mapper.pojo.standalone.mapping.metadata.EntityConfigurer;
 import org.hibernate.search.mapper.pojo.standalone.model.impl.StandalonePojoBootstrapIntrospector;
-import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
 public class StandalonePojoEntityTypeMetadataProvider {
@@ -27,7 +27,8 @@ public class StandalonePojoEntityTypeMetadataProvider {
 
 	private final Map<PojoRawTypeModel<?>, StandalonePojoEntityTypeMetadata<?>> entityTypeMetadata;
 
-	private StandalonePojoEntityTypeMetadataProvider(Map<PojoRawTypeModel<?>, StandalonePojoEntityTypeMetadata<?>> entityTypeMetadata) {
+	private StandalonePojoEntityTypeMetadataProvider(Map<PojoRawTypeModel<?>,
+			StandalonePojoEntityTypeMetadata<?>> entityTypeMetadata) {
 		this.entityTypeMetadata = entityTypeMetadata;
 	}
 
@@ -55,7 +56,7 @@ public class StandalonePojoEntityTypeMetadataProvider {
 		public <E> void addEntityType(Class<E> clazz, String entityName, EntityConfigurer<E> configurerOrNull) {
 			PojoRawTypeModel<E> type = introspector.typeModel( clazz );
 			entityDefinitionByType.merge( type, new EntityDefinition<>( type, entityName, configurerOrNull ),
-							EntityDefinition::mergeWith );
+					EntityDefinition::mergeWith );
 			PojoRawTypeModel<?> previousType = entityTypeByName.putIfAbsent( entityName, type );
 			if ( previousType != null && !previousType.equals( type ) ) {
 				throw log.multipleEntityTypesWithSameName( entityName, previousType, type );

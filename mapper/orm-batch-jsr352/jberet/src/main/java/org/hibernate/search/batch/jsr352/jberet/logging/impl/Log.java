@@ -51,7 +51,9 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET_LEGACY + 5,
 			value = "Multiple entity manager factories have been registered in the CDI context."
-					+ " Use the '" + MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_REFERENCE + "' parameter"
+					+ " Use the '"
+					+ MassIndexingJobParameters.ENTITY_MANAGER_FACTORY_REFERENCE
+					+ "' parameter"
 					+ " to provide the bean name for the selected entity manager factory to the mass indexing job."
 	)
 	SearchException ambiguousEntityManagerFactoryInJsr352();

@@ -6,16 +6,17 @@
  */
 package org.hibernate.search.test.bridge;
 
+import static org.hibernate.search.test.bridge.ArrayBridgeTestEntity.Language.ENGLISH;
+import static org.hibernate.search.test.bridge.ArrayBridgeTestEntity.Language.ITALIAN;
+import static org.hibernate.search.test.bridge.ArrayBridgeTestEntity.Language.KLINGON;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Date;
 import java.util.List;
 
-import org.apache.lucene.document.DateTools;
-import org.apache.lucene.search.Query;
-import org.junit.Before;
-import org.junit.Test;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -23,11 +24,11 @@ import org.hibernate.search.query.dsl.TermMatchingContext;
 import org.hibernate.search.test.SearchTestBase;
 import org.hibernate.search.test.bridge.ArrayBridgeTestEntity.Language;
 
-import static org.hibernate.search.test.bridge.ArrayBridgeTestEntity.Language.ENGLISH;
-import static org.hibernate.search.test.bridge.ArrayBridgeTestEntity.Language.ITALIAN;
-import static org.hibernate.search.test.bridge.ArrayBridgeTestEntity.Language.KLINGON;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.apache.lucene.document.DateTools;
+import org.apache.lucene.search.Query;
 
 /**
  * Test indexing of {@link javax.persistence.ElementCollection} annotated arrays.
@@ -86,11 +87,13 @@ public class ArrayBridgeTest extends SearchTestBase {
 
 	@Test
 	public void testSearchNullEntry() throws Exception {
-		List<ArrayBridgeTestEntity> results = findResults( "nullIndexed", ArrayBridgeTestEntity.NULL_LANGUAGE_TOKEN, true );
+		List<ArrayBridgeTestEntity> results = findResults( "nullIndexed", ArrayBridgeTestEntity.NULL_LANGUAGE_TOKEN,
+				true );
 
 		assertNotNull( "No result found for an indexed collection", results );
 		assertEquals( "Unexpected number of results in a collection", 1, results.size() );
-		assertEquals( "Wrong result returned looking for a null in a collection", withNullEntry.getName(), results.get( 0 ).getName() );
+		assertEquals( "Wrong result returned looking for a null in a collection", withNullEntry.getName(), results.get(
+				0 ).getName() );
 	}
 
 	@Test
@@ -100,7 +103,8 @@ public class ArrayBridgeTest extends SearchTestBase {
 
 		assertNotNull( "No result found for an indexed collection", results );
 		assertEquals( "Unexpected number of results in a collection", 1, results.size() );
-		assertEquals( "Wrong result returned looking for a null in a collection of numeric", withNullEntry.getName(), results.get( 0 ).getName() );
+		assertEquals( "Wrong result returned looking for a null in a collection of numeric", withNullEntry.getName(),
+				results.get( 0 ).getName() );
 	}
 
 	@Test

@@ -38,8 +38,8 @@ abstract class AbstractLuceneNestablePredicate extends AbstractLuceneSearchPredi
 		checkNestableWithin( context.getNestedPath() );
 
 		List<String> nestedPathHierarchy = getNestedPathHierarchy();
-		String expectedNestedPath = nestedPathHierarchy.isEmpty() ? null
-				: nestedPathHierarchy.get( nestedPathHierarchy.size() - 1 );
+		String expectedNestedPath = nestedPathHierarchy.isEmpty() ?
+				null : nestedPathHierarchy.get( nestedPathHierarchy.size() - 1 );
 
 		if ( Objects.equals( context.getNestedPath(), expectedNestedPath ) ) {
 			// Implicit nesting is not necessary

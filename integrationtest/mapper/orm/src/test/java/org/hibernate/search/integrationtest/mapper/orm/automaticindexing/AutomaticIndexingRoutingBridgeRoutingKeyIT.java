@@ -7,6 +7,7 @@
 package org.hibernate.search.integrationtest.mapper.orm.automaticindexing;
 
 import java.util.Locale;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -196,9 +197,7 @@ public class AutomaticIndexingRoutingBridgeRoutingKeyIT {
 
 	public enum Category {
 
-		CAT_1,
-		CAT_2,
-		CAT_3
+		CAT_1, CAT_2, CAT_3
 
 	}
 }

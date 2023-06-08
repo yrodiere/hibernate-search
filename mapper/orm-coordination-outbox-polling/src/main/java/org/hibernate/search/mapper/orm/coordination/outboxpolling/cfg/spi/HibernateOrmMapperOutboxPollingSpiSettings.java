@@ -79,8 +79,10 @@ public final class HibernateOrmMapperOutboxPollingSpiSettings {
 
 		public static final String COORDINATION_PREFIX = HibernateOrmMapperSettings.Radicals.COORDINATION_PREFIX;
 
-		public static final String OUTBOXEVENT_ENTITY_MAPPING = COORDINATION_PREFIX + CoordinationRadicals.OUTBOXEVENT_ENTITY_MAPPING;
-		public static final String AGENT_ENTITY_MAPPING = COORDINATION_PREFIX + CoordinationRadicals.AGENT_ENTITY_MAPPING;
+		public static final String OUTBOXEVENT_ENTITY_MAPPING = COORDINATION_PREFIX
+				+ CoordinationRadicals.OUTBOXEVENT_ENTITY_MAPPING;
+		public static final String AGENT_ENTITY_MAPPING = COORDINATION_PREFIX
+				+ CoordinationRadicals.AGENT_ENTITY_MAPPING;
 
 	}
 

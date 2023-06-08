@@ -9,6 +9,7 @@ package org.hibernate.search.integrationtest.mapper.orm.automaticindexing;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -169,7 +170,7 @@ public class AutomaticIndexingElementCollectionIT {
 			session.persist( entity1 );
 
 			backendMock.expectWorks( IndexedEntity.INDEX )
-					.add( "1", b -> { } );
+					.add( "1", b -> {} );
 		} );
 		backendMock.verifyExpectationsMet();
 
@@ -210,7 +211,7 @@ public class AutomaticIndexingElementCollectionIT {
 			session.persist( entity1 );
 
 			backendMock.expectWorks( IndexedEntity.INDEX )
-					.add( "1", b -> { } );
+					.add( "1", b -> {} );
 		} );
 		backendMock.verifyExpectationsMet();
 
@@ -222,7 +223,7 @@ public class AutomaticIndexingElementCollectionIT {
 
 			// TODO HSEARCH-3204: remove the statement below to not expect any work
 			backendMock.expectWorks( IndexedEntity.INDEX )
-					.addOrUpdate( "1", b -> { } );
+					.addOrUpdate( "1", b -> {} );
 		} );
 		backendMock.verifyExpectationsMet();
 	}
@@ -474,7 +475,8 @@ public class AutomaticIndexingElementCollectionIT {
 			return shallowReindexOnUpdateElementCollectionField;
 		}
 
-		public void setShallowReindexOnUpdateElementCollectionField(List<String> shallowReindexOnUpdateElementCollectionField) {
+		public void setShallowReindexOnUpdateElementCollectionField(List<
+				String> shallowReindexOnUpdateElementCollectionField) {
 			this.shallowReindexOnUpdateElementCollectionField = shallowReindexOnUpdateElementCollectionField;
 		}
 

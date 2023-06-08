@@ -18,14 +18,14 @@ import org.hibernate.search.engine.backend.document.IndexObjectFieldReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaObjectField;
 import org.hibernate.search.engine.backend.types.ObjectStructure;
-import org.hibernate.search.engine.mapper.mapping.building.spi.IndexedEmbeddedDefinition;
 import org.hibernate.search.engine.mapper.mapping.building.spi.IndexedEmbeddedBindingContext;
+import org.hibernate.search.engine.mapper.mapping.building.spi.IndexedEmbeddedDefinition;
 import org.hibernate.search.engine.mapper.mapping.building.spi.IndexedEntityBindingContext;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.types.FieldTypeDescriptor;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.SimpleFieldModelsByType;
-import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 import org.hibernate.search.util.common.SearchException;
+import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubTypeModel;
 
 import org.junit.BeforeClass;
@@ -102,7 +102,8 @@ public class DocumentElementFieldReferenceIT<F> {
 			DocumentElement flattenedObjectSecondLevelObject =
 					flattenedObject.addObject( index.binding().flattenedObject.flattenedObject.self );
 			setNonNullValue( index.binding().flattenedObject.flattenedObject, flattenedObjectSecondLevelObject );
-			flattenedObjectSecondLevelObject = flattenedObject.addObject( index.binding().flattenedObject.nestedObject.self );
+			flattenedObjectSecondLevelObject = flattenedObject.addObject( index
+					.binding().flattenedObject.nestedObject.self );
 			setNullValue( index.binding().flattenedObject.nestedObject, flattenedObjectSecondLevelObject );
 
 			DocumentElement nestedObject = document.addObject( index.binding().nestedObject.self );
@@ -157,10 +158,12 @@ public class DocumentElementFieldReferenceIT<F> {
 			DocumentElement flattenedSecondLevelObject =
 					excludingObject.addObject( index.binding().excludingObject.flattenedObject.self );
 			setNonNullValue( index.binding().excludingObject.flattenedObject, flattenedSecondLevelObject );
-			flattenedSecondLevelObject = excludingObject.addObject( index.binding().excludingObject.flattenedObject.self );
+			flattenedSecondLevelObject = excludingObject.addObject( index
+					.binding().excludingObject.flattenedObject.self );
 			setNullValue( index.binding().excludingObject.flattenedObject, flattenedSecondLevelObject );
 
-			DocumentElement nestedSecondLevelObject = excludingObject.addObject( index.binding().excludingObject.nestedObject.self );
+			DocumentElement nestedSecondLevelObject = excludingObject.addObject( index
+					.binding().excludingObject.nestedObject.self );
 			setNullValue( index.binding().excludingObject.nestedObject, nestedSecondLevelObject );
 			nestedSecondLevelObject = excludingObject.addObject( index.binding().excludingObject.nestedObject.self );
 			setNullValue( index.binding().excludingObject.nestedObject, nestedSecondLevelObject );
@@ -242,7 +245,8 @@ public class DocumentElementFieldReferenceIT<F> {
 		IndexBinding(IndexedEntityBindingContext ctx) {
 			super( ctx.schemaElement() );
 			IndexSchemaElement root = ctx.schemaElement();
-			IndexSchemaObjectField flattenedObjectField = root.objectField( "flattenedObject", ObjectStructure.FLATTENED )
+			IndexSchemaObjectField flattenedObjectField = root.objectField( "flattenedObject",
+					ObjectStructure.FLATTENED )
 					.multiValued();
 			flattenedObject = new FirstLevelObjectBinding( flattenedObjectField );
 			IndexSchemaObjectField nestedObjectField = root.objectField( "nestedObject", ObjectStructure.NESTED )
@@ -277,7 +281,8 @@ public class DocumentElementFieldReferenceIT<F> {
 		FirstLevelObjectBinding(IndexSchemaElement objectField, IndexObjectFieldReference objectFieldReference) {
 			super( objectField );
 			self = objectFieldReference;
-			IndexSchemaObjectField flattenedObjectField = objectField.objectField( "flattenedObject", ObjectStructure.FLATTENED )
+			IndexSchemaObjectField flattenedObjectField = objectField.objectField( "flattenedObject",
+					ObjectStructure.FLATTENED )
 					.multiValued();
 			flattenedObject = new SecondLevelObjectBinding( flattenedObjectField );
 			IndexSchemaObjectField nestedObjectField = objectField.objectField( "nestedObject", ObjectStructure.NESTED )

@@ -23,8 +23,10 @@ public final class ContainerExtractingProcessor<T, C, V, C2> implements ValuePro
 	@Override
 	public String toString() {
 		return "ContainerExtractingProcessor["
-				+ "extractor=" + extractor
-				+ ", perValueProcessor=" + perValueProcessor
+				+ "extractor="
+				+ extractor
+				+ ", perValueProcessor="
+				+ perValueProcessor
 				+ "]";
 	}
 

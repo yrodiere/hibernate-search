@@ -32,7 +32,8 @@ class TestPluggableMethod<T> {
 		return result;
 	}
 
-	private static <T> void collectAllSetupMethods(MethodHandles.Lookup lookup, Class<? extends Annotation> annotationClass,
+	private static <T> void collectAllSetupMethods(MethodHandles.Lookup lookup, Class<
+			? extends Annotation> annotationClass,
 			List<TestPluggableMethod<T>> collector, Class<?> testClass,
 			Class<T> expectedReturnType, List<ArgumentKey<?>> availableKeys) {
 		Class<?> superClass = testClass.getSuperclass();
@@ -46,7 +47,8 @@ class TestPluggableMethod<T> {
 		}
 	}
 
-	private static <T> TestPluggableMethod<T> create(MethodHandles.Lookup lookup, Class<? extends Annotation> annotationClass,
+	private static <T> TestPluggableMethod<T> create(MethodHandles.Lookup lookup, Class<
+			? extends Annotation> annotationClass,
 			Method method, Class<T> expectedReturnType, List<ArgumentKey<?>> availableKeys) {
 		if ( !Modifier.isPublic( method.getModifiers() ) ) {
 			throw new IllegalStateException(
@@ -58,7 +60,11 @@ class TestPluggableMethod<T> {
 		}
 		if ( !expectedReturnType.isAssignableFrom( method.getReturnType() ) ) {
 			throw new IllegalStateException(
-					"Method " + method + ", annotated with " + annotationClass.getName() + ", must return type "
+					"Method "
+							+ method
+							+ ", annotated with "
+							+ annotationClass.getName()
+							+ ", must return type "
 							+ expectedReturnType );
 		}
 		MethodHandle setupMethod;
@@ -67,7 +73,13 @@ class TestPluggableMethod<T> {
 		}
 		catch (IllegalAccessException e) {
 			throw new IllegalStateException(
-					"Method " + method + ", annotated with " + annotationClass.getName() + ", must be accessible from " + lookup + ".",
+					"Method "
+							+ method
+							+ ", annotated with "
+							+ annotationClass.getName()
+							+ ", must be accessible from "
+							+ lookup
+							+ ".",
 					e
 			);
 		}
@@ -82,7 +94,11 @@ class TestPluggableMethod<T> {
 			}
 			if ( matchingKey == null ) {
 				throw new IllegalStateException(
-						"Method " + method + " has a parameter of type " + parameterType.getName() + ", which isn't supported."
+						"Method "
+								+ method
+								+ " has a parameter of type "
+								+ parameterType.getName()
+								+ ", which isn't supported."
 								+ " Supported parameter types: "
 								+ availableKeys.stream().map( k -> k.type.getName() ).collect( Collectors.toList() ) );
 			}
@@ -114,8 +130,12 @@ class TestPluggableMethod<T> {
 		}
 		catch (Throwable t) {
 			throw new Error(
-					"Failed to call " + setupMethod + " with arguments " + Arrays.toString( args )
-							+ ": " + t.getMessage(),
+					"Failed to call "
+							+ setupMethod
+							+ " with arguments "
+							+ Arrays.toString( args )
+							+ ": "
+							+ t.getMessage(),
 					t
 			);
 		}

@@ -6,12 +6,12 @@
  */
 package org.hibernate.search.test.query;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 /**
  * @author Gustavo Fernandes
@@ -36,10 +36,10 @@ public class FootballTeam {
 	@Field(store = Store.YES)
 	private String name;
 
-	@Field( store = Store.YES )
+	@Field(store = Store.YES)
 	private double debtInMillions;
 
-	@Field( store = Store.YES)
+	@Field(store = Store.YES)
 	private int nrTitles;
 
 }

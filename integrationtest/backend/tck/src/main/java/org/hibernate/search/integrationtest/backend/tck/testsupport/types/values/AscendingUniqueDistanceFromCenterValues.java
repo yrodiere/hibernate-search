@@ -18,7 +18,8 @@ import org.hibernate.search.engine.spatial.GeoPoint;
 public class AscendingUniqueDistanceFromCenterValues extends AscendingUniqueTermValues<GeoPoint> {
 	public static final GeoPoint CENTER_POINT = GeoPoint.of( 46.038673, 3.978563 );
 
-	public static final AscendingUniqueDistanceFromCenterValues INSTANCE = new AscendingUniqueDistanceFromCenterValues();
+	public static final AscendingUniqueDistanceFromCenterValues INSTANCE =
+			new AscendingUniqueDistanceFromCenterValues();
 
 	private final List<Double> singleDistancesFromCenterPoint;
 	private final List<List<Double>> multiDistancesFromCenterPointForMinDataset;

@@ -15,13 +15,13 @@ import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrateg
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.PersistenceTypeKey;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.StubLoadingContext;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.StubMassLoadingStrategy;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.massindexing.MassIndexer;
 import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Before;
@@ -35,8 +35,8 @@ public class MassIndexingPrimitiveIdIT {
 	public final BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public final StandalonePojoMappingSetupHelper setupHelper
-			= StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public final StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private SearchMapping mapping;
 
@@ -49,7 +49,8 @@ public class MassIndexingPrimitiveIdIT {
 		mapping = setupHelper.start()
 				.withConfiguration( b -> {
 					b.addEntityType( EntityWithPrimitiveId.class, c -> c
-							.massLoadingStrategy( new StubMassLoadingStrategy<>( EntityWithPrimitiveId.PERSISTENCE_KEY ) ) );
+							.massLoadingStrategy( new StubMassLoadingStrategy<>(
+									EntityWithPrimitiveId.PERSISTENCE_KEY ) ) );
 				} )
 				.setup( EntityWithPrimitiveId.class );
 
@@ -71,12 +72,9 @@ public class MassIndexingPrimitiveIdIT {
 			backendMock.expectWorks(
 					EntityWithPrimitiveId.INDEX, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
 			)
-					.add( "1", b -> {
-					} )
-					.add( "2", b -> {
-					} )
-					.add( "3", b -> {
-					} );
+					.add( "1", b -> {} )
+					.add( "2", b -> {} )
+					.add( "3", b -> {} );
 
 			// purgeAtStart and mergeSegmentsAfterPurge are enabled by default,
 			// so we expect 1 purge, 1 mergeSegments and 1 flush calls in this order:

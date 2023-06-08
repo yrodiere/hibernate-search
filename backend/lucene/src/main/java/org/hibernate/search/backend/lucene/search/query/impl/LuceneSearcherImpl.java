@@ -59,11 +59,16 @@ class LuceneSearcherImpl<H> implements LuceneSearcher<LuceneLoadableSearchResult
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "rootExtractor=" + rootExtractor
-				+ ", luceneQuery=" + requestContext.getLuceneQuery()
-				+ ", luceneSort=" + requestContext.getLuceneSort()
-				+ ", aggregations=" + aggregations
+		return getClass().getSimpleName()
+				+ "["
+				+ "rootExtractor="
+				+ rootExtractor
+				+ ", luceneQuery="
+				+ requestContext.getLuceneQuery()
+				+ ", luceneSort="
+				+ requestContext.getLuceneSort()
+				+ ", aggregations="
+				+ aggregations
 				+ "]";
 	}
 
@@ -93,7 +98,8 @@ class LuceneSearcherImpl<H> implements LuceneSearcher<LuceneLoadableSearchResult
 		int maxDocs = getMaxDocs( indexSearcher.getIndexReader(), offset, limit );
 		LuceneCollectors luceneCollectors = ( limit != null || maxDocs <= PREFETCH_HITS_SIZE ) ?
 				collectMatchingDocs( indexSearcher, metadataResolver, offset, limit, maxDocs, totalHitCountThreshold ) :
-				collectMatchingDocsWithPrefetch( indexSearcher, metadataResolver, offset, limit, maxDocs, totalHitCountThreshold );
+				collectMatchingDocsWithPrefetch( indexSearcher, metadataResolver, offset, limit, maxDocs,
+						totalHitCountThreshold );
 
 		return new LuceneExtractableSearchResult<>( requestContext, indexSearcher, luceneCollectors,
 				rootExtractor, aggregations, timeoutManager );
@@ -108,7 +114,8 @@ class LuceneSearcherImpl<H> implements LuceneSearcher<LuceneLoadableSearchResult
 		// since there is no possible to have partial result.
 		if ( timeoutManager.hasHardTimeout() ) {
 			return indexSearcher.search(
-					requestContext.getLuceneQuery(), new TimeoutCountCollectorManager( timeoutManager.deadlineOrNull() ) );
+					requestContext.getLuceneQuery(), new TimeoutCountCollectorManager( timeoutManager
+							.deadlineOrNull() ) );
 		}
 
 		return indexSearcher.count( requestContext.getLuceneQuery() );

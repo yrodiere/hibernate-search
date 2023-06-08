@@ -98,7 +98,8 @@ public class OffsetDateTimePropertyTypeDescriptor extends PropertyTypeDescriptor
 
 			@Override
 			public OffsetDateTime getNullAsValueBridge2() {
-				return OffsetDateTime.of( LocalDateTime.of( 1999, Month.JANUARY, 1, 7, 30, 59 ), ZoneOffset.ofHours( -6 ) );
+				return OffsetDateTime.of( LocalDateTime.of( 1999, Month.JANUARY, 1, 7, 30, 59 ), ZoneOffset.ofHours(
+						-6 ) );
 			}
 		};
 	}

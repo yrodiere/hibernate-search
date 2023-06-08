@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -76,9 +77,9 @@ import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 @SuppressWarnings("deprecation")
 public class HibernateOrmMapping extends AbstractPojoMappingImplementor<HibernateOrmMapping>
 		implements SearchMapping, AutoCloseable, HibernateOrmMappingContext,
-				HibernateOrmListenerContextProvider, BatchMappingContext,
-				HibernateOrmScopeMappingContext, HibernateOrmSearchSessionMappingContext,
-				AutomaticIndexingMappingContext, CoordinationStrategyContext {
+		HibernateOrmListenerContextProvider, BatchMappingContext,
+		HibernateOrmScopeMappingContext, HibernateOrmSearchSessionMappingContext,
+		AutomaticIndexingMappingContext, CoordinationStrategyContext {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
@@ -111,7 +112,8 @@ public class HibernateOrmMapping extends AbstractPojoMappingImplementor<Hibernat
 		int fetchSize = QUERY_LOADING_FETCH_SIZE.get( propertySource );
 
 		SchemaManagementStrategyName schemaManagementStrategyName = SCHEMA_MANAGEMENT_STRATEGY.get( propertySource );
-		SchemaManagementListener schemaManagementListener = new SchemaManagementListener( schemaManagementStrategyName );
+		SchemaManagementListener schemaManagementListener = new SchemaManagementListener(
+				schemaManagementStrategyName );
 
 		return new HibernateOrmMapping(
 				mappingDelegate,
@@ -131,7 +133,8 @@ public class HibernateOrmMapping extends AbstractPojoMappingImplementor<Hibernat
 	private final int fetchSize;
 
 	private final SchemaManagementListener schemaManagementListener;
-	private volatile ConfiguredSearchIndexingPlanFilter applicationIndexingPlanFilter = ConfiguredSearchIndexingPlanFilter.IncludeAll.INSTANCE;
+	private volatile ConfiguredSearchIndexingPlanFilter applicationIndexingPlanFilter =
+			ConfiguredSearchIndexingPlanFilter.IncludeAll.INSTANCE;
 
 	private TenancyConfiguration tenancyConfiguration;
 
@@ -373,7 +376,8 @@ public class HibernateOrmMapping extends AbstractPojoMappingImplementor<Hibernat
 	public AutomaticIndexingQueueEventProcessingPlan createIndexingQueueEventProcessingPlan(Session session) {
 		HibernateOrmSearchSession searchSession =
 				HibernateOrmSearchSession.get( this, session.unwrap( SessionImplementor.class ), true );
-		return new AutomaticIndexingQueueEventProcessingPlanImpl( searchSession.createIndexingQueueEventProcessingPlan() );
+		return new AutomaticIndexingQueueEventProcessingPlanImpl( searchSession
+				.createIndexingQueueEventProcessingPlan() );
 	}
 
 	@Override
@@ -446,8 +450,8 @@ public class HibernateOrmMapping extends AbstractPojoMappingImplementor<Hibernat
 	}
 
 	private Optional<SearchScopeImpl<Object>> createAllScope() {
-		return delegate()
-				.<org.hibernate.search.mapper.orm.common.EntityReference, HibernateOrmScopeIndexedTypeContext<?>>createPojoAllScope(
+		return delegate().<org.hibernate.search.mapper.orm.common.EntityReference, HibernateOrmScopeIndexedTypeContext<
+				?>>createPojoAllScope(
 						this,
 						typeContextContainer::indexedForExactType
 				)
@@ -455,12 +459,14 @@ public class HibernateOrmMapping extends AbstractPojoMappingImplementor<Hibernat
 	}
 
 	private <T> SearchScopeImpl<T> doCreateScope(Collection<PojoRawTypeIdentifier<? extends T>> typeIdentifiers) {
-		PojoScopeDelegate<org.hibernate.search.mapper.orm.common.EntityReference, T, HibernateOrmScopeIndexedTypeContext<? extends T>> scopeDelegate =
-				delegate().createPojoScope(
-						this,
-						typeIdentifiers,
-						typeContextContainer::indexedForExactType
-				);
+		PojoScopeDelegate<org.hibernate.search.mapper.orm.common.EntityReference,
+				T,
+				HibernateOrmScopeIndexedTypeContext<? extends T>> scopeDelegate =
+						delegate().createPojoScope(
+								this,
+								typeIdentifiers,
+								typeContextContainer::indexedForExactType
+						);
 
 		// Explicit type parameter is necessary here for ECJ (Eclipse compiler)
 		return new SearchScopeImpl<T>( this, tenancyConfiguration, scopeDelegate );

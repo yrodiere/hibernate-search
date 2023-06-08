@@ -24,10 +24,9 @@ import org.hibernate.search.engine.search.predicate.spi.PredicateTypeKeys;
 import org.hibernate.search.util.common.impl.Contracts;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
-
 class MatchPredicateFieldMoreStepImpl
 		implements MatchPredicateFieldMoreStep<MatchPredicateFieldMoreStepImpl, MatchPredicateOptionsStep<?>>,
-				AbstractBooleanMultiFieldPredicateCommonState.FieldSetState {
+		AbstractBooleanMultiFieldPredicateCommonState.FieldSetState {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
@@ -72,7 +71,8 @@ class MatchPredicateFieldMoreStepImpl
 		}
 	}
 
-	static class CommonState extends AbstractBooleanMultiFieldPredicateCommonState<CommonState, MatchPredicateFieldMoreStepImpl>
+	static class CommonState
+			extends AbstractBooleanMultiFieldPredicateCommonState<CommonState, MatchPredicateFieldMoreStepImpl>
 			implements MatchPredicateOptionsStep<CommonState> {
 
 		CommonState(SearchPredicateDslContext<?> dslContext) {

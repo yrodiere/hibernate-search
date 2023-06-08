@@ -45,19 +45,25 @@ public class FieldProjectionBaseIT {
 		setupHelper.start()
 				.withIndexes( InObjectProjectionIT.mainIndex, InObjectProjectionIT.missingLevel1Index,
 						InObjectProjectionIT.missingLevel1SingleValuedFieldIndex,
-						InObjectProjectionIT.missingLevel2Index, InObjectProjectionIT.missingLevel2SingleValuedFieldIndex )
+						InObjectProjectionIT.missingLevel2Index,
+						InObjectProjectionIT.missingLevel2SingleValuedFieldIndex )
 				.setup();
 
 		BulkIndexer compositeForEachMainIndexer = InObjectProjectionIT.mainIndex.bulkIndexer();
 		BulkIndexer compositeForEachMissingLevel1Indexer = InObjectProjectionIT.missingLevel1Index.bulkIndexer();
-		BulkIndexer compositeForEachMissingLevel1SingleValuedFieldIndexer = InObjectProjectionIT.missingLevel1SingleValuedFieldIndex.bulkIndexer();
+		BulkIndexer compositeForEachMissingLevel1SingleValuedFieldIndexer =
+				InObjectProjectionIT.missingLevel1SingleValuedFieldIndex.bulkIndexer();
 		BulkIndexer compositeForEachMissingLevel2Indexer = InObjectProjectionIT.missingLevel2Index.bulkIndexer();
-		BulkIndexer compositeForEachMissingLevel2SingleValuedFieldIndexer = InObjectProjectionIT.missingLevel2SingleValuedFieldIndex.bulkIndexer();
-		InObjectProjectionIT.dataSets.forEach( d -> d.contribute( InObjectProjectionIT.mainIndex, compositeForEachMainIndexer,
+		BulkIndexer compositeForEachMissingLevel2SingleValuedFieldIndexer =
+				InObjectProjectionIT.missingLevel2SingleValuedFieldIndex.bulkIndexer();
+		InObjectProjectionIT.dataSets.forEach( d -> d.contribute( InObjectProjectionIT.mainIndex,
+				compositeForEachMainIndexer,
 				InObjectProjectionIT.missingLevel1Index, compositeForEachMissingLevel1Indexer,
-				InObjectProjectionIT.missingLevel1SingleValuedFieldIndex, compositeForEachMissingLevel1SingleValuedFieldIndexer,
+				InObjectProjectionIT.missingLevel1SingleValuedFieldIndex,
+				compositeForEachMissingLevel1SingleValuedFieldIndexer,
 				InObjectProjectionIT.missingLevel2Index, compositeForEachMissingLevel2Indexer,
-				InObjectProjectionIT.missingLevel2SingleValuedFieldIndex, compositeForEachMissingLevel2SingleValuedFieldIndexer ) );
+				InObjectProjectionIT.missingLevel2SingleValuedFieldIndex,
+				compositeForEachMissingLevel2SingleValuedFieldIndexer ) );
 
 		compositeForEachMainIndexer.join( compositeForEachMissingLevel1Indexer,
 				compositeForEachMissingLevel1SingleValuedFieldIndexer, compositeForEachMissingLevel2Indexer,
@@ -78,14 +84,15 @@ public class FieldProjectionBaseIT {
 		private static final List<Object[]> parameters = new ArrayList<>();
 		static {
 			for ( FieldTypeDescriptor<?> fieldType : supportedFieldTypes ) {
-				for ( ObjectStructure singleValuedObjectStructure :
-						new ObjectStructure[] { ObjectStructure.FLATTENED, ObjectStructure.NESTED } ) {
+				for ( ObjectStructure singleValuedObjectStructure : new ObjectStructure[] { ObjectStructure.FLATTENED,
+						ObjectStructure.NESTED } ) {
 					ObjectStructure multiValuedObjectStructure =
 							ObjectStructure.NESTED.equals( singleValuedObjectStructure )
-									|| TckConfiguration.get().getBackendFeatures().reliesOnNestedDocumentsForMultiValuedObjectProjection()
-									? ObjectStructure.NESTED
-									: ObjectStructure.FLATTENED;
-					DataSet<?, ?, ?> dataSet = new DataSet<>( testValues( fieldType ), singleValuedObjectStructure, multiValuedObjectStructure );
+									|| TckConfiguration.get().getBackendFeatures()
+											.reliesOnNestedDocumentsForMultiValuedObjectProjection() ?
+													ObjectStructure.NESTED : ObjectStructure.FLATTENED;
+					DataSet<?, ?, ?> dataSet = new DataSet<>( testValues( fieldType ), singleValuedObjectStructure,
+							multiValuedObjectStructure );
 					dataSets.add( dataSet );
 					parameters.add( new Object[] { dataSet } );
 				}
@@ -98,15 +105,19 @@ public class FieldProjectionBaseIT {
 		private static final SimpleMappedIndex<MissingLevel1IndexBinding> missingLevel1Index =
 				SimpleMappedIndex.of( MissingLevel1IndexBinding::new )
 						.name( "missingLevel1" );
-		private static final SimpleMappedIndex<MissingLevel1SingleValuedFieldIndexBinding> missingLevel1SingleValuedFieldIndex =
-				SimpleMappedIndex.of( root -> new MissingLevel1SingleValuedFieldIndexBinding( root, supportedFieldTypes ) )
-						.name( "missingLevel1Field1" );
+		private static final SimpleMappedIndex<
+				MissingLevel1SingleValuedFieldIndexBinding> missingLevel1SingleValuedFieldIndex =
+						SimpleMappedIndex.of( root -> new MissingLevel1SingleValuedFieldIndexBinding( root,
+								supportedFieldTypes ) )
+								.name( "missingLevel1Field1" );
 		private static final SimpleMappedIndex<MissingLevel2IndexBinding> missingLevel2Index =
 				SimpleMappedIndex.of( root -> new MissingLevel2IndexBinding( root, supportedFieldTypes ) )
 						.name( "missingLevel2" );
-		private static final SimpleMappedIndex<MissingLevel2SingleValuedFieldIndexBinding> missingLevel2SingleValuedFieldIndex =
-				SimpleMappedIndex.of( root -> new MissingLevel2SingleValuedFieldIndexBinding( root, supportedFieldTypes ) )
-						.name( "missingLevel2Field1" );
+		private static final SimpleMappedIndex<
+				MissingLevel2SingleValuedFieldIndexBinding> missingLevel2SingleValuedFieldIndex =
+						SimpleMappedIndex.of( root -> new MissingLevel2SingleValuedFieldIndexBinding( root,
+								supportedFieldTypes ) )
+								.name( "missingLevel2Field1" );
 
 		@Parameterized.Parameters(name = "{0}")
 		public static List<Object[]> parameters() {
@@ -122,7 +133,8 @@ public class FieldProjectionBaseIT {
 		@Override
 		protected RecursiveComparisonConfiguration.Builder configureRecursiveComparison(
 				RecursiveComparisonConfiguration.Builder builder) {
-			return builder.withComparatorForType( Comparator.nullsFirst( Comparator.naturalOrder() ), BigDecimal.class );
+			return builder.withComparatorForType( Comparator.nullsFirst( Comparator.naturalOrder() ),
+					BigDecimal.class );
 		}
 
 		@Override

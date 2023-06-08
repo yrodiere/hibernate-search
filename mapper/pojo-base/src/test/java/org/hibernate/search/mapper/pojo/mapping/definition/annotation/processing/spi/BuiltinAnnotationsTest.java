@@ -31,7 +31,8 @@ public class BuiltinAnnotationsTest {
 	public static void index() throws IOException {
 		pojoMapperBaseIndex = readOrBuildIndex(
 				codeSourceLocation( BuiltinAnnotations.class )
-						.orElseThrow( () -> new AssertionFailure( "Could not find hibernate-search-mapper-pojo-base JAR?" ) )
+						.orElseThrow( () -> new AssertionFailure(
+								"Could not find hibernate-search-mapper-pojo-base JAR?" ) )
 		);
 	}
 

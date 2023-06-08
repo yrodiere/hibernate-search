@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.lang.invoke.MethodHandles;
 
 import org.hibernate.search.engine.backend.types.dsl.StandardIndexFieldTypeOptionsStep;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.mapper.pojo.bridge.ValueBridge;
 import org.hibernate.search.mapper.pojo.bridge.binding.ValueBindingContext;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.ValueBinderRef;
@@ -24,6 +23,7 @@ import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.reporting.FailureReportUtils;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.StubBackendExtension;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -47,12 +47,13 @@ public class NonStandardFieldIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Test
 	public void defaultAttributes() {
 		@Indexed(index = INDEX_NAME)
-		class IndexedEntity	{
+		class IndexedEntity {
 			@DocumentId
 			Integer id;
 			@NonStandardField(valueBinder = @ValueBinderRef(type = ValidTypeBridge.ExplicitFieldTypeBinder.class))
@@ -69,7 +70,7 @@ public class NonStandardFieldIT {
 	@Test
 	public void name() {
 		@Indexed(index = INDEX_NAME)
-		class IndexedEntity	{
+		class IndexedEntity {
 			@DocumentId
 			Integer id;
 			@NonStandardField(name = "explicitName",
@@ -87,10 +88,11 @@ public class NonStandardFieldIT {
 	@Test
 	public void name_invalid_dot() {
 		@Indexed(index = INDEX_NAME)
-		class IndexedEntity	{
+		class IndexedEntity {
 			@DocumentId
 			Integer id;
-			@NonStandardField(name = "invalid.withdot", valueBinder = @ValueBinderRef(type = ValidTypeBridge.ExplicitFieldTypeBinder.class))
+			@NonStandardField(name = "invalid.withdot", valueBinder = @ValueBinderRef(
+					type = ValidTypeBridge.ExplicitFieldTypeBinder.class))
 			WrappedValue value;
 		}
 
@@ -102,7 +104,8 @@ public class NonStandardFieldIT {
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".value" )
 						.annotationContextAnyParameters( NonStandardField.class )
-						.failure( "Invalid index field name 'invalid.withdot': field names cannot contain a dot ('.')" ) );
+						.failure(
+								"Invalid index field name 'invalid.withdot': field names cannot contain a dot ('.')" ) );
 	}
 
 	@Test
@@ -188,7 +191,8 @@ public class NonStandardFieldIT {
 						.typeContext( IndexedEntity.class.getName() )
 						.pathContext( ".property" )
 						.failure( "Unable to infer index field type for value bridge '"
-								+ GenericTypeBridge.TOSTRING + "':"
+								+ GenericTypeBridge.TOSTRING
+								+ "':"
 								+ " this bridge implements ValueBridge<V, F>,"
 								+ " but sets the generic type parameter F to 'T'."
 								+ " The index field type can only be inferred automatically"

@@ -8,9 +8,9 @@ package org.hibernate.search.integrationtest.mapper.pojo.work.operations;
 
 import java.util.concurrent.CompletionStage;
 
+import org.hibernate.search.mapper.pojo.route.DocumentRoutesDescriptor;
 import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexer;
 import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexingPlan;
-import org.hibernate.search.mapper.pojo.route.DocumentRoutesDescriptor;
 
 public abstract class PojoIndexingAddOrUpdateOrDeleteScenario extends PojoIndexingOperationScenario {
 
@@ -50,7 +50,8 @@ public abstract class PojoIndexingAddOrUpdateOrDeleteScenario extends PojoIndexi
 	}
 
 	@Override
-	final CompletionStage<?> execute(SearchIndexer indexer, Object providedId, DocumentRoutesDescriptor providedRoutes) {
+	final CompletionStage<?> execute(SearchIndexer indexer, Object providedId,
+			DocumentRoutesDescriptor providedRoutes) {
 		throw notSupportedOnIndexer();
 	}
 

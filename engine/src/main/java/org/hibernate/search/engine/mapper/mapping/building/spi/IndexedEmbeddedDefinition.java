@@ -59,7 +59,8 @@ public final class IndexedEmbeddedDefinition {
 			return false;
 		}
 		IndexedEmbeddedDefinition that = (IndexedEmbeddedDefinition) o;
-		return definingTypeModel.equals( that.definingTypeModel ) &&
+		return definingTypeModel.equals( that.definingTypeModel )
+				&&
 				relativePrefix.equals( that.relativePrefix ) &&
 				Objects.equals( includeDepth, that.includeDepth ) &&
 				includePaths.equals( that.includePaths );

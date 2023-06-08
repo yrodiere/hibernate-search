@@ -10,6 +10,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 import static org.junit.Assert.fail;
 
 import java.io.Serializable;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.AttributeOverride;
@@ -74,7 +75,7 @@ public class ProgrammaticMappingAccessTypeIT {
 						.field( "field", String.class )
 				)
 		);
-		backendMock.expectSchema( IndexedEntityWithoutIdSetter.INDEX, b -> { } );
+		backendMock.expectSchema( IndexedEntityWithoutIdSetter.INDEX, b -> {} );
 
 		sessionFactory = ormSetupHelper.start()
 				.withProperty( HibernateOrmMapperSettings.MAPPING_CONFIGURER, new MyMappingConfigurer() )
@@ -103,7 +104,8 @@ public class ProgrammaticMappingAccessTypeIT {
 			embeddableWithDefaultFieldAccess.fieldWithDefaultFieldAccess = "defaultFieldAccess";
 			embeddableWithDefaultFieldAccess.setFieldWithNonDefaultMethodAccess( "nonDefaultMethodAccess" );
 
-			EmbeddableWithDefaultMethodAccess embeddableWithDefaultMethodAccess = new EmbeddableWithDefaultMethodAccess();
+			EmbeddableWithDefaultMethodAccess embeddableWithDefaultMethodAccess =
+					new EmbeddableWithDefaultMethodAccess();
 			entity1.setEmbeddedWithDefaultMethodAccess( embeddableWithDefaultMethodAccess );
 			embeddableWithDefaultMethodAccess.fieldWithNonDefaultFieldAccess = "nonDefaultFieldAccess";
 			embeddableWithDefaultMethodAccess.setFieldWithDefaultMethodAccess( "defaultMethodAccess" );
@@ -121,12 +123,16 @@ public class ProgrammaticMappingAccessTypeIT {
 							.field( "fieldWithNonDefaultMethodAccess", entity1.getFieldWithNonDefaultMethodAccess() )
 							.field( "fieldWithDefaultMethodAccess", entity1.getFieldWithDefaultMethodAccess() )
 							.objectField( "embeddedWithDefaultFieldAccess", b2 -> b2
-									.field( "fieldWithDefaultFieldAccess", embeddableWithDefaultFieldAccess.fieldWithDefaultFieldAccess )
-									.field( "fieldWithNonDefaultMethodAccess", embeddableWithDefaultFieldAccess.getFieldWithNonDefaultMethodAccess() )
+									.field( "fieldWithDefaultFieldAccess",
+											embeddableWithDefaultFieldAccess.fieldWithDefaultFieldAccess )
+									.field( "fieldWithNonDefaultMethodAccess", embeddableWithDefaultFieldAccess
+											.getFieldWithNonDefaultMethodAccess() )
 							)
 							.objectField( "embeddedWithDefaultMethodAccess", b2 -> b2
-									.field( "fieldWithNonDefaultFieldAccess", embeddableWithDefaultMethodAccess.fieldWithNonDefaultFieldAccess )
-									.field( "fieldWithDefaultMethodAccess", embeddableWithDefaultMethodAccess.getFieldWithDefaultMethodAccess() )
+									.field( "fieldWithNonDefaultFieldAccess",
+											embeddableWithDefaultMethodAccess.fieldWithNonDefaultFieldAccess )
+									.field( "fieldWithDefaultMethodAccess", embeddableWithDefaultMethodAccess
+											.getFieldWithDefaultMethodAccess() )
 							)
 							.objectField( "nonManaged", b2 -> b2
 									.field( "field", nonManaged.getField() )
@@ -159,11 +165,13 @@ public class ProgrammaticMappingAccessTypeIT {
 			indexedEntityWithoutIdSetterMapping.indexed().index( IndexedEntityWithoutIdSetter.INDEX );
 			indexedEntityWithoutIdSetterMapping.property( "id" ).documentId();
 
-			TypeMappingStep embeddableWithDefaultFieldAccessMapping = mapping.type( EmbeddableWithDefaultFieldAccess.class );
+			TypeMappingStep embeddableWithDefaultFieldAccessMapping = mapping.type(
+					EmbeddableWithDefaultFieldAccess.class );
 			embeddableWithDefaultFieldAccessMapping.property( "fieldWithDefaultFieldAccess" ).genericField();
 			embeddableWithDefaultFieldAccessMapping.property( "fieldWithNonDefaultMethodAccess" ).genericField();
 
-			TypeMappingStep embeddableWithDefaultMethodAccessMapping = mapping.type( EmbeddableWithDefaultMethodAccess.class );
+			TypeMappingStep embeddableWithDefaultMethodAccessMapping = mapping.type(
+					EmbeddableWithDefaultMethodAccess.class );
 			embeddableWithDefaultMethodAccessMapping.property( "fieldWithNonDefaultFieldAccess" ).genericField();
 			embeddableWithDefaultMethodAccessMapping.property( "fieldWithDefaultMethodAccess" ).genericField();
 
@@ -173,7 +181,7 @@ public class ProgrammaticMappingAccessTypeIT {
 	}
 
 	@MappedSuperclass
-	@Access( AccessType.FIELD )
+	@Access(AccessType.FIELD)
 	public static class ParentIndexedEntity {
 
 		@Basic
@@ -190,7 +198,7 @@ public class ProgrammaticMappingAccessTypeIT {
 			methodShouldNotBeCalled();
 		}
 
-		@Access( AccessType.PROPERTY )
+		@Access(AccessType.PROPERTY)
 		@Basic
 		@Column(name = "nonDefaultMethodAccess")
 		public String getFieldWithNonDefaultMethodAccess() {
@@ -204,14 +212,14 @@ public class ProgrammaticMappingAccessTypeIT {
 
 	@Entity
 	@Table(name = "indexed")
-	@Access( AccessType.PROPERTY )
+	@Access(AccessType.PROPERTY)
 	public static class IndexedEntity extends ParentIndexedEntity {
 
 		public static final String INDEX = "IndexedEntity";
 
 		private Integer id;
 
-		@Access( AccessType.FIELD )
+		@Access(AccessType.FIELD)
 		@Basic
 		protected String fieldWithNonDefaultFieldAccess;
 
@@ -253,8 +261,10 @@ public class ProgrammaticMappingAccessTypeIT {
 		}
 
 		@AttributeOverrides({
-				@AttributeOverride(name = "fieldWithDefaultFieldAccess", column = @Column(name = "ef_defaultFieldAccess")),
-				@AttributeOverride(name = "fieldWithNonDefaultMethodAccess", column = @Column(name = "ef_nonDefaultMethodAccess"))
+				@AttributeOverride(name = "fieldWithDefaultFieldAccess", column = @Column(
+						name = "ef_defaultFieldAccess")),
+				@AttributeOverride(name = "fieldWithNonDefaultMethodAccess", column = @Column(
+						name = "ef_nonDefaultMethodAccess"))
 		})
 		public EmbeddableWithDefaultFieldAccess getEmbeddedWithDefaultFieldAccess() {
 			return embeddedWithDefaultFieldAccess;
@@ -265,14 +275,17 @@ public class ProgrammaticMappingAccessTypeIT {
 		}
 
 		@AttributeOverrides({
-				@AttributeOverride(name = "fieldWithDefaultMethodAccess", column = @Column(name = "em_defaultMethodAccess")),
-				@AttributeOverride(name = "fieldWithNonDefaultFieldAccess", column = @Column(name = "em_nonDefaultFieldAccess"))
+				@AttributeOverride(name = "fieldWithDefaultMethodAccess", column = @Column(
+						name = "em_defaultMethodAccess")),
+				@AttributeOverride(name = "fieldWithNonDefaultFieldAccess", column = @Column(
+						name = "em_nonDefaultFieldAccess"))
 		})
 		public EmbeddableWithDefaultMethodAccess getEmbeddedWithDefaultMethodAccess() {
 			return embeddedWithDefaultMethodAccess;
 		}
 
-		public void setEmbeddedWithDefaultMethodAccess(EmbeddableWithDefaultMethodAccess embeddedWithDefaultMethodAccess) {
+		public void setEmbeddedWithDefaultMethodAccess(
+				EmbeddableWithDefaultMethodAccess embeddedWithDefaultMethodAccess) {
 			this.embeddedWithDefaultMethodAccess = embeddedWithDefaultMethodAccess;
 		}
 
@@ -298,7 +311,7 @@ public class ProgrammaticMappingAccessTypeIT {
 	}
 
 	@javax.persistence.Embeddable
-	@Access( AccessType.FIELD )
+	@Access(AccessType.FIELD)
 	public static class EmbeddableWithDefaultFieldAccess {
 		@Basic
 		protected String fieldWithDefaultFieldAccess;
@@ -314,7 +327,7 @@ public class ProgrammaticMappingAccessTypeIT {
 			methodShouldNotBeCalled();
 		}
 
-		@Access( AccessType.PROPERTY )
+		@Access(AccessType.PROPERTY)
 		@Basic
 		public String getFieldWithNonDefaultMethodAccess() {
 			return internalFieldWithDifferentName;
@@ -326,9 +339,9 @@ public class ProgrammaticMappingAccessTypeIT {
 	}
 
 	@javax.persistence.Embeddable
-	@Access( AccessType.PROPERTY )
+	@Access(AccessType.PROPERTY)
 	public static class EmbeddableWithDefaultMethodAccess {
-		@Access( AccessType.FIELD )
+		@Access(AccessType.FIELD)
 		@Basic
 		protected String fieldWithNonDefaultFieldAccess;
 

@@ -24,13 +24,12 @@ import org.hibernate.search.engine.backend.types.converter.runtime.spi.FromDocum
 import org.hibernate.search.engine.backend.types.converter.runtime.spi.ToDocumentValueConvertContextImpl;
 import org.hibernate.search.engine.backend.types.converter.spi.DslConverter;
 import org.hibernate.search.engine.backend.types.converter.spi.ProjectionConverter;
+import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.reporting.spi.EventContexts;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.types.PropertyTypeDescriptor;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.types.expectations.DefaultIdentifierBridgeExpectations;
 import org.hibernate.search.mapper.pojo.common.spi.PojoEntityReference;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.SearchException;
@@ -38,6 +37,7 @@ import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.StubSearchWorkBehavior;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.StubBackendUtils;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.document.model.impl.StubIndexModel;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -62,7 +62,8 @@ public class DocumentIdDefaultBridgeBaseIT<I> {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private final PropertyTypeDescriptor<I, ?> typeDescriptor;
 	private final DefaultIdentifierBridgeExpectations<I> expectations;
@@ -80,17 +81,19 @@ public class DocumentIdDefaultBridgeBaseIT<I> {
 	public void setup() {
 		backendMock.expectSchema(
 				DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_1_NAME,
-				b -> { },
+				b -> {},
 				indexModel -> this.index1Model = indexModel
 		);
 		backendMock.expectSchema(
 				DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_2_NAME,
-				b -> { },
+				b -> {},
 				indexModel -> this.index2Model = indexModel
 		);
 		mapping = setupHelper.start()
-				.withAnnotatedEntityType( expectations.getTypeWithIdentifierBridge1(), DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_1_NAME )
-				.withAnnotatedEntityType( expectations.getTypeWithIdentifierBridge2(), DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_2_NAME )
+				.withAnnotatedEntityType( expectations.getTypeWithIdentifierBridge1(),
+						DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_1_NAME )
+				.withAnnotatedEntityType( expectations.getTypeWithIdentifierBridge2(),
+						DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_2_NAME )
 				.setup();
 		backendMock.verifyExpectationsMet();
 	}
@@ -104,7 +107,7 @@ public class DocumentIdDefaultBridgeBaseIT<I> {
 				session.indexingPlan().add( entity );
 
 				backendMock.expectWorks( DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_1_NAME )
-						.add( documentIdentifierIterator.next(), b -> { } );
+						.add( documentIdentifierIterator.next(), b -> {} );
 			}
 		}
 		backendMock.verifyExpectationsMet();
@@ -153,8 +156,7 @@ public class DocumentIdDefaultBridgeBaseIT<I> {
 				backendMock.expectSearchIds(
 						Collections.singletonList(
 								DefaultIdentifierBridgeExpectations.TYPE_WITH_IDENTIFIER_BRIDGE_1_NAME ),
-						b -> {
-						},
+						b -> {},
 						StubSearchWorkBehavior.of(
 								1L,
 								documentIdentifierValue
@@ -224,7 +226,8 @@ public class DocumentIdDefaultBridgeBaseIT<I> {
 		ProjectionConverter<String, ?> compatibleProjectionConverter =
 				index2Model.identifier().projectionConverter();
 		ProjectionConverter<String, ?> incompatibleProjectionConverter =
-				new ProjectionConverter<>( typeDescriptor.getJavaType(), new IncompatibleFromDocumentValueConverter<>() );
+				new ProjectionConverter<>( typeDescriptor.getJavaType(),
+						new IncompatibleFromDocumentValueConverter<>() );
 
 		// isCompatibleWith must return true when appropriate
 		assertThat( projectionConverter.isCompatibleWith( projectionConverter ) ).isTrue();
@@ -236,7 +239,8 @@ public class DocumentIdDefaultBridgeBaseIT<I> {
 		assertThatCode( () -> projectionConverter.withConvertedType( Object.class,
 				() -> EventContexts.fromIndexFieldAbsolutePath( "foo" ) ) )
 				.doesNotThrowAnyException();
-		assertThatCode( () -> projectionConverter.withConvertedType( typeDescriptor.getBoxedJavaType(), () -> EventContexts.fromIndexFieldAbsolutePath( "foo" ) ) )
+		assertThatCode( () -> projectionConverter.withConvertedType( typeDescriptor.getBoxedJavaType(),
+				() -> EventContexts.fromIndexFieldAbsolutePath( "foo" ) ) )
 				.doesNotThrowAnyException();
 		assertThatThrownBy( () -> projectionConverter.withConvertedType( IncompatibleType.class,
 				() -> EventContexts.fromIndexFieldAbsolutePath( "foo" ) ) )
@@ -273,8 +277,7 @@ public class DocumentIdDefaultBridgeBaseIT<I> {
 	/**
 	 * A type that is clearly not a supertype of any type with a default bridge.
 	 */
-	private static final class IncompatibleType {
-	}
+	private static final class IncompatibleType {}
 
 	private static class IncompatibleToDocumentValueConverter<V>
 			implements ToDocumentValueConverter<V, Object> {

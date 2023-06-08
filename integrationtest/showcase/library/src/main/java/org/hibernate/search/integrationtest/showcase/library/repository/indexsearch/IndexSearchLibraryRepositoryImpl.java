@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 
 import org.hibernate.search.engine.search.aggregation.AggregationKey;
@@ -106,12 +107,12 @@ public class IndexSearchLibraryRepositoryImpl implements IndexSearchLibraryRepos
 					}
 					// Nested query + must loop
 					if ( libraryServices != null && !libraryServices.isEmpty() ) {
-							for ( LibraryServiceOption service : libraryServices ) {
-								root.add( f.match()
-										.field( "services" )
-										.matching( service )
-								);
-							}
+						for ( LibraryServiceOption service : libraryServices ) {
+							root.add( f.match()
+									.field( "services" )
+									.matching( service )
+							);
+						}
 					}
 				} )
 				.aggregation( aggByCollectionSizekey, f -> f.range()

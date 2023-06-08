@@ -13,5 +13,4 @@ import org.hibernate.search.util.common.annotation.Incubating;
  * Extended version of an {@link SchemaExport} that exposes any Lucene-specific methods.
  */
 @Incubating
-public interface LuceneIndexSchemaExport extends SchemaExport {
-}
+public interface LuceneIndexSchemaExport extends SchemaExport {}

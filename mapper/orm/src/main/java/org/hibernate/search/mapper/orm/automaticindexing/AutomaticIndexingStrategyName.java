@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.mapper.orm.automaticindexing;
 
-
 import java.lang.invoke.MethodHandles;
 
 import org.hibernate.search.engine.cfg.spi.ParseUtils;
@@ -29,8 +28,7 @@ public enum AutomaticIndexingStrategyName {
 	 *
 	 * @deprecated Use {@link org.hibernate.search.mapper.orm.cfg.HibernateOrmMapperSettings#AUTOMATIC_INDEXING_ENABLED} instead.
 	 */
-	@Deprecated
-	NONE("none"),
+	@Deprecated NONE("none"),
 
 	/**
 	 * Indexing is triggered automatically when entities are modified in the Hibernate ORM session:
@@ -38,8 +36,7 @@ public enum AutomaticIndexingStrategyName {
 	 *
 	 * @deprecated Use {@link org.hibernate.search.mapper.orm.cfg.HibernateOrmMapperSettings#AUTOMATIC_INDEXING_ENABLED} instead.
 	 */
-	@Deprecated
-	SESSION("session");
+	@Deprecated SESSION("session");
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 

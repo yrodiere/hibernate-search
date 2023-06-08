@@ -61,16 +61,20 @@ public class PojoModelPathTest {
 
 	@Test
 	public void ofValue_propertyAndContainerExtractorPath() {
-		assertThat( PojoModelPath.ofValue( "foo", ContainerExtractorPath.explicitExtractor( BuiltinContainerExtractors.MAP_KEY ) ) )
-				.satisfies( isPath( "foo", ContainerExtractorPath.explicitExtractor( BuiltinContainerExtractors.MAP_KEY ) ) );
+		assertThat( PojoModelPath.ofValue( "foo", ContainerExtractorPath.explicitExtractor(
+				BuiltinContainerExtractors.MAP_KEY ) ) )
+				.satisfies( isPath( "foo", ContainerExtractorPath.explicitExtractor(
+						BuiltinContainerExtractors.MAP_KEY ) ) );
 
 		assertThatThrownBy(
-				() -> PojoModelPath.ofValue( null, ContainerExtractorPath.explicitExtractor( BuiltinContainerExtractors.MAP_KEY ) )
+				() -> PojoModelPath.ofValue( null, ContainerExtractorPath.explicitExtractor(
+						BuiltinContainerExtractors.MAP_KEY ) )
 		)
 				.isInstanceOf( IllegalArgumentException.class );
 
 		assertThatThrownBy(
-				() -> PojoModelPath.ofValue( "", ContainerExtractorPath.explicitExtractor( BuiltinContainerExtractors.MAP_KEY ) )
+				() -> PojoModelPath.ofValue( "", ContainerExtractorPath.explicitExtractor(
+						BuiltinContainerExtractors.MAP_KEY ) )
 		)
 				.isInstanceOf( IllegalArgumentException.class );
 
@@ -221,7 +225,8 @@ public class PojoModelPathTest {
 	@Test
 	public void builder_chainedContainerExtractors() {
 		PojoModelPath.Builder builder = PojoModelPath.builder();
-		builder.property( "foo" ).value( BuiltinContainerExtractors.COLLECTION ).value( BuiltinContainerExtractors.ITERABLE )
+		builder.property( "foo" ).value( BuiltinContainerExtractors.COLLECTION ).value(
+				BuiltinContainerExtractors.ITERABLE )
 				.property( "bar" ).value( BuiltinContainerExtractors.MAP_KEY );
 		assertThat( builder.toValuePath() )
 				.satisfies( isPath(
@@ -420,7 +425,7 @@ public class PojoModelPathTest {
 				.isEmpty();
 	}
 
-	private static <T extends PojoModelPath> Consumer<T> isPath(Object ... pathComponents) {
+	private static <T extends PojoModelPath> Consumer<T> isPath(Object... pathComponents) {
 		return path -> {
 			Deque<Object> components = new ArrayDeque<>();
 			PojoModelPath currentPath = path;
@@ -432,8 +437,7 @@ public class PojoModelPathTest {
 					components.addFirst( ( (PojoModelPathPropertyNode) currentPath ).propertyName() );
 				}
 				currentPath = currentPath.parent();
-			}
-			while ( currentPath != null );
+			} while ( currentPath != null );
 
 			assertThat( components ).containsExactly( pathComponents );
 		};

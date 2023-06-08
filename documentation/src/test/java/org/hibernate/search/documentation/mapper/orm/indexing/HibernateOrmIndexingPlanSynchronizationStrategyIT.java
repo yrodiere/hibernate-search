@@ -6,11 +6,11 @@
  */
 package org.hibernate.search.documentation.mapper.orm.indexing;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.util.List;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.documentation.testsupport.BackendConfigurations;
@@ -32,7 +32,8 @@ public class HibernateOrmIndexingPlanSynchronizationStrategyIT {
 	private static final String BOOK3_TITLE = "The Robots of Dawn";
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	@Test
 	public void synchronizationStrategyOverride() {

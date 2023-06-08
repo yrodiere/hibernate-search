@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.hibernate.search.engine.backend.common.DocumentReference;
 import org.hibernate.search.engine.backend.document.IndexFieldReference;
 import org.hibernate.search.engine.mapper.mapping.building.spi.IndexedEntityBindingContext;
-import org.hibernate.search.engine.backend.common.DocumentReference;
 import org.hibernate.search.util.impl.integrationtest.common.assertion.NormalizedDocRefHit;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.BulkIndexer;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
@@ -37,11 +37,13 @@ public abstract class AbstractShardingIT {
 		return docRefs( docIdByRoutingKey.values().stream().flatMap( List::stream ) );
 	}
 
-	protected final DocumentReference[] docRefsForRoutingKey(String routingKey, Map<String, List<String>> docIdByRoutingKey) {
+	protected final DocumentReference[] docRefsForRoutingKey(String routingKey, Map<String,
+			List<String>> docIdByRoutingKey) {
 		return docRefs( docIdByRoutingKey.get( routingKey ).stream() );
 	}
 
-	protected final DocumentReference[] docRefsForRoutingKeys(Collection<String> routingKeys, Map<String, List<String>> docIdByRoutingKey) {
+	protected final DocumentReference[] docRefsForRoutingKeys(Collection<String> routingKeys, Map<String,
+			List<String>> docIdByRoutingKey) {
 		return docRefs( routingKeys.stream().flatMap( routingKey -> docIdByRoutingKey.get( routingKey ).stream() ) );
 	}
 
@@ -83,7 +85,6 @@ public abstract class AbstractShardingIT {
 	}
 
 	protected enum RoutingMode {
-		EXPLICIT_ROUTING_KEYS,
-		DOCUMENT_IDS
+		EXPLICIT_ROUTING_KEYS, DOCUMENT_IDS
 	}
 }

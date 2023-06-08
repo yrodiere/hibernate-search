@@ -45,13 +45,14 @@ public class MappedSuperclassIT {
 				INDEX_NAME, b -> b.field( "text", String.class, f -> f.analyzerName( AnalyzerNames.DEFAULT ) ) );
 
 		sessionFactory = ormSetupHelper.start()
-				.withProperty( HibernateOrmMapperSettings.MAPPING_CONFIGURER, (HibernateOrmSearchMappingConfigurer) context -> {
-					ProgrammaticMappingConfigurationContext mapping = context.programmaticMapping();
-					TypeMappingStep indexedEntityMapping = mapping.type( IndexedEntity.class );
-					indexedEntityMapping.indexed().index( INDEX_NAME );
-					indexedEntityMapping.property( "id" ).documentId();
-					indexedEntityMapping.property( "text" ).fullTextField();
-				} )
+				.withProperty( HibernateOrmMapperSettings.MAPPING_CONFIGURER,
+						(HibernateOrmSearchMappingConfigurer) context -> {
+							ProgrammaticMappingConfigurationContext mapping = context.programmaticMapping();
+							TypeMappingStep indexedEntityMapping = mapping.type( IndexedEntity.class );
+							indexedEntityMapping.indexed().index( INDEX_NAME );
+							indexedEntityMapping.property( "id" ).documentId();
+							indexedEntityMapping.property( "text" ).fullTextField();
+						} )
 				.setup( IndexedEntity.class );
 		backendMock.verifyExpectationsMet();
 	}

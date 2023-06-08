@@ -132,8 +132,10 @@ public class ElasticsearchIndexSchemaManagerValidationAliasesIT {
 	@Test
 	public void writeAlias_invalid_isWriteIndex() {
 		assumeFalse(
-				"This test only is only relevant for Elasticsearch versions supporting the is_write_index" +
-						" attribute in alias definitions." +
+				"This test only is only relevant for Elasticsearch versions supporting the is_write_index"
+						+
+						" attribute in alias definitions."
+						+
 						" These operations are not available on ES 6.3 and below in particular.",
 				isActualVersion(
 						esVersion -> esVersion.isAtMost( "6.3" ),

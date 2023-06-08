@@ -29,7 +29,6 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-
 public abstract class AbstractConfiguredExtraPropertiesJsonAdapterFactory implements TypeAdapterFactory {
 
 	@Override
@@ -107,7 +106,10 @@ public abstract class AbstractConfiguredExtraPropertiesJsonAdapterFactory implem
 			}
 			rawType = rawType.getSuperclass();
 		}
-		throw new AssertionFailure( "Missing or inaccessible field annotated with " + SerializeExtraProperties.class + " on type " + type );
+		throw new AssertionFailure( "Missing or inaccessible field annotated with "
+				+ SerializeExtraProperties.class
+				+ " on type "
+				+ type );
 	}
 
 	@SuppressWarnings("unchecked")
@@ -172,12 +174,20 @@ public abstract class AbstractConfiguredExtraPropertiesJsonAdapterFactory implem
 				extraPropertiesField.set( instance, extraProperties );
 			}
 			catch (IllegalArgumentException e) {
-				throw new AssertionFailure( "Field " + extraPropertiesField + " annotated with "
-						+ SerializeExtraProperties.class + " has the wrong type on " + instance.getClass() );
+				throw new AssertionFailure( "Field "
+						+ extraPropertiesField
+						+ " annotated with "
+						+ SerializeExtraProperties.class
+						+ " has the wrong type on "
+						+ instance.getClass() );
 			}
 			catch (IllegalAccessException e) {
-				throw new AssertionFailure( "Field " + extraPropertiesField + " annotated with "
-						+ SerializeExtraProperties.class + " is inaccessible on " + instance.getClass() );
+				throw new AssertionFailure( "Field "
+						+ extraPropertiesField
+						+ " annotated with "
+						+ SerializeExtraProperties.class
+						+ " is inaccessible on "
+						+ instance.getClass() );
 			}
 		}
 
@@ -187,8 +197,12 @@ public abstract class AbstractConfiguredExtraPropertiesJsonAdapterFactory implem
 				return (Map<String, JsonElement>) extraPropertiesField.get( instance );
 			}
 			catch (IllegalAccessException e) {
-				throw new AssertionFailure( "Field " + extraPropertiesField + " annotated with "
-						+ SerializeExtraProperties.class + " is inaccessible on " + instance.getClass() );
+				throw new AssertionFailure( "Field "
+						+ extraPropertiesField
+						+ " annotated with "
+						+ SerializeExtraProperties.class
+						+ " is inaccessible on "
+						+ instance.getClass() );
 			}
 		}
 	}

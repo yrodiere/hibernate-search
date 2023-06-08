@@ -9,6 +9,7 @@ package org.hibernate.search.integrationtest.mapper.orm.schema.management.manage
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.concurrent.CompletableFuture;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -45,7 +46,7 @@ public abstract class AbstractSearchSchemaManagerSimpleOperationIT {
 		backendMock.expectAnySchema( IndexedEntity1.NAME );
 		backendMock.expectAnySchema( IndexedEntity2.NAME );
 		setupContext.withProperty( HibernateOrmMapperSettings.SCHEMA_MANAGEMENT_STRATEGY,
-						SchemaManagementStrategyName.NONE )
+				SchemaManagementStrategyName.NONE )
 				.withAnnotatedTypes( IndexedEntity1.class, IndexedEntity2.class );
 	}
 

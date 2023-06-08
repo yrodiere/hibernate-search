@@ -12,5 +12,4 @@ package org.hibernate.search.query.dsl;
  * @deprecated See the deprecation note on {@link QueryBuilder}.
  */
 @Deprecated
-public interface SimpleQueryStringTermination extends Termination<SimpleQueryStringTermination> {
-}
+public interface SimpleQueryStringTermination extends Termination<SimpleQueryStringTermination> {}

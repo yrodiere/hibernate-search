@@ -68,7 +68,8 @@ public abstract class AbstractSearchQueryEntityLoadingIT {
 
 			SearchSession searchSession = Search.session( session );
 
-			SearchQueryOptionsStep<?, T, SearchLoadingOptionsStep, ?, ?> optionsStep = searchSession.search( targetClasses )
+			SearchQueryOptionsStep<?, T, SearchLoadingOptionsStep, ?, ?> optionsStep = searchSession.search(
+					targetClasses )
 					.where( f -> f.matchAll() )
 					.loading( loadingOptionsContributor );
 
@@ -87,8 +88,10 @@ public abstract class AbstractSearchQueryEntityLoadingIT {
 
 			softAssertions.assertThat( loadedEntities )
 					.as(
-							"Loaded entities when targeting types " + targetClasses
-									+ " and when the backend returns document references " + hitDocumentReferences
+							"Loaded entities when targeting types "
+									+ targetClasses
+									+ " and when the backend returns document references "
+									+ hitDocumentReferences
 					)
 					.allSatisfy( loadedEntity -> {
 						// Loading should fully initialize entities
@@ -113,14 +116,17 @@ public abstract class AbstractSearchQueryEntityLoadingIT {
 
 			softAssertions.assertThat( unproxyfiedLoadedEntities )
 					.as(
-							"Loaded, then unproxified entities when targeting types " + targetClasses
-									+ " and when the backend returns document references " + hitDocumentReferences
+							"Loaded, then unproxified entities when targeting types "
+									+ targetClasses
+									+ " and when the backend returns document references "
+									+ hitDocumentReferences
 					)
 					.containsExactlyElementsOf( unproxyfiedExpectedLoadedEntities );
 		} );
 	}
 
-	protected <T> List<T> getHits(List<String> targetIndexes, SearchQuery<T> query, List<DocumentReference> hitDocumentReferences,
+	protected <T> List<T> getHits(List<String> targetIndexes, SearchQuery<T> query, List<
+			DocumentReference> hitDocumentReferences,
 			Integer timeout, TimeUnit timeUnit) {
 		backendMock().expectSearchObjects(
 				targetIndexes,

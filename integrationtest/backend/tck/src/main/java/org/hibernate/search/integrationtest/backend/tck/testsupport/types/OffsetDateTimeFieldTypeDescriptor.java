@@ -72,7 +72,8 @@ public class OffsetDateTimeFieldTypeDescriptor extends FieldTypeDescriptor<Offse
 			@Override
 			protected List<OffsetDateTime> createSingle() {
 				List<OffsetDateTime> values = new ArrayList<>();
-				for ( LocalDateTime localDateTime : LocalDateTimeFieldTypeDescriptor.INSTANCE.getIndexableValues().getSingle() ) {
+				for ( LocalDateTime localDateTime : LocalDateTimeFieldTypeDescriptor.INSTANCE.getIndexableValues()
+						.getSingle() ) {
 					for ( ZoneOffset offset : createIndexableOffsetList() ) {
 						values.add( localDateTime.atOffset( offset ) );
 					}
@@ -85,7 +86,8 @@ public class OffsetDateTimeFieldTypeDescriptor extends FieldTypeDescriptor<Offse
 	@Override
 	protected List<OffsetDateTime> createUniquelyMatchableValues() {
 		List<OffsetDateTime> values = new ArrayList<>();
-		for ( LocalDateTime localDateTime : LocalDateTimeFieldTypeDescriptor.INSTANCE.getIndexableValues().getSingle() ) {
+		for ( LocalDateTime localDateTime : LocalDateTimeFieldTypeDescriptor.INSTANCE.getIndexableValues()
+				.getSingle() ) {
 			for ( ZoneOffset offset : createIndexableOffsetList() ) {
 				values.add( localDateTime.atOffset( offset ) );
 			}
@@ -128,7 +130,8 @@ public class OffsetDateTimeFieldTypeDescriptor extends FieldTypeDescriptor<Offse
 
 	@Override
 	public OffsetDateTime valueFromInteger(int integer) {
-		return LocalDateTimeFieldTypeDescriptor.INSTANCE.valueFromInteger( integer ).atOffset( ZoneOffset.ofHours( 2 ) );
+		return LocalDateTimeFieldTypeDescriptor.INSTANCE.valueFromInteger( integer ).atOffset( ZoneOffset.ofHours(
+				2 ) );
 	}
 
 	@Override

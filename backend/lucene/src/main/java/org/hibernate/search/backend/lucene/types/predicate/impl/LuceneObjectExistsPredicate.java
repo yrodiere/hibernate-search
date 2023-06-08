@@ -12,14 +12,14 @@ import java.util.List;
 import org.hibernate.search.backend.lucene.lowlevel.common.impl.MetadataFields;
 import org.hibernate.search.backend.lucene.search.common.impl.AbstractLuceneCompositeNodeSearchQueryElementFactory;
 import org.hibernate.search.backend.lucene.search.common.impl.LuceneSearchIndexCompositeNodeContext;
-import org.hibernate.search.backend.lucene.search.common.impl.LuceneSearchIndexScope;
 import org.hibernate.search.backend.lucene.search.common.impl.LuceneSearchIndexNodeContext;
+import org.hibernate.search.backend.lucene.search.common.impl.LuceneSearchIndexScope;
 import org.hibernate.search.backend.lucene.search.predicate.impl.AbstractLuceneSingleFieldPredicate;
 import org.hibernate.search.backend.lucene.search.predicate.impl.LuceneSearchPredicate;
 import org.hibernate.search.backend.lucene.search.predicate.impl.PredicateRequestContext;
-import org.hibernate.search.engine.search.predicate.spi.PredicateTypeKeys;
 import org.hibernate.search.engine.search.predicate.SearchPredicate;
 import org.hibernate.search.engine.search.predicate.spi.ExistsPredicateBuilder;
+import org.hibernate.search.engine.search.predicate.spi.PredicateTypeKeys;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
@@ -61,7 +61,8 @@ public class LuceneObjectExistsPredicate extends AbstractLuceneSingleFieldPredic
 		return builder.build();
 	}
 
-	public static class Factory extends
+	public static class Factory
+			extends
 			AbstractLuceneCompositeNodeSearchQueryElementFactory<ExistsPredicateBuilder> {
 		public static final Factory INSTANCE = new Factory();
 
@@ -69,7 +70,8 @@ public class LuceneObjectExistsPredicate extends AbstractLuceneSingleFieldPredic
 		}
 
 		@Override
-		public ExistsPredicateBuilder create(LuceneSearchIndexScope<?> scope, LuceneSearchIndexCompositeNodeContext node) {
+		public ExistsPredicateBuilder create(LuceneSearchIndexScope<?> scope,
+				LuceneSearchIndexCompositeNodeContext node) {
 			Builder builder = new Builder( scope, node );
 			for ( LuceneSearchIndexNodeContext child : node.staticChildrenByName().values() ) {
 				builder.addChild( child );

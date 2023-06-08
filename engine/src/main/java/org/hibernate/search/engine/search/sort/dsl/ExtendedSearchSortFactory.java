@@ -21,7 +21,9 @@ import org.hibernate.search.engine.spatial.GeoPoint;
  * @param <S> The self type, i.e. the exposed type of this factory.
  * @param <PDF> The type of factory used to create predicates in {@link FieldSortOptionsStep#filter(Function)}.
  */
-public interface ExtendedSearchSortFactory<S extends ExtendedSearchSortFactory<?, PDF>, PDF extends SearchPredicateFactory>
+public interface ExtendedSearchSortFactory<
+		S extends ExtendedSearchSortFactory<?, PDF>,
+		PDF extends SearchPredicateFactory>
 		extends SearchSortFactory {
 
 	@Override

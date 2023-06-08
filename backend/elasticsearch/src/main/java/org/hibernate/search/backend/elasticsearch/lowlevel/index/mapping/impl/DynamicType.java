@@ -18,12 +18,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public enum DynamicType {
 
-	@SerializedName("true")
-	TRUE,
-	@SerializedName("false")
-	FALSE,
-	@SerializedName("strict")
-	STRICT;
+	@SerializedName("true") TRUE, @SerializedName("false") FALSE, @SerializedName("strict") STRICT;
 
 	public static DynamicType create(DynamicMapping dynamicMapping) {
 		switch ( dynamicMapping ) {

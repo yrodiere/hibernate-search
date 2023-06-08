@@ -49,7 +49,8 @@ public interface ProjectionBindingContext {
 	 * to bind to the {@link #constructorParameter()}.
 	 * @param <P> The type of values returned by the projection.
 	 */
-	<P> void definition(Class<P> expectedValueType, BeanHolder<? extends ProjectionDefinition<? extends P>> definitionHolder);
+	<P> void definition(Class<P> expectedValueType, BeanHolder<? extends ProjectionDefinition<
+			? extends P>> definitionHolder);
 
 	/**
 	 * Inspects the type of the {@link #constructorParameter()}

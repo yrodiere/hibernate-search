@@ -13,7 +13,9 @@ import org.hibernate.search.engine.backend.types.converter.ToDocumentValueConver
 import org.hibernate.search.engine.backend.types.dsl.IndexFieldTypeOptionsStep;
 import org.hibernate.search.util.common.impl.Contracts;
 
-abstract class AbstractElasticsearchIndexFieldTypeOptionsStep<S extends AbstractElasticsearchIndexFieldTypeOptionsStep<?, F>, F>
+abstract class AbstractElasticsearchIndexFieldTypeOptionsStep<
+		S extends AbstractElasticsearchIndexFieldTypeOptionsStep<?, F>,
+		F>
 		implements IndexFieldTypeOptionsStep<S, F> {
 	protected final ElasticsearchIndexFieldTypeBuildContext buildContext;
 	protected final ElasticsearchIndexValueFieldType.Builder<F> builder;

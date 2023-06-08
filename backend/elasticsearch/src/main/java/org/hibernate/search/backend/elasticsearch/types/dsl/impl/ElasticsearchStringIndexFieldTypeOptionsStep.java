@@ -51,9 +51,9 @@ import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
 import com.google.gson.JsonPrimitive;
 
-
 class ElasticsearchStringIndexFieldTypeOptionsStep
-		extends AbstractElasticsearchStandardIndexFieldTypeOptionsStep<ElasticsearchStringIndexFieldTypeOptionsStep, String>
+		extends AbstractElasticsearchStandardIndexFieldTypeOptionsStep<ElasticsearchStringIndexFieldTypeOptionsStep,
+				String>
 		implements StringIndexFieldTypeOptionsStep<ElasticsearchStringIndexFieldTypeOptionsStep> {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -168,7 +168,8 @@ class ElasticsearchStringIndexFieldTypeOptionsStep
 			}
 
 			if ( normalizerName != null ) {
-				throw log.cannotApplyAnalyzerAndNormalizer( analyzerName, normalizerName, buildContext.getEventContext() );
+				throw log.cannotApplyAnalyzerAndNormalizer( analyzerName, normalizerName, buildContext
+						.getEventContext() );
 			}
 
 			if ( resolvedSortable ) {
@@ -206,7 +207,8 @@ class ElasticsearchStringIndexFieldTypeOptionsStep
 
 		if ( resolvedSearchable ) {
 			builder.searchable( true );
-			builder.queryElementFactory( PredicateTypeKeys.MATCH, new ElasticsearchTextMatchPredicate.Factory( codec ) );
+			builder.queryElementFactory( PredicateTypeKeys.MATCH, new ElasticsearchTextMatchPredicate.Factory(
+					codec ) );
 			builder.queryElementFactory( PredicateTypeKeys.RANGE, new ElasticsearchRangePredicate.Factory<>( codec ) );
 			builder.queryElementFactory( PredicateTypeKeys.EXISTS, new ElasticsearchExistsPredicate.Factory<>() );
 			builder.queryElementFactory( PredicateTypeKeys.PHRASE, new ElasticsearchTextPhrasePredicate.Factory() );
@@ -219,17 +221,20 @@ class ElasticsearchStringIndexFieldTypeOptionsStep
 
 		if ( resolvedSortable ) {
 			builder.sortable( true );
-			builder.queryElementFactory( SortTypeKeys.FIELD, new ElasticsearchStandardFieldSort.TextFieldFactory( codec ) );
+			builder.queryElementFactory( SortTypeKeys.FIELD, new ElasticsearchStandardFieldSort.TextFieldFactory(
+					codec ) );
 		}
 
 		if ( resolvedProjectable ) {
 			builder.projectable( true );
-			builder.queryElementFactory( ProjectionTypeKeys.FIELD, new ElasticsearchFieldProjection.Factory<>( codec ) );
+			builder.queryElementFactory( ProjectionTypeKeys.FIELD, new ElasticsearchFieldProjection.Factory<>(
+					codec ) );
 		}
 
 		if ( resolvedAggregable ) {
 			builder.aggregable( true );
-			builder.queryElementFactory( AggregationTypeKeys.TERMS, new ElasticsearchTermsAggregation.Factory<>( codec ) );
+			builder.queryElementFactory( AggregationTypeKeys.TERMS, new ElasticsearchTermsAggregation.Factory<>(
+					codec ) );
 		}
 
 		return builder.build();
@@ -254,15 +259,16 @@ class ElasticsearchStringIndexFieldTypeOptionsStep
 	}
 
 	private String resolveTermVector() {
-		if ( highlightable != null && ( highlightable.contains( Highlightable.FAST_VECTOR )
-				|| highlightable.contains( Highlightable.ANY ) ) ) {
+		if ( highlightable != null
+				&& ( highlightable.contains( Highlightable.FAST_VECTOR )
+						|| highlightable.contains( Highlightable.ANY ) ) ) {
 			if ( TermVector.DEFAULT.equals( termVector ) ) {
 				return TermVector.WITH_POSITIONS_OFFSETS.name().toLowerCase( Locale.ROOT );
 			}
 			else if ( TermVector.WITH_POSITIONS_OFFSETS.equals( termVector )
 					|| TermVector.WITH_POSITIONS_OFFSETS_PAYLOADS.equals( termVector ) ) {
-				return termVector.name().toLowerCase( Locale.ROOT );
-			}
+						return termVector.name().toLowerCase( Locale.ROOT );
+					}
 			else {
 				throw log.termVectorDontAllowFastVectorHighlighter( termVector );
 			}
@@ -286,7 +292,8 @@ class ElasticsearchStringIndexFieldTypeOptionsStep
 			throw log.noHighlightableProvided();
 		}
 		if ( highlightable.contains( Highlightable.DEFAULT ) ) {
-			if ( TermVector.WITH_POSITIONS_OFFSETS.equals( termVector ) ||
+			if ( TermVector.WITH_POSITIONS_OFFSETS.equals( termVector )
+					||
 					TermVector.WITH_POSITIONS_OFFSETS_PAYLOADS.equals( termVector ) ) {
 				highlightable = EnumSet.of( Highlightable.ANY );
 			}
@@ -303,7 +310,8 @@ class ElasticsearchStringIndexFieldTypeOptionsStep
 			}
 		}
 		if ( highlightable.contains( Highlightable.ANY ) ) {
-			return EnumSet.of( SearchHighlighterType.PLAIN, SearchHighlighterType.UNIFIED, SearchHighlighterType.FAST_VECTOR );
+			return EnumSet.of( SearchHighlighterType.PLAIN, SearchHighlighterType.UNIFIED,
+					SearchHighlighterType.FAST_VECTOR );
 		}
 		Set<SearchHighlighterType> highlighters = new HashSet<>();
 		if ( highlightable.contains( Highlightable.PLAIN ) ) {

@@ -10,8 +10,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
-
-
 public abstract class AbstractTypeOrdering<T> {
 
 	protected AbstractTypeOrdering() {
@@ -48,7 +46,7 @@ public abstract class AbstractTypeOrdering<T> {
 			// Reached the superclass of Object or of an interface
 			return;
 		}
-		if ( ! result.add( subType ) ) {
+		if ( !result.add( subType ) ) {
 			// We've already seen this type, skip the rest of this method
 			return;
 		}

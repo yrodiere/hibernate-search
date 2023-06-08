@@ -50,7 +50,8 @@ public class IndexSchemaElementFieldTemplateIT {
 						.typeContext( index.typeName() )
 						.indexContext( index.name() )
 						.indexSchemaRootContext()
-						.failure( "Invalid index field template name 'null': field template names cannot be null or empty" ) );
+						.failure(
+								"Invalid index field template name 'null': field template names cannot be null or empty" ) );
 
 		assertThatThrownBy(
 				() -> setup( ctx -> {
@@ -64,7 +65,8 @@ public class IndexSchemaElementFieldTemplateIT {
 						.typeContext( index.typeName() )
 						.indexContext( index.name() )
 						.indexFieldContext( "nonRoot" )
-						.failure( "Invalid index field template name 'null': field template names cannot be null or empty" ) );
+						.failure(
+								"Invalid index field template name 'null': field template names cannot be null or empty" ) );
 
 		assertThatThrownBy(
 				() -> setup( ctx -> {
@@ -77,7 +79,8 @@ public class IndexSchemaElementFieldTemplateIT {
 						.typeContext( index.typeName() )
 						.indexContext( index.name() )
 						.indexSchemaRootContext()
-						.failure( "Invalid index field template name 'null': field template names cannot be null or empty" ) );
+						.failure(
+								"Invalid index field template name 'null': field template names cannot be null or empty" ) );
 
 		assertThatThrownBy(
 				() -> setup( ctx -> {
@@ -90,7 +93,8 @@ public class IndexSchemaElementFieldTemplateIT {
 						.typeContext( index.typeName() )
 						.indexContext( index.name() )
 						.indexFieldContext( "nonRoot" )
-						.failure( "Invalid index field template name 'null': field template names cannot be null or empty" ) );
+						.failure(
+								"Invalid index field template name 'null': field template names cannot be null or empty" ) );
 	}
 
 	@Test
@@ -106,7 +110,8 @@ public class IndexSchemaElementFieldTemplateIT {
 						.typeContext( index.typeName() )
 						.indexContext( index.name() )
 						.indexSchemaRootContext()
-						.failure( "Invalid index field template name '': field template names cannot be null or empty" ) );
+						.failure(
+								"Invalid index field template name '': field template names cannot be null or empty" ) );
 
 		assertThatThrownBy(
 				() -> setup( ctx -> {
@@ -119,7 +124,8 @@ public class IndexSchemaElementFieldTemplateIT {
 						.typeContext( index.typeName() )
 						.indexContext( index.name() )
 						.indexFieldContext( "nonRoot" )
-						.failure( "Invalid index field template name '': field template names cannot be null or empty" ) );
+						.failure(
+								"Invalid index field template name '': field template names cannot be null or empty" ) );
 
 		assertThatThrownBy(
 				() -> setup( ctx -> {
@@ -132,7 +138,8 @@ public class IndexSchemaElementFieldTemplateIT {
 						.typeContext( index.typeName() )
 						.indexContext( index.name() )
 						.indexSchemaRootContext()
-						.failure( "Invalid index field template name '': field template names cannot be null or empty" ) );
+						.failure(
+								"Invalid index field template name '': field template names cannot be null or empty" ) );
 
 		assertThatThrownBy(
 				() -> setup( ctx -> {
@@ -145,7 +152,8 @@ public class IndexSchemaElementFieldTemplateIT {
 						.typeContext( index.typeName() )
 						.indexContext( index.name() )
 						.indexFieldContext( "nonRoot" )
-						.failure( "Invalid index field template name '': field template names cannot be null or empty" ) );
+						.failure(
+								"Invalid index field template name '': field template names cannot be null or empty" ) );
 	}
 
 	@Test

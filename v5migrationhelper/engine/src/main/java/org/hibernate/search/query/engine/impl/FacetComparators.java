@@ -15,7 +15,8 @@ import org.hibernate.search.query.facet.FacetSortOrder;
 
 public class FacetComparators {
 
-	private static final EnumMap<FacetSortOrder, FacetComparator> FACET_COMPARATORS = new EnumMap<>( FacetSortOrder.class );
+	private static final EnumMap<FacetSortOrder, FacetComparator> FACET_COMPARATORS = new EnumMap<>(
+			FacetSortOrder.class );
 
 	static {
 		FACET_COMPARATORS.put( FacetSortOrder.COUNT_ASC, new FacetComparator( FacetSortOrder.COUNT_ASC ) );

@@ -6,19 +6,19 @@
  */
 package org.hibernate.search.test.embedded.doubleinsert;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Date;
 
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.TermQuery;
-
 import org.hibernate.query.Query;
-
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.test.SearchTestBase;
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.TermQuery;
 
 /**
  * @author Emmanuel Bernard
@@ -28,7 +28,7 @@ public class DoubleInsertEmbeddedTest extends SearchTestBase {
 	@Test
 	public void testDoubleInsert() throws Exception {
 		PersonalContact contact = createTestData();
-		FullTextSession s = Search.getFullTextSession( openSession( ) );
+		FullTextSession s = Search.getFullTextSession( openSession() );
 		s.getTransaction().begin();
 		Term term = new Term( "county", "county" );
 		TermQuery termQuery = new TermQuery( term );
@@ -49,7 +49,7 @@ public class DoubleInsertEmbeddedTest extends SearchTestBase {
 	@Test
 	public void testMultipleUpdatesTriggeredByContainedIn() {
 		PersonalContact contact = createTestData();
-		FullTextSession s = Search.getFullTextSession( openSession( ) );
+		FullTextSession s = Search.getFullTextSession( openSession() );
 		s.getTransaction().begin();
 		contact = (PersonalContact) s.load( PersonalContact.class, contact.getId() );
 		contact.setEmail( "spam@hibernate.org" );
@@ -87,7 +87,7 @@ public class DoubleInsertEmbeddedTest extends SearchTestBase {
 		contact.addAddressToContact( address );
 		contact.addPhoneToContact( phone );
 
-		FullTextSession s = Search.getFullTextSession( openSession( ) );
+		FullTextSession s = Search.getFullTextSession( openSession() );
 		s.getTransaction().begin();
 		s.save( contact );
 		s.getTransaction().commit();

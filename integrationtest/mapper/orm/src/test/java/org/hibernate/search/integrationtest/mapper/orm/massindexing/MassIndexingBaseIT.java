@@ -13,6 +13,7 @@ import static org.hibernate.search.util.common.impl.CollectionHelper.asSet;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -83,7 +84,8 @@ public class MassIndexingBaseIT {
 	}
 
 	@ReusableOrmSetupHolder.Setup
-	public void setup(OrmSetupHelper.SetupContext setupContext, ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
+	public void setup(OrmSetupHelper.SetupContext setupContext,
+			ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
 		backendMock.expectAnySchema( Book.INDEX );
 
 		setupContext.withPropertyRadical( HibernateOrmMapperSettings.Radicals.AUTOMATIC_INDEXING_ENABLED, false )
@@ -271,8 +273,8 @@ public class MassIndexingBaseIT {
 		// add operations on indexes can follow any random order,
 		// since they are executed by different threads
 		backendMock.expectWorks(
-						Book.INDEX, targetTenantId(), DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
-				)
+				Book.INDEX, targetTenantId(), DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
+		)
 				.add( "1", b -> b
 						.field( "title", TITLE_1 )
 						.field( "author", AUTHOR_1 )
@@ -312,8 +314,8 @@ public class MassIndexingBaseIT {
 		// add operations on indexes can follow any random order,
 		// since they are executed by different threads
 		backendMock.expectWorks(
-						Book.INDEX, targetTenantId(), DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
-				)
+				Book.INDEX, targetTenantId(), DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
+		)
 				.add( "1", b -> b
 						.field( "title", TITLE_1 )
 						.field( "author", AUTHOR_1 )
@@ -328,8 +330,8 @@ public class MassIndexingBaseIT {
 				);
 		if ( TenancyMode.MULTI_TENANCY.equals( tenancyMode ) ) {
 			backendMock.expectWorks(
-							Book.INDEX, TENANT_2_ID, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
-					)
+					Book.INDEX, TENANT_2_ID, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
+			)
 					.add( "1", b -> b
 							.field( "title", TITLE_1 )
 							.field( "author", AUTHOR_1 )
@@ -389,8 +391,8 @@ public class MassIndexingBaseIT {
 		// add operations on indexes can follow any random order,
 		// since they are executed by different threads
 		backendMock.expectWorks(
-						Book.INDEX, targetTenantId(), DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
-				)
+				Book.INDEX, targetTenantId(), DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
+		)
 				.add( "1", b -> b
 						.field( "title", TITLE_1 )
 						.field( "author", AUTHOR_1 )
@@ -405,8 +407,8 @@ public class MassIndexingBaseIT {
 				);
 		if ( TenancyMode.MULTI_TENANCY.equals( tenancyMode ) ) {
 			backendMock.expectWorks(
-							Book.INDEX, TENANT_2_ID, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
-					)
+					Book.INDEX, TENANT_2_ID, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
+			)
 					.add( "1", b -> b
 							.field( "title", TITLE_1 )
 							.field( "author", AUTHOR_1 )
@@ -466,8 +468,8 @@ public class MassIndexingBaseIT {
 			// add operations on indexes can follow any random order,
 			// since they are executed by different threads
 			backendMock.expectWorks(
-							Book.INDEX, targetTenantId(), DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
-					)
+					Book.INDEX, targetTenantId(), DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
+			)
 					.add( "1", b -> b
 							.field( "title", TITLE_1 )
 							.field( "author", AUTHOR_1 )

@@ -33,7 +33,8 @@ import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 public final class BatchingExecutor<P extends BatchedWorkProcessor, W extends BatchedWork<? super P>> {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
-	private static final BiConsumer<? super BatchedWork<?>, Throwable> ASYNC_FAILURE_REPORTER = BatchedWork::markAsFailed;
+	private static final BiConsumer<? super BatchedWork<?>, Throwable> ASYNC_FAILURE_REPORTER =
+			BatchedWork::markAsFailed;
 
 	private final String name;
 
@@ -69,9 +70,12 @@ public final class BatchingExecutor<P extends BatchedWorkProcessor, W extends Ba
 	@Override
 	public String toString() {
 		return "BatchingExecutor["
-				+ "name=" + name
-				+ ", queue size=" + workQueue.size()
-				+ ", processing=" + processingTask
+				+ "name="
+				+ name
+				+ ", queue size="
+				+ workQueue.size()
+				+ ", processing="
+				+ processingTask
 				+ "]";
 	}
 
@@ -148,7 +152,8 @@ public final class BatchingExecutor<P extends BatchedWorkProcessor, W extends Ba
 	/**
 	 * Takes a batch of works from the queue and submits them to the processor.
 	 */
-	private static final class BatchWorker<P extends BatchedWorkProcessor, W extends BatchedWork<? super P>> implements SingletonTask.Worker {
+	private static final class BatchWorker<P extends BatchedWorkProcessor, W extends BatchedWork<? super P>>
+			implements SingletonTask.Worker {
 		private final CompletableFuture<?> completedFuture = CompletableFuture.completedFuture( null );
 
 		private final String name;

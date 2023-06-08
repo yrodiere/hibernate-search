@@ -15,8 +15,8 @@ import org.hibernate.search.backend.lucene.lowlevel.collector.impl.CollectorExec
 import org.hibernate.search.backend.lucene.lowlevel.collector.impl.CollectorFactory;
 import org.hibernate.search.backend.lucene.lowlevel.collector.impl.CollectorKey;
 import org.hibernate.search.backend.lucene.search.timeout.impl.LuceneCounterAdapter;
-import org.hibernate.search.engine.search.timeout.spi.TimeoutManager;
 import org.hibernate.search.engine.common.timing.Deadline;
+import org.hibernate.search.engine.search.timeout.spi.TimeoutManager;
 
 import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.MultiCollector;
@@ -72,7 +72,8 @@ public class CollectorSet {
 			Collector composed = wrapTimeLimitingCollectorIfNecessary(
 					// avoid to use a multi collector if we have just one collector,
 					// as MultiCollector explicitly ignores the total hit count optimization
-					( components.size() == 1 ) ? components.values().iterator().next() :
+					( components.size() == 1 ) ?
+							components.values().iterator().next() :
 							MultiCollector.wrap( components.values() ),
 					timeoutManager
 			);

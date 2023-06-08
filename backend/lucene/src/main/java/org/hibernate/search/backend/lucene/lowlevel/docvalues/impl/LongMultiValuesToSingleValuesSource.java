@@ -8,6 +8,10 @@ package org.hibernate.search.backend.lucene.lowlevel.docvalues.impl;
 
 import java.io.IOException;
 import java.util.Objects;
+
+import org.hibernate.search.backend.lucene.lowlevel.join.impl.ChildDocIds;
+import org.hibernate.search.backend.lucene.lowlevel.join.impl.NestedDocsProvider;
+
 import org.apache.lucene.index.DocValues;
 import org.apache.lucene.index.LeafReaderContext;
 import org.apache.lucene.index.NumericDocValues;
@@ -16,9 +20,6 @@ import org.apache.lucene.search.DoubleValues;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.LongValues;
 import org.apache.lucene.search.LongValuesSource;
-
-import org.hibernate.search.backend.lucene.lowlevel.join.impl.ChildDocIds;
-import org.hibernate.search.backend.lucene.lowlevel.join.impl.NestedDocsProvider;
 
 /**
  * An implementation of {@link LongValuesSource} for docvalues with multiple values per document,
@@ -39,7 +40,8 @@ public abstract class LongMultiValuesToSingleValuesSource extends LongValuesSour
 	 * @param nested the nested provider
 	 * @return A {@link LongMultiValuesToSingleValuesSource}
 	 */
-	public static LongMultiValuesToSingleValuesSource fromLongField(String field, MultiValueMode mode, NestedDocsProvider nested) {
+	public static LongMultiValuesToSingleValuesSource fromLongField(String field, MultiValueMode mode,
+			NestedDocsProvider nested) {
 		return fromField( field, mode, nested );
 	}
 
@@ -51,11 +53,13 @@ public abstract class LongMultiValuesToSingleValuesSource extends LongValuesSour
 	 * @param nested the nested provider
 	 * @return A {@link LongMultiValuesToSingleValuesSource}
 	 */
-	public static LongMultiValuesToSingleValuesSource fromIntField(String field, MultiValueMode mode, NestedDocsProvider nested) {
+	public static LongMultiValuesToSingleValuesSource fromIntField(String field, MultiValueMode mode,
+			NestedDocsProvider nested) {
 		return fromLongField( field, mode, nested );
 	}
 
-	private static LongMultiValuesToSingleValuesSource fromField(String field, MultiValueMode mode, NestedDocsProvider nested) {
+	private static LongMultiValuesToSingleValuesSource fromField(String field, MultiValueMode mode,
+			NestedDocsProvider nested) {
 		return new MultiFieldValuesToSingleValuesSource( field, mode, nested );
 	}
 

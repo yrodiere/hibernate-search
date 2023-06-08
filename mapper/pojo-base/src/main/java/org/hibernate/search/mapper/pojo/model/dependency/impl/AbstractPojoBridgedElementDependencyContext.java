@@ -12,10 +12,10 @@ import org.hibernate.search.mapper.pojo.extractor.impl.ContainerExtractorBinder;
 import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.model.additionalmetadata.building.impl.PojoTypeAdditionalMetadataProvider;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
-import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathOriginalTypeNode;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathValueNode;
+import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.spi.PojoBootstrapIntrospector;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
@@ -49,7 +49,8 @@ public abstract class AbstractPojoBridgedElementDependencyContext {
 
 	public abstract boolean hasNonRootDependency();
 
-	PojoOtherEntityIndexingDependencyConfigurationContextImpl<?> createOtherEntityDependencyContext(PojoRawTypeModel<?> bridgedType,
+	PojoOtherEntityIndexingDependencyConfigurationContextImpl<?> createOtherEntityDependencyContext(PojoRawTypeModel<
+			?> bridgedType,
 			Class<?> otherEntityClass, PojoModelPathValueNode pathFromOtherEntityTypeToBridgedType) {
 		if ( !typeAdditionalMetadataProvider.get( bridgedType ).isEntity() ) {
 			throw log.cannotDefineOtherEntityDependencyOnNonEntityBridgedType( bridgedType );

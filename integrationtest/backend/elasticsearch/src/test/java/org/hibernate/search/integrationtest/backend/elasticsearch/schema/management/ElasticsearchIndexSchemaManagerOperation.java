@@ -36,7 +36,8 @@ enum ElasticsearchIndexSchemaManagerOperation {
 	CREATE_OR_VALIDATE {
 		@Override
 		public CompletableFuture<?> apply(IndexSchemaManager schemaManager) {
-			return schemaManager.createOrValidate( new StubUnusedContextualFailureCollector(), OperationSubmitter.blocking() );
+			return schemaManager.createOrValidate( new StubUnusedContextualFailureCollector(), OperationSubmitter
+					.blocking() );
 		}
 	},
 	CREATE_OR_UPDATE {

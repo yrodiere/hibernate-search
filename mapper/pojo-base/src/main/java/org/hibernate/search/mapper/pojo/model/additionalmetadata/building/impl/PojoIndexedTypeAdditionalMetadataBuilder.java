@@ -44,7 +44,8 @@ class PojoIndexedTypeAdditionalMetadataBuilder implements PojoAdditionalMetadata
 
 	public Optional<PojoIndexedTypeAdditionalMetadata> build() {
 		if ( enabled ) {
-			return Optional.of( new PojoIndexedTypeAdditionalMetadata( backendName, indexName, routingBinder, params ) );
+			return Optional.of( new PojoIndexedTypeAdditionalMetadata( backendName, indexName, routingBinder,
+					params ) );
 		}
 		else {
 			return Optional.empty();

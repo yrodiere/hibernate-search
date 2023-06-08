@@ -25,9 +25,8 @@ abstract class AbstractNestingAwareAccumulatingValues<E, A> implements Values<A>
 
 	AbstractNestingAwareAccumulatingValues(String parentDocumentPath, String nestedDocumentPath,
 			ProjectionAccumulator<E, ?, A, ?> accumulator, TopDocsDataCollectorExecutionContext context) {
-		this.nestedDocsProvider = nestedDocumentPath == null || nestedDocumentPath.equals( parentDocumentPath )
-				? null
-				: context.createNestedDocsProvider( parentDocumentPath, nestedDocumentPath );
+		this.nestedDocsProvider = nestedDocumentPath == null || nestedDocumentPath.equals( parentDocumentPath ) ?
+				null : context.createNestedDocsProvider( parentDocumentPath, nestedDocumentPath );
 		this.accumulator = accumulator;
 	}
 

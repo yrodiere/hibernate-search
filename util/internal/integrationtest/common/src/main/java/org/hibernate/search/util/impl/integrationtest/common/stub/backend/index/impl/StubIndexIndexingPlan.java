@@ -84,7 +84,8 @@ class StubIndexIndexingPlan implements IndexIndexingPlan {
 	}
 
 	@Override
-	public CompletableFuture<MultiEntityOperationExecutionReport> executeAndReport(OperationSubmitter operationSubmitter) {
+	public CompletableFuture<MultiEntityOperationExecutionReport> executeAndReport(
+			OperationSubmitter operationSubmitter) {
 		List<StubDocumentWork> worksToExecute = new ArrayList<>( works );
 		works.clear();
 		CompletableFuture<?>[] workFutures = worksToExecute.stream()

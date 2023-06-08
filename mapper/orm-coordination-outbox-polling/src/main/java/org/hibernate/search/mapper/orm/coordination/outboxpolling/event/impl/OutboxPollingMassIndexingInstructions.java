@@ -14,7 +14,8 @@ public class OutboxPollingMassIndexingInstructions {
 	final Instant expiration;
 	boolean considerEventProcessingSuspended;
 
-	public OutboxPollingMassIndexingInstructions(Clock clock, Instant expiration, boolean considerEventProcessingSuspended) {
+	public OutboxPollingMassIndexingInstructions(Clock clock, Instant expiration,
+			boolean considerEventProcessingSuspended) {
 		this.clock = clock;
 		this.expiration = expiration;
 		this.considerEventProcessingSuspended = considerEventProcessingSuspended;

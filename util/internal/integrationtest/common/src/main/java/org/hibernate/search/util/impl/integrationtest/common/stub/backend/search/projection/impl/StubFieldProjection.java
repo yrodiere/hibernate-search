@@ -18,10 +18,10 @@ import org.hibernate.search.engine.search.loading.spi.ProjectionHitMapper;
 import org.hibernate.search.engine.search.projection.SearchProjection;
 import org.hibernate.search.engine.search.projection.spi.FieldProjectionBuilder;
 import org.hibernate.search.engine.search.projection.spi.ProjectionAccumulator;
-import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.StubSearchIndexNodeContext;
-import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.StubSearchIndexValueFieldContext;
-import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.StubSearchIndexScope;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.AbstractStubSearchQueryElementFactory;
+import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.StubSearchIndexNodeContext;
+import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.StubSearchIndexScope;
+import org.hibernate.search.util.impl.integrationtest.common.stub.backend.search.common.impl.StubSearchIndexValueFieldContext;
 
 public class StubFieldProjection<F, V, A, P> extends StubSearchProjection<P> {
 	private final String fieldPath;
@@ -32,7 +32,7 @@ public class StubFieldProjection<F, V, A, P> extends StubSearchProjection<P> {
 	private final boolean singleValued;
 
 	public StubFieldProjection(String fieldPath, Class<F> fieldType, Class<V> expectedType,
-			ProjectionConverter<F,? extends V> converter,
+			ProjectionConverter<F, ? extends V> converter,
 			ProjectionAccumulator<F, V, A, P> accumulator, boolean singleValued) {
 		this.fieldPath = fieldPath;
 		this.fieldType = fieldType;
@@ -65,7 +65,8 @@ public class StubFieldProjection<F, V, A, P> extends StubSearchProjection<P> {
 	public P transform(LoadingResult<?> loadingResult, Object extractedData,
 			StubSearchProjectionContext context) {
 		A accumulated = (A) extractedData;
-		A transformedData = accumulator.transformAll( accumulated, converter, context.fromDocumentValueConvertContext() );
+		A transformedData = accumulator.transformAll( accumulated, converter, context
+				.fromDocumentValueConvertContext() );
 		return accumulator.finish( transformedData );
 	}
 

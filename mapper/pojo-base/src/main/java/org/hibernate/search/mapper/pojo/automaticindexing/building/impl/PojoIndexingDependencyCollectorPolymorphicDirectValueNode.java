@@ -34,7 +34,8 @@ public class PojoIndexingDependencyCollectorPolymorphicDirectValueNode<P, V>
 		List<? extends PojoIndexingDependencyCollectorTypeNode<?>> holderSubTypeNodes =
 				parentNode.parentNode().polymorphic();
 		String propertyName = parentNode.modelPathFromParentNode().getPropertyModel().name();
-		BoundContainerExtractorPath<? super P, V> boundExtractorPath = modelPathFromLastEntityNode.getBoundExtractorPath();
+		BoundContainerExtractorPath<? super P, V> boundExtractorPath = modelPathFromLastEntityNode
+				.getBoundExtractorPath();
 		List<PojoIndexingDependencyCollectorMonomorphicDirectValueNode<? extends P, V>> monomorphicValueNodes =
 				new ArrayList<>();
 		Metadata parentTypeMetadata = Metadata.create(

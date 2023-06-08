@@ -30,7 +30,8 @@ class SchemaManagementWorkCall extends Call<SchemaManagementWorkCall> {
 		this.failureCollector = null;
 	}
 
-	SchemaManagementWorkCall(String indexName, StubSchemaManagementWork work, ContextualFailureCollector failureCollector) {
+	SchemaManagementWorkCall(String indexName, StubSchemaManagementWork work,
+			ContextualFailureCollector failureCollector) {
 		this.indexName = indexName;
 		this.work = work;
 		this.behavior = null;
@@ -38,7 +39,8 @@ class SchemaManagementWorkCall extends Call<SchemaManagementWorkCall> {
 	}
 
 	public CallBehavior<CompletableFuture<?>> verify(SchemaManagementWorkCall actualCall) {
-		String whenThisWorkWasExpected = "when a schema management work on index '" + indexName
+		String whenThisWorkWasExpected = "when a schema management work on index '"
+				+ indexName
 				+ "' was expected";
 		assertThatSchemaManagementWork( actualCall.work )
 				.as( "Incorrect work " + whenThisWorkWasExpected + ":\n" )

@@ -55,9 +55,11 @@ public abstract class AbstractHighlighterIT {
 	protected static final SimpleMappedIndex<IndexBinding> index = SimpleMappedIndex.of( IndexBinding::new );
 	protected static final SimpleMappedIndex<IndexBinding> matchingIndex = SimpleMappedIndex.of( IndexBinding::new )
 			.name( "matchingIndex" );
-	protected static final SimpleMappedIndex<NotMatchingTypeIndexBinding> notMatchingTypeIndex = SimpleMappedIndex.of( NotMatchingTypeIndexBinding::new )
+	protected static final SimpleMappedIndex<NotMatchingTypeIndexBinding> notMatchingTypeIndex = SimpleMappedIndex.of(
+			NotMatchingTypeIndexBinding::new )
 			.name( "notMatchingTypeIndex" );
-	protected static final SimpleMappedIndex<NestedIndexBinding> nestedIndex = SimpleMappedIndex.of( NestedIndexBinding::new )
+	protected static final SimpleMappedIndex<NestedIndexBinding> nestedIndex = SimpleMappedIndex.of(
+			NestedIndexBinding::new )
 			.name( "nestedIndex" );
 
 	@BeforeClass
@@ -83,7 +85,8 @@ public abstract class AbstractHighlighterIT {
 					d.addValue( "string", "foo and foo and foo much more times" );
 					d.addValue(
 							"anotherString",
-							"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec ipsum ultricies, blandit velit vitae, lacinia tellus. Fusce elementum ultricies felis, ut molestie orci lacinia a. In eget euismod nulla. Praesent euismod orci vitae sapien cursus aliquet. Aenean velit ex, consequat in magna eu, ornare facilisis tellus. Ut vel diam nec sem lobortis lacinia. Sed nisi ex, faucibus nec ante pulvinar, congue feugiat mauris. Curabitur efficitur arcu et neque condimentum, vel convallis elit ultricies. Suspendisse a odio augue. Aliquam lorem turpis, molestie at sollicitudin quis, convallis id dolor. Quisque ultricies libero at consequat ornare.\n" +
+							"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec ipsum ultricies, blandit velit vitae, lacinia tellus. Fusce elementum ultricies felis, ut molestie orci lacinia a. In eget euismod nulla. Praesent euismod orci vitae sapien cursus aliquet. Aenean velit ex, consequat in magna eu, ornare facilisis tellus. Ut vel diam nec sem lobortis lacinia. Sed nisi ex, faucibus nec ante pulvinar, congue feugiat mauris. Curabitur efficitur arcu et neque condimentum, vel convallis elit ultricies. Suspendisse a odio augue. Aliquam lorem turpis, molestie at sollicitudin quis, convallis id dolor. Quisque ultricies libero at consequat ornare.\n"
+									+
 									"Praesent vel accumsan lectus. Fusce tristique pulvinar pulvinar. Sed ac leo sodales, dictum sapien non, feugiat urna. Quisque dignissim id massa ut dictum. Nam nec erat luctus, sodales lorem in, congue leo. Aliquam erat volutpat. Fusce dapibus consequat dui at lobortis. Suspendisse iaculis pellentesque lacus, eu tincidunt nisi ullamcorper molestie. Vivamus ullamcorper pulvinar commodo. Vivamus at justo in risus pretium malesuada."
 					);
 				} )
@@ -106,10 +109,12 @@ public abstract class AbstractHighlighterIT {
 					d.addValue( "multiValuedString", "This string mentions a fox" );
 				} )
 				.add( "10", d -> {
-					d.addValue( "string", "Scorpions are a German rock band formed in Hanover in 1965 by guitarist Rudolf Schenker. Since the band's inception, its musical style has ranged from hard rock, heavy metal and glam metal to soft rock." );
+					d.addValue( "string",
+							"Scorpions are a German rock band formed in Hanover in 1965 by guitarist Rudolf Schenker. Since the band's inception, its musical style has ranged from hard rock, heavy metal and glam metal to soft rock." );
 				} )
 				.add( "11", d -> {
-					d.addValue( "string", "text that has - dash in - it from time - to some useless text in between time to see - how - boundary_chars - works" );
+					d.addValue( "string",
+							"text that has - dash in - it from time - to some useless text in between time to see - how - boundary_chars - works" );
 				} )
 				.add( "12", d -> {
 					d.addValue( "stringNoTermVector", "boo and boo and boo much more times" );
@@ -129,8 +134,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" )
-				)
+				f -> f.highlight( "string" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "another" ) )
 				.toQuery();
 
@@ -146,8 +151,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" )
-				)
+				f -> f.highlight( "string" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "another" ) )
 				.highlighter( h -> highlighter( h ) )
 				.toQuery();
@@ -164,8 +169,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" )
-				)
+				f -> f.highlight( "string" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "foo" ) )
 				.highlighter( h -> highlighter( h ) )
 				.toQuery();
@@ -181,8 +186,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" )
-				)
+				f -> f.highlight( "string" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "another" ) )
 				.highlighter( h2 -> highlighter( h2 ).tag( "<strong>", "</strong>" ) )
 				.toQuery();
@@ -199,8 +204,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" ).highlighter( "strong-tag-highlighter" )
-				)
+				f -> f.highlight( "string" ).highlighter( "strong-tag-highlighter" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "another" ) )
 				.highlighter( "strong-tag-highlighter", h2 -> highlighter( h2 ).tag( "<strong>", "</strong>" ) )
 				.toQuery();
@@ -217,8 +222,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" ).highlighter( "strong-tag-highlighter" )
-				)
+				f -> f.highlight( "string" ).highlighter( "strong-tag-highlighter" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "another" ) )
 				.highlighter( h -> highlighter( h ).tag( "<custom>", "</custom>" ) )
 				.highlighter( "strong-tag-highlighter", h2 -> highlighter( h2 ).tag( "<strong>", "</strong>" ) )
@@ -236,8 +241,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" )
-				)
+				f -> f.highlight( "string" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "foo" ) )
 				.highlighter( h -> highlighter( h )
 						.tag( "*", "*" )
@@ -273,8 +278,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" )
-				)
+				f -> f.highlight( "string" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "Heading" ) )
 				.highlighter( h -> highlighter( h ).encoder( encoder ) )
 				.toQuery();
@@ -309,8 +314,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" ).highlighter( "encoder" )
-				)
+				f -> f.highlight( "string" ).highlighter( "encoder" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "Heading" ) )
 				.highlighter( "encoder", h -> highlighter( h ).encoder( encoder ) )
 				.toQuery();
@@ -347,8 +352,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" ).highlighter( "encoder" )
-				)
+				f -> f.highlight( "string" ).highlighter( "encoder" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "Heading" ) )
 				.highlighter( h -> highlighter( h ).encoder( globalEncoder ) )
 				.highlighter( "encoder", h -> highlighter( h ).encoder( encoder ) )
@@ -366,8 +371,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "anotherString" )
-				)
+				f -> f.highlight( "anotherString" )
+		)
 				.where( f -> f.match().field( "anotherString" ).matching( "ipsum" ) )
 				.highlighter( h -> highlighter( h ).fragmentSize( 18 ) )
 				.toQuery();
@@ -384,8 +389,8 @@ public abstract class AbstractHighlighterIT {
 
 		assertThatThrownBy(
 				() -> index.createScope().query().select(
-								f -> f.highlight( "anotherString" )
-						)
+						f -> f.highlight( "anotherString" )
+				)
 						.where( f -> f.match().field( "anotherString" ).matching( "ipsum" ) )
 						.highlighter( h -> highlighter( h ).fragmentSize( 18 ) )
 						.toQuery()
@@ -407,8 +412,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "anotherString" )
-				)
+				f -> f.highlight( "anotherString" )
+		)
 				.where( f -> f.match().field( "anotherString" ).matching( "ipsum" ) )
 				.highlighter( h -> highlighter( h ).numberOfFragments( 1 ) )
 				.toQuery();
@@ -430,8 +435,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "anotherString" )
-				)
+				f -> f.highlight( "anotherString" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "foo" ) )
 				.highlighter( h -> highlighter( h ) )
 				.toQuery();
@@ -449,8 +454,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "anotherString" )
-				)
+				f -> f.highlight( "anotherString" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "foo" ) )
 				.highlighter( h -> highlighter( h ).noMatchSize( 11 ) )
 				.toQuery();
@@ -472,8 +477,8 @@ public abstract class AbstractHighlighterIT {
 		);
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "anotherString" )
-				)
+				f -> f.highlight( "anotherString" )
+		)
 				.where( f -> f.match().field( "string" ).matching( "foo" ) )
 				.highlighter( h -> highlighter( h ).noMatchSize( 11 ) )
 				.toQuery();
@@ -491,8 +496,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "multiValuedString" )
-				)
+				f -> f.highlight( "multiValuedString" )
+		)
 				.where( f -> f.match().field( "nested.nestedString" ).matching( "dog" ) )
 				// set to max possible value so that all highlighters can return something:
 				.highlighter( h -> highlighter( h ).noMatchSize( Integer.MAX_VALUE ) )
@@ -514,11 +519,11 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<?>> highlights = scope.query().select(
-						f -> f.composite().from(
-								f.highlight( "string" ),
-								f.highlight( "anotherString" )
-						).asList()
-				)
+				f -> f.composite().from(
+						f.highlight( "string" ),
+						f.highlight( "anotherString" )
+				).asList()
+		)
 				.where( f -> f.bool()
 						.should( f.match().field( "anotherString" ).matching( "fox" ) )
 						.should( f.match().field( "string" ).matching( "dog" ) )
@@ -550,11 +555,11 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<?>> highlights = scope.query().select(
-						f -> f.composite().from(
-								f.highlight( "string" ).highlighter( "for-string" ),
-								f.highlight( "anotherString" ).highlighter( "for-another-string" )
-						).asList()
-				)
+				f -> f.composite().from(
+						f.highlight( "string" ).highlighter( "for-string" ),
+						f.highlight( "anotherString" ).highlighter( "for-another-string" )
+				).asList()
+		)
 				.where( f -> f.bool()
 						.should( f.match().field( "anotherString" ).matching( "fox" ) )
 						.should( f.match().field( "string" ).matching( "dog" ) )
@@ -588,8 +593,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "multiValuedString" )
-				)
+				f -> f.highlight( "multiValuedString" )
+		)
 				.where( f -> f.match().field( "multiValuedString" ).matching( "dog" ) )
 				.highlighter( h -> highlighter( h ) )
 				.toQuery();
@@ -603,11 +608,11 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<?>> highlights = scope.query().select(
-						f -> f.composite().from(
-								f.highlight( "multiValuedString" ),
-								f.highlight( "multiValuedString" )
-						).asList()
-				)
+				f -> f.composite().from(
+						f.highlight( "multiValuedString" ),
+						f.highlight( "multiValuedString" )
+				).asList()
+		)
 				.where( f -> f.match().field( "multiValuedString" ).matching( "dog" ) )
 				.highlighter( h -> highlighter( h ) )
 				.toQuery();
@@ -635,8 +640,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "nested.nestedString" )
-				)
+				f -> f.highlight( "nested.nestedString" )
+		)
 				.where( f -> f.match().field( "nested.nestedString" ).matching( "fox" ) )
 				.highlighter( h -> highlighter( h ) )
 				.toQuery();
@@ -654,8 +659,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "nested.nestedString" )
-				)
+				f -> f.highlight( "nested.nestedString" )
+		)
 				.where( f -> f.wildcard().field( "nested.nestedString" ).matching( "fo?" ) )
 				.highlighter( h -> highlighter( h ) )
 				.toQuery();
@@ -673,8 +678,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "string" )
-				)
+				f -> f.highlight( "string" )
+		)
 				.where( f -> f.wildcard().field( "string" ).matching( "fo?" ) )
 				.highlighter( h -> highlighter( h ) )
 				.toQuery();
@@ -696,8 +701,8 @@ public abstract class AbstractHighlighterIT {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<List<String>> highlights = scope.query().select(
-						f -> f.highlight( "multiValuedString" )
-				)
+				f -> f.highlight( "multiValuedString" )
+		)
 				.where( f -> f.bool()
 						.must( f.match().field( "multiValuedString" ).matching( "dog" ) )
 						.should( f.match().field( "multiValuedString" ).matching( "string" ).boost( 10.0f ) ) )
@@ -726,8 +731,8 @@ public abstract class AbstractHighlighterIT {
 	public void unknownNamedHighlighter() {
 		assertThatThrownBy(
 				() -> index.createScope().query().select(
-								f -> f.highlight( "string" ).highlighter( "not-configured-highlighter" )
-						).where( f -> f.matchAll() )
+						f -> f.highlight( "string" ).highlighter( "not-configured-highlighter" )
+				).where( f -> f.matchAll() )
 						.highlighter( "some-config", h -> highlighter( h ) )
 						.highlighter( "some-other-config", h -> highlighter( h ) )
 						.toQuery()
@@ -743,8 +748,8 @@ public abstract class AbstractHighlighterIT {
 	public void highlightNonAnalyzedField() {
 		assertThatThrownBy(
 				() -> index.createScope().query().select(
-								f -> f.highlight( "notAnalyzedString" )
-						).where( f -> f.matchAll() )
+						f -> f.highlight( "notAnalyzedString" )
+				).where( f -> f.matchAll() )
 						.toQuery()
 		).isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
@@ -758,8 +763,8 @@ public abstract class AbstractHighlighterIT {
 	public void multipleIndexesScopeIncompatibleTypes() {
 		assertThatThrownBy(
 				() -> index.createScope( notMatchingTypeIndex ).query().select(
-								f -> f.highlight( "string" )
-						).where( f -> f.matchAll() )
+						f -> f.highlight( "string" )
+				).where( f -> f.matchAll() )
 						.toQuery()
 		).isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
@@ -773,8 +778,8 @@ public abstract class AbstractHighlighterIT {
 	public void multipleIndexesScopeIncompatibleTypesNested() {
 		assertThatThrownBy(
 				() -> index.createScope( notMatchingTypeIndex ).query().select(
-								f -> f.highlight( "nested.nestedString" )
-						).where( f -> f.matchAll() )
+						f -> f.highlight( "nested.nestedString" )
+				).where( f -> f.matchAll() )
 						.toQuery()
 		).isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
@@ -787,8 +792,8 @@ public abstract class AbstractHighlighterIT {
 	@Test
 	public void multipleIndexesScopeCompatibleTypes() {
 		SearchQuery<List<String>> highlights = index.createScope( matchingIndex ).query().select(
-						f -> f.highlight( "string" )
-				).where( f -> f.match().field( "string" ).matching( "dog" ) )
+				f -> f.highlight( "string" )
+		).where( f -> f.match().field( "string" ).matching( "dog" ) )
 				.highlighter( h -> highlighter( h ) )
 				.toQuery();
 
@@ -806,8 +811,8 @@ public abstract class AbstractHighlighterIT {
 				.toHighlighter();
 
 		SearchQuery<List<String>> highlights = index.createScope().query().select(
-						f -> f.highlight( "string" )
-				).where( f -> f.match().field( "string" ).matching( "dog" ) )
+				f -> f.highlight( "string" )
+		).where( f -> f.match().field( "string" ).matching( "dog" ) )
 				.highlighter( highlighter )
 				.toQuery();
 
@@ -826,8 +831,8 @@ public abstract class AbstractHighlighterIT {
 				.toHighlighter();
 
 		SearchQuery<List<String>> highlights = index.createScope().query().select(
-						f -> f.highlight( "string" ).highlighter( "named-highlighter" )
-				).where( f -> f.match().field( "string" ).matching( "dog" ) )
+				f -> f.highlight( "string" ).highlighter( "named-highlighter" )
+		).where( f -> f.match().field( "string" ).matching( "dog" ) )
 				.highlighter( "named-highlighter", highlighter )
 				.toQuery();
 
@@ -842,12 +847,13 @@ public abstract class AbstractHighlighterIT {
 
 	@Test
 	public void prebuiltHighlighterWrongScope() {
-		SearchHighlighter highlighter = highlighter( notMatchingTypeIndex.createScope().highlighter() ).tag( "---", "---" )
+		SearchHighlighter highlighter = highlighter( notMatchingTypeIndex.createScope().highlighter() ).tag( "---",
+				"---" )
 				.toHighlighter();
 
 		assertThatThrownBy( () -> index.createScope().query().select(
-						f -> f.highlight( "string" )
-				).where( f -> f.match().field( "string" ).matching( "dog" ) )
+				f -> f.highlight( "string" )
+		).where( f -> f.match().field( "string" ).matching( "dog" ) )
 				.highlighter( highlighter )
 				.toQuery() ).isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
@@ -863,17 +869,17 @@ public abstract class AbstractHighlighterIT {
 		for ( String object : objects ) {
 			for ( String level2 : objects ) {
 				assertThatThrownBy( () -> nestedIndex.query().select(
-								f -> f.object( object )
-										.from(
-												f.composite().from(
-														f.field( object + ".string" ),
-														f.object( object + ".level2" + level2 )
-																.from( f.highlight( object + ".level2" + level2 + ".string" ) )
-																.asList()
-												).asList()
-										)
-										.asList()
-						)
+						f -> f.object( object )
+								.from(
+										f.composite().from(
+												f.field( object + ".string" ),
+												f.object( object + ".level2" + level2 )
+														.from( f.highlight( object + ".level2" + level2 + ".string" ) )
+														.asList()
+										).asList()
+								)
+								.asList()
+				)
 						.where( f -> f.matchAll() )
 						.toQuery() )
 						.as( object )
@@ -890,8 +896,8 @@ public abstract class AbstractHighlighterIT {
 	@Test
 	public void phraseMatching() {
 		SearchQuery<List<String>> highlights = index.createScope().query().select(
-						f -> f.highlight( "multiValuedString" )
-				).where( f -> f.phrase().field( "multiValuedString" ).matching( "brown fox" ) )
+				f -> f.highlight( "multiValuedString" )
+		).where( f -> f.phrase().field( "multiValuedString" ).matching( "brown fox" ) )
 				.highlighter( h -> highlighter( h ) )
 				.toQuery();
 
@@ -987,14 +993,16 @@ public abstract class AbstractHighlighterIT {
 			}
 			objectDefault.toReference();
 
-			IndexSchemaObjectField objectNested = element.objectField( prefix + "objectNested", ObjectStructure.NESTED );
+			IndexSchemaObjectField objectNested = element.objectField( prefix + "objectNested",
+					ObjectStructure.NESTED );
 			createString( "string", objectNested );
 			if ( addNested ) {
 				createObjects( "level" + ( level ), objectNested, level + 1, false );
 			}
 			objectNested.toReference();
 
-			IndexSchemaObjectField objectFlattened = element.objectField( prefix + "objectFlattened", ObjectStructure.FLATTENED );
+			IndexSchemaObjectField objectFlattened = element.objectField( prefix + "objectFlattened",
+					ObjectStructure.FLATTENED );
 			createString( "string", objectFlattened );
 			if ( addNested ) {
 				createObjects( "level" + ( level ), objectFlattened, level + 1, false );

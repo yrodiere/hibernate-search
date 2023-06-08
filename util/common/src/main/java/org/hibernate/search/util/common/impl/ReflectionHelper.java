@@ -32,7 +32,8 @@ public final class ReflectionHelper {
 
 	public static Class<?> getPrimitiveWrapperType(Class<?> primitiveType) {
 		if ( !primitiveType.isPrimitive() ) {
-			throw new IllegalArgumentException( "Argument primitiveType must be a Class representing a primitive Java type" );
+			throw new IllegalArgumentException(
+					"Argument primitiveType must be a Class representing a primitive Java type" );
 		}
 		return PRIMITIVES_TO_WRAPPERS.get( primitiveType );
 	}

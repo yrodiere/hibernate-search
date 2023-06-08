@@ -34,7 +34,7 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
 @RunWith(Parameterized.class)
-@SuppressWarnings({"unchecked", "rawtypes"}) // Raw types are the only way to mock parameterized types
+@SuppressWarnings({ "unchecked", "rawtypes" }) // Raw types are the only way to mock parameterized types
 public class ConfigurationPropertyValidMissingValuesTest<T> {
 
 	@Parameterized.Parameters(name = "{2}")
@@ -176,8 +176,11 @@ public class ConfigurationPropertyValidMissingValuesTest<T> {
 		assertThatThrownBy( () -> property.getAndMap( sourceMock, mappingFunction ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContaining(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + expectedValue + "'."
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ expectedValue
+								+ "'."
 				)
 				.hasMessageContaining( simulatedFailure.getMessage() )
 				.hasCause( simulatedFailure );
@@ -248,8 +251,11 @@ public class ConfigurationPropertyValidMissingValuesTest<T> {
 		when( sourceMock.resolve( key ) ).thenReturn( Optional.of( resolvedKey ) );
 		assertThatThrownBy( () -> property.getAndMap( sourceMock, mappingFunction ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Invalid value for configuration property '" + resolvedKey
-						+ "': '" + expectedValue + "'.",
+				.hasMessageContainingAll( "Invalid value for configuration property '"
+						+ resolvedKey
+						+ "': '"
+						+ expectedValue
+						+ "'.",
 						simulatedFailure.getMessage() )
 				.hasCause( simulatedFailure );
 		verifyNoOtherSourceInteractionsAndReset();
@@ -320,7 +326,8 @@ public class ConfigurationPropertyValidMissingValuesTest<T> {
 		assertThat( result.get() ).containsExactly( expectedValue );
 
 		// Typed value - multiple
-		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( createCollection( expectedValue, expectedValue ) ) );
+		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( createCollection( expectedValue,
+				expectedValue ) ) );
 		result = property.get( sourceMock );
 		verifyNoOtherSourceInteractionsAndReset();
 		assertThat( result ).isNotEmpty();

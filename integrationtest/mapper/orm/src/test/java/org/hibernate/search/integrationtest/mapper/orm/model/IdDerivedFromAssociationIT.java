@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils.with;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -44,11 +45,13 @@ public class IdDerivedFromAssociationIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-4352")
 	public void indexed_withoutDocumentId() {
-		assertThatThrownBy( () -> ormSetupHelper.start().setup( NonIndexedBaseForIndexedDerived.class, IndexedDerived.class ) )
+		assertThatThrownBy( () -> ormSetupHelper.start().setup( NonIndexedBaseForIndexedDerived.class,
+				IndexedDerived.class ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
 						"Unable to define a document identifier for indexed type '"
-								+ IndexedDerived.class.getName() + "'",
+								+ IndexedDerived.class.getName()
+								+ "'",
 						"The property representing the entity identifier is unknown",
 						"Define the document identifier explicitly by annotating"
 								+ " a property whose values are unique with @DocumentId"
@@ -74,7 +77,7 @@ public class IdDerivedFromAssociationIT {
 			session.persist( derived );
 
 			backendMock.expectWorks( IndexedBaseForNonIndexedDerived.NAME )
-					.add( String.valueOf( base.getId() ), b -> { } );
+					.add( String.valueOf( base.getId() ), b -> {} );
 		} );
 		backendMock.verifyExpectationsMet();
 	}
@@ -96,7 +99,7 @@ public class IdDerivedFromAssociationIT {
 			session.persist( derived );
 
 			backendMock.expectWorks( IndexedDerivedWithDocumentId.NAME )
-					.add( String.valueOf( base.getId() ), b -> { } );
+					.add( String.valueOf( base.getId() ), b -> {} );
 		} );
 		backendMock.verifyExpectationsMet();
 	}

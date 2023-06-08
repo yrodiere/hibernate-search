@@ -15,6 +15,9 @@ import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanReference;
 import org.hibernate.search.engine.search.common.ValueConvert;
 import org.hibernate.search.engine.search.projection.definition.ProjectionDefinition;
+import org.hibernate.search.engine.search.projection.definition.spi.ConstantProjectionDefinition;
+import org.hibernate.search.engine.search.projection.definition.spi.FieldProjectionDefinition;
+import org.hibernate.search.engine.search.projection.definition.spi.ObjectProjectionDefinition;
 import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.mapping.building.impl.PojoMappingHelper;
 import org.hibernate.search.mapper.pojo.mapping.building.spi.PojoSearchMappingConstructorNode;
@@ -26,9 +29,6 @@ import org.hibernate.search.mapper.pojo.model.spi.PojoMethodParameterModel;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 import org.hibernate.search.mapper.pojo.reporting.spi.PojoEventContexts;
 import org.hibernate.search.mapper.pojo.search.definition.binding.ProjectionBinder;
-import org.hibernate.search.engine.search.projection.definition.spi.FieldProjectionDefinition;
-import org.hibernate.search.engine.search.projection.definition.spi.ConstantProjectionDefinition;
-import org.hibernate.search.engine.search.projection.definition.spi.ObjectProjectionDefinition;
 import org.hibernate.search.mapper.pojo.search.definition.impl.PojoConstructorProjectionDefinition;
 import org.hibernate.search.util.common.impl.SuppressingCloser;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
@@ -83,7 +83,8 @@ class ProjectionConstructorParameterBinder<P> implements EventContextProvider {
 			if ( !parameterMapping.isPresent() ) {
 				continue;
 			}
-			for ( PojoSearchMappingMethodParameterNode.ProjectionBindingData projectionDefinition : parameterMapping.get()
+			for ( PojoSearchMappingMethodParameterNode.ProjectionBindingData projectionDefinition : parameterMapping
+					.get()
 					.projectionBindings() ) {
 				if ( result != null ) {
 					throw log.multipleProjectionMappingsForParameter();
@@ -125,18 +126,20 @@ class ProjectionConstructorParameterBinder<P> implements EventContextProvider {
 	}
 
 	@SuppressWarnings("resource") // ECJ (Eclipse compiler) incorrectly complains about a resource leak
-	private BeanHolder<? extends ProjectionDefinition<?>> defaultInnerProjection(PojoRawTypeModel<?> elementType, boolean multi) {
+	private BeanHolder<? extends ProjectionDefinition<?>> defaultInnerProjection(PojoRawTypeModel<?> elementType,
+			boolean multi) {
 		PojoConstructorProjectionDefinition<?> definition = createConstructorProjectionDefinitionOrNull( elementType );
 		if ( definition != null ) {
-			return BeanHolder.ofCloseable( multi
-					? new ObjectProjectionDefinition.MultiValued<>( paramNameOrFail(), definition )
-					: new ObjectProjectionDefinition.SingleValued<>( paramNameOrFail(), definition ) );
+			return BeanHolder.ofCloseable( multi ?
+					new ObjectProjectionDefinition.MultiValued<>( paramNameOrFail(), definition ) :
+					new ObjectProjectionDefinition.SingleValued<>( paramNameOrFail(), definition ) );
 		}
 		else {
 			// No projection constructor for this type; assume it's a projection on a value field
-			return BeanHolder.of( multi
-					? new FieldProjectionDefinition.MultiValued<>( paramNameOrFail(), elementType.typeIdentifier().javaClass(), ValueConvert.YES )
-					: new FieldProjectionDefinition.SingleValued<>( paramNameOrFail(), elementType.typeIdentifier().javaClass(), ValueConvert.YES ) );
+			return BeanHolder.of( multi ?
+					new FieldProjectionDefinition.MultiValued<>( paramNameOrFail(), elementType.typeIdentifier()
+							.javaClass(), ValueConvert.YES ) : new FieldProjectionDefinition.SingleValued<>(
+									paramNameOrFail(), elementType.typeIdentifier().javaClass(), ValueConvert.YES ) );
 		}
 	}
 

@@ -8,7 +8,6 @@ package org.hibernate.search.documentation.mapper.orm.binding.routingbridge.rout
 
 public enum Genre {
 
-	SCIENCE_FICTION,
-	CRIME_FICTION
+	SCIENCE_FICTION, CRIME_FICTION
 
 }

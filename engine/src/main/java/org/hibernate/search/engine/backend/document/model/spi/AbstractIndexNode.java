@@ -6,8 +6,8 @@
  */
 package org.hibernate.search.engine.backend.document.model.spi;
 
-import org.hibernate.search.engine.search.common.spi.SearchIndexSchemaElementContextHelper;
 import org.hibernate.search.engine.search.common.spi.SearchIndexNodeTypeContext;
+import org.hibernate.search.engine.search.common.spi.SearchIndexSchemaElementContextHelper;
 import org.hibernate.search.engine.search.common.spi.SearchIndexScope;
 import org.hibernate.search.engine.search.common.spi.SearchQueryElementFactory;
 import org.hibernate.search.engine.search.common.spi.SearchQueryElementTypeKey;
@@ -15,10 +15,9 @@ import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.common.reporting.EventContext;
 
 public abstract class AbstractIndexNode<
-				S extends AbstractIndexNode<S, SC, ?>,
-				SC extends SearchIndexScope<?>,
-				NT extends SearchIndexNodeTypeContext<SC, ? super S>
-		>
+		S extends AbstractIndexNode<S, SC, ?>,
+		SC extends SearchIndexScope<?>,
+		NT extends SearchIndexNodeTypeContext<SC, ? super S>>
 		implements IndexNode<SC> {
 	protected final NT type;
 

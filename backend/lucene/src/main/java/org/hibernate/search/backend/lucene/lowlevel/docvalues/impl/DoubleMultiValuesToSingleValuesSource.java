@@ -40,7 +40,8 @@ public abstract class DoubleMultiValuesToSingleValuesSource extends DoubleValues
 	 * @param nested the nested provider
 	 * @return A {@link DoubleMultiValuesToSingleValuesSource}
 	 */
-	public static DoubleMultiValuesToSingleValuesSource fromDoubleField(String field, MultiValueMode mode, NestedDocsProvider nested) {
+	public static DoubleMultiValuesToSingleValuesSource fromDoubleField(String field, MultiValueMode mode,
+			NestedDocsProvider nested) {
 		return fromField( field, mode, nested, SortedNumericDoubleDocValues::fromDoubleField );
 	}
 
@@ -52,11 +53,13 @@ public abstract class DoubleMultiValuesToSingleValuesSource extends DoubleValues
 	 * @param nested the nested provider
 	 * @return A {@link DoubleMultiValuesToSingleValuesSource}
 	 */
-	public static DoubleMultiValuesToSingleValuesSource fromFloatField(String field, MultiValueMode mode, NestedDocsProvider nested) {
+	public static DoubleMultiValuesToSingleValuesSource fromFloatField(String field, MultiValueMode mode,
+			NestedDocsProvider nested) {
 		return fromField( field, mode, nested, SortedNumericDoubleDocValues::fromFloatField );
 	}
 
-	private static DoubleMultiValuesToSingleValuesSource fromField(String field, MultiValueMode mode, NestedDocsProvider nested,
+	private static DoubleMultiValuesToSingleValuesSource fromField(String field, MultiValueMode mode,
+			NestedDocsProvider nested,
 			Function<SortedNumericDocValues, SortedNumericDoubleDocValues> decoder) {
 		return new FieldMultiValuesToSingleValuesSource( field, mode, nested, decoder );
 	}
@@ -98,7 +101,8 @@ public abstract class DoubleMultiValuesToSingleValuesSource extends DoubleValues
 		return select( values, nestedDocsProvider.childDocs( ctx, values ) );
 	}
 
-	protected abstract SortedNumericDoubleDocValues getSortedNumericDoubleDocValues(LeafReaderContext ctx) throws IOException;
+	protected abstract SortedNumericDoubleDocValues getSortedNumericDoubleDocValues(
+			LeafReaderContext ctx) throws IOException;
 
 	protected NumericDoubleValues select(SortedNumericDoubleDocValues values) {
 		final NumericDoubleValues singleton = SortedNumericDoubleDocValues.unwrapSingleton( values );
@@ -167,7 +171,8 @@ public abstract class DoubleMultiValuesToSingleValuesSource extends DoubleValues
 		private final String field;
 		private final Function<SortedNumericDocValues, SortedNumericDoubleDocValues> decoder;
 
-		public FieldMultiValuesToSingleValuesSource(String field, MultiValueMode mode, NestedDocsProvider nestedDocsProvider,
+		public FieldMultiValuesToSingleValuesSource(String field, MultiValueMode mode,
+				NestedDocsProvider nestedDocsProvider,
 				Function<SortedNumericDocValues, SortedNumericDoubleDocValues> decoder) {
 			super( mode, nestedDocsProvider );
 			this.field = field;
@@ -224,7 +229,8 @@ public abstract class DoubleMultiValuesToSingleValuesSource extends DoubleValues
 		}
 
 		@Override
-		protected SortedNumericDoubleDocValues getSortedNumericDoubleDocValues(LeafReaderContext ctx) throws IOException {
+		protected SortedNumericDoubleDocValues getSortedNumericDoubleDocValues(
+				LeafReaderContext ctx) throws IOException {
 			// Numeric doc values are longs, but we want doubles
 			return decoder.apply( DocValues.getSortedNumeric( ctx.reader(), field ) );
 		}

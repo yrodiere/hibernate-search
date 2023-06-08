@@ -46,8 +46,8 @@ public class ElasticsearchObjectProjection<E, V, P>
 		super( builder.scope );
 		this.absoluteFieldPath = builder.objectField.absolutePath();
 		this.absoluteFieldPathComponents = builder.objectField.absolutePathComponents();
-		this.requiredContextAbsoluteFieldPath = accumulatorProvider.isSingleValued()
-				? builder.objectField.closestMultiValuedParentAbsolutePath() : null;
+		this.requiredContextAbsoluteFieldPath = accumulatorProvider.isSingleValued() ?
+				builder.objectField.closestMultiValuedParentAbsolutePath() : null;
 		this.inners = inners;
 		this.compositor = compositor;
 		this.accumulatorProvider = accumulatorProvider;
@@ -55,10 +55,14 @@ public class ElasticsearchObjectProjection<E, V, P>
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "inners=" + Arrays.toString( inners )
-				+ ", compositor=" + compositor
-				+ ", accumulatorProvider=" + accumulatorProvider
+		return getClass().getSimpleName()
+				+ "["
+				+ "inners="
+				+ Arrays.toString( inners )
+				+ ", compositor="
+				+ compositor
+				+ ", accumulatorProvider="
+				+ accumulatorProvider
 				+ "]";
 	}
 
@@ -94,10 +98,14 @@ public class ElasticsearchObjectProjection<E, V, P>
 
 		@Override
 		public String toString() {
-			return getClass().getSimpleName() + "["
-					+ "inners=" + Arrays.toString( inners )
-					+ ", compositor=" + compositor
-					+ ", accumulator=" + accumulator
+			return getClass().getSimpleName()
+					+ "["
+					+ "inners="
+					+ Arrays.toString( inners )
+					+ ", compositor="
+					+ compositor
+					+ ", accumulator="
+					+ accumulator
 					+ "]";
 		}
 
@@ -165,7 +173,7 @@ public class ElasticsearchObjectProjection<E, V, P>
 						objectField.eventContext() );
 			}
 			ElasticsearchSearchProjection<?>[] typedInners =
-					new ElasticsearchSearchProjection<?>[ inners.length ];
+					new ElasticsearchSearchProjection<?>[inners.length];
 			for ( int i = 0; i < inners.length; i++ ) {
 				typedInners[i] = ElasticsearchSearchProjection.from( scope, inners[i] );
 			}

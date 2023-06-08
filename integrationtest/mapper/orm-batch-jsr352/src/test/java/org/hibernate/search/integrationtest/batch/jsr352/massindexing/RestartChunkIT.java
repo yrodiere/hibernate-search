@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchStatus;
 import javax.batch.runtime.JobExecution;
@@ -109,26 +110,30 @@ public class RestartChunkIT {
 	@TestForIssue(jiraKey = "HSEARCH-2616")
 	public void failureBeforeFirstRead_hql() throws InterruptedException, IOException {
 		SimulatedFailure.raiseExceptionOnNextRead();
-		doTest( "select c from SimulatedFailureCompany c where c.name like 'Google%'", DB_COMP_ROWS / 5, DB_COMP_ROWS / 5 );
+		doTest( "select c from SimulatedFailureCompany c where c.name like 'Google%'", DB_COMP_ROWS / 5,
+				DB_COMP_ROWS / 5 );
 	}
 
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-2616")
 	public void failureDuringFirstCheckpointBetweenTwoWrites_hql() throws InterruptedException, IOException {
 		SimulatedFailure.raiseExceptionAfterXWrites( (int) ( CHECKPOINT_INTERVAL * 0.5 ) );
-		doTest( "select c from SimulatedFailureCompany c where c.name like 'Google%'", DB_COMP_ROWS / 5, DB_COMP_ROWS / 5 );
+		doTest( "select c from SimulatedFailureCompany c where c.name like 'Google%'", DB_COMP_ROWS / 5,
+				DB_COMP_ROWS / 5 );
 	}
 
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-2616")
 	public void failureDuringNonFirstCheckpointBetweenTwoWrites_hql() throws InterruptedException, IOException {
 		SimulatedFailure.raiseExceptionAfterXWrites( (int) ( CHECKPOINT_INTERVAL * 2.5 ) );
-		doTest( "select c from SimulatedFailureCompany c where c.name like 'Google%'", DB_COMP_ROWS / 5, DB_COMP_ROWS / 5 );
+		doTest( "select c from SimulatedFailureCompany c where c.name like 'Google%'", DB_COMP_ROWS / 5,
+				DB_COMP_ROWS / 5 );
 	}
 
 	private void doTest(String hql, long expectedTotal, long expectedGoogle) throws InterruptedException, IOException {
 		assertEquals( 0, JobTestUtil.nbDocumentsInIndex( emf, SimulatedFailureCompany.class ) );
-		List<SimulatedFailureCompany> google = JobTestUtil.findIndexedResults( emf, SimulatedFailureCompany.class, "name", "Google" );
+		List<SimulatedFailureCompany> google = JobTestUtil.findIndexedResults( emf, SimulatedFailureCompany.class,
+				"name", "Google" );
 		assertEquals( 0, google.size() );
 
 		// start the job

@@ -45,7 +45,8 @@ public class GsonClassesTest {
 		gsonIndex = readOrBuildIndex( codeSourceLocation( Gson.class )
 				.orElseThrow( () -> new AssertionFailure( "Could not find Gson JAR?" ) ) );
 		backendElasticsearchIndex = readOrBuildIndex( codeSourceLocation( ElasticsearchExtension.class )
-				.orElseThrow( () -> new AssertionFailure( "Could not find hibernate-search-backend-elasticsearch JAR?" ) ) );
+				.orElseThrow( () -> new AssertionFailure(
+						"Could not find hibernate-search-backend-elasticsearch JAR?" ) ) );
 	}
 
 	@Test

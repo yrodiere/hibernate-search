@@ -8,6 +8,7 @@ package org.hibernate.search.documentation.mapper.orm.binding.identifierbridge.c
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -35,7 +36,8 @@ public class BookOrMagazineId implements Serializable {
 			return false;
 		}
 		BookOrMagazineId bookOrMagazineId = (BookOrMagazineId) o;
-		return publisherId.equals( bookOrMagazineId.publisherId ) &&
+		return publisherId.equals( bookOrMagazineId.publisherId )
+				&&
 				publisherSpecificBookId.equals( bookOrMagazineId.publisherSpecificBookId );
 	}
 

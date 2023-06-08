@@ -15,8 +15,8 @@ import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchClient
 import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchRequest;
 import org.hibernate.search.backend.elasticsearch.client.spi.ElasticsearchResponse;
 import org.hibernate.search.backend.elasticsearch.gson.spi.GsonProvider;
-import org.hibernate.search.engine.common.execution.spi.SimpleScheduledExecutor;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
+import org.hibernate.search.engine.common.execution.spi.SimpleScheduledExecutor;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanReference;
 import org.hibernate.search.engine.environment.bean.BeanResolver;
@@ -78,7 +78,8 @@ public class ElasticsearchClientSpy implements TestRule {
 	}
 
 	public BeanReference<ElasticsearchClientFactory> factoryReference() {
-		return beanResolver -> BeanHolder.of( new SpyingElasticsearchClientFactory( new ElasticsearchClientFactoryImpl() ) );
+		return beanResolver -> BeanHolder.of( new SpyingElasticsearchClientFactory(
+				new ElasticsearchClientFactoryImpl() ) );
 	}
 
 	public void expectNext(ElasticsearchRequest request, ElasticsearchRequestAssertionMode assertionMode) {

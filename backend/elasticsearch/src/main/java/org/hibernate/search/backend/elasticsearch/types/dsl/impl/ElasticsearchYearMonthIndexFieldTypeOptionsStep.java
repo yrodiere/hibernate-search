@@ -14,7 +14,8 @@ import org.hibernate.search.backend.elasticsearch.types.codec.impl.Elasticsearch
 
 class ElasticsearchYearMonthIndexFieldTypeOptionsStep
 		extends
-		AbstractElasticsearchTemporalIndexFieldTypeOptionsStep<ElasticsearchYearMonthIndexFieldTypeOptionsStep, YearMonth> {
+		AbstractElasticsearchTemporalIndexFieldTypeOptionsStep<ElasticsearchYearMonthIndexFieldTypeOptionsStep,
+				YearMonth> {
 
 	ElasticsearchYearMonthIndexFieldTypeOptionsStep(ElasticsearchIndexFieldTypeBuildContext buildContext) {
 		super( buildContext, YearMonth.class );

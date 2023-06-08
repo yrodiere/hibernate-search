@@ -14,10 +14,10 @@ import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
-import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexer;
 import org.hibernate.search.mapper.pojo.route.DocumentRouteDescriptor;
 import org.hibernate.search.mapper.pojo.route.DocumentRoutesDescriptor;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
+import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexer;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Test;
@@ -81,8 +81,10 @@ public abstract class AbstractPojoIndexerOperationBaseIT extends AbstractPojoInd
 								MyRoutingBridge.previousValues = Arrays.asList( "1", "foo", "3" );
 								worksBeforeInSamePlan
 										// "1" is ignored as it's the current value
-										.delete( b -> addWorkInfo( b, tenantId, "42", MyRoutingBridge.toRoutingKey( tenantId, 42, "foo" ) ) )
-										.delete( b -> addWorkInfo( b, tenantId, "42", MyRoutingBridge.toRoutingKey( tenantId, 42, "3" ) ) );
+										.delete( b -> addWorkInfo( b, tenantId, "42", MyRoutingBridge.toRoutingKey(
+												tenantId, 42, "foo" ) ) )
+										.delete( b -> addWorkInfo( b, tenantId, "42", MyRoutingBridge.toRoutingKey(
+												tenantId, 42, "3" ) ) );
 							}
 							// else: if implicit routing is disabled,
 							// since we don't provide any previous routes, we don't expect additional deletes.
@@ -124,8 +126,10 @@ public abstract class AbstractPojoIndexerOperationBaseIT extends AbstractPojoInd
 								MyRoutingBridge.previousValues = Arrays.asList( "1", "foo", "3" );
 								worksBefore
 										// "1" is ignored as it's the current value
-										.delete( b -> addWorkInfo( b, tenantId, "42", MyRoutingBridge.toRoutingKey( tenantId, 42, "foo" ) ) )
-										.delete( b -> addWorkInfo( b, tenantId, "42", MyRoutingBridge.toRoutingKey( tenantId, 42, "3" ) ) );
+										.delete( b -> addWorkInfo( b, tenantId, "42", MyRoutingBridge.toRoutingKey(
+												tenantId, 42, "foo" ) ) )
+										.delete( b -> addWorkInfo( b, tenantId, "42", MyRoutingBridge.toRoutingKey(
+												tenantId, 42, "3" ) ) );
 							}
 						}
 					},

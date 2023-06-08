@@ -15,9 +15,9 @@ import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaObjectField;
 import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.engine.search.predicate.SearchPredicate;
-import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.engine.search.predicate.definition.PredicateDefinition;
 import org.hibernate.search.engine.search.predicate.definition.PredicateDefinitionContext;
+import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.types.KeywordStringFieldTypeDescriptor;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.SimpleFieldModel;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
@@ -218,10 +218,11 @@ public class NamedPredicateBaseIT {
 
 		public void contribute(BulkIndexer indexer) {
 			indexer
-					.add( DOCUMENT_1, document -> index.binding().initDocument( document, WORD_1, WORD_2, WORD_3, WORD_4 ) )
-					.add( DOCUMENT_2, document -> index.binding().initDocument( document, WORD_1, WORD_5, WORD_3, WORD_5 ) )
-					.add( EMPTY, document -> {
-					} );
+					.add( DOCUMENT_1, document -> index.binding().initDocument( document, WORD_1, WORD_2, WORD_3,
+							WORD_4 ) )
+					.add( DOCUMENT_2, document -> index.binding().initDocument( document, WORD_1, WORD_5, WORD_3,
+							WORD_5 ) )
+					.add( EMPTY, document -> {} );
 		}
 	}
 

@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.Dependent;
@@ -136,7 +137,8 @@ public class CdiBeanResolutionIT {
 
 		int expectedInstances = ExpectedScope.SINGLETON.equals( expectedScope ) ? 1 : 2;
 
-		try ( @SuppressWarnings("unused") SessionFactory sessionFactory = ormSetupHelper.start()
+		try ( @SuppressWarnings("unused")
+		SessionFactory sessionFactory = ormSetupHelper.start()
 				.withProperty( AvailableSettings.CDI_BEAN_MANAGER, cdiContainer.getBeanManager() )
 				.setup( IndexedEntity.class ) ) {
 			backendMock.verifyExpectationsMet();
@@ -195,8 +197,7 @@ public class CdiBeanResolutionIT {
 	}
 
 	@Dependent
-	public static class InjectedBean {
-	}
+	public static class InjectedBean {}
 
 	public abstract static class AbstractBeanBase
 			implements InterfaceDefinedByMapper {
@@ -271,7 +272,6 @@ public class CdiBeanResolutionIT {
 	}
 
 	private enum ExpectedScope {
-		SINGLETON,
-		DEPENDENT
+		SINGLETON, DEPENDENT
 	}
 }

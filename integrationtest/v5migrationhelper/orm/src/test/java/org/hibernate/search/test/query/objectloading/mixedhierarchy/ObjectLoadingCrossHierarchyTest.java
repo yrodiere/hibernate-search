@@ -6,9 +6,10 @@
  */
 package org.hibernate.search.test.query.objectloading.mixedhierarchy;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
-import org.apache.lucene.search.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.search.FullTextSession;
@@ -16,11 +17,12 @@ import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.search.test.SearchTestBase;
 import org.hibernate.search.testsupport.TestForIssue;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.apache.lucene.search.Query;
 
 /**
  * Tests for using object loading with queries spanning across multiple id spaces
@@ -57,37 +59,37 @@ public class ObjectLoadingCrossHierarchyTest extends SearchTestBase {
 				// uses @Id Long identifier;
 				.should(
 						queryBuilder.keyword()
-							.onField( "name" )
-							.matching( "Southern Florida College of Golf" )
-							.createQuery()
+								.onField( "name" )
+								.matching( "Southern Florida College of Golf" )
+								.createQuery()
 				)
 				// uses @Id Long identifier, via SINGLE_TABLE shared with College
 				.should(
 						queryBuilder.keyword()
-						.onField( "name" )
-						.matching( "St. Lucie Community College" )
-						.createQuery()
+								.onField( "name" )
+								.matching( "St. Lucie Community College" )
+								.createQuery()
 				)
 				// uses @Id Integer id;
 				.should(
 						queryBuilder.keyword()
-							.onField( "name" )
-							.matching( "Wogharts" )
-							.createQuery()
+								.onField( "name" )
+								.matching( "Wogharts" )
+								.createQuery()
 				)
 				// uses @Id Short id; has mapped super-class School, using TABLE_PER_CLASS
 				.should(
 						queryBuilder.keyword()
-							.onField( "name" )
-							.matching( "Homestead Elementary School" )
-							.createQuery()
+								.onField( "name" )
+								.matching( "Homestead Elementary School" )
+								.createQuery()
 				)
 				// uses @Id Long identifier; also has mapped super-class School, using TABLE_PER_CLASS
 				.should(
 						queryBuilder.keyword()
-							.onField( "name" )
-							.matching( "Cutler Bay High School" )
-							.createQuery()
+								.onField( "name" )
+								.matching( "Cutler Bay High School" )
+								.createQuery()
 				)
 				.createQuery();
 
@@ -96,14 +98,15 @@ public class ObjectLoadingCrossHierarchyTest extends SearchTestBase {
 
 		assertThat( results )
 				.extracting( "name" )
-				.describedAs( "Can load results originating from different id spaces, using different id types and names" )
+				.describedAs(
+						"Can load results originating from different id spaces, using different id types and names" )
 				.containsExactlyInAnyOrder(
-				"Southern Florida College of Golf",
-				"Wogharts",
-				"St. Lucie Community College",
-				"Homestead Elementary School",
-				"Cutler Bay High School"
-		);
+						"Southern Florida College of Golf",
+						"Wogharts",
+						"St. Lucie Community College",
+						"Homestead Elementary School",
+						"Cutler Bay High School"
+				);
 	}
 
 	private void indexTestData() {

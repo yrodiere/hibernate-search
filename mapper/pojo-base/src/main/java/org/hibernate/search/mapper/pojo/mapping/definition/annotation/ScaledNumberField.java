@@ -14,8 +14,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.hibernate.search.engine.backend.types.Aggregable;
-import org.hibernate.search.engine.backend.types.Searchable;
 import org.hibernate.search.engine.backend.types.Projectable;
+import org.hibernate.search.engine.backend.types.Searchable;
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.engine.environment.bean.BeanRetrieval;
 import org.hibernate.search.mapper.pojo.bridge.mapping.annotation.ValueBinderRef;
@@ -39,7 +39,8 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing
 @Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Repeatable(ScaledNumberField.List.class)
-@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(type = ScaledNumberFieldProcessor.class, retrieval = BeanRetrieval.CONSTRUCTOR))
+@PropertyMapping(processor = @PropertyMappingAnnotationProcessorRef(type = ScaledNumberFieldProcessor.class,
+		retrieval = BeanRetrieval.CONSTRUCTOR))
 public @interface ScaledNumberField {
 
 	/**

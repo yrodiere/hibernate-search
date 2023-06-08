@@ -16,12 +16,12 @@ import org.hibernate.search.backend.lucene.cfg.LuceneIndexSettings;
 import org.hibernate.search.backend.lucene.lowlevel.common.impl.MetadataFields;
 import org.hibernate.search.engine.backend.work.execution.DocumentCommitStrategy;
 import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrategy;
-import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
+import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.integrationtest.backend.lucene.testsupport.util.LuceneIndexContentUtils;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
-import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMapping;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMappedIndex;
+import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMapping;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMappingSchemaManagementStrategy;
 
 import org.junit.Rule;
@@ -80,7 +80,7 @@ public class LuceneIndexWriterCommitIT {
 				DocumentCommitStrategy.NONE, // The commit will happen at some point, but the indexing plan will be considered completed before that
 				DocumentRefreshStrategy.NONE // This is irrelevant
 		);
-		plan.add( referenceProvider( "1" ), document -> { } );
+		plan.add( referenceProvider( "1" ), document -> {} );
 		plan.execute( OperationSubmitter.blocking() ).join();
 
 		// Commit will happen some time after indexing finished
@@ -107,7 +107,7 @@ public class LuceneIndexWriterCommitIT {
 				DocumentCommitStrategy.FORCE, // The commit will happen before the indexing plan is considered completed
 				DocumentRefreshStrategy.NONE // This is irrelevant
 		);
-		plan.add( referenceProvider( "1" ), document -> { } );
+		plan.add( referenceProvider( "1" ), document -> {} );
 		plan.execute( OperationSubmitter.blocking() ).join();
 
 		// Commit should have happened before indexing finished
@@ -129,7 +129,7 @@ public class LuceneIndexWriterCommitIT {
 				DocumentCommitStrategy.NONE, // The commit should not be necessary for changes to be visible
 				DocumentRefreshStrategy.NONE // The refresh should be done regardless of this parameter
 		);
-		plan.add( referenceProvider( "1" ), document -> { } );
+		plan.add( referenceProvider( "1" ), document -> {} );
 		plan.execute( OperationSubmitter.blocking() ).join();
 
 		// Stop Hibernate Search

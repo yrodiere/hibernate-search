@@ -11,8 +11,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.hibernate.MappingException;
 import org.hibernate.boot.Metadata;
@@ -22,7 +22,7 @@ import org.hibernate.mapping.Property;
 import org.hibernate.mapping.Value;
 import org.hibernate.property.access.spi.Getter;
 
-@SuppressWarnings( "unchecked" ) // Hibernate ORM gives us raw types, we must make do.
+@SuppressWarnings("unchecked") // Hibernate ORM gives us raw types, we must make do.
 public class HibernateOrmBasicTypeMetadataProvider {
 
 	public static HibernateOrmBasicTypeMetadataProvider create(Metadata metadata) {
@@ -195,7 +195,8 @@ public class HibernateOrmBasicTypeMetadataProvider {
 		}
 	}
 
-	private static HibernateOrmTypeModelFactory<?> collectEmbedded(Builder metadataProviderBuilder, Component component) {
+	private static HibernateOrmTypeModelFactory<?> collectEmbedded(Builder metadataProviderBuilder,
+			Component component) {
 		if ( component.isDynamic() ) {
 			String name = component.getRoleName();
 			// We don't care about duplicates, we assume they are all the same regarding the information we need
@@ -269,7 +270,8 @@ public class HibernateOrmBasicTypeMetadataProvider {
 	private static class Builder {
 		private final Map<String, PersistentClass> persistentClasses = new LinkedHashMap<>();
 		private final Map<Class<?>, HibernateOrmBasicClassTypeMetadata> classTypeMetadata = new LinkedHashMap<>();
-		private final Map<String, HibernateOrmBasicDynamicMapTypeMetadata> dynamicMapTypeMetadata = new LinkedHashMap<>();
+		private final Map<String, HibernateOrmBasicDynamicMapTypeMetadata> dynamicMapTypeMetadata =
+				new LinkedHashMap<>();
 
 		private final Map<String, String> jpaEntityNameToHibernateOrmEntityName = new LinkedHashMap<>();
 		private final HibernateOrmRawTypeIdentifierResolver.Builder typeIdentifierResolverBuilder =

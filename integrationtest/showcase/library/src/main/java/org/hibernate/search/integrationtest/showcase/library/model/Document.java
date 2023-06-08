@@ -8,6 +8,7 @@ package org.hibernate.search.integrationtest.showcase.library.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,11 +20,11 @@ import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.engine.backend.types.Projectable;
 import org.hibernate.search.engine.backend.types.Sortable;
 import org.hibernate.search.integrationtest.showcase.library.analysis.LibraryAnalyzers;
+import org.hibernate.search.integrationtest.showcase.library.bridge.annotation.MultiKeywordStringBinding;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
-import org.hibernate.search.integrationtest.showcase.library.bridge.annotation.MultiKeywordStringBinding;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.KeywordField;
 
 /**
@@ -48,7 +49,7 @@ public abstract class Document<C extends DocumentCopy<?>> extends AbstractEntity
 	)
 	private String title;
 
-	@GenericField( projectable = Projectable.YES, sortable = Sortable.YES)
+	@GenericField(projectable = Projectable.YES, sortable = Sortable.YES)
 	private String author;
 
 	@Basic
@@ -63,7 +64,8 @@ public abstract class Document<C extends DocumentCopy<?>> extends AbstractEntity
 	private String tags;
 
 	@OneToMany(mappedBy = "document", targetEntity = DocumentCopy.class)
-	@IndexedEmbedded(includePaths = {"medium", "library.location", "library.services"}, structure = ObjectStructure.NESTED)
+	@IndexedEmbedded(includePaths = { "medium", "library.location", "library.services" },
+			structure = ObjectStructure.NESTED)
 	private List<C> copies = new ArrayList<>();
 
 	public Document() {

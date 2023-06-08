@@ -58,7 +58,8 @@ public class IndexNullAsValueIT {
 					.toQuery();
 
 			assertThatQuery( query )
-					.hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_WITH_INDEX_NULL_AS_VALUES, DOCUMENT_WITH_NULL_VALUES );
+					.hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_WITH_INDEX_NULL_AS_VALUES,
+							DOCUMENT_WITH_NULL_VALUES );
 		}
 	}
 
@@ -75,7 +76,8 @@ public class IndexNullAsValueIT {
 				.toQuery();
 
 		assertThatQuery( query )
-				.hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_WITH_INDEX_NULL_AS_VALUES, DOCUMENT_WITH_NULL_VALUES );
+				.hasDocRefHitsAnyOrder( index.typeName(), DOCUMENT_WITH_INDEX_NULL_AS_VALUES,
+						DOCUMENT_WITH_NULL_VALUES );
 	}
 
 	@Test
@@ -87,7 +89,7 @@ public class IndexNullAsValueIT {
 								c -> c.asString().analyzer( DefaultAnalysisDefinitions.ANALYZER_STANDARD_ENGLISH.name
 								)
 										.indexNullAs( "bla bla bla" ) )
-										.toReference()
+								.toReference()
 				) )
 				.setup()
 		)
@@ -164,7 +166,8 @@ public class IndexNullAsValueIT {
 
 	private static class ByTypeFieldModel<F> {
 		static <F> ByTypeFieldModel<F> mapper(IndexSchemaElement root, FieldTypeDescriptor<F> typeDescriptor) {
-			IndexNullAsMatchPredicateExpectactions<F> expectations = typeDescriptor.getIndexNullAsMatchPredicateExpectations().get();
+			IndexNullAsMatchPredicateExpectactions<F> expectations = typeDescriptor
+					.getIndexNullAsMatchPredicateExpectations().get();
 			F indexNullAsValue = expectations.getIndexNullAsValue();
 
 			return StandardFieldMapper.of(
@@ -178,7 +181,8 @@ public class IndexNullAsValueIT {
 		final ValueModel<F> differentValue;
 		final ValueModel<F> nullValue;
 
-		public ByTypeFieldModel(IndexFieldReference<F> reference, String relativeFieldName, IndexNullAsMatchPredicateExpectactions<F> expectations) {
+		public ByTypeFieldModel(IndexFieldReference<F> reference, String relativeFieldName,
+				IndexNullAsMatchPredicateExpectactions<F> expectations) {
 			this.relativeFieldName = relativeFieldName;
 			this.indexNullAsValue = new ValueModel<>( reference, expectations.getIndexNullAsValue() );
 			this.differentValue = new ValueModel<>( reference, expectations.getDifferentValue() );

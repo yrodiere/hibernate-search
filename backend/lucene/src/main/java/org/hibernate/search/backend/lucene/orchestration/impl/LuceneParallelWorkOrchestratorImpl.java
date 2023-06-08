@@ -41,7 +41,8 @@ public class LuceneParallelWorkOrchestratorImpl
 	}
 
 	@Override
-	public <T> void submit(CompletableFuture<T> future, IndexManagementWork<T> work, OperationSubmitter operationSubmitter) {
+	public <T> void submit(CompletableFuture<T> future, IndexManagementWork<T> work,
+			OperationSubmitter operationSubmitter) {
 		submit( new WorkExecution<>( future, work, context ), operationSubmitter );
 	}
 
@@ -62,7 +63,8 @@ public class LuceneParallelWorkOrchestratorImpl
 	}
 
 	@Override
-	protected void doSubmit(WorkExecution<?> workExecution, OperationSubmitter operationSubmitter) throws InterruptedException {
+	protected void doSubmit(WorkExecution<?> workExecution,
+			OperationSubmitter operationSubmitter) throws InterruptedException {
 		operationSubmitter.submitToExecutor( executor, workExecution, blockingRetryProducer, ASYNC_FAILURE_REPORTER );
 	}
 

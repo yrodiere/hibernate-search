@@ -12,6 +12,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -49,8 +50,8 @@ public class SyntheticPropertyIT {
 	public void test() {
 		backendMock.expectSchema( IndexedEntity.NAME, b -> b
 				.objectField( "contained", b2 -> b2
-						.field( "ref1", String.class, b3 -> { } )
-						.field( "ref2", String.class, b3 -> { } ) ) );
+						.field( "ref1", String.class, b3 -> {} )
+						.field( "ref2", String.class, b3 -> {} ) ) );
 
 		SessionFactory sessionFactory = ormSetupHelper.start()
 				.setup( IndexedEntity.class, ContainedEntity.class );

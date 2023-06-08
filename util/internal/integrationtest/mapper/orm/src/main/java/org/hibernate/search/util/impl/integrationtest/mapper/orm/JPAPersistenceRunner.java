@@ -24,7 +24,9 @@ class JPAPersistenceRunner implements PersistenceRunner<EntityManager, EntityTra
 	}
 
 	@Override
-	public <R, E extends Throwable> R applyNoTransaction(ThrowingFunction<? super EntityManager, R, E> action) throws E {
+	public <R, E extends Throwable> R applyNoTransaction(ThrowingFunction<? super EntityManager,
+			R,
+			E> action) throws E {
 		try ( Closer<RuntimeException> closer = new Closer<>() ) {
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
 			try {
@@ -37,9 +39,12 @@ class JPAPersistenceRunner implements PersistenceRunner<EntityManager, EntityTra
 	}
 
 	@Override
-	public <R, E extends Throwable> R applyInTransaction(ThrowingBiFunction<? super EntityManager, ? super EntityTransaction, R, E> action) throws E {
-		return applyNoTransaction( entityManager ->
-				applyInJPATransaction( entityManager, tx -> action.apply( entityManager, tx ) )
+	public <R, E extends Throwable> R applyInTransaction(ThrowingBiFunction<? super EntityManager,
+			? super EntityTransaction,
+			R,
+			E> action) throws E {
+		return applyNoTransaction( entityManager -> applyInJPATransaction( entityManager, tx -> action.apply(
+				entityManager, tx ) )
 		);
 	}
 }

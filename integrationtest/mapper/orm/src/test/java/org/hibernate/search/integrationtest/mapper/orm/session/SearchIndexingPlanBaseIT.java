@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -250,8 +251,10 @@ public class SearchIndexingPlanBaseIT {
 					.hasMessageContainingAll( "No matching entity type for class '" + invalidClass.getName() + "'",
 							"Either this class is not an entity type, or the entity type is not mapped in Hibernate Search",
 							"Valid classes for mapped entity types are: ["
-									+ IndexedEntity1.class.getName() + ", "
-									+ IndexedEntity2.class.getName() + ", "
+									+ IndexedEntity1.class.getName()
+									+ ", "
+									+ IndexedEntity2.class.getName()
+									+ ", "
 									+ ContainedEntity.class.getName()
 									+ "]" );
 		} );
@@ -287,11 +290,16 @@ public class SearchIndexingPlanBaseIT {
 							"Either this is not the name of an entity type, or the entity type is not mapped in Hibernate Search",
 							"Valid names for mapped entity types are: ["
 									// JPA entity names + Hibernate ORM entity names
-									+ IndexedEntity1.NAME + ", "
-									+ IndexedEntity1.class.getName() + ", "
-									+ IndexedEntity2.NAME + ", "
-									+ IndexedEntity2.class.getName() + ", "
-									+ ContainedEntity.NAME + ", "
+									+ IndexedEntity1.NAME
+									+ ", "
+									+ IndexedEntity1.class.getName()
+									+ ", "
+									+ IndexedEntity2.NAME
+									+ ", "
+									+ IndexedEntity2.class.getName()
+									+ ", "
+									+ ContainedEntity.NAME
+									+ ", "
 									+ ContainedEntity.class.getName()
 									+ "]"
 					);

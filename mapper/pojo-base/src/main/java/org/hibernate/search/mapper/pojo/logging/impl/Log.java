@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.mapper.pojo.logging.impl;
 
-import org.hibernate.search.mapper.pojo.model.path.spi.ProjectionConstructorPath;
 import static org.jboss.logging.Logger.Level.ERROR;
 import static org.jboss.logging.Logger.Level.INFO;
 
@@ -34,6 +33,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ObjectPath
 import org.hibernate.search.mapper.pojo.mapping.impl.PojoContainedTypeManager;
 import org.hibernate.search.mapper.pojo.mapping.impl.PojoIndexedTypeManager;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
+import org.hibernate.search.mapper.pojo.model.path.spi.ProjectionConstructorPath;
 import org.hibernate.search.mapper.pojo.model.spi.PojoConstructorModel;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeIdentifier;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
@@ -103,7 +103,8 @@ public interface Log extends BasicLogger {
 	void indexingProgressRaw(long doneCount, long elapsedMs);
 
 	@LogMessage(level = INFO)
-	@Message(id = ID_OFFSET_LEGACY_ENGINE + 31, value = "Mass indexing progress: %3$.2f%%. Mass indexing speed: %1$f documents/second since last message, %2$f documents/second since start.")
+	@Message(id = ID_OFFSET_LEGACY_ENGINE + 31,
+			value = "Mass indexing progress: %3$.2f%%. Mass indexing speed: %1$f documents/second since last message, %2$f documents/second since start.")
 	void indexingProgressStats(float currentSpeed, float estimateSpeed, float estimatePercentileComplete);
 
 	@LogMessage(level = ERROR)
@@ -160,12 +161,14 @@ public interface Log extends BasicLogger {
 	SearchException parseException(String text, @FormatWith(SimpleNameClassFormatter.class) Class<?> readerClass,
 			String causeMessage, @Cause Exception e);
 
-	@Message(id = ID_OFFSET_LEGACY_ENGINE + 297, value = "Unable to convert '%2$s' into type '%1$s': value is too large.")
+	@Message(id = ID_OFFSET_LEGACY_ENGINE + 297,
+			value = "Unable to convert '%2$s' into type '%1$s': value is too large.")
 	SearchException valueTooLargeForConversionException(@FormatWith(SimpleNameClassFormatter.class) Class<?> type,
 			Object duration, @Cause Exception ae);
 
-	@Message(id = ID_OFFSET_LEGACY_ENGINE + 337, value = "Conflicting usage of @Param annotation for parameter name:" +
-			" '%1$s'. Can't assign both value '%2$s' and '%3$s'" )
+	@Message(id = ID_OFFSET_LEGACY_ENGINE + 337, value = "Conflicting usage of @Param annotation for parameter name:"
+			+
+			" '%1$s'. Can't assign both value '%2$s' and '%3$s'")
 	SearchException conflictingParameterDefined(String name, Object value1, Object value2);
 
 	// -----------------------------------
@@ -174,8 +177,10 @@ public interface Log extends BasicLogger {
 	int ID_OFFSET = MessageConstants.MAPPER_POJO_ID_RANGE_MIN;
 
 	@Message(id = ID_OFFSET + 1,
-			value = "No default identifier bridge implementation for type '%1$s'." +
-					" Implement a custom bridge and assign it to the identifier property with @DocumentId(identifierBridge = ...)." +
+			value = "No default identifier bridge implementation for type '%1$s'."
+					+
+					" Implement a custom bridge and assign it to the identifier property with @DocumentId(identifierBridge = ...)."
+					+
 					" See the reference documentation for more information about bridges.")
 	SearchException unableToResolveDefaultIdentifierBridgeFromSourceType(
 			@FormatWith(PojoTypeModelFormatter.class) PojoTypeModel<?> sourceType);
@@ -340,7 +345,7 @@ public interface Log extends BasicLogger {
 	SearchException unknownTypeIdentifierForMappedEntityType(PojoRawTypeIdentifier<?> invalidTypeId,
 			Collection<PojoRawTypeIdentifier<?>> validTypeIds);
 
-	@Message(id = ID_OFFSET + 38, value = "The entity identifier must not be null." )
+	@Message(id = ID_OFFSET + 38, value = "The entity identifier must not be null.")
 	SearchException nullProvidedIdentifier();
 
 	@Message(id = ID_OFFSET + 39, value = "'%1$s' cannot be assigned to '%2$s'")
@@ -568,7 +573,8 @@ public interface Log extends BasicLogger {
 					+ " when this type parameter is set to a raw class."
 					+ " Use an IdentifierBinder to set the expected identifier type explicitly,"
 					+ " or set the type parameter I to a definite, raw type.")
-	SearchException invalidGenericParameterToInferIdentifierType(Object bridge, @FormatWith(TypeFormatter.class) Type type);
+	SearchException invalidGenericParameterToInferIdentifierType(Object bridge,
+			@FormatWith(TypeFormatter.class) Type type);
 
 	@Message(id = ID_OFFSET + 82,
 			value = "Unable to infer expected value type for value bridge '%1$s':"
@@ -605,11 +611,11 @@ public interface Log extends BasicLogger {
 	SearchException unexpectedEntityNameForEntityLoading(String entityName, Collection<String> expectedNames);
 
 	@Message(id = ID_OFFSET + 87, value = "Invalid indexing request:"
-			+ " if the entity is null, the identifier must be provided explicitly." )
+			+ " if the entity is null, the identifier must be provided explicitly.")
 	SearchException nullProvidedIdentifierAndEntity();
 
 	@Message(id = ID_OFFSET + 88, value = "Invalid indexing request:"
-			+ " the add and update operations require a non-null entity." )
+			+ " the add and update operations require a non-null entity.")
 	SearchException nullEntityForIndexerAddOrUpdate();
 
 	@Message(id = ID_OFFSET + 89,
@@ -651,10 +657,11 @@ public interface Log extends BasicLogger {
 	@LogMessage(level = Logger.Level.ERROR)
 	@Message(id = ID_OFFSET + 102,
 			value = "The mass indexing failure handler threw an exception while handling a previous failure."
-			+ " The failure may not have been reported.")
+					+ " The failure may not have been reported.")
 	void failureInMassIndexingFailureHandler(@Cause Throwable t);
 
-	@Message(id = ID_OFFSET + 103, value = "Mass indexing received interrupt signal. The index is left in an unknown state!")
+	@Message(id = ID_OFFSET + 103,
+			value = "Mass indexing received interrupt signal. The index is left in an unknown state!")
 	SearchException massIndexingThreadInterrupted(@Cause InterruptedException e);
 
 	@Message(id = ID_OFFSET + 104, value = "Param with name '%1$s' has not been defined for the binder.")
@@ -662,7 +669,8 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET + 105, value = "Cannot work with the identifier of entities of type '%1$s':"
 			+ " identifier mapping (@DocumentId, ...) is not configured for this type.")
-	SearchException cannotWorkWithIdentifierBecauseUnconfiguredIdentifierMapping(PojoRawTypeIdentifier<?> typeIdentifier);
+	SearchException cannotWorkWithIdentifierBecauseUnconfiguredIdentifierMapping(PojoRawTypeIdentifier<
+			?> typeIdentifier);
 
 	@Message(id = ID_OFFSET + 42, value = "%1$s failure(s) occurred during mass indexing. See the logs for details."
 			+ " First failure: %2$s")
@@ -676,15 +684,18 @@ public interface Log extends BasicLogger {
 
 	@Message(id = ID_OFFSET + 107,
 			value = "No main constructor for type '%1$s': this type does not declare exactly one constructor.")
-	SearchException cannotFindMainConstructorNotExactlyOneConstructor(@FormatWith(PojoTypeModelFormatter.class) PojoRawTypeModel<?> typeModel);
+	SearchException cannotFindMainConstructorNotExactlyOneConstructor(
+			@FormatWith(PojoTypeModelFormatter.class) PojoRawTypeModel<?> typeModel);
 
 	@Message(id = ID_OFFSET + 109,
 			value = "No constructor with parameter types %2$s on type '%1$s'. Available constructors: %3$s")
-	SearchException cannotFindConstructorWithParameterTypes(@FormatWith(PojoTypeModelFormatter.class) PojoRawTypeModel<?> typeModel,
+	SearchException cannotFindConstructorWithParameterTypes(@FormatWith(PojoTypeModelFormatter.class) PojoRawTypeModel<
+			?> typeModel,
 			@FormatWith(CommaSeparatedClassesFormatter.class) Class<?>[] parameterTypes,
 			Collection<? extends PojoConstructorModel<?>> constructors);
 
-	@Message(id = ID_OFFSET + 110, value = "Exception while retrieving parameter type model for parameter #%1$s of '%2$s'.")
+	@Message(id = ID_OFFSET + 110,
+			value = "Exception while retrieving parameter type model for parameter #%1$s of '%2$s'.")
 	SearchException errorRetrievingConstructorParameterTypeModel(int parameterIndex,
 			PojoConstructorModel<?> constructorModel, @Cause Exception cause);
 
@@ -702,7 +713,8 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 113,
 			value = "Invalid declaring type for projection constructor: type '%1$s' is abstract."
 					+ " Projection constructors can only be declared on concrete types.")
-	SearchException invalidAbstractTypeForProjectionConstructor(@FormatWith(PojoTypeModelFormatter.class) PojoRawTypeModel<?> typeModel);
+	SearchException invalidAbstractTypeForProjectionConstructor(
+			@FormatWith(PojoTypeModelFormatter.class) PojoRawTypeModel<?> typeModel);
 
 	@Message(id = ID_OFFSET + 114,
 			value = "Missing parameter names in Java metadata for projection constructor."
@@ -729,7 +741,8 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 117,
 			value = "Constructor projection for type '%1$s': %2$s")
 	void constructorProjection(@FormatWith(PojoTypeModelFormatter.class) PojoRawTypeModel<?> typeModel,
-			@FormatWith(ToStringTreeMultilineFormatter.class) PojoConstructorProjectionDefinition<?> projectionDefinition);
+			@FormatWith(ToStringTreeMultilineFormatter.class) PojoConstructorProjectionDefinition<
+					?> projectionDefinition);
 
 	@Message(id = ID_OFFSET + 118,
 			value = "Infinite object projection recursion:\n%1$s")
@@ -741,7 +754,8 @@ public interface Log extends BasicLogger {
 
 	@LogMessage(level = Logger.Level.WARN)
 	@Message(id = ID_OFFSET + 120,
-			value = "Both \"dropAndCreateSchemaOnStart()\" and \"purgeAllOnStart()\" are enabled. " +
+			value = "Both \"dropAndCreateSchemaOnStart()\" and \"purgeAllOnStart()\" are enabled. "
+					+
 					"Consider having just one setting enabled as after the index is recreated there is nothing to purge.")
 	void redundantPurgeAfterDrop();
 
@@ -758,7 +772,8 @@ public interface Log extends BasicLogger {
 					+ " %2$s" // Context
 					+ " Association inverse side: %1$s.")
 	void failedToCreateImplicitReindexingAssociationInverseSideResolverNode(
-			Map<PojoRawTypeModel<?>, PojoModelPathValueNode> inversePathByInverseType, @FormatWith(EventContextFormatter.class) EventContext context,
+			Map<PojoRawTypeModel<?>, PojoModelPathValueNode> inversePathByInverseType,
+			@FormatWith(EventContextFormatter.class) EventContext context,
 			String causeMessage, @Cause Exception cause);
 
 	@Message(id = ID_OFFSET + 123,
@@ -771,7 +786,8 @@ public interface Log extends BasicLogger {
 	@Message(value = "Automatic indexing of entities")
 	String automaticIndexing();
 
-	@Message(id = ID_OFFSET + 124, value = "Indexing failure: %1$s.\nThe following entities may not have been updated correctly in the index: %2$s.")
+	@Message(id = ID_OFFSET + 124,
+			value = "Indexing failure: %1$s.\nThe following entities may not have been updated correctly in the index: %2$s.")
 	SearchException indexingFailure(String causeMessage, List<?> failingEntities, @Cause Throwable cause);
 
 	@Message(id = ID_OFFSET + 125,
@@ -783,7 +799,7 @@ public interface Log extends BasicLogger {
 			value = "Target path '%1$s' already exists and is not an empty directory. Use a path to an empty or non-existing directory.")
 	SearchException schemaExporterTargetIsNotEmptyDirectory(Path targetDirectory);
 
-	@Message(id = ID_OFFSET + 127, value = "Unable to export the schema: %1$s" )
+	@Message(id = ID_OFFSET + 127, value = "Unable to export the schema: %1$s")
 	SearchException unableToExportSchema(String cause, @Cause Exception e, @Param EventContext context);
 
 	@Message(id = ID_OFFSET + 128,
@@ -791,8 +807,10 @@ public interface Log extends BasicLogger {
 	SearchException attemptToCreateIndexingPlanForExcludedType(PojoRawTypeIdentifier<?> typeIdentifier);
 
 	@Message(id = ID_OFFSET + 129,
-			value = "'%1$s' cannot be included and excluded at the same time within one filter. " +
-					"Already included types: '%2$s'. " +
+			value = "'%1$s' cannot be included and excluded at the same time within one filter. "
+					+
+					"Already included types: '%2$s'. "
+					+
 					"Already excluded types: '%3$s'.")
 	SearchException indexingPlanFilterCannotIncludeExcludeSameType(PojoRawTypeIdentifier<?> typeIdentifier,
 			Set<PojoRawTypeIdentifier<?>> includes, Set<PojoRawTypeIdentifier<?>> excludes);
@@ -814,11 +832,13 @@ public interface Log extends BasicLogger {
 	@Message(id = ID_OFFSET + 132,
 			value = "No matching supertype type for type identifier '%1$s'."
 					+ " Valid identifiers for indexed entity types are: %2$s")
-	SearchException unknownSupertypeTypeIdentifier(PojoRawTypeIdentifier<?> typeIdentifier, Set<PojoRawTypeIdentifier<?>> availableTypeIdentifiers);
+	SearchException unknownSupertypeTypeIdentifier(PojoRawTypeIdentifier<?> typeIdentifier, Set<PojoRawTypeIdentifier<
+			?>> availableTypeIdentifiers);
 
 	@Message(id = ID_OFFSET + 133,
 			value = "No parameter at index '%2$s' for constructor '%1$s'.")
-	SearchException cannotFindConstructorParameter(@FormatWith(PojoConstructorModelFormatter.class) PojoConstructorModel<?> constructorModel, int index);
+	SearchException cannotFindConstructorParameter(
+			@FormatWith(PojoConstructorModelFormatter.class) PojoConstructorModel<?> constructorModel, int index);
 
 	@Message(id = ID_OFFSET + 134,
 			value = "Multiple projections are mapped for this parameter."

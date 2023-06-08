@@ -13,12 +13,12 @@ import java.util.stream.Stream;
 import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.ContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.MappingAnnotatedProperty;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.processing.PropertyMappingAnnotationProcessorContext;
-import org.hibernate.search.mapper.pojo.model.path.PojoModelPath;
 import org.hibernate.search.mapper.pojo.mapping.spi.PojoMappingConfigurationContext;
+import org.hibernate.search.mapper.pojo.model.path.PojoModelPath;
 import org.hibernate.search.mapper.pojo.model.spi.PojoPropertyModel;
-import org.hibernate.search.util.common.reflect.spi.AnnotationHelper;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 import org.hibernate.search.mapper.pojo.reporting.spi.PojoEventContexts;
+import org.hibernate.search.util.common.reflect.spi.AnnotationHelper;
 import org.hibernate.search.util.common.reporting.EventContext;
 
 public class PropertyMappingAnnotationProcessorContextImpl
@@ -29,7 +29,8 @@ public class PropertyMappingAnnotationProcessorContextImpl
 	private final Annotation annotation;
 	private final PojoMappingConfigurationContext configurationContext;
 
-	public PropertyMappingAnnotationProcessorContextImpl(PojoRawTypeModel<?> typeModel, PojoPropertyModel<?> propertyModel,
+	public PropertyMappingAnnotationProcessorContextImpl(PojoRawTypeModel<?> typeModel, PojoPropertyModel<
+			?> propertyModel,
 			Annotation annotation,
 			AnnotationHelper annotationHelper, PojoMappingConfigurationContext configurationContext) {
 		super( annotationHelper );

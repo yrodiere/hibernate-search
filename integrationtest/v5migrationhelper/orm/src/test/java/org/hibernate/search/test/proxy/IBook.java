@@ -9,5 +9,4 @@ package org.hibernate.search.test.proxy;
 /**
  * @author Hardy Ferentschik
  */
-public interface IBook {
-}
+public interface IBook {}

@@ -14,12 +14,13 @@ import org.hibernate.search.mapper.pojo.automaticindexing.building.impl.PojoInde
 import org.hibernate.search.mapper.pojo.automaticindexing.building.impl.PojoIndexingDependencyCollectorTypeNode;
 import org.hibernate.search.mapper.pojo.model.dependency.PojoOtherEntityIndexingDependencyConfigurationContext;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
-import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathTypeNode;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathValueNode;
+import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 
-class PojoOtherEntityIndexingDependencyConfigurationContextImpl<T> implements
+class PojoOtherEntityIndexingDependencyConfigurationContextImpl<T>
+		implements
 		PojoOtherEntityIndexingDependencyConfigurationContext {
 	private final BoundPojoModelPath.Walker bindingPathWalker;
 	private final BoundPojoModelPathTypeNode<T> modelPath;
@@ -35,7 +36,8 @@ class PojoOtherEntityIndexingDependencyConfigurationContextImpl<T> implements
 	}
 
 	@Override
-	public PojoOtherEntityIndexingDependencyConfigurationContext use(PojoModelPathValueNode pathFromBridgedTypeToUsedValue) {
+	public PojoOtherEntityIndexingDependencyConfigurationContext use(
+			PojoModelPathValueNode pathFromBridgedTypeToUsedValue) {
 		BoundPojoModelPathValueNode<?, ?, ?> boundPath = PojoModelPathBinder.bind(
 				modelPath, pathFromBridgedTypeToUsedValue, bindingPathWalker
 		);

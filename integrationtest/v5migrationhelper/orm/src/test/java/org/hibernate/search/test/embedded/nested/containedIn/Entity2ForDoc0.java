@@ -29,7 +29,7 @@ public class Entity2ForDoc0 {
 	@Version
 	private int optlock;
 
-	@javax.persistence.ManyToOne(cascade = { }, fetch = javax.persistence.FetchType.LAZY)
+	@javax.persistence.ManyToOne(cascade = {}, fetch = javax.persistence.FetchType.LAZY)
 	private Entity1ForDoc0 entity1;
 
 	@Basic

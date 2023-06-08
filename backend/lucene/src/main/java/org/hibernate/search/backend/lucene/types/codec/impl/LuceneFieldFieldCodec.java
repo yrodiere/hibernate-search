@@ -9,13 +9,13 @@ package org.hibernate.search.backend.lucene.types.codec.impl;
 import java.lang.invoke.MethodHandles;
 import java.util.Objects;
 
-import org.apache.lucene.index.IndexableField;
-
+import org.hibernate.search.backend.lucene.logging.impl.Log;
 import org.hibernate.search.backend.lucene.types.converter.LuceneFieldContributor;
 import org.hibernate.search.backend.lucene.types.converter.LuceneFieldValueExtractor;
-import org.hibernate.search.backend.lucene.logging.impl.Log;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
+
+import org.apache.lucene.index.IndexableField;
 
 public final class LuceneFieldFieldCodec<F> implements LuceneFieldCodec<F> {
 
@@ -25,7 +25,8 @@ public final class LuceneFieldFieldCodec<F> implements LuceneFieldCodec<F> {
 
 	private final LuceneFieldValueExtractor<F> fieldValueExtractor;
 
-	public LuceneFieldFieldCodec(LuceneFieldContributor<F> fieldContributor, LuceneFieldValueExtractor<F> fieldValueExtractor) {
+	public LuceneFieldFieldCodec(LuceneFieldContributor<F> fieldContributor, LuceneFieldValueExtractor<
+			F> fieldValueExtractor) {
 		this.fieldContributor = fieldContributor;
 		this.fieldValueExtractor = fieldValueExtractor;
 	}
@@ -36,7 +37,8 @@ public final class LuceneFieldFieldCodec<F> implements LuceneFieldCodec<F> {
 			return;
 		}
 
-		fieldContributor.contribute( absoluteFieldPath, value, f -> contributeField( documentBuilder, absoluteFieldPath, f ) );
+		fieldContributor.contribute( absoluteFieldPath, value, f -> contributeField( documentBuilder, absoluteFieldPath,
+				f ) );
 	}
 
 	@Override
@@ -62,7 +64,8 @@ public final class LuceneFieldFieldCodec<F> implements LuceneFieldCodec<F> {
 		return Objects.equals( fieldValueExtractor, other.fieldValueExtractor );
 	}
 
-	private static void contributeField(LuceneDocumentContent documentBuilder, String absoluteFieldPath, IndexableField field) {
+	private static void contributeField(LuceneDocumentContent documentBuilder, String absoluteFieldPath,
+			IndexableField field) {
 		if ( !absoluteFieldPath.equals( field.name() ) ) {
 			throw log.invalidFieldPath( absoluteFieldPath, field.name() );
 		}

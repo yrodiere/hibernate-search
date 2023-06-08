@@ -6,22 +6,22 @@
  */
 package org.hibernate.search.backend.elasticsearch.document.model.dsl.impl;
 
-import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexObjectFieldTemplate;
 import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexCompositeNode;
+import org.hibernate.search.backend.elasticsearch.document.model.impl.ElasticsearchIndexObjectFieldTemplate;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.mapping.impl.DataMatchingTypes;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.mapping.impl.DynamicTemplate;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.mapping.impl.DynamicType;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.mapping.impl.NamedDynamicTemplate;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.mapping.impl.PropertyMapping;
 import org.hibernate.search.backend.elasticsearch.types.impl.ElasticsearchIndexCompositeNodeType;
-import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.engine.backend.document.model.spi.IndexFieldInclusion;
+import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.util.common.pattern.spi.SimpleGlobPattern;
 
 class ElasticsearchIndexObjectFieldTemplateBuilder
 		extends AbstractElasticsearchIndexFieldTemplateBuilder<
-						ElasticsearchIndexObjectFieldTemplateBuilder, ElasticsearchIndexObjectFieldTemplate
-				> {
+				ElasticsearchIndexObjectFieldTemplateBuilder,
+				ElasticsearchIndexObjectFieldTemplate> {
 
 	protected final ElasticsearchIndexCompositeNodeType.Builder typeBuilder;
 

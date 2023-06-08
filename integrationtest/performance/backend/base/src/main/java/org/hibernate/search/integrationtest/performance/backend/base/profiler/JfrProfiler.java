@@ -44,7 +44,8 @@ public class JfrProfiler implements ExternalProfiler {
 		}
 
 		this.outputDir = Paths.get( Optional.ofNullable( options.remove( "outputDir" ) ).orElse( "." ) );
-		this.jfrOptions = Optional.ofNullable( options.remove( "jfrOptions" ) ).orElse( "settings=profile,maxsize=30M" );
+		this.jfrOptions = Optional.ofNullable( options.remove( "jfrOptions" ) ).orElse(
+				"settings=profile,maxsize=30M" );
 
 		if ( !options.isEmpty() ) {
 			throw new ProfilerException( "Unknown options: " + options );

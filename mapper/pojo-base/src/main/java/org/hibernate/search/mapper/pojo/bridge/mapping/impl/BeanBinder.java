@@ -74,12 +74,14 @@ public final class BeanBinder
 	}
 
 	@SuppressWarnings("unchecked") // Using reflection
-	private <B extends IdentifierBridge<I>, I> void doBind(BeanHolder<B> bridgeHolder, IdentifierBindingContext<?> context) {
+	private <B extends IdentifierBridge<I>, I> void doBind(BeanHolder<B> bridgeHolder, IdentifierBindingContext<
+			?> context) {
 		IdentifierBridge<I> bridge = bridgeHolder.get();
 		GenericTypeContext bridgeTypeContext = new GenericTypeContext( bridge.getClass() );
 		Type typeArgument = bridgeTypeContext.resolveTypeArgument( IdentifierBridge.class, 0 )
 				.orElseThrow( () -> new AssertionFailure( "Could not auto-detect the input type for identifier bridge '"
-						+ bridge + "'." ) );
+						+ bridge
+						+ "'." ) );
 		if ( typeArgument instanceof Class ) {
 			context.bridge( (Class<I>) typeArgument, bridge );
 		}
@@ -89,12 +91,14 @@ public final class BeanBinder
 	}
 
 	@SuppressWarnings("unchecked") // Using reflection
-	private <B extends ValueBridge<V, F>, V, F> void doBind(BeanHolder<B> bridgeHolder, ValueBindingContext<?> context) {
+	private <B extends ValueBridge<V, F>, V, F> void doBind(BeanHolder<B> bridgeHolder, ValueBindingContext<
+			?> context) {
 		ValueBridge<V, F> bridge = bridgeHolder.get();
 		GenericTypeContext bridgeTypeContext = new GenericTypeContext( bridge.getClass() );
 		Type typeArgument = bridgeTypeContext.resolveTypeArgument( ValueBridge.class, 0 )
 				.orElseThrow( () -> new AssertionFailure( "Could not auto-detect the input type for value bridge '"
-						+ bridge + "'." ) );
+						+ bridge
+						+ "'." ) );
 		if ( typeArgument instanceof Class ) {
 			context.bridge( (Class<V>) typeArgument, bridge );
 		}

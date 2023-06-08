@@ -6,7 +6,6 @@
  */
 package org.hibernate.search.engine.environment.bean.spi;
 
-
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.common.annotation.impl.SuppressForbiddenApis;
 
@@ -24,5 +23,4 @@ public class BeanNotFoundException extends SearchException {
 		super( message, cause );
 	}
 }
-
 

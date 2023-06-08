@@ -21,15 +21,15 @@ import org.hibernate.search.mapper.pojo.extractor.builtin.BuiltinContainerExtrac
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.BooleanArrayElementExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.ByteArrayElementExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.CharArrayElementExtractor;
+import org.hibernate.search.mapper.pojo.extractor.builtin.impl.CollectionElementExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.DoubleArrayElementExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.FloatArrayElementExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.IntArrayElementExtractor;
-import org.hibernate.search.mapper.pojo.extractor.builtin.impl.LongArrayElementExtractor;
-import org.hibernate.search.mapper.pojo.extractor.builtin.impl.ObjectArrayElementExtractor;
-import org.hibernate.search.mapper.pojo.extractor.builtin.impl.CollectionElementExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.IterableElementExtractor;
+import org.hibernate.search.mapper.pojo.extractor.builtin.impl.LongArrayElementExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.MapKeyExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.MapValueExtractor;
+import org.hibernate.search.mapper.pojo.extractor.builtin.impl.ObjectArrayElementExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.OptionalDoubleValueExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.OptionalIntValueExtractor;
 import org.hibernate.search.mapper.pojo.extractor.builtin.impl.OptionalLongValueExtractor;
@@ -47,10 +47,12 @@ public final class ContainerExtractorRegistry {
 		return new Builder();
 	}
 
-	private final Map<String, ContainerExtractorDefinition<? extends ContainerExtractor>> extractorsByName = new HashMap<>();
+	private final Map<String, ContainerExtractorDefinition<? extends ContainerExtractor>> extractorsByName =
+			new HashMap<>();
 	private final List<String> defaultExtractors = new ArrayList<>();
 
-	private ContainerExtractorRegistry(Map<String, ContainerExtractorDefinition<? extends ContainerExtractor>> customExtractorsByName) {
+	private ContainerExtractorRegistry(Map<String,
+			ContainerExtractorDefinition<? extends ContainerExtractor>> customExtractorsByName) {
 		extractorsByName.putAll( customExtractorsByName );
 
 		// Caution: the order of calls below is meaningful

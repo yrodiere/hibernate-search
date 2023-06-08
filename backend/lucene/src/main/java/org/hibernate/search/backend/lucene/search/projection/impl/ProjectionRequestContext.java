@@ -28,12 +28,14 @@ public final class ProjectionRequestContext {
 	private final Map<String, LuceneAbstractSearchHighlighter> namedHighlighters;
 
 	public ProjectionRequestContext(ExtractionRequirements.Builder extractionRequirementsBuilder,
-			LuceneAbstractSearchHighlighter globalHighlighter, Map<String, LuceneAbstractSearchHighlighter> namedHighlighters) {
+			LuceneAbstractSearchHighlighter globalHighlighter, Map<String,
+					LuceneAbstractSearchHighlighter> namedHighlighters) {
 		this( extractionRequirementsBuilder, globalHighlighter, namedHighlighters, null, null );
 	}
 
 	private ProjectionRequestContext(ExtractionRequirements.Builder extractionRequirementsBuilder,
-			LuceneAbstractSearchHighlighter globalHighlighter, Map<String, LuceneAbstractSearchHighlighter> namedHighlighters,
+			LuceneAbstractSearchHighlighter globalHighlighter, Map<String,
+					LuceneAbstractSearchHighlighter> namedHighlighters,
 			String absoluteCurrentFieldPath, String absoluteCurrentNestedFieldPath) {
 		this.globalHighlighter = globalHighlighter;
 		this.namedHighlighters = namedHighlighters;

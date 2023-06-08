@@ -16,7 +16,6 @@ import org.hibernate.search.engine.search.projection.dsl.spi.SearchProjectionDsl
 import org.hibernate.search.engine.search.projection.spi.ProjectionAccumulator;
 import org.hibernate.search.engine.search.projection.spi.ProjectionTypeKeys;
 
-
 public final class FieldProjectionValueStepImpl<T>
 		extends FieldProjectionOptionsStepImpl<T, T>
 		implements FieldProjectionValueStep<FieldProjectionOptionsStepImpl<T, T>, T> {
@@ -25,7 +24,7 @@ public final class FieldProjectionValueStepImpl<T>
 			Class<T> clazz,
 			ValueConvert convert) {
 		super( dslContext.scope().fieldQueryElement( fieldPath, ProjectionTypeKeys.FIELD )
-						.type( clazz, convert ),
+				.type( clazz, convert ),
 				ProjectionAccumulator.single() );
 	}
 

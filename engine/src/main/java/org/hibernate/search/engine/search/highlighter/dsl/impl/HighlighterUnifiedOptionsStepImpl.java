@@ -40,7 +40,8 @@ public class HighlighterUnifiedOptionsStepImpl
 
 	private class HighlighterBoundaryScannerTypeStepImpl
 			implements
-			HighlighterBoundaryScannerTypeStep<HighlighterBoundaryScannerOptionsStepImpl, HighlighterUnifiedOptionsStep> {
+			HighlighterBoundaryScannerTypeStep<HighlighterBoundaryScannerOptionsStepImpl,
+					HighlighterUnifiedOptionsStep> {
 
 		@Override
 		public HighlighterBoundaryScannerOptionsStepImpl sentence() {
@@ -56,8 +57,10 @@ public class HighlighterUnifiedOptionsStepImpl
 		}
 	}
 
-	private class HighlighterBoundaryScannerOptionsStepImpl implements
-			HighlighterBoundaryScannerOptionsStep<HighlighterBoundaryScannerOptionsStepImpl, HighlighterUnifiedOptionsStep> {
+	private class HighlighterBoundaryScannerOptionsStepImpl
+			implements
+			HighlighterBoundaryScannerOptionsStep<HighlighterBoundaryScannerOptionsStepImpl,
+					HighlighterUnifiedOptionsStep> {
 
 		@Override
 		public HighlighterBoundaryScannerOptionsStepImpl locale(Locale locale) {

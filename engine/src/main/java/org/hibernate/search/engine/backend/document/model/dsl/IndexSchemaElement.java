@@ -6,14 +6,13 @@
  */
 package org.hibernate.search.engine.backend.document.model.dsl;
 
-
 import java.util.function.Function;
 
 import org.hibernate.search.engine.backend.document.IndexFieldReference;
+import org.hibernate.search.engine.backend.types.IndexFieldType;
 import org.hibernate.search.engine.backend.types.ObjectStructure;
 import org.hibernate.search.engine.backend.types.dsl.IndexFieldTypeFactory;
 import org.hibernate.search.engine.backend.types.dsl.IndexFieldTypeFinalStep;
-import org.hibernate.search.engine.backend.types.IndexFieldType;
 import org.hibernate.search.engine.search.predicate.definition.PredicateDefinition;
 import org.hibernate.search.util.common.annotation.Incubating;
 
@@ -121,7 +120,8 @@ public interface IndexSchemaElement {
 	 * @param dslFinalStep A final step in the index field type DSL allowing the retrieval of an {@link IndexFieldType}.
 	 * @return A DSL step where the field template can be defined in more details.
 	 */
-	default IndexSchemaFieldTemplateOptionsStep<?> fieldTemplate(String templateName, IndexFieldTypeFinalStep<?> dslFinalStep) {
+	default IndexSchemaFieldTemplateOptionsStep<?> fieldTemplate(String templateName, IndexFieldTypeFinalStep<
+			?> dslFinalStep) {
 		return fieldTemplate( templateName, dslFinalStep.toIndexFieldType() );
 	}
 

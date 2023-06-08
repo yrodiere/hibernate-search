@@ -116,7 +116,7 @@ public class TestDataService {
 
 		Book thesaurusOfLanguages = documentService.createBook(
 				THESAURUS_OF_LANGUAGES_ID,
-				"978-0-00-000006-6" ,
+				"978-0-00-000006-6",
 				"Thesaurus of Indo-European Languages",
 				"Dorothy White",
 				"An entertaining list of about three thousand languages, most of which are long dead",
@@ -258,7 +258,8 @@ public class TestDataService {
 	public void initBooksDataSet(int numberOfBooks) {
 		for ( int i = 0; i < numberOfBooks; i++ ) {
 			String isbn = String.format( Locale.ROOT, "973-0-00-%06d-3", i );
-			documentService.createBook( i, isbn, "Divine Comedy chapter n. " + ( i + 1 ), "Dante Alighieri " + ( i + 1 ),
+			documentService.createBook( i, isbn, "Divine Comedy chapter n. " + ( i + 1 ), "Dante Alighieri "
+					+ ( i + 1 ),
 					"The Divine Comedy is composed of 14,233 lines that are divided into three cantiche (singular cantica) – Inferno (Hell), Purgatorio (Purgatory), and Paradiso (Paradise)",
 					"literature,poem,afterlife"
 			);

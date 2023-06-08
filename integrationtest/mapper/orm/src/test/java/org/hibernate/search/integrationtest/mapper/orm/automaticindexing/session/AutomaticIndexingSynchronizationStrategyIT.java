@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -225,7 +226,8 @@ public class AutomaticIndexingSynchronizationStrategyIT {
 		AtomicReference<CompletableFuture<?>> futureThatTookTooLong = new AtomicReference<>( null );
 
 		SessionFactory sessionFactory = setup(
-				new CustomAutomaticIndexingSynchronizationStrategy( futureThatTookTooLong, OperationSubmitter.blocking() )
+				new CustomAutomaticIndexingSynchronizationStrategy( futureThatTookTooLong, OperationSubmitter
+						.blocking() )
 		);
 		CompletableFuture<?> indexingWorkFuture = new CompletableFuture<>();
 
@@ -247,7 +249,8 @@ public class AutomaticIndexingSynchronizationStrategyIT {
 		AtomicReference<CompletableFuture<?>> futureThatTookTooLong = new AtomicReference<>( null );
 
 		SessionFactory sessionFactory = setup(
-				new CustomAutomaticIndexingSynchronizationStrategy( futureThatTookTooLong, OperationSubmitter.rejecting() )
+				new CustomAutomaticIndexingSynchronizationStrategy( futureThatTookTooLong, OperationSubmitter
+						.rejecting() )
 		);
 		CompletableFuture<?> indexingWorkFuture = new CompletableFuture<>();
 
@@ -448,7 +451,8 @@ public class AutomaticIndexingSynchronizationStrategyIT {
 	public void failure_custom() throws InterruptedException, ExecutionException, TimeoutException {
 		AtomicReference<CompletableFuture<?>> futureThatTookTooLong = new AtomicReference<>( null );
 
-		SessionFactory sessionFactory = setup( new CustomAutomaticIndexingSynchronizationStrategy( futureThatTookTooLong ) );
+		SessionFactory sessionFactory = setup( new CustomAutomaticIndexingSynchronizationStrategy(
+				futureThatTookTooLong ) );
 		CompletableFuture<?> indexingWorkFuture = new CompletableFuture<>();
 		Throwable indexingWorkException = new RuntimeException( "Some message" );
 
@@ -480,7 +484,8 @@ public class AutomaticIndexingSynchronizationStrategyIT {
 								+ HibernateOrmMapperSettings.AUTOMATIC_INDEXING_SYNCHRONIZATION_STRATEGY
 								+ "': 'invalidName'",
 						"Unable to load class 'invalidName'",
-						"No beans defined for type '" + AutomaticIndexingSynchronizationStrategy.class.getName()
+						"No beans defined for type '"
+								+ AutomaticIndexingSynchronizationStrategy.class.getName()
 								+ "' and name 'invalidName' in Hibernate Search's internal registry"
 				);
 	}
@@ -489,8 +494,7 @@ public class AutomaticIndexingSynchronizationStrategyIT {
 			AutomaticIndexingSynchronizationStrategy customStrategy,
 			DocumentCommitStrategy expectedCommitStrategy,
 			DocumentRefreshStrategy expectedRefreshStrategy,
-			CompletableFuture<?> indexingWorkFuture)
-			throws InterruptedException, ExecutionException, TimeoutException {
+			CompletableFuture<?> indexingWorkFuture) throws InterruptedException, ExecutionException, TimeoutException {
 		CompletableFuture<?> transactionThreadFuture = runTransactionInDifferentThread(
 				sessionFactory,
 				customStrategy,
@@ -511,8 +515,7 @@ public class AutomaticIndexingSynchronizationStrategyIT {
 			AutomaticIndexingSynchronizationStrategy overriddenStrategy,
 			DocumentCommitStrategy expectedCommitStrategy,
 			DocumentRefreshStrategy expectedRefreshStrategy,
-			CompletableFuture<?> indexingWorkFuture)
-			throws InterruptedException, ExecutionException, TimeoutException {
+			CompletableFuture<?> indexingWorkFuture) throws InterruptedException, ExecutionException, TimeoutException {
 		CompletableFuture<?> transactionThreadFuture = runTransactionInDifferentThread(
 				sessionFactory,
 				overriddenStrategy,
@@ -534,8 +537,7 @@ public class AutomaticIndexingSynchronizationStrategyIT {
 			AutomaticIndexingSynchronizationStrategy overriddenStrategy,
 			DocumentCommitStrategy expectedCommitStrategy,
 			DocumentRefreshStrategy expectedRefreshStrategy,
-			CompletableFuture<?> indexingWorkFuture)
-			throws InterruptedException, ExecutionException, TimeoutException {
+			CompletableFuture<?> indexingWorkFuture) throws InterruptedException, ExecutionException, TimeoutException {
 		CompletableFuture<?> justBeforeTransactionCommitFuture = new CompletableFuture<>();
 		CompletableFuture<?> transactionThreadFuture = CompletableFuture.runAsync( () -> {
 			with( sessionFactory ).runInTransaction( session -> {
@@ -589,7 +591,8 @@ public class AutomaticIndexingSynchronizationStrategyIT {
 		return sessionFactory;
 	}
 
-	private static Consumer<Throwable> transactionSynchronizationExceptionMatcher(Throwable indexingWorkException, int ... entityIds) {
+	private static Consumer<Throwable> transactionSynchronizationExceptionMatcher(Throwable indexingWorkException,
+			int... entityIds) {
 		StringBuilder entityReferences = new StringBuilder();
 		for ( int entityId : entityIds ) {
 			if ( entityReferences.length() > 0 ) {
@@ -600,21 +603,26 @@ public class AutomaticIndexingSynchronizationStrategyIT {
 		return transactionSynchronizationExceptionMatcher( indexingWorkException, entityReferences.toString() );
 	}
 
-	private static Consumer<Throwable> transactionSynchronizationExceptionMatcher(Throwable indexingWorkException, String entityReferences) {
+	private static Consumer<Throwable> transactionSynchronizationExceptionMatcher(Throwable indexingWorkException,
+			String entityReferences) {
 		return throwable -> assertThat( throwable ).isInstanceOf( HibernateException.class )
 				.extracting( Throwable::getCause ).asInstanceOf( InstanceOfAssertFactories.THROWABLE )
-						.isInstanceOf( SearchException.class )
-						.hasMessageContainingAll(
-								"Unable to index documents for automatic indexing after transaction completion: ",
-								"Indexing failure: " + indexingWorkException.getMessage(),
-								"The following entities may not have been updated correctly in the index: [" + entityReferences + "]"
-						)
+				.isInstanceOf( SearchException.class )
+				.hasMessageContainingAll(
+						"Unable to index documents for automatic indexing after transaction completion: ",
+						"Indexing failure: " + indexingWorkException.getMessage(),
+						"The following entities may not have been updated correctly in the index: ["
+								+ entityReferences
+								+ "]"
+				)
 				.extracting( Throwable::getCause ).asInstanceOf( InstanceOfAssertFactories.THROWABLE )
-						.isInstanceOf( SearchException.class )
-						.hasMessageContainingAll(
-								"Indexing failure: " + indexingWorkException.getMessage(),
-								"The following entities may not have been updated correctly in the index: [" + entityReferences + "]"
-						)
+				.isInstanceOf( SearchException.class )
+				.hasMessageContainingAll(
+						"Indexing failure: " + indexingWorkException.getMessage(),
+						"The following entities may not have been updated correctly in the index: ["
+								+ entityReferences
+								+ "]"
+				)
 				.extracting( Throwable::getCause ).isSameAs( indexingWorkException );
 	}
 
@@ -655,7 +663,8 @@ public class AutomaticIndexingSynchronizationStrategyIT {
 
 		private final OperationSubmitter operationSubmitter;
 
-		private CustomAutomaticIndexingSynchronizationStrategy(AtomicReference<CompletableFuture<?>> futureThatTookTooLong) {
+		private CustomAutomaticIndexingSynchronizationStrategy(AtomicReference<CompletableFuture<
+				?>> futureThatTookTooLong) {
 			this( futureThatTookTooLong, OperationSubmitter.blocking() );
 		}
 

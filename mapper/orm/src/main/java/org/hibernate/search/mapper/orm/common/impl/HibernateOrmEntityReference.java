@@ -24,7 +24,8 @@ public final class HibernateOrmEntityReference implements org.hibernate.search.m
 		return withName( type, type.getSimpleName(), id );
 	}
 
-	public static org.hibernate.search.mapper.orm.common.EntityReference withName(Class<?> type, String name, Object id) {
+	public static org.hibernate.search.mapper.orm.common.EntityReference withName(Class<?> type, String name,
+			Object id) {
 		return new HibernateOrmEntityReference( PojoRawTypeIdentifier.of( type ), name, id );
 	}
 
@@ -60,7 +61,8 @@ public final class HibernateOrmEntityReference implements org.hibernate.search.m
 		if ( !( obj instanceof org.hibernate.search.engine.common.EntityReference ) ) {
 			return false;
 		}
-		org.hibernate.search.engine.common.EntityReference other = (org.hibernate.search.engine.common.EntityReference) obj;
+		org.hibernate.search.engine.common.EntityReference other =
+				(org.hibernate.search.engine.common.EntityReference) obj;
 		return name.equals( other.name() ) && Objects.equals( id, other.id() );
 	}
 

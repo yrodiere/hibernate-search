@@ -21,8 +21,8 @@ import org.hibernate.search.engine.backend.common.DocumentReference;
 import org.hibernate.search.engine.backend.common.spi.MultiEntityOperationExecutionReport;
 import org.hibernate.search.engine.backend.document.IndexFieldReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
-import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
+import org.hibernate.search.engine.backend.work.execution.spi.IndexIndexingPlan;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.configuration.DefaultAnalysisDefinitions;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.TckBackendHelper;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.TckBackendSetupStrategy;
@@ -57,12 +57,14 @@ public class IndexIndexingPlanIT {
 		return new Object[][] {
 				{
 						NO_MULTI_TENANCY_LABEL,
-						(Function<TckBackendHelper, TckBackendSetupStrategy<?>>) TckBackendHelper::createDefaultBackendSetupStrategy,
+						(Function<TckBackendHelper,
+								TckBackendSetupStrategy<?>>) TckBackendHelper::createDefaultBackendSetupStrategy,
 						null
 				},
 				{
 						MULTI_TENANCY_LABEL,
-						(Function<TckBackendHelper, TckBackendSetupStrategy<?>>) TckBackendHelper::createMultiTenancyBackendSetupStrategy,
+						(Function<TckBackendHelper,
+								TckBackendSetupStrategy<?>>) TckBackendHelper::createMultiTenancyBackendSetupStrategy,
 						"tenant_1"
 				}
 		};
@@ -79,7 +81,8 @@ public class IndexIndexingPlanIT {
 
 	private StubSession sessionContext;
 
-	public IndexIndexingPlanIT(String label, Function<TckBackendHelper, TckBackendSetupStrategy<?>> setupStrategyFunction,
+	public IndexIndexingPlanIT(String label, Function<TckBackendHelper,
+			TckBackendSetupStrategy<?>> setupStrategyFunction,
 			String tenantId) {
 		this.setupHelper = new SearchSetupHelper( setupStrategyFunction );
 		this.tenantId = tenantId;
@@ -103,9 +106,12 @@ public class IndexIndexingPlanIT {
 		IndexIndexingPlan plan = index.createIndexingPlan( sessionContext );
 
 		// Add
-		plan.add( referenceProvider( "1" ), document -> document.addValue( index.binding().title, "The Lord of the Rings chap. 1" ) );
-		plan.add( referenceProvider( "2" ), document -> document.addValue( index.binding().title, "The Lord of the Rings chap. 2" ) );
-		plan.add( referenceProvider( "3" ), document -> document.addValue( index.binding().title, "The Lord of the Rings chap. 3" ) );
+		plan.add( referenceProvider( "1" ), document -> document.addValue( index.binding().title,
+				"The Lord of the Rings chap. 1" ) );
+		plan.add( referenceProvider( "2" ), document -> document.addValue( index.binding().title,
+				"The Lord of the Rings chap. 2" ) );
+		plan.add( referenceProvider( "3" ), document -> document.addValue( index.binding().title,
+				"The Lord of the Rings chap. 3" ) );
 		CompletableFuture<?> future = plan.execute( OperationSubmitter.blocking() );
 		Awaitility.await().until( future::isDone );
 		// The operations should succeed.
@@ -117,7 +123,8 @@ public class IndexIndexingPlanIT {
 				.hasDocRefHitsAnyOrder( index.typeName(), "1", "2", "3" );
 
 		// Update
-		plan.addOrUpdate( referenceProvider( "2" ), document -> document.addValue( index.binding().title, "The Boss of the Rings chap. 2" ) );
+		plan.addOrUpdate( referenceProvider( "2" ), document -> document.addValue( index.binding().title,
+				"The Boss of the Rings chap. 2" ) );
 		future = plan.execute( OperationSubmitter.blocking() );
 		Awaitility.await().until( future::isDone );
 		// The operations should succeed.
@@ -189,8 +196,10 @@ public class IndexIndexingPlanIT {
 		setup();
 
 		IndexIndexingPlan plan = index.createIndexingPlan( sessionContext );
-		plan.addOrUpdate( referenceProvider( "1" ), document -> document.addValue( index.binding().title, "Title of Book 1" ) );
-		plan.addOrUpdate( referenceProvider( "2" ), document -> document.addValue( index.binding().title, "Title of Book 2" ) );
+		plan.addOrUpdate( referenceProvider( "1" ), document -> document.addValue( index.binding().title,
+				"Title of Book 1" ) );
+		plan.addOrUpdate( referenceProvider( "2" ), document -> document.addValue( index.binding().title,
+				"Title of Book 2" ) );
 
 		// Trigger failures in the next operations
 		setupHelper.getBackendAccessor().ensureIndexingOperationsFail( index.name() );

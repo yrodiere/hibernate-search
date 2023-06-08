@@ -19,9 +19,9 @@ import org.hibernate.search.mapper.pojo.automaticindexing.impl.PojoImplicitReind
 import org.hibernate.search.mapper.pojo.extractor.mapping.programmatic.ContainerExtractorPath;
 import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
-import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathValueNode;
+import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 import org.hibernate.search.mapper.pojo.model.spi.PojoTypeModel;
 import org.hibernate.search.util.common.AssertionFailure;
@@ -61,8 +61,9 @@ public abstract class AbstractPojoIndexingDependencyCollectorDirectValueNode<P, 
 	final Metadata metadata;
 
 	// First key: inverse side entity type, second key: original side concrete entity type
-	private final Map<PojoRawTypeModel<?>, Map<PojoRawTypeModel<?>, PojoModelPathValueNode>> inverseAssociationPathCache =
-			new HashMap<>();
+	private final Map<PojoRawTypeModel<?>,
+			Map<PojoRawTypeModel<?>, PojoModelPathValueNode>> inverseAssociationPathCache =
+					new HashMap<>();
 
 	AbstractPojoIndexingDependencyCollectorDirectValueNode(PojoIndexingDependencyCollectorPropertyNode<?, P> parentNode,
 			BoundPojoModelPathValueNode<?, P, V> modelPathFromLastEntityNode,
@@ -117,9 +118,13 @@ public abstract class AbstractPojoIndexingDependencyCollectorDirectValueNode<P, 
 		PojoRawTypeModel<?> expectedInverseSideEntityRawType = expectedInverseSideEntityType.rawType();
 		if ( !inverseSideRawEntityType.isSubTypeOf( expectedInverseSideEntityRawType ) ) {
 			throw new AssertionFailure(
-					"Error while building the automatic reindexing resolver at path " + modelPathFromLastEntityNode
+					"Error while building the automatic reindexing resolver at path "
+							+ modelPathFromLastEntityNode
 							+ ": the dependency collector was passed a resolver builder with incorrect type; "
-							+ " got " + inverseSideRawEntityType + ", but a subtype of " + expectedInverseSideEntityRawType
+							+ " got "
+							+ inverseSideRawEntityType
+							+ ", but a subtype of "
+							+ expectedInverseSideEntityRawType
 							+ " was expected."
 			);
 		}
@@ -149,8 +154,8 @@ public abstract class AbstractPojoIndexingDependencyCollectorDirectValueNode<P, 
 				// Use a LinkedHashMap for deterministic iteration
 				result = new LinkedHashMap<>();
 
-				for ( PojoRawTypeModel<?> concreteEntityType :
-						buildingHelper.getConcreteEntitySubTypesForEntitySuperType( originalSideRawEntityType ) ) {
+				for ( PojoRawTypeModel<?> concreteEntityType : buildingHelper
+						.getConcreteEntitySubTypesForEntitySuperType( originalSideRawEntityType ) ) {
 					BoundPojoModelPathValueNode<?, ?, ?> modelPathFromConcreteEntitySubType =
 							applyProcessingPathToSubType( concreteEntityType, modelPathFromLastEntityNode );
 					PojoModelPathValueNode inverseAssociationPath = buildingHelper.pathInverter()

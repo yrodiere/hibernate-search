@@ -19,8 +19,8 @@ import org.hibernate.search.engine.search.aggregation.SearchAggregation;
 import org.hibernate.search.engine.search.aggregation.dsl.AggregationFinalStep;
 import org.hibernate.search.engine.search.aggregation.dsl.SearchAggregationFactory;
 import org.hibernate.search.engine.search.highlighter.SearchHighlighter;
-import org.hibernate.search.engine.search.highlighter.dsl.SearchHighlighterFactory;
 import org.hibernate.search.engine.search.highlighter.dsl.HighlighterFinalStep;
+import org.hibernate.search.engine.search.highlighter.dsl.SearchHighlighterFactory;
 import org.hibernate.search.engine.search.loading.spi.SearchLoadingContextBuilder;
 import org.hibernate.search.engine.search.predicate.SearchPredicate;
 import org.hibernate.search.engine.search.predicate.dsl.PredicateFinalStep;
@@ -39,14 +39,13 @@ import org.hibernate.search.engine.search.sort.dsl.SearchSortFactory;
 import org.hibernate.search.engine.search.sort.dsl.SortFinalStep;
 
 public abstract class AbstractSearchQueryOptionsStep<
-				S extends SearchQueryOptionsStep<S, H, LOS, SF, AF>,
-				H,
-				LOS,
-				PDF extends SearchPredicateFactory,
-				SF extends SearchSortFactory,
-				AF extends SearchAggregationFactory,
-				SC extends SearchQueryIndexScope<?>
-		>
+		S extends SearchQueryOptionsStep<S, H, LOS, SF, AF>,
+		H,
+		LOS,
+		PDF extends SearchPredicateFactory,
+		SF extends SearchSortFactory,
+		AF extends SearchAggregationFactory,
+		SC extends SearchQueryIndexScope<?>>
 		implements SearchQueryWhereStep<S, H, LOS, PDF>, SearchQueryOptionsStep<S, H, LOS, SF, AF> {
 
 	protected final SC scope;
@@ -114,7 +113,8 @@ public abstract class AbstractSearchQueryOptionsStep<
 	}
 
 	@Override
-	public S highlighter(Function<? super SearchHighlighterFactory, ? extends HighlighterFinalStep> highlighterContributor) {
+	public S highlighter(Function<? super SearchHighlighterFactory,
+			? extends HighlighterFinalStep> highlighterContributor) {
 		searchQueryBuilder.highlighter(
 				highlighterContributor.apply(
 						highlighterFactory()
@@ -131,7 +131,8 @@ public abstract class AbstractSearchQueryOptionsStep<
 	}
 
 	@Override
-	public S highlighter(String highlighterName, Function<? super SearchHighlighterFactory, ? extends HighlighterFinalStep> highlighterContributor) {
+	public S highlighter(String highlighterName, Function<? super SearchHighlighterFactory,
+			? extends HighlighterFinalStep> highlighterContributor) {
 		searchQueryBuilder.highlighter(
 				highlighterName,
 				highlighterContributor.apply(
@@ -175,7 +176,8 @@ public abstract class AbstractSearchQueryOptionsStep<
 	}
 
 	@Override
-	public <A> S aggregation(AggregationKey<A> key, Function<? super AF, ? extends AggregationFinalStep<A>> aggregationContributor) {
+	public <A> S aggregation(AggregationKey<A> key, Function<? super AF,
+			? extends AggregationFinalStep<A>> aggregationContributor) {
 		AF factory = aggregationFactory();
 		SearchAggregation<A> aggregation = aggregationContributor.apply( factory ).toAggregation();
 		searchQueryBuilder.aggregation( key, aggregation );

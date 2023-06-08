@@ -11,7 +11,5 @@ package org.hibernate.search.query.dsl;
  * @deprecated See the deprecation note on {@link QueryBuilder}.
  */
 @Deprecated
-public interface DiscreteFacetContext extends FacetParameterContext {
-}
-
+public interface DiscreteFacetContext extends FacetParameterContext {}
 

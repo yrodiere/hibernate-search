@@ -29,24 +29,23 @@ import org.junit.Test;
 public class AnalysisIT {
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	@Test
 	public void simple() {
 		EntityManagerFactory entityManagerFactory = setupHelper.start()
 				.withProperties(
-						isLucene()
-								? "/analysis/lucene-simple.properties"
-								: "/analysis/elasticsearch-simple.properties"
+						isLucene() ? "/analysis/lucene-simple.properties" : "/analysis/elasticsearch-simple.properties"
 				)
 				.withProperty(
 						HibernateOrmMapperSettings.MAPPING_CONFIGURER,
 						(HibernateOrmSearchMappingConfigurer) context -> context.programmaticMapping()
 								.type( IndexedEntity.class )
-										.property( "text" )
-												.fullTextField( "english" ).analyzer( "english" )
-												.fullTextField( "french" ).analyzer( "french" )
-												.keywordField( "lowercase" ).normalizer( "lowercase" )
+								.property( "text" )
+								.fullTextField( "english" ).analyzer( "english" )
+								.fullTextField( "french" ).analyzer( "french" )
+								.keywordField( "lowercase" ).normalizer( "lowercase" )
 				)
 				.setup( IndexedEntity.class );
 
@@ -96,9 +95,9 @@ public class AnalysisIT {
 	public void default_override() {
 		EntityManagerFactory entityManagerFactory = setupHelper.start()
 				.withProperties(
-						isLucene()
-								? "/analysis/lucene-default-override.properties"
-								: "/analysis/elasticsearch-default-override.properties"
+						isLucene() ?
+								"/analysis/lucene-default-override.properties" :
+								"/analysis/elasticsearch-default-override.properties"
 				)
 				.withProperty(
 						HibernateOrmMapperSettings.MAPPING_CONFIGURER,

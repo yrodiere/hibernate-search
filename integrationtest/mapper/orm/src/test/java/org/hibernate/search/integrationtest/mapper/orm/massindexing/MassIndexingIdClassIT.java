@@ -10,6 +10,7 @@ import static org.assertj.core.api.Fail.fail;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -73,8 +74,8 @@ public class MassIndexingIdClassIT {
 			// add operations on indexes can follow any random order,
 			// since they are executed by different threads
 			backendMock.expectWorks(
-							IdClassEntity.INDEX, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
-					)
+					IdClassEntity.INDEX, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
+			)
 					.add( "1", b -> b.field( "keyword", "key-A" ) )
 					.add( "2", b -> b.field( "keyword", "key-C" ) )
 					.add( "3", b -> b.field( "keyword", "key-C" ) )
@@ -192,7 +193,8 @@ public class MassIndexingIdClassIT {
 				return false;
 			}
 			MyIdClass myIdClass = (MyIdClass) o;
-			return Objects.equals( id1, myIdClass.id1 ) &&
+			return Objects.equals( id1, myIdClass.id1 )
+					&&
 					Objects.equals( id2, myIdClass.id2 );
 		}
 

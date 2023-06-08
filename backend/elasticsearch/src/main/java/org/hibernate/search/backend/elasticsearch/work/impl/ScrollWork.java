@@ -13,7 +13,6 @@ import org.hibernate.search.engine.common.timing.Deadline;
 
 import com.google.gson.JsonObject;
 
-
 public class ScrollWork<R> extends AbstractNonBulkableWork<R> {
 
 	private final ElasticsearchSearchResultExtractor<R> resultExtractor;
@@ -62,9 +61,9 @@ public class ScrollWork<R> extends AbstractNonBulkableWork<R> {
 
 			ElasticsearchRequest.Builder builder =
 					ElasticsearchRequest.post()
-					.pathComponent( Paths._SEARCH )
-					.pathComponent( Paths.SCROLL )
-					.body( body );
+							.pathComponent( Paths._SEARCH )
+							.pathComponent( Paths.SCROLL )
+							.body( body );
 
 			return builder.build();
 		}

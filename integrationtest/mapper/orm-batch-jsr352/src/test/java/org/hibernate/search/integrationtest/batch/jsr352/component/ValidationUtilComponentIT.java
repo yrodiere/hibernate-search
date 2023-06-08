@@ -62,7 +62,8 @@ public class ValidationUtilComponentIT {
 		assertThatThrownBy( () -> ValidationUtil.validateEntityTypes( null, null, null, serializedEntityTypes ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContaining( "The following selected entity types aren't indexable: "
-						+ NotIndexed.class.getName() + ". Check whether they are annotated with '@Indexed'." );
+						+ NotIndexed.class.getName()
+						+ ". Check whether they are annotated with '@Indexed'." );
 	}
 
 	@Test(expected = SearchException.class)

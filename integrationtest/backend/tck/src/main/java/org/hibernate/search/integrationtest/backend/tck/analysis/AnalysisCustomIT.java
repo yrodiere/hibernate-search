@@ -12,19 +12,19 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.hibernate.search.engine.backend.analysis.AnalyzerNames;
+import org.hibernate.search.engine.backend.common.DocumentReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
 import org.hibernate.search.engine.backend.types.dsl.StandardIndexFieldTypeOptionsStep;
 import org.hibernate.search.engine.backend.types.dsl.StringIndexFieldTypeOptionsStep;
+import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.types.KeywordStringFieldTypeDescriptor;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.SimpleFieldModel;
-import org.hibernate.search.util.impl.integrationtest.mapper.stub.SingleFieldDocumentBuilder;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.TckBackendHelper;
+import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 import org.hibernate.search.util.impl.integrationtest.common.assertion.SearchResultAssert;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
+import org.hibernate.search.util.impl.integrationtest.mapper.stub.SingleFieldDocumentBuilder;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMappingScope;
-import org.hibernate.search.engine.backend.common.DocumentReference;
-import org.hibernate.search.engine.search.query.SearchQuery;
-import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,8 +74,7 @@ public class AnalysisCustomIT {
 		 *     <li>A stopword token filter removing the stopword "stopword"</li>
 		 * </ul>
 		 */
-		ANALYZER_PATTERNS_STOPWORD("analyzer_patterns_stopword")
-		;
+		ANALYZER_PATTERNS_STOPWORD("analyzer_patterns_stopword");
 
 		public final String name;
 
@@ -85,7 +84,8 @@ public class AnalysisCustomIT {
 	}
 
 	@Rule
-	public final SearchSetupHelper setupHelper = new SearchSetupHelper( TckBackendHelper::createAnalysisCustomBackendSetupStrategy );
+	public final SearchSetupHelper setupHelper = new SearchSetupHelper(
+			TckBackendHelper::createAnalysisCustomBackendSetupStrategy );
 
 	private SimpleMappedIndex<IndexBinding> index;
 
@@ -255,7 +255,8 @@ public class AnalysisCustomIT {
 	}
 
 	private void setup(String fieldName,
-			Function<StringIndexFieldTypeOptionsStep<?>, StandardIndexFieldTypeOptionsStep<?, String>> typeContributor) {
+			Function<StringIndexFieldTypeOptionsStep<?>,
+					StandardIndexFieldTypeOptionsStep<?, String>> typeContributor) {
 		index = SimpleMappedIndex.of( ctx -> new IndexBinding( ctx, fieldName, typeContributor ) );
 		setupHelper.start().withIndex( index ).setup();
 	}
@@ -270,7 +271,8 @@ public class AnalysisCustomIT {
 		final SimpleFieldModel<String> field;
 
 		IndexBinding(IndexSchemaElement root, String fieldName,
-				Function<StringIndexFieldTypeOptionsStep<?>, StandardIndexFieldTypeOptionsStep<?, String>> typeContributor) {
+				Function<StringIndexFieldTypeOptionsStep<?>,
+						StandardIndexFieldTypeOptionsStep<?, String>> typeContributor) {
 			this.field = SimpleFieldModel.mapperWithOverride( KeywordStringFieldTypeDescriptor.INSTANCE,
 					f -> typeContributor.apply( f.asString() ) )
 					.map( root, fieldName );

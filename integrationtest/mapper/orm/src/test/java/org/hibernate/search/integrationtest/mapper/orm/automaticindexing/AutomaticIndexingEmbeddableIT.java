@@ -59,7 +59,8 @@ public class AutomaticIndexingEmbeddableIT {
 	public MethodRule setupHolderMethodRule = setupHolder.methodRule();
 
 	@ReusableOrmSetupHolder.Setup
-	public void setup(OrmSetupHelper.SetupContext setupContext, ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
+	public void setup(OrmSetupHelper.SetupContext setupContext,
+			ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
 		// Embedded deserialization rules in ORM are just weird:
 		// when all columns are empty, an embedded is sometimes deserialized as `null`
 		// (though that can be prevented with hibernate.create_empty_composites.enabled = true),
@@ -141,9 +142,9 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -169,8 +170,8 @@ public class AutomaticIndexingEmbeddableIT {
 													.field( "includedInEmbeddedSingle", "initialValue" )
 											)
 									)
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -197,8 +198,8 @@ public class AutomaticIndexingEmbeddableIT {
 													.field( "includedInEmbeddedSingle", "updatedValue" )
 											)
 									)
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -213,9 +214,9 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> {
-								b2.objectField( "containedEmbeddedList", b3 -> { } );
-								b2.objectField( "containedBidirectionalEmbedded", b3 -> { } );
-								b2.objectField( "containedEmbeddedSingle", b3 -> { } );
+								b2.objectField( "containedEmbeddedList", b3 -> {} );
+								b2.objectField( "containedBidirectionalEmbedded", b3 -> {} );
+								b2.objectField( "containedEmbeddedSingle", b3 -> {} );
 							} )
 					);
 		} );
@@ -251,8 +252,8 @@ public class AutomaticIndexingEmbeddableIT {
 													.field( "includedInEmbeddedSingle", "initialValue" )
 											)
 									)
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -279,8 +280,8 @@ public class AutomaticIndexingEmbeddableIT {
 													.field( "includedInEmbeddedSingle", "updatedValue" )
 											)
 									)
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -295,9 +296,9 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -333,8 +334,8 @@ public class AutomaticIndexingEmbeddableIT {
 													.field( "includedInEmbeddedSingle", "initialValue" )
 											)
 									)
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -353,8 +354,8 @@ public class AutomaticIndexingEmbeddableIT {
 													.field( "includedInEmbeddedSingle", "updatedValue" )
 											)
 									)
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -387,9 +388,9 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -410,13 +411,13 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
 									.objectField( "containedEmbeddedList", b3 -> b3
 											.objectField( "containedList", b4 -> b4
 													.field( "includedInEmbeddedList", "initialValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -429,7 +430,8 @@ public class AutomaticIndexingEmbeddableIT {
 			containedEntity.setIncludedInEmbeddedList( "updatedValue" );
 
 			ContainingEntity containingEntity1 = session.get( ContainingEntity.class, 2 );
-			containingEntity1.getContainedEmbeddedList().getContainedList().get( 0 ).getContainingAsEmbeddedList().clear();
+			containingEntity1.getContainedEmbeddedList().getContainedList().get( 0 ).getContainingAsEmbeddedList()
+					.clear();
 			containingEntity1.setContainedEmbeddedList( new ListContainingEmbeddable( containedEntity ) );
 			containedEntity.getContainingAsEmbeddedList().add( containingEntity1 );
 
@@ -438,13 +440,13 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
 									.objectField( "containedEmbeddedList", b3 -> b3
 											.objectField( "containedList", b4 -> b4
 													.field( "includedInEmbeddedList", "updatedValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -453,15 +455,16 @@ public class AutomaticIndexingEmbeddableIT {
 		// Test removing a value
 		setupHolder.runInTransaction( session -> {
 			ContainingEntity containingEntity1 = session.get( ContainingEntity.class, 2 );
-			containingEntity1.getContainedEmbeddedList().getContainedList().get( 0 ).getContainingAsEmbeddedList().clear();
+			containingEntity1.getContainedEmbeddedList().getContainedList().get( 0 ).getContainingAsEmbeddedList()
+					.clear();
 			containingEntity1.setContainedEmbeddedList( null );
 
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> {
-								b2.objectField( "containedEmbeddedSingle", b3 -> { } );
-								b2.objectField( "containedBidirectionalEmbedded", b3 -> { } );
-								b2.objectField( "containedEmbeddedList", b3 -> { } );
+								b2.objectField( "containedEmbeddedSingle", b3 -> {} );
+								b2.objectField( "containedBidirectionalEmbedded", b3 -> {} );
+								b2.objectField( "containedEmbeddedList", b3 -> {} );
 							} )
 					);
 		} );
@@ -485,9 +488,9 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -508,13 +511,13 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
 									.objectField( "containedEmbeddedList", b3 -> b3
 											.objectField( "containedList", b4 -> b4
 													.field( "includedInEmbeddedList", "firstValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -535,7 +538,7 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
 									.objectField( "containedEmbeddedList", b3 -> b3
 											.objectField( "containedList", b4 -> b4
 													.field( "includedInEmbeddedList", "firstValue" )
@@ -544,7 +547,7 @@ public class AutomaticIndexingEmbeddableIT {
 													.field( "includedInEmbeddedList", "secondValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -560,13 +563,13 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
 									.objectField( "containedEmbeddedList", b3 -> b3
 											.objectField( "containedList", b4 -> b4
 													.field( "includedInEmbeddedList", "secondValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -597,13 +600,13 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
 									.objectField( "containedEmbeddedList", b3 -> b3
 											.objectField( "containedList", b4 -> b4
 													.field( "includedInEmbeddedList", "initialValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -617,13 +620,13 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
 									.objectField( "containedEmbeddedList", b3 -> b3
 											.objectField( "containedList", b4 -> b4
 													.field( "includedInEmbeddedList", "updatedValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -656,9 +659,9 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -679,14 +682,14 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedElementCollection", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInElementCollection", "firstValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -707,8 +710,8 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedElementCollection", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInElementCollection", "firstValue" )
@@ -719,7 +722,7 @@ public class AutomaticIndexingEmbeddableIT {
 													.field( "includedInElementCollection", "secondValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -735,14 +738,14 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedElementCollection", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInElementCollection", "secondValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -773,10 +776,10 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedElementCollection", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedElementCollection", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -809,14 +812,14 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedElementCollection", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInElementCollection", "initialValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -839,14 +842,14 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedElementCollection", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
-												.field( "includedInElementCollection", "updatedValue" )
+													.field( "includedInElementCollection", "updatedValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -862,10 +865,10 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedElementCollection", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedElementCollection", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -896,14 +899,14 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedElementCollection", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInElementCollection", "initialValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -917,14 +920,14 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedElementCollection", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInElementCollection", "updatedValue" )
 											)
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -955,7 +958,8 @@ public class AutomaticIndexingEmbeddableIT {
 			containedEntity.setId( 4 );
 			containedEntity.setIncludedInContainedSingleWithInverseSideEmbedded( "initialValue" );
 			containingEntity1.setContainedSingleWithInverseSideEmbedded( containedEntity );
-			containedEntity.setContainingAsSingleWithInverseSideEmbedded( new InverseSideEmbeddable( containingEntity1 ) );
+			containedEntity.setContainingAsSingleWithInverseSideEmbedded( new InverseSideEmbeddable(
+					containingEntity1 ) );
 
 			session.persist( containedEntity );
 			session.persist( containingEntity1 );
@@ -964,12 +968,12 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedSingleWithInverseSideEmbedded", b3 -> b3
 											.field( "includedInContainedSingleWithInverseSideEmbedded", "initialValue" )
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -991,31 +995,29 @@ public class AutomaticIndexingEmbeddableIT {
 				backendMock.expectWorks( IndexedEntity.INDEX )
 						.addOrUpdate( "1", b -> b
 								.objectField( "child", b2 -> b2
-										.objectField( "containedEmbeddedSingle", b3 -> {
-										} )
-										.objectField( "containedEmbeddedList", b3 -> {
-										} )
-										.objectField( "containedBidirectionalEmbedded", b3 -> {
-										} )
+										.objectField( "containedEmbeddedSingle", b3 -> {} )
+										.objectField( "containedEmbeddedList", b3 -> {} )
+										.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 								)
 						);
 			}
 			session.flush();
 
 			containingEntity1.setContainedSingleWithInverseSideEmbedded( containedEntity );
-			containedEntity.setContainingAsSingleWithInverseSideEmbedded( new InverseSideEmbeddable( containingEntity1 ) );
+			containedEntity.setContainingAsSingleWithInverseSideEmbedded( new InverseSideEmbeddable(
+					containingEntity1 ) );
 
 			session.persist( containedEntity );
 
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedSingleWithInverseSideEmbedded", b3 -> b3
 											.field( "includedInContainedSingleWithInverseSideEmbedded", "updatedValue" )
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -1031,9 +1033,9 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -1055,7 +1057,8 @@ public class AutomaticIndexingEmbeddableIT {
 			containedEntity1.setId( 4 );
 			containedEntity1.setIncludedInContainedSingleWithInverseSideEmbedded( "initialValue" );
 			containingEntity1.setContainedSingleWithInverseSideEmbedded( containedEntity1 );
-			containedEntity1.setContainingAsSingleWithInverseSideEmbedded( new InverseSideEmbeddable( containingEntity1 ) );
+			containedEntity1.setContainingAsSingleWithInverseSideEmbedded( new InverseSideEmbeddable(
+					containingEntity1 ) );
 
 			session.persist( containedEntity1 );
 			session.persist( containingEntity1 );
@@ -1064,12 +1067,12 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedSingleWithInverseSideEmbedded", b3 -> b3
 											.field( "includedInContainedSingleWithInverseSideEmbedded", "initialValue" )
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -1083,12 +1086,12 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedSingleWithInverseSideEmbedded", b3 -> b3
 											.field( "includedInContainedSingleWithInverseSideEmbedded", "updatedValue" )
 									)
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -1121,9 +1124,9 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -1137,15 +1140,16 @@ public class AutomaticIndexingEmbeddableIT {
 
 			ContainingEntity containingEntity1 = session.get( ContainingEntity.class, 2 );
 			containingEntity1.setContainedBidirectionalEmbedded( new BidirectionalEmbeddable( containedEntity ) );
-			containedEntity.setContainingAsBidirectionalEmbedded( new InverseSideBidirectionalEmbeddable( containingEntity1 ) );
+			containedEntity.setContainingAsBidirectionalEmbedded( new InverseSideBidirectionalEmbeddable(
+					containingEntity1 ) );
 
 			session.persist( containedEntity );
 
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedBidirectionalEmbedded", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInBidirectionalEmbedded", "initialValue" )
@@ -1166,15 +1170,16 @@ public class AutomaticIndexingEmbeddableIT {
 			containingEntity1.getContainedBidirectionalEmbedded().getContainedSingle()
 					.getContainingAsBidirectionalEmbedded().setContainingAsSingle( null );
 			containingEntity1.setContainedBidirectionalEmbedded( new BidirectionalEmbeddable( containedEntity ) );
-			containedEntity.setContainingAsBidirectionalEmbedded( new InverseSideBidirectionalEmbeddable( containingEntity1 ) );
+			containedEntity.setContainingAsBidirectionalEmbedded( new InverseSideBidirectionalEmbeddable(
+					containingEntity1 ) );
 
 			session.persist( containedEntity );
 
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedBidirectionalEmbedded", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInBidirectionalEmbedded", "updatedValue" )
@@ -1195,9 +1200,9 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> {
-								b2.objectField( "containedEmbeddedSingle", b3 -> { } );
-								b2.objectField( "containedEmbeddedList", b3 -> { } );
-								b2.objectField( "containedBidirectionalEmbedded", b3 -> { } );
+								b2.objectField( "containedEmbeddedSingle", b3 -> {} );
+								b2.objectField( "containedEmbeddedList", b3 -> {} );
+								b2.objectField( "containedBidirectionalEmbedded", b3 -> {} );
 							} )
 					);
 		} );
@@ -1219,7 +1224,8 @@ public class AutomaticIndexingEmbeddableIT {
 			containedEntity.setId( 4 );
 			containedEntity.setIncludedInBidirectionalEmbedded( "initialValue" );
 			containingEntity1.setContainedBidirectionalEmbedded( new BidirectionalEmbeddable( containedEntity ) );
-			containedEntity.setContainingAsBidirectionalEmbedded( new InverseSideBidirectionalEmbeddable( containingEntity1 ) );
+			containedEntity.setContainingAsBidirectionalEmbedded( new InverseSideBidirectionalEmbeddable(
+					containingEntity1 ) );
 
 			session.persist( containedEntity );
 			session.persist( containingEntity1 );
@@ -1228,8 +1234,8 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedBidirectionalEmbedded", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInBidirectionalEmbedded", "initialValue" )
@@ -1250,15 +1256,16 @@ public class AutomaticIndexingEmbeddableIT {
 			containingEntity1.getContainedBidirectionalEmbedded().getContainedSingle()
 					.getContainingAsBidirectionalEmbedded().setContainingAsSingle( null );
 			containingEntity1.getContainedBidirectionalEmbedded().setContainedSingle( containedEntity );
-			containedEntity.setContainingAsBidirectionalEmbedded( new InverseSideBidirectionalEmbeddable( containingEntity1 ) );
+			containedEntity.setContainingAsBidirectionalEmbedded( new InverseSideBidirectionalEmbeddable(
+					containingEntity1 ) );
 
 			session.persist( containedEntity );
 
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedBidirectionalEmbedded", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInBidirectionalEmbedded", "updatedValue" )
@@ -1279,9 +1286,9 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
-									.objectField( "containedBidirectionalEmbedded", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
+									.objectField( "containedBidirectionalEmbedded", b3 -> {} )
 							)
 					);
 		} );
@@ -1303,7 +1310,8 @@ public class AutomaticIndexingEmbeddableIT {
 			containedEntity1.setId( 4 );
 			containedEntity1.setIncludedInBidirectionalEmbedded( "initialValue" );
 			containingEntity1.setContainedBidirectionalEmbedded( new BidirectionalEmbeddable( containedEntity1 ) );
-			containedEntity1.setContainingAsBidirectionalEmbedded( new InverseSideBidirectionalEmbeddable( containingEntity1 ) );
+			containedEntity1.setContainingAsBidirectionalEmbedded( new InverseSideBidirectionalEmbeddable(
+					containingEntity1 ) );
 
 			session.persist( containedEntity1 );
 			session.persist( containingEntity1 );
@@ -1312,8 +1320,8 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.add( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedBidirectionalEmbedded", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInBidirectionalEmbedded", "initialValue" )
@@ -1332,8 +1340,8 @@ public class AutomaticIndexingEmbeddableIT {
 			backendMock.expectWorks( IndexedEntity.INDEX )
 					.addOrUpdate( "1", b -> b
 							.objectField( "child", b2 -> b2
-									.objectField( "containedEmbeddedSingle", b3 -> { } )
-									.objectField( "containedEmbeddedList", b3 -> { } )
+									.objectField( "containedEmbeddedSingle", b3 -> {} )
+									.objectField( "containedEmbeddedList", b3 -> {} )
 									.objectField( "containedBidirectionalEmbedded", b3 -> b3
 											.objectField( "containedSingle", b4 -> b4
 													.field( "includedInBidirectionalEmbedded", "updatedValue" )
@@ -1372,7 +1380,8 @@ public class AutomaticIndexingEmbeddableIT {
 		@IndexedEmbedded(includePaths = "containedList.includedInEmbeddedList")
 		@AssociationOverride(
 				name = "containedList",
-				joinTable = @JoinTable(name = "containing_embeddedList", inverseJoinColumns = @JoinColumn(name = "CEList_containedList"))
+				joinTable = @JoinTable(name = "containing_embeddedList", inverseJoinColumns = @JoinColumn(
+						name = "CEList_containedList"))
 		)
 		@Access(AccessType.PROPERTY)
 		private ListContainingEmbeddable containedEmbeddedList = new ListContainingEmbeddable();
@@ -1521,7 +1530,7 @@ public class AutomaticIndexingEmbeddableIT {
 		 * Anyway, we can't use mappedBy in this specific case.
 		 */
 		@ManyToMany
-		@JoinTable(name = "contained_containingEC", inverseJoinColumns = { @JoinColumn( name = "containingEC_id" ) })
+		@JoinTable(name = "contained_containingEC", inverseJoinColumns = { @JoinColumn(name = "containingEC_id") })
 		@OrderBy("id asc") // Make sure the iteration order is predictable
 		@AssociationInverseSide(
 				inversePath = @ObjectPath({
@@ -1537,7 +1546,8 @@ public class AutomaticIndexingEmbeddableIT {
 
 		@Embedded
 		@Access(AccessType.PROPERTY)
-		private InverseSideBidirectionalEmbeddable containingAsBidirectionalEmbedded = new InverseSideBidirectionalEmbeddable();
+		private InverseSideBidirectionalEmbeddable containingAsBidirectionalEmbedded =
+				new InverseSideBidirectionalEmbeddable();
 
 		@Basic
 		@GenericField
@@ -1604,7 +1614,8 @@ public class AutomaticIndexingEmbeddableIT {
 			return containingAsBidirectionalEmbedded;
 		}
 
-		public void setContainingAsBidirectionalEmbedded(InverseSideBidirectionalEmbeddable containingAsBidirectionalEmbedded) {
+		public void setContainingAsBidirectionalEmbedded(
+				InverseSideBidirectionalEmbeddable containingAsBidirectionalEmbedded) {
 			this.containingAsBidirectionalEmbedded = containingAsBidirectionalEmbedded;
 		}
 
@@ -1724,7 +1735,7 @@ public class AutomaticIndexingEmbeddableIT {
 		@JoinColumn(name = "containing")
 		@AssociationInverseSide(
 				inversePath = @ObjectPath(
-						@PropertyValue(propertyName = "containedSingleWithInverseSideEmbedded")
+					@PropertyValue(propertyName = "containedSingleWithInverseSideEmbedded")
 				)
 		)
 		private ContainingEntity containingAsSingle;

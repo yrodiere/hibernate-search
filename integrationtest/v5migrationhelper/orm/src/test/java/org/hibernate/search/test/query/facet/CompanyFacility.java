@@ -39,6 +39,7 @@ public class CompanyFacility {
 		this.country = country;
 
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -61,9 +62,15 @@ public class CompanyFacility {
 
 	@Override
 	public String toString() {
-		return "CompanyFacility{" +
-				"id=" + id +
-				", country='" + country + '\'' +
+		return "CompanyFacility{"
+				+
+				"id="
+				+ id
+				+
+				", country='"
+				+ country
+				+ '\''
+				+
 				'}';
 	}
 }

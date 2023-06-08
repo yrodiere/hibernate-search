@@ -248,7 +248,8 @@ public class BeanResolverImplBaseTest {
 
 	@Test
 	public void resolve_matchingReflection() {
-		BeanNotFoundException beanManagerNotFoundException = new BeanNotFoundException( "cannot find from beanManager" );
+		BeanNotFoundException beanManagerNotFoundException = new BeanNotFoundException(
+				"cannot find from beanManager" );
 
 		// resolve(Class)
 		when( beanManagerBeanProviderMock.forType( ReflectionType1.class ) )
@@ -302,7 +303,8 @@ public class BeanResolverImplBaseTest {
 
 	@Test
 	public void resolve_noMatch() {
-		BeanNotFoundException beanManagerNotFoundException = new BeanNotFoundException( "cannot find from beanManager" );
+		BeanNotFoundException beanManagerNotFoundException = new BeanNotFoundException(
+				"cannot find from beanManager" );
 		RuntimeException classNotFoundException = new RuntimeException( "cannot find class" );
 
 		// resolve(Class)
@@ -310,7 +312,9 @@ public class BeanResolverImplBaseTest {
 				.thenThrow( beanManagerNotFoundException );
 		assertThatThrownBy( () -> beanResolver.resolve( InvalidType.class, BeanRetrieval.ANY ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "'",
 						"No beans defined for type", "in Hibernate Search's internal registry",
 						beanManagerNotFoundException.getMessage(),
 						"missing constructor" )
@@ -322,7 +326,9 @@ public class BeanResolverImplBaseTest {
 				.thenThrow( beanManagerNotFoundException );
 		assertThatThrownBy( () -> beanResolver.resolve( BeanReference.of( InvalidType.class ) ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "'",
 						"No beans defined for type", "in Hibernate Search's internal registry",
 						beanManagerNotFoundException.getMessage(),
 						"missing constructor" )
@@ -336,8 +342,9 @@ public class BeanResolverImplBaseTest {
 				.thenThrow( classNotFoundException );
 		assertThatThrownBy( () -> beanResolver.resolve( InvalidType.class, "someName", BeanRetrieval.ANY ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName()
-								+ "' and name 'someName'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "' and name 'someName'",
 						"No beans defined for type", "in Hibernate Search's internal registry",
 						beanManagerNotFoundException.getMessage(),
 						classNotFoundException.getMessage() )
@@ -351,8 +358,9 @@ public class BeanResolverImplBaseTest {
 				.thenThrow( classNotFoundException );
 		assertThatThrownBy( () -> beanResolver.resolve( BeanReference.of( InvalidType.class, "someName" ) ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName()
-								+ "' and name 'someName'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "' and name 'someName'",
 						"No beans defined for type", "in Hibernate Search's internal registry",
 						beanManagerNotFoundException.getMessage(),
 						classNotFoundException.getMessage() )
@@ -371,7 +379,9 @@ public class BeanResolverImplBaseTest {
 						BeanReference.of( Object.class, InvalidType.class.getName() ) )
 		) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InvalidType.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InvalidType.class.getName()
+						+ "'",
 						"No beans defined for type", "in Hibernate Search's internal registry",
 						beanManagerNotFoundException.getMessage(),
 						"missing constructor" )
@@ -418,14 +428,17 @@ public class BeanResolverImplBaseTest {
 
 	@Test
 	public void resolve_ambiguousInternalBean() {
-		BeanNotFoundException beanManagerNotFoundException = new BeanNotFoundException( "cannot find from beanManager" );
+		BeanNotFoundException beanManagerNotFoundException = new BeanNotFoundException(
+				"cannot find from beanManager" );
 
 		// resolve(Class)
 		when( beanManagerBeanProviderMock.forType( InternalType3.class ) )
 				.thenThrow( beanManagerNotFoundException );
 		assertThatThrownBy( () -> beanResolver.resolve( InternalType3.class, BeanRetrieval.ANY ) )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContainingAll( "Unable to resolve bean reference to type '" + InternalType3.class.getName() + "'",
+				.hasMessageContainingAll( "Unable to resolve bean reference to type '"
+						+ InternalType3.class.getName()
+						+ "'",
 						"Ambiguous bean reference to type '" + InternalType3.class.getName() + "'",
 						"multiple beans are explicitly defined for this type",
 						beanManagerNotFoundException.getMessage(),
@@ -450,7 +463,8 @@ public class BeanResolverImplBaseTest {
 		BeanHolder<List<RoleType>> beansWithRole = beanResolver.resolve( beanReferencesWithRole );
 		verifyNoOtherInteractionsAndReset();
 		assertThat( beansWithRole.get() )
-				.containsExactlyInAnyOrder( beanHolder1.get(), beanHolder2.get(), beanHolder3.get(), beanHolder4.get() );
+				.containsExactlyInAnyOrder( beanHolder1.get(), beanHolder2.get(), beanHolder3.get(), beanHolder4
+						.get() );
 
 		// Roles should ignore inheritance
 		List<BeanReference<Object>> beanReferencesWithObjectRole = beanResolver.allConfiguredForRole( Object.class );
@@ -459,7 +473,8 @@ public class BeanResolverImplBaseTest {
 		assertThat( beansWithObjectRole.get() ).isEmpty();
 
 		// Unassigned roles should result in an empty list
-		List<BeanReference<NonRoleType>> beanReferencesWithNonRole = beanResolver.allConfiguredForRole( NonRoleType.class );
+		List<BeanReference<NonRoleType>> beanReferencesWithNonRole = beanResolver.allConfiguredForRole(
+				NonRoleType.class );
 		BeanHolder<List<NonRoleType>> beansWithNonRole = beanResolver.resolve( beanReferencesWithNonRole );
 		verifyNoOtherInteractionsAndReset();
 		assertThat( beansWithNonRole.get() ).isEmpty();
@@ -479,11 +494,9 @@ public class BeanResolverImplBaseTest {
 				roleInternalBean3FactoryMock, roleInternalBean4FactoryMock );
 	}
 
-	private interface RoleType {
-	}
+	private interface RoleType {}
 
-	private interface NonRoleType {
-	}
+	private interface NonRoleType {}
 
 	private static class InternalType1 implements RoleType {
 		// No public, no-arg constructor
@@ -521,14 +534,11 @@ public class BeanResolverImplBaseTest {
 		}
 	}
 
-	public static class ReflectionType1 {
-	}
+	public static class ReflectionType1 {}
 
-	public static class ReflectionType2 {
-	}
+	public static class ReflectionType2 {}
 
-	public static class ReflectionType3 {
-	}
+	public static class ReflectionType3 {}
 
 	private static class InvalidType {
 		// No public, no-arg constructor

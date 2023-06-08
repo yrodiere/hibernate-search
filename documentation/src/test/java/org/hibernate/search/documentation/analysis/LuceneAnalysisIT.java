@@ -29,7 +29,8 @@ import org.junit.Test;
 public class LuceneAnalysisIT {
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	@Test
 	public void advanced() {
@@ -42,8 +43,8 @@ public class LuceneAnalysisIT {
 						HibernateOrmMapperSettings.MAPPING_CONFIGURER,
 						(HibernateOrmSearchMappingConfigurer) context -> context.programmaticMapping()
 								.type( IndexedEntity.class )
-										.property( "text" )
-												.fullTextField( "standard" ).analyzer( "my-standard" )
+								.property( "text" )
+								.fullTextField( "standard" ).analyzer( "my-standard" )
 				)
 				.setup( IndexedEntity.class );
 

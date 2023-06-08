@@ -20,15 +20,15 @@ import org.hibernate.search.engine.cfg.spi.EngineSpiSettings;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.PersistenceTypeKey;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.StubLoadingContext;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.StubMassLoadingStrategy;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.massindexing.MassIndexer;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.massindexing.MassIndexer;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.ThreadSpy;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -49,8 +49,8 @@ public class MassIndexingInterruptionIT {
 	public final BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public final StandalonePojoMappingSetupHelper setupHelper
-			= StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public final StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	@Rule
 	public ThreadSpy threadSpy = new ThreadSpy();
@@ -114,7 +114,8 @@ public class MassIndexingInterruptionIT {
 				.hasSize( 1 )
 				.allSatisfy( t -> assertThat( t )
 						.asInstanceOf( InstanceOfAssertFactories.THROWABLE )
-						.hasMessageContaining( "Mass indexing received interrupt signal. The index is left in an unknown state!" ) );
+						.hasMessageContaining(
+								"Mass indexing received interrupt signal. The index is left in an unknown state!" ) );
 		// Most JDK methods unset the interrupt flag when they throw an InterruptedException:
 		// the MassIndexer should do the same.
 		assertThat( interruptFlagAfterInterruption ).isFalse();
@@ -154,7 +155,8 @@ public class MassIndexingInterruptionIT {
 
 		assertThat( thrown.get() )
 				.isInstanceOf( SearchException.class )
-				.hasMessageContaining( "Mass indexing received interrupt signal. The index is left in an unknown state!" )
+				.hasMessageContaining(
+						"Mass indexing received interrupt signal. The index is left in an unknown state!" )
 				.hasCauseInstanceOf( InterruptedException.class );
 
 		// The interrupt didn't occur on the mass indexing thread, so the interrupt flag shouldn't be set on that thread.
@@ -224,11 +226,11 @@ public class MassIndexingInterruptionIT {
 				.filteredOn( t -> !t.getName().contains( "ID loading" ) )
 				.hasSize( expectedThreadCount - 1 )
 				.allSatisfy( t -> assertThat( t )
-				.extracting( Thread::getState )
-				.isIn(
-						Thread.State.RUNNABLE, Thread.State.TIMED_WAITING,
-						Thread.State.WAITING, Thread.State.BLOCKED
-				)
+						.extracting( Thread::getState )
+						.isIn(
+								Thread.State.RUNNABLE, Thread.State.TIMED_WAITING,
+								Thread.State.WAITING, Thread.State.BLOCKED
+						)
 				);
 	}
 
@@ -238,8 +240,8 @@ public class MassIndexingInterruptionIT {
 						.as( "Mass indexing threads" )
 						.hasSize( expectedThreadCount )
 						.allSatisfy( t -> assertThat( t )
-						.extracting( Thread::getState )
-						.isEqualTo( Thread.State.TERMINATED )
+								.extracting( Thread::getState )
+								.isEqualTo( Thread.State.TERMINATED )
 						)
 		);
 	}

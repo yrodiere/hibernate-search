@@ -39,7 +39,8 @@ public final class ErrorCollectingPojoTypeMetadataContributor implements PojoTyp
 		}
 	}
 
-	public ErrorCollectingPojoTypeMetadataContributor addAll(Collection<? extends PojoTypeMetadataContributor> children) {
+	public ErrorCollectingPojoTypeMetadataContributor addAll(Collection<
+			? extends PojoTypeMetadataContributor> children) {
 		initChildren();
 		this.children.addAll( children );
 		return this;

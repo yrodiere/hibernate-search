@@ -6,15 +6,13 @@
  */
 package org.hibernate.search.test.query.facet;
 
-import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.query.engine.spi.FacetManager;
 import org.hibernate.search.query.facet.Facet;
@@ -25,8 +23,9 @@ import org.hibernate.search.testsupport.junit.PortedToSearch6;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 
 /**
  * @author Hardy Ferentschik
@@ -94,6 +93,7 @@ public class NoQueryResultsFacetingTest extends AbstractFacetTest {
 				facetManager.getFacets( ascendingOrderedFacet ).isEmpty()
 		);
 	}
+
 	private FullTextQuery queryHondaNoResultsWithFacet(FacetingRequest request) {
 		Query luceneQuery = queryBuilder( Car.class )
 				.keyword()
@@ -105,6 +105,7 @@ public class NoQueryResultsFacetingTest extends AbstractFacetTest {
 		assertEquals( "Wrong number of query matches", 0, query.getResultSize() );
 		return query;
 	}
+
 	@Test
 	public void testSimpleDiscretFacetingQuery() throws Exception {
 		FacetingRequest request = queryBuilder( Car.class ).facet()
@@ -164,6 +165,7 @@ public class NoQueryResultsFacetingTest extends AbstractFacetTest {
 				facetManager.getFacets( ascendingOrderedFacet ).isEmpty()
 		);
 	}
+
 	private FullTextQuery queryHondaWithFacet(FacetingRequest request) {
 		Query luceneQuery = queryBuilder( Car.class )
 				.keyword()

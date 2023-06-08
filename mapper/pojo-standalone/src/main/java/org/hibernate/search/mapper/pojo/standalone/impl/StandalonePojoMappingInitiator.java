@@ -32,17 +32,18 @@ import org.hibernate.search.mapper.pojo.standalone.schema.management.impl.Schema
 public class StandalonePojoMappingInitiator extends AbstractPojoMappingInitiator<StandalonePojoMappingPartialBuildState>
 		implements StandalonePojoMappingConfigurationContext {
 
-	private static final ConfigurationProperty<SchemaManagementStrategyName> SCHEMA_MANAGEMENT_STRATEGY
-			= ConfigurationProperty.forKey( StandalonePojoMapperSettings.Radicals.SCHEMA_MANAGEMENT_STRATEGY )
-			.as( SchemaManagementStrategyName.class, SchemaManagementStrategyName::of )
-			.withDefault( StandalonePojoMapperSettings.Defaults.SCHEMA_MANAGEMENT_STRATEGY )
-			.build();
-
-	private static final OptionalConfigurationProperty<List<BeanReference<? extends StandalonePojoMappingConfigurer>>> MAPPING_CONFIGURER =
-			ConfigurationProperty.forKey( StandalonePojoMapperSettings.Radicals.MAPPING_CONFIGURER )
-					.asBeanReference( StandalonePojoMappingConfigurer.class )
-					.multivalued()
+	private static final ConfigurationProperty<SchemaManagementStrategyName> SCHEMA_MANAGEMENT_STRATEGY =
+			ConfigurationProperty.forKey( StandalonePojoMapperSettings.Radicals.SCHEMA_MANAGEMENT_STRATEGY )
+					.as( SchemaManagementStrategyName.class, SchemaManagementStrategyName::of )
+					.withDefault( StandalonePojoMapperSettings.Defaults.SCHEMA_MANAGEMENT_STRATEGY )
 					.build();
+
+	private static final OptionalConfigurationProperty<List<BeanReference<
+			? extends StandalonePojoMappingConfigurer>>> MAPPING_CONFIGURER =
+					ConfigurationProperty.forKey( StandalonePojoMapperSettings.Radicals.MAPPING_CONFIGURER )
+							.asBeanReference( StandalonePojoMappingConfigurer.class )
+							.multivalued()
+							.build();
 
 	private static final ConfigurationProperty<Boolean> MULTI_TENANCY_ENABLED =
 			ConfigurationProperty.forKey( StandalonePojoMapperSettings.Radicals.MULTI_TENANCY_ENABLED )

@@ -36,7 +36,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
-@SuppressWarnings({"unchecked", "rawtypes"}) // Raw types are the only way to mock parameterized types
+@SuppressWarnings({ "unchecked", "rawtypes" }) // Raw types are the only way to mock parameterized types
 public class ConfigurationPropertyBeanReferenceTest {
 
 	@Rule
@@ -108,7 +108,8 @@ public class ConfigurationPropertyBeanReferenceTest {
 		assertThat( result ).isEqualTo( expected );
 
 		// BeanReference value
-		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( BeanReference.of( StubBeanImpl1.class, "name" ) ) );
+		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( BeanReference.of( StubBeanImpl1.class,
+				"name" ) ) );
 		when( beanResolverMock.resolve( StubBeanImpl1.class, "name", BeanRetrieval.ANY ) )
 				.thenReturn( expected );
 		result = property.get( sourceMock ).resolve( beanResolverMock );
@@ -185,7 +186,8 @@ public class ConfigurationPropertyBeanReferenceTest {
 		assertThat( result ).isEqualTo( expected );
 
 		// BeanReference value
-		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( BeanReference.of( StubBeanImpl1.class, "name" ) ) );
+		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( BeanReference.of( StubBeanImpl1.class,
+				"name" ) ) );
 		when( beanResolverMock.resolve( StubBeanImpl1.class, "name", BeanRetrieval.ANY ) )
 				.thenReturn( expected );
 		reference = property.get( sourceMock );
@@ -331,11 +333,15 @@ public class ConfigurationPropertyBeanReferenceTest {
 		when( sourceMock.resolve( key ) ).thenReturn( Optional.of( resolvedKey ) );
 		assertThatThrownBy( () -> property.get( sourceMock ) )
 				.hasMessageContaining(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + invalidTypeValue + "'."
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ invalidTypeValue
+								+ "'."
 				)
 				.hasMessageContaining(
-						"Invalid BeanReference value: expected an instance of '" + StubBean.class.getName()
+						"Invalid BeanReference value: expected an instance of '"
+								+ StubBean.class.getName()
 								+ "', BeanReference, String or Class"
 				);
 		verifyNoOtherSourceInteractionsAndReset();
@@ -363,8 +369,11 @@ public class ConfigurationPropertyBeanReferenceTest {
 		)
 				.hasCause( simulatedFailure )
 				.hasMessageContainingAll(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + propertyValue + "'.",
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ propertyValue
+								+ "'.",
 						simulatedFailure.getMessage()
 				);
 		verifyNoOtherSourceInteractionsAndReset();
@@ -397,8 +406,11 @@ public class ConfigurationPropertyBeanReferenceTest {
 		)
 				.hasCause( simulatedFailure )
 				.hasMessageContaining(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + propertyValue + "'.",
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ propertyValue
+								+ "'.",
 						"Invalid multi value: expected either a single value of the correct type, a Collection, or a String",
 						"interpreting as a single value failed with the following exception",
 						simulatedFailure.getMessage()
@@ -423,13 +435,16 @@ public class ConfigurationPropertyBeanReferenceTest {
 		assertThatThrownBy( () -> property.getAndMap( sourceMock, beanResolverMock::resolve ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Invalid value for configuration property '" + resolvedKey
-								+ "': '" + propertyValue + "'.",
+						"Invalid value for configuration property '"
+								+ resolvedKey
+								+ "': '"
+								+ propertyValue
+								+ "'.",
 						"Invalid bean reference: 'notABeanRetrieval:name'.",
 						"The reference is prefixed with 'notABeanRetrieval:', which is not a valid bean retrieval prefix.",
 						"If you want to reference a bean by name, and the name contains a colon, use 'bean:notABeanRetrieval:name'.",
 						"Otherwise, use a valid bean retrieval prefix among the following:"
-							+ " [builtin:, bean:, class:, constructor:, any:]."
+								+ " [builtin:, bean:, class:, constructor:, any:]."
 				);
 		verifyNoOtherSourceInteractionsAndReset();
 
@@ -526,7 +541,8 @@ public class ConfigurationPropertyBeanReferenceTest {
 		assertThat( result ).isEqualTo( expected );
 
 		// BeanReference value
-		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( BeanReference.of( StubBeanImpl1.class, "name" ) ) );
+		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( BeanReference.of( StubBeanImpl1.class,
+				"name" ) ) );
 		when( beanResolverMock.resolve( StubBeanImpl1.class, "name", BeanRetrieval.ANY ) )
 				.thenReturn( expected );
 		reference = property.get( sourceMock );
@@ -608,7 +624,8 @@ public class ConfigurationPropertyBeanReferenceTest {
 		assertThat( result ).isEqualTo( expected );
 
 		// BeanReference value
-		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( BeanReference.of( StubBeanImpl1.class, "name" ) ) );
+		when( sourceMock.get( key ) ).thenReturn( (Optional) Optional.of( BeanReference.of( StubBeanImpl1.class,
+				"name" ) ) );
 		when( beanResolverMock.resolve( StubBeanImpl1.class, "name", BeanRetrieval.ANY ) )
 				.thenReturn( expected );
 		reference = property.get( sourceMock );
@@ -630,14 +647,11 @@ public class ConfigurationPropertyBeanReferenceTest {
 		return Collections.unmodifiableCollection( Arrays.asList( values ) );
 	}
 
-	private interface StubBean {
-	}
+	private interface StubBean {}
 
-	private class StubBeanImpl1 implements StubBean {
-	}
+	private class StubBeanImpl1 implements StubBean {}
 
-	private class StubBeanImpl2 implements StubBean {
-	}
+	private class StubBeanImpl2 implements StubBean {}
 
 	private static class InvalidType {
 		@Override
@@ -653,9 +667,7 @@ public class ConfigurationPropertyBeanReferenceTest {
 	}
 
 	enum MyEnum {
-		VALUE1,
-		VALUE2,
-		VALUE3;
+		VALUE1, VALUE2, VALUE3;
 	}
 
 }

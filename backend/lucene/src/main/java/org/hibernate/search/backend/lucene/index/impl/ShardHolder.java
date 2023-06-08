@@ -29,13 +29,14 @@ import org.hibernate.search.backend.lucene.orchestration.impl.LuceneSerialWorkOr
 import org.hibernate.search.backend.lucene.schema.management.impl.SchemaManagementIndexManagerContext;
 import org.hibernate.search.backend.lucene.work.execution.impl.WorkExecutionIndexManagerContext;
 import org.hibernate.search.engine.backend.index.spi.IndexManagerStartContext;
-import org.hibernate.search.engine.common.resources.spi.SavedState;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
+import org.hibernate.search.engine.common.resources.spi.SavedState;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.reporting.spi.EventContexts;
 import org.hibernate.search.util.common.impl.Closer;
 
-class ShardHolder implements ReadIndexManagerContext, WorkExecutionIndexManagerContext,
+class ShardHolder
+		implements ReadIndexManagerContext, WorkExecutionIndexManagerContext,
 		SchemaManagementIndexManagerContext {
 
 	private static final SavedState.Key<Map<String, SavedState>> SHARDS_KEY = SavedState.key( "shards" );
@@ -65,17 +66,18 @@ class ShardHolder implements ReadIndexManagerContext, WorkExecutionIndexManagerC
 		return SavedState.builder().put( SHARDS_KEY, states ).build();
 	}
 
-	private ConfigurationPropertySource toShardPropertySource(ConfigurationPropertySource indexPropertySource, String shardIdOrNull) {
-		return shardIdOrNull != null
-				? indexPropertySource.withMask( LuceneIndexSettings.SHARDS ).withMask( shardIdOrNull )
-						.withFallback( indexPropertySource )
-				: indexPropertySource;
+	private ConfigurationPropertySource toShardPropertySource(ConfigurationPropertySource indexPropertySource,
+			String shardIdOrNull) {
+		return shardIdOrNull != null ?
+				indexPropertySource.withMask( LuceneIndexSettings.SHARDS ).withMask( shardIdOrNull )
+						.withFallback( indexPropertySource ) : indexPropertySource;
 	}
 
 	void preStart(IndexManagerStartContext startContext, SavedState savedState) {
 		ConfigurationPropertySource indexPropertySource = startContext.configurationPropertySource();
 		ShardingStrategyInitializationContextImpl initializationContext =
-				new ShardingStrategyInitializationContextImpl( backendContext, model, startContext, indexPropertySource );
+				new ShardingStrategyInitializationContextImpl( backendContext, model, startContext,
+						indexPropertySource );
 		Map<String, SavedState> states = savedState.get( SHARDS_KEY ).orElse( Collections.emptyMap() );
 
 		this.shardingStrategyHolder = initializationContext.create( shards );

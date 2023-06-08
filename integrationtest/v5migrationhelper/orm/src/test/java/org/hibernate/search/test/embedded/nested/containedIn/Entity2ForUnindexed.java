@@ -38,7 +38,7 @@ public class Entity2ForUnindexed {
 	@Version
 	private int optlock;
 
-	@javax.persistence.ManyToOne(cascade = { }, fetch = javax.persistence.FetchType.LAZY)
+	@javax.persistence.ManyToOne(cascade = {}, fetch = javax.persistence.FetchType.LAZY)
 	@org.hibernate.search.annotations.IndexedEmbedded()
 	@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 	private Entity1ForUnindexed entity1;

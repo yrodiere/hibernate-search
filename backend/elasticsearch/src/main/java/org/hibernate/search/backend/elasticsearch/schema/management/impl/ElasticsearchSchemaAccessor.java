@@ -12,12 +12,12 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-import org.hibernate.search.backend.elasticsearch.index.layout.impl.IndexNames;
 import org.hibernate.search.backend.elasticsearch.index.IndexStatus;
+import org.hibernate.search.backend.elasticsearch.index.layout.impl.IndexNames;
 import org.hibernate.search.backend.elasticsearch.logging.impl.Log;
+import org.hibernate.search.backend.elasticsearch.lowlevel.index.aliases.impl.IndexAliasDefinition;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.mapping.impl.RootTypeMapping;
 import org.hibernate.search.backend.elasticsearch.lowlevel.index.settings.impl.IndexSettings;
-import org.hibernate.search.backend.elasticsearch.lowlevel.index.aliases.impl.IndexAliasDefinition;
 import org.hibernate.search.backend.elasticsearch.orchestration.impl.ElasticsearchParallelWorkOrchestrator;
 import org.hibernate.search.backend.elasticsearch.util.spi.URLEncodedString;
 import org.hibernate.search.backend.elasticsearch.work.factory.impl.ElasticsearchWorkFactory;
@@ -77,15 +77,18 @@ final class ElasticsearchSchemaAccessor {
 		return execute( work, operationSubmitter ).thenApply( CreateIndexResult.CREATED::equals );
 	}
 
-	public CompletableFuture<ExistingIndexMetadata> getCurrentIndexMetadata(IndexNames indexNames, OperationSubmitter operationSubmitter) {
+	public CompletableFuture<ExistingIndexMetadata> getCurrentIndexMetadata(IndexNames indexNames,
+			OperationSubmitter operationSubmitter) {
 		return getCurrentIndexMetadata( indexNames, false, operationSubmitter );
 	}
 
-	public CompletableFuture<ExistingIndexMetadata> getCurrentIndexMetadataOrNull(IndexNames indexNames, OperationSubmitter operationSubmitter) {
+	public CompletableFuture<ExistingIndexMetadata> getCurrentIndexMetadataOrNull(IndexNames indexNames,
+			OperationSubmitter operationSubmitter) {
 		return getCurrentIndexMetadata( indexNames, true, operationSubmitter );
 	}
 
-	private CompletableFuture<ExistingIndexMetadata> getCurrentIndexMetadata(IndexNames indexNames, boolean allowNull, OperationSubmitter operationSubmitter) {
+	private CompletableFuture<ExistingIndexMetadata> getCurrentIndexMetadata(IndexNames indexNames, boolean allowNull,
+			OperationSubmitter operationSubmitter) {
 		NonBulkableWork<List<ExistingIndexMetadata>> work = getWorkFactory().getIndexMetadata()
 				.index( indexNames.write() )
 				.index( indexNames.read() )
@@ -114,7 +117,8 @@ final class ElasticsearchSchemaAccessor {
 				} );
 	}
 
-	public CompletableFuture<?> updateAliases(URLEncodedString indexName, Map<String, IndexAliasDefinition> aliases, OperationSubmitter operationSubmitter) {
+	public CompletableFuture<?> updateAliases(URLEncodedString indexName, Map<String, IndexAliasDefinition> aliases,
+			OperationSubmitter operationSubmitter) {
 		NonBulkableWork<?> work = getWorkFactory().putIndexAliases( indexName, aliases ).build();
 		return execute( work, operationSubmitter )
 				.exceptionally( Futures.handler( e -> {
@@ -123,7 +127,8 @@ final class ElasticsearchSchemaAccessor {
 				} ) );
 	}
 
-	public CompletableFuture<?> updateSettings(URLEncodedString indexName, IndexSettings settings, OperationSubmitter operationSubmitter) {
+	public CompletableFuture<?> updateSettings(URLEncodedString indexName, IndexSettings settings,
+			OperationSubmitter operationSubmitter) {
 		NonBulkableWork<?> work = getWorkFactory().putIndexSettings( indexName, settings ).build();
 		return execute( work, operationSubmitter )
 				.exceptionally( Futures.handler( e -> {
@@ -132,7 +137,8 @@ final class ElasticsearchSchemaAccessor {
 				} ) );
 	}
 
-	public CompletableFuture<?> updateMapping(URLEncodedString indexName, RootTypeMapping mapping, OperationSubmitter operationSubmitter) {
+	public CompletableFuture<?> updateMapping(URLEncodedString indexName, RootTypeMapping mapping,
+			OperationSubmitter operationSubmitter) {
 		NonBulkableWork<?> work = getWorkFactory().putIndexTypeMapping( indexName, mapping ).build();
 		return execute( work, operationSubmitter )
 				.exceptionally( Futures.handler( e -> {
@@ -142,7 +148,8 @@ final class ElasticsearchSchemaAccessor {
 				} ) );
 	}
 
-	public CompletableFuture<?> waitForIndexStatus(IndexNames indexNames, ElasticsearchIndexLifecycleExecutionOptions executionOptions,
+	public CompletableFuture<?> waitForIndexStatus(IndexNames indexNames,
+			ElasticsearchIndexLifecycleExecutionOptions executionOptions,
 			OperationSubmitter operationSubmitter) {
 		IndexStatus requiredIndexStatus = executionOptions.getRequiredStatus();
 		int requiredStatusTimeoutInMs = executionOptions.getRequiredStatusTimeoutInMs();

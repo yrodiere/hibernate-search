@@ -28,13 +28,13 @@ import org.hibernate.search.engine.reporting.spi.EventContexts;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.types.PropertyTypeDescriptor;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.types.expectations.DefaultValueBridgeExpectations;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.rule.StubSearchWorkBehavior;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.document.model.impl.StubIndexNode;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -48,7 +48,8 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class FieldDefaultBridgeBaseIT<V, F> {
 	private static final String FIELD_NAME = DefaultValueBridgeExpectations.TYPE_WITH_VALUE_BRIDGE_FIELD_NAME;
-	private static final String FIELD_INDEXNULLAS_NAME = DefaultValueBridgeExpectations.TYPE_WITH_VALUE_BRIDGE_FIELD_INDEXNULLAS_NAME;
+	private static final String FIELD_INDEXNULLAS_NAME =
+			DefaultValueBridgeExpectations.TYPE_WITH_VALUE_BRIDGE_FIELD_INDEXNULLAS_NAME;
 
 	@Parameterized.Parameters(name = "{0}")
 	public static Object[] types() {
@@ -61,7 +62,8 @@ public class FieldDefaultBridgeBaseIT<V, F> {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private final PropertyTypeDescriptor<V, F> typeDescriptor;
 	private final DefaultValueBridgeExpectations<V, F> expectations;
@@ -69,7 +71,8 @@ public class FieldDefaultBridgeBaseIT<V, F> {
 	private StubIndexNode index1Field;
 	private StubIndexNode index2Field;
 
-	public FieldDefaultBridgeBaseIT(PropertyTypeDescriptor<V, F> typeDescriptor, DefaultValueBridgeExpectations<V, F> expectations) {
+	public FieldDefaultBridgeBaseIT(PropertyTypeDescriptor<V, F> typeDescriptor, DefaultValueBridgeExpectations<V,
+			F> expectations) {
 		this.typeDescriptor = typeDescriptor;
 		this.expectations = expectations;
 	}
@@ -81,7 +84,8 @@ public class FieldDefaultBridgeBaseIT<V, F> {
 					b.field( FIELD_NAME, expectations.getIndexFieldJavaType() );
 
 					if ( typeDescriptor.isNullable() ) {
-						b.field( FIELD_INDEXNULLAS_NAME, expectations.getIndexFieldJavaType(), f -> f.indexNullAs( expectations.getNullAsValueBridge1() ) );
+						b.field( FIELD_INDEXNULLAS_NAME, expectations.getIndexFieldJavaType(), f -> f.indexNullAs(
+								expectations.getNullAsValueBridge1() ) );
 					}
 				},
 				indexModel -> this.index1Field = indexModel.fieldOrNull( FIELD_NAME )
@@ -91,14 +95,17 @@ public class FieldDefaultBridgeBaseIT<V, F> {
 					b.field( FIELD_NAME, expectations.getIndexFieldJavaType() );
 
 					if ( typeDescriptor.isNullable() ) {
-						b.field( FIELD_INDEXNULLAS_NAME, expectations.getIndexFieldJavaType(), f -> f.indexNullAs( expectations.getNullAsValueBridge2() ) );
+						b.field( FIELD_INDEXNULLAS_NAME, expectations.getIndexFieldJavaType(), f -> f.indexNullAs(
+								expectations.getNullAsValueBridge2() ) );
 					}
 				},
 				indexModel -> this.index2Field = indexModel.fieldOrNull( FIELD_NAME )
 		);
 		mapping = setupHelper.start()
-				.withAnnotatedEntityType( expectations.getTypeWithValueBridge1(), DefaultValueBridgeExpectations.TYPE_WITH_VALUE_BRIDGE_1_NAME )
-				.withAnnotatedEntityType( expectations.getTypeWithValueBridge2(), DefaultValueBridgeExpectations.TYPE_WITH_VALUE_BRIDGE_2_NAME )
+				.withAnnotatedEntityType( expectations.getTypeWithValueBridge1(),
+						DefaultValueBridgeExpectations.TYPE_WITH_VALUE_BRIDGE_1_NAME )
+				.withAnnotatedEntityType( expectations.getTypeWithValueBridge2(),
+						DefaultValueBridgeExpectations.TYPE_WITH_VALUE_BRIDGE_2_NAME )
 				.setup();
 		backendMock.verifyExpectationsMet();
 	}
@@ -212,7 +219,8 @@ public class FieldDefaultBridgeBaseIT<V, F> {
 		ProjectionConverter<?, ?> compatibleProjectionConverter =
 				index2Field.toValueField().type().projectionConverter();
 		ProjectionConverter<?, ?> incompatibleProjectionConverter =
-				new ProjectionConverter<>( typeDescriptor.getJavaType(), new IncompatibleFromDocumentValueConverter<>() );
+				new ProjectionConverter<>( typeDescriptor.getJavaType(),
+						new IncompatibleFromDocumentValueConverter<>() );
 
 		// isCompatibleWith must return true when appropriate
 		assertThat( projectionConverter.isCompatibleWith( projectionConverter ) ).isTrue();
@@ -286,8 +294,7 @@ public class FieldDefaultBridgeBaseIT<V, F> {
 	/**
 	 * A type that is clearly not a supertype of any type with a default bridge.
 	 */
-	private static final class IncompatibleType {
-	}
+	private static final class IncompatibleType {}
 
 	private static class IncompatibleToDocumentValueConverter<V>
 			implements ToDocumentValueConverter<V, Object> {

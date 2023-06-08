@@ -13,8 +13,8 @@ import static org.mockito.Mockito.when;
 import java.util.UUID;
 
 import org.hibernate.search.engine.reporting.FailureContext;
-import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentType;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentState;
+import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentType;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.ShardAssignmentDescriptor;
 import org.hibernate.search.util.common.SearchException;
 
@@ -114,7 +114,9 @@ public class EventProcessorClusterLinkStaticShardingEdgeCasesTest
 		assertThat( failure.throwable() )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Agent '" + SELF_REF + "': failed to infer a target cluster from the list of registered agents.",
+						"Agent '"
+								+ SELF_REF
+								+ "': failed to infer a target cluster from the list of registered agents.",
 						"The agent will try again in the next pulse.",
 						"Agent '" + OTHER_2_ID + " - ",
 						"is statically assigned to shard 0 (total " + totalShardCount + ")",
@@ -154,7 +156,9 @@ public class EventProcessorClusterLinkStaticShardingEdgeCasesTest
 		assertThat( failure.throwable() )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Agent '" + SELF_REF + "': failed to infer a target cluster from the list of registered agents.",
+						"Agent '"
+								+ SELF_REF
+								+ "': failed to infer a target cluster from the list of registered agents.",
 						"The agent will try again in the next pulse.",
 						"Agent '" + OTHER_2_ID + " - ",
 						"is statically assigned to shard 2 (total 4)",

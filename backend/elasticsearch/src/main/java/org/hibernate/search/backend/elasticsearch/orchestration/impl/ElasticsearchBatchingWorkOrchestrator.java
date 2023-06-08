@@ -15,8 +15,8 @@ import org.hibernate.search.backend.elasticsearch.work.impl.ElasticsearchWorkExe
 import org.hibernate.search.backend.elasticsearch.work.impl.IndexingWork;
 import org.hibernate.search.engine.backend.orchestration.spi.BatchingExecutor;
 import org.hibernate.search.engine.backend.work.execution.OperationSubmitter;
-import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
+import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.reporting.FailureHandler;
 import org.hibernate.search.util.common.data.impl.HashTable;
 import org.hibernate.search.util.common.data.impl.ModuloHashTable;
@@ -108,7 +108,8 @@ public class ElasticsearchBatchingWorkOrchestrator
 	}
 
 	@Override
-	protected void doSubmit(ElasticsearchBatchedWork<?> work, OperationSubmitter operationSubmitter) throws InterruptedException {
+	protected void doSubmit(ElasticsearchBatchedWork<?> work,
+			OperationSubmitter operationSubmitter) throws InterruptedException {
 		executors.get( work.getQueuingKey() ).submit( work, operationSubmitter );
 	}
 
@@ -133,8 +134,8 @@ public class ElasticsearchBatchingWorkOrchestrator
 		ElasticsearchWorkSequenceBuilder sequenceBuilder = new ElasticsearchDefaultWorkSequenceBuilder( context );
 		ElasticsearchWorkBulker bulker = new ElasticsearchDefaultWorkBulker(
 				sequenceBuilder,
-				(worksToBulk, refreshStrategy) ->
-						link.getWorkFactory().bulk( worksToBulk ).refresh( refreshStrategy ).build(),
+				(worksToBulk, refreshStrategy) -> link.getWorkFactory().bulk( worksToBulk ).refresh( refreshStrategy )
+						.build(),
 				maxBulkSize
 		);
 		return new ElasticsearchBatchedWorkProcessor( sequenceBuilder, bulker );

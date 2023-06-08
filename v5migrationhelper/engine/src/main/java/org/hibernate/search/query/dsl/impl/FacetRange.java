@@ -81,13 +81,20 @@ public class FacetRange<T> {
 	@Override
 	public String toString() {
 		return "FacetRange"
-				+ "{min=" + getMin()
-				+ ", max=" + getMax()
-				+ ", includeMin=" + isMinIncluded()
-				+ ", includeMax=" + isMaxIncluded()
-				+ ", fieldName='" + fieldName + '\''
-				+ ", rangeType=" + rangeType + '}';
+				+ "{min="
+				+ getMin()
+				+ ", max="
+				+ getMax()
+				+ ", includeMin="
+				+ isMinIncluded()
+				+ ", includeMax="
+				+ isMaxIncluded()
+				+ ", fieldName='"
+				+ fieldName
+				+ '\''
+				+ ", rangeType="
+				+ rangeType
+				+ '}';
 	}
 }
-
 

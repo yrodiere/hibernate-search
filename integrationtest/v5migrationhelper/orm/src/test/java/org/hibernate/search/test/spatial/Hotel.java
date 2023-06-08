@@ -6,15 +6,15 @@
  */
 package org.hibernate.search.test.spatial;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Spatial;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.spatial.Coordinates;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 /**
  * Hibernate Search spatial : Point Of Interest test entity
@@ -37,7 +37,7 @@ public class Hotel implements Coordinates {
 	double latitude;
 	double longitude;
 
-	public Hotel( Integer id, String name, double latitude, double longitude, String type ) {
+	public Hotel(Integer id, String name, double latitude, double longitude, String type) {
 		this.id = id;
 		this.name = name;
 		this.latitude = latitude;

@@ -41,8 +41,8 @@ public class MassIndexingEnvironmentIT {
 	public final BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public final StandalonePojoMappingSetupHelper setupHelper
-			= StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public final StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private SearchMapping mapping;
 
@@ -89,10 +89,9 @@ public class MassIndexingEnvironmentIT {
 					} );
 
 			backendMock.expectWorks(
-							Entity.INDEX, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
-					)
-					.add( "1", b -> {
-					} );
+					Entity.INDEX, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
+			)
+					.add( "1", b -> {} );
 
 			// purgeAtStart and mergeSegmentsAfterPurge are enabled by default,
 			// so we expect 1 purge, 1 mergeSegments and 1 flush calls in this order:
@@ -147,11 +146,13 @@ public class MassIndexingEnvironmentIT {
 					.environment( new MassIndexingEnvironment() {
 						@Override
 						public void beforeExecution(Context context) {
-							if ( contextClass.isAssignableFrom( EntityIdentifierLoadingContext.class ) &&
+							if ( contextClass.isAssignableFrom( EntityIdentifierLoadingContext.class )
+									&&
 									context instanceof EntityIdentifierLoadingContext ) {
 								throw new UnsupportedOperationException( "don't call me in identifier loading." );
 							}
-							if ( contextClass.isAssignableFrom( EntityLoadingContext.class ) &&
+							if ( contextClass.isAssignableFrom( EntityLoadingContext.class )
+									&&
 									context instanceof EntityIdentifierLoadingContext ) {
 								throw new UnsupportedOperationException( "don't call me in entity loading." );
 							}
@@ -163,7 +164,8 @@ public class MassIndexingEnvironmentIT {
 						@Override
 						public void afterExecution(Context context) {
 							if ( !threadNames.remove( Thread.currentThread().getName() ) ) {
-								fail( "We should not have reached this state as after call is only possible " +
+								fail( "We should not have reached this state as after call is only possible "
+										+
 										"with successful before call which would've added the thread name." );
 							}
 						}

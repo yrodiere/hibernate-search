@@ -13,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
@@ -55,8 +56,7 @@ public class SessionProxyIT {
 	@Configuration
 	@EntityScan
 	@ComponentScan(basePackageClasses = SessionProxyIT.class)
-	public static class SpringConfig extends AbstractSpringITConfig {
-	}
+	public static class SpringConfig extends AbstractSpringITConfig {}
 
 	private static boolean needsInit;
 

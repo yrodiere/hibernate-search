@@ -30,7 +30,10 @@ import org.hibernate.search.util.impl.integrationtest.mapper.orm.SimpleSessionFa
 import org.hibernate.search.util.impl.integrationtest.mapper.orm.multitenancy.impl.MultitenancyTestHelper;
 
 public final class DocumentationSetupHelper
-		extends MappingSetupHelper<DocumentationSetupHelper.SetupContext, SimpleSessionFactoryBuilder, SimpleSessionFactoryBuilder, SessionFactory> {
+		extends MappingSetupHelper<DocumentationSetupHelper.SetupContext,
+				SimpleSessionFactoryBuilder,
+				SimpleSessionFactoryBuilder,
+				SessionFactory> {
 
 	public static List<DocumentationSetupHelper> testParamsForBothAnnotationsAndProgrammatic(
 			BackendConfiguration backendConfiguration,
@@ -73,8 +76,8 @@ public final class DocumentationSetupHelper
 		List<DocumentationSetupHelper> result = new ArrayList<>();
 		// Annotation-based mapping
 		HibernateOrmSearchMappingConfigurer annotationMappingConfigurer =
-				additionalAnnotatedClasses.isEmpty() ? null
-						: context -> context.annotationMapping().add( additionalAnnotatedClasses );
+				additionalAnnotatedClasses.isEmpty() ?
+						null : context -> context.annotationMapping().add( additionalAnnotatedClasses );
 		result.add( new DocumentationSetupHelper( backendSetupStrategy,
 				null, annotationMappingConfigurer ) );
 		// Programmatic mapping
@@ -115,7 +118,7 @@ public final class DocumentationSetupHelper
 	@Override
 	public String toString() {
 		return super.toString()
-				+ ( annotationProcessingEnabled == Boolean.FALSE ? " - programmatic mapping" : "");
+				+ ( annotationProcessingEnabled == Boolean.FALSE ? " - programmatic mapping" : "" );
 	}
 
 	@Override
@@ -129,12 +132,16 @@ public final class DocumentationSetupHelper
 	}
 
 	public final class SetupContext
-			extends MappingSetupHelper<SetupContext, SimpleSessionFactoryBuilder, SimpleSessionFactoryBuilder, SessionFactory>.AbstractSetupContext {
+			extends MappingSetupHelper<SetupContext,
+					SimpleSessionFactoryBuilder,
+					SimpleSessionFactoryBuilder,
+					SessionFactory>.AbstractSetupContext {
 
 		// Use a LinkedHashMap for deterministic iteration
 		private final Map<String, Object> overriddenProperties = new LinkedHashMap<>();
 
-		SetupContext(Boolean annotationProcessingEnabled, HibernateOrmSearchMappingConfigurer defaultMappingConfigurer) {
+		SetupContext(Boolean annotationProcessingEnabled,
+				HibernateOrmSearchMappingConfigurer defaultMappingConfigurer) {
 			// Real backend => ensure we clean up everything before and after the tests
 			withProperty( HibernateOrmMapperSettings.SCHEMA_MANAGEMENT_STRATEGY,
 					SchemaManagementStrategyName.DROP_AND_CREATE_AND_DROP );
@@ -166,7 +173,7 @@ public final class DocumentationSetupHelper
 			return thisAsC();
 		}
 
-		public SessionFactory setup(Class<?> ... annotatedTypes) {
+		public SessionFactory setup(Class<?>... annotatedTypes) {
 			return withConfiguration( builder -> builder.addAnnotatedClasses( Arrays.asList( annotatedTypes ) ) )
 					.setup();
 		}
@@ -177,7 +184,8 @@ public final class DocumentationSetupHelper
 		}
 
 		@Override
-		protected void consumeBeforeBuildConfigurations(SimpleSessionFactoryBuilder builder, List<Consumer<SimpleSessionFactoryBuilder>> consumers) {
+		protected void consumeBeforeBuildConfigurations(SimpleSessionFactoryBuilder builder, List<Consumer<
+				SimpleSessionFactoryBuilder>> consumers) {
 			consumers.forEach( c -> c.accept( builder ) );
 		}
 

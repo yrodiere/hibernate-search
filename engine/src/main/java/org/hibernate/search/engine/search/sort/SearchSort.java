@@ -12,5 +12,4 @@ package org.hibernate.search.engine.search.sort;
  * Implementations of this interface are provided to users by Hibernate Search.
  * Users must not try to implement this interface.
  */
-public interface SearchSort {
-}
+public interface SearchSort {}

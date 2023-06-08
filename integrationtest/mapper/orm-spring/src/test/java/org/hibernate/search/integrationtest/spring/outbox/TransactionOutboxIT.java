@@ -45,7 +45,8 @@ public class TransactionOutboxIT {
 		@Override
 		public BackendMock backendMock() {
 			BackendMock backendMock = super.backendMock();
-			backendMock.indexingWorkExpectations( CoordinationStrategyExpectations.outboxPolling().indexingWorkExpectations );
+			backendMock.indexingWorkExpectations( CoordinationStrategyExpectations
+					.outboxPolling().indexingWorkExpectations );
 			return backendMock;
 		}
 	}
@@ -62,8 +63,7 @@ public class TransactionOutboxIT {
 		Integer id = 1;
 
 		backendMock.expectWorks( IndexedEntity.NAME )
-				.add( id.toString(), b -> {
-				} );
+				.add( id.toString(), b -> {} );
 
 		helperService.persist( id );
 	}

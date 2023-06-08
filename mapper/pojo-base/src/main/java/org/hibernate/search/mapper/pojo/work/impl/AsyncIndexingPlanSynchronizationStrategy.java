@@ -39,25 +39,24 @@ public final class AsyncIndexingPlanSynchronizationStrategy implements IndexingP
 		context.documentCommitStrategy( DocumentCommitStrategy.NONE );
 		context.documentRefreshStrategy( DocumentRefreshStrategy.NONE );
 		FailureHandler failureHandler = context.failureHandler();
-		context.indexingFutureHandler( future ->
-				future.whenComplete( Futures.handler( (result, throwable) -> {
-							if ( throwable != null ) {
-								EntityIndexingFailureContext.Builder contextBuilder = EntityIndexingFailureContext.builder();
-								contextBuilder.throwable( throwable );
-								contextBuilder.failingOperation( log.automaticIndexing() );
-								failureHandler.handle( contextBuilder.build() );
-							}
-							else if ( result != null && result.throwable().isPresent() ) {
-								EntityIndexingFailureContext.Builder contextBuilder = EntityIndexingFailureContext.builder();
-								contextBuilder.throwable( result.throwable().get() );
-								contextBuilder.failingOperation( log.automaticIndexing() );
-								for ( EntityReference entityReference : result.failingEntities() ) {
-									contextBuilder.failingEntityReference( entityReference );
-								}
-								failureHandler.handle( contextBuilder.build() );
-							}
-						} )
-				)
+		context.indexingFutureHandler( future -> future.whenComplete( Futures.handler( (result, throwable) -> {
+			if ( throwable != null ) {
+				EntityIndexingFailureContext.Builder contextBuilder = EntityIndexingFailureContext.builder();
+				contextBuilder.throwable( throwable );
+				contextBuilder.failingOperation( log.automaticIndexing() );
+				failureHandler.handle( contextBuilder.build() );
+			}
+			else if ( result != null && result.throwable().isPresent() ) {
+				EntityIndexingFailureContext.Builder contextBuilder = EntityIndexingFailureContext.builder();
+				contextBuilder.throwable( result.throwable().get() );
+				contextBuilder.failingOperation( log.automaticIndexing() );
+				for ( EntityReference entityReference : result.failingEntities() ) {
+					contextBuilder.failingEntityReference( entityReference );
+				}
+				failureHandler.handle( contextBuilder.build() );
+			}
+		} )
+		)
 		);
 	}
 }

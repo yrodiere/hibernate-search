@@ -46,6 +46,9 @@ public interface TckBackendHelper {
 	 */
 	PredicateFinalStep createSlowPredicate(SearchPredicateFactory f);
 
-	<R, E, LOS> SearchQueryDslExtension<? extends SearchQuerySelectStep<?, R, E, LOS, ?, ?>, R, E, LOS> queryDslExtension();
+	<R, E, LOS> SearchQueryDslExtension<? extends SearchQuerySelectStep<?, R, E, LOS, ?, ?>,
+			R,
+			E,
+			LOS> queryDslExtension();
 
 }

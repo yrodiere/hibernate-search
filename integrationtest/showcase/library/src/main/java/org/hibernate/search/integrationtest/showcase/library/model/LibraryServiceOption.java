@@ -11,9 +11,6 @@ package org.hibernate.search.integrationtest.showcase.library.model;
  */
 public enum LibraryServiceOption {
 
-	READING_ROOMS,
-	HARDCOPY_LOAN,
-	DEMATERIALIZED_LOAN,
-	DISABLED_ACCESS
+	READING_ROOMS, HARDCOPY_LOAN, DEMATERIALIZED_LOAN, DISABLED_ACCESS
 
 }

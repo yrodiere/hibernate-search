@@ -85,7 +85,8 @@ public class TestElasticsearchClient implements TestRule, Closeable {
 		return index( IndexNames.encodeName( hibernateSearchIndexName ), null, null );
 	}
 
-	public IndexClient index(URLEncodedString primaryIndexName, URLEncodedString writeAlias, URLEncodedString readAlias) {
+	public IndexClient index(URLEncodedString primaryIndexName, URLEncodedString writeAlias,
+			URLEncodedString readAlias) {
 		return new IndexClient( primaryIndexName, writeAlias, readAlias );
 	}
 
@@ -112,7 +113,8 @@ public class TestElasticsearchClient implements TestRule, Closeable {
 
 		public IndexClient deleteAndCreate(String settingsPath, String settings) {
 			JsonObject settingsAsJsonObject = buildStructuredSettings( settingsPath, settings );
-			TestElasticsearchClient.this.deleteAndCreateIndex( primaryIndexName, writeAlias, readAlias, settingsAsJsonObject );
+			TestElasticsearchClient.this.deleteAndCreateIndex( primaryIndexName, writeAlias, readAlias,
+					settingsAsJsonObject );
 			return this;
 		}
 
@@ -324,7 +326,7 @@ public class TestElasticsearchClient implements TestRule, Closeable {
 		return action;
 	}
 
-	private void updateAliases(JsonObject ... actions) {
+	private void updateAliases(JsonObject... actions) {
 		ElasticsearchRequest.Builder builder = ElasticsearchRequest.post()
 				.pathComponent( Paths._ALIASES );
 
@@ -360,7 +362,9 @@ public class TestElasticsearchClient implements TestRule, Closeable {
 				 * the indexes to never reach a green status
 				 */
 				.param( "wait_for_status", IndexStatus.YELLOW.externalRepresentation() )
-				.param( "timeout", ElasticsearchIndexSettings.Defaults.SCHEMA_MANAGEMENT_MINIMAL_REQUIRED_STATUS_WAIT_TIMEOUT + "ms" )
+				.param( "timeout",
+						ElasticsearchIndexSettings.Defaults.SCHEMA_MANAGEMENT_MINIMAL_REQUIRED_STATUS_WAIT_TIMEOUT
+								+ "ms" )
 				.build() );
 	}
 
@@ -555,7 +559,8 @@ public class TestElasticsearchClient implements TestRule, Closeable {
 		}
 		catch (RuntimeException e) {
 			throw new AssertionFailure(
-					String.format( Locale.ROOT, "Error while trying to delete index '%s' as part of test cleanup", indexName ),
+					String.format( Locale.ROOT, "Error while trying to delete index '%s' as part of test cleanup",
+							indexName ),
 					e
 			);
 		}
@@ -620,7 +625,7 @@ public class TestElasticsearchClient implements TestRule, Closeable {
 				+ "\nResponse:\n"
 				+ "========\n"
 				+ new ElasticsearchResponseFormatter( response )
-				);
+		);
 	}
 
 	/*

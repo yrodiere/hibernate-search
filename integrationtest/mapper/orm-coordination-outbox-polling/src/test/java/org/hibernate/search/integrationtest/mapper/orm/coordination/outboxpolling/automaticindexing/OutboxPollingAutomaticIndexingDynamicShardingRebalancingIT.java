@@ -15,6 +15,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -140,7 +141,8 @@ public class OutboxPollingAutomaticIndexingDynamicShardingRebalancingIT {
 		// The workload must be spread evenly over the other factories in accordance with
 		// the number of shards (with some tolerance)
 		int remainingShardCount = initialShardCount - 1;
-		int entityCountNotProcessedByFactory2 = entityCount - indexingCountHelper.indexingCounts().forSessionFactory( 2 );
+		int entityCountNotProcessedByFactory2 = entityCount - indexingCountHelper.indexingCounts().forSessionFactory(
+				2 );
 		indexingCountHelper.indexingCounts().assertForSessionFactory( 0 )
 				.isCloseTo( entityCountNotProcessedByFactory2 / remainingShardCount, withinPercentage( 25 ) );
 		indexingCountHelper.indexingCounts().assertForSessionFactory( 1 )
@@ -228,7 +230,8 @@ public class OutboxPollingAutomaticIndexingDynamicShardingRebalancingIT {
 				.isPositive();
 		// The workload must be spread evenly over the other factories in accordance with
 		// the number of shards (with some tolerance)
-		int entityCountNotProcessedByFactory3 = entityCount - indexingCountHelper.indexingCounts().forSessionFactory( 3 );
+		int entityCountNotProcessedByFactory3 = entityCount - indexingCountHelper.indexingCounts().forSessionFactory(
+				3 );
 		indexingCountHelper.indexingCounts().assertForSessionFactory( 0 )
 				.isCloseTo( entityCountNotProcessedByFactory3 / initialShardCount, withinPercentage( 25 ) );
 		indexingCountHelper.indexingCounts().assertForSessionFactory( 1 )

@@ -33,13 +33,13 @@ import org.hibernate.search.mapper.pojo.model.additionalmetadata.building.impl.P
 import org.hibernate.search.mapper.pojo.model.additionalmetadata.impl.PojoEntityTypeAdditionalMetadata;
 import org.hibernate.search.mapper.pojo.model.additionalmetadata.impl.PojoTypeAdditionalMetadata;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
-import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathValueNode;
 import org.hibernate.search.mapper.pojo.model.path.impl.PojoPathOrdinalReference;
 import org.hibernate.search.mapper.pojo.model.path.impl.PojoPathOrdinals;
 import org.hibernate.search.mapper.pojo.model.path.impl.PojoRuntimePathsBuildingHelper;
 import org.hibernate.search.mapper.pojo.model.path.spi.BindablePojoModelPath;
+import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.path.spi.PojoPathDefinition;
 import org.hibernate.search.mapper.pojo.model.path.spi.PojoPathEntityStateRepresentation;
 import org.hibernate.search.mapper.pojo.model.path.spi.PojoPathFilter;
@@ -82,19 +82,18 @@ public final class PojoImplicitReindexingResolverBuildingHelper {
 		for ( PojoRawTypeModel<?> entityType : entityTypes ) {
 			if ( !entityType.isAbstract() ) {
 				entityType.ascendingSuperTypes().forEach(
-						superType ->
-								concreteEntitySubTypesByEntitySuperType.computeIfAbsent(
-										superType,
-										// Use a LinkedHashSet for deterministic iteration
-										ignored -> new LinkedHashSet<>()
-								)
-										.add( entityType )
+						superType -> concreteEntitySubTypesByEntitySuperType.computeIfAbsent(
+								superType,
+								// Use a LinkedHashSet for deterministic iteration
+								ignored -> new LinkedHashSet<>()
+						)
+								.add( entityType )
 				);
 			}
 		}
 		// Make sure every Set is unmodifiable
-		for ( Map.Entry<PojoRawTypeModel<?>, Set<PojoRawTypeModel<?>>> entry
-				: concreteEntitySubTypesByEntitySuperType.entrySet() ) {
+		for ( Map.Entry<PojoRawTypeModel<?>, Set<PojoRawTypeModel<?>>> entry : concreteEntitySubTypesByEntitySuperType
+				.entrySet() ) {
 			entry.setValue( Collections.unmodifiableSet( entry.getValue() ) );
 		}
 	}
@@ -146,10 +145,12 @@ public final class PojoImplicitReindexingResolverBuildingHelper {
 
 	public PojoImplicitReindexingAssociationInverseSideResolver createAssociationInverseSideResolver(
 			PojoRawTypeModel<?> typeModel,
-			Map<PojoModelPathValueNode, Map<PojoRawTypeModel<?>, PojoModelPathValueNode>> inversePathByInverseTypeByDirectContainingPath) {
+			Map<PojoModelPathValueNode,
+					Map<PojoRawTypeModel<?>, PojoModelPathValueNode>> inversePathByInverseTypeByDirectContainingPath) {
 		PojoRuntimePathsBuildingHelper pathsBuildingHelper = runtimePathsBuildingHelper( typeModel );
 		List<List<PojoImplicitReindexingAssociationInverseSideResolverNode<Object>>> resolversByOrdinal =
-				createResolversByOrdinal( typeModel, pathsBuildingHelper, inversePathByInverseTypeByDirectContainingPath );
+				createResolversByOrdinal( typeModel, pathsBuildingHelper,
+						inversePathByInverseTypeByDirectContainingPath );
 		PojoPathFilter filter = pathsBuildingHelper.createFilterForNonNullOrdinals( resolversByOrdinal );
 		return new PojoImplicitReindexingAssociationInverseSideResolver(
 				pathsBuildingHelper.pathOrdinals(), filter, resolversByOrdinal
@@ -158,10 +159,12 @@ public final class PojoImplicitReindexingResolverBuildingHelper {
 
 	private List<List<PojoImplicitReindexingAssociationInverseSideResolverNode<Object>>> createResolversByOrdinal(
 			PojoRawTypeModel<?> typeModel, PojoRuntimePathsBuildingHelper pathsBuildingHelper,
-			Map<PojoModelPathValueNode, Map<PojoRawTypeModel<?>, PojoModelPathValueNode>> inversePathByInverseTypeByDirectContainingPath) {
+			Map<PojoModelPathValueNode,
+					Map<PojoRawTypeModel<?>, PojoModelPathValueNode>> inversePathByInverseTypeByDirectContainingPath) {
 		List<List<PojoImplicitReindexingAssociationInverseSideResolverNode<Object>>> result = new ArrayList<>();
-		for ( Map.Entry<PojoModelPathValueNode, Map<PojoRawTypeModel<?>, PojoModelPathValueNode>> entry :
-				inversePathByInverseTypeByDirectContainingPath.entrySet() ) {
+		for ( Map.Entry<PojoModelPathValueNode,
+				Map<PojoRawTypeModel<?>, PojoModelPathValueNode>> entry : inversePathByInverseTypeByDirectContainingPath
+						.entrySet() ) {
 			PojoModelPathValueNode path = entry.getKey();
 			Map<PojoRawTypeModel<?>, PojoModelPathValueNode> inversePathByInverseType = entry.getValue();
 			int ordinal;
@@ -171,7 +174,8 @@ public final class PojoImplicitReindexingResolverBuildingHelper {
 				// otherwise toPathDefinition() might lack some information and fail.
 				BoundPojoModelPathValueNode<?, ?, ?> boundPath = bindPath( typeModel, path );
 				PojoPathDefinition pathDefinition = pathsBuildingHelper.toPathDefinition( boundPath.toUnboundPath() );
-				Optional<PojoPathEntityStateRepresentation> entityStateRepresentationOptional = pathDefinition.entityStateRepresentation();
+				Optional<PojoPathEntityStateRepresentation> entityStateRepresentationOptional = pathDefinition
+						.entityStateRepresentation();
 				if ( !entityStateRepresentationOptional.isPresent() ) {
 					// Ignore: we don't have metadata to resolve the inverse side of this association from entity state.
 					// This may happen with the Standalone POJO Mapper,
@@ -193,14 +197,16 @@ public final class PojoImplicitReindexingResolverBuildingHelper {
 				// TODO HSEARCH-4720 when we can afford breaking changes (in the next major), we should probably throw an exception
 				//  instead of just logging a warning here?
 				// Wrap the failure to append a message "please report this bug"
-				AssertionFailure assertionFailure = e instanceof AssertionFailure ? (AssertionFailure) e
-						: new AssertionFailure( e.getMessage(), e );
+				AssertionFailure assertionFailure = e instanceof AssertionFailure ?
+						(AssertionFailure) e : new AssertionFailure( e.getMessage(), e );
 				log.failedToCreateImplicitReindexingAssociationInverseSideResolverNode(
-						inversePathByInverseType, EventContexts.fromType( typeModel ).append( PojoEventContexts.fromPath( path ) ),
+						inversePathByInverseType, EventContexts.fromType( typeModel ).append( PojoEventContexts
+								.fromPath( path ) ),
 						assertionFailure.getMessage(), assertionFailure );
 				continue;
 			}
-			List<PojoImplicitReindexingAssociationInverseSideResolverNode<Object>> nodesForOrdinal = result.get( ordinal );
+			List<PojoImplicitReindexingAssociationInverseSideResolverNode<Object>> nodesForOrdinal = result.get(
+					ordinal );
 			if ( nodesForOrdinal == null ) {
 				nodesForOrdinal = new ArrayList<>();
 				result.set( ordinal, nodesForOrdinal );
@@ -238,7 +244,8 @@ public final class PojoImplicitReindexingResolverBuildingHelper {
 		return PojoImplicitReindexingAssociationInverseSideResolverNode.bind( extractorBinder, boundPath, markingNode );
 	}
 
-	public BoundPojoModelPathValueNode<?, ?, ?> bindPath(PojoTypeModel<?> rootType, PojoModelPathValueNode unboundPath) {
+	public BoundPojoModelPathValueNode<?, ?, ?> bindPath(PojoTypeModel<?> rootType,
+			PojoModelPathValueNode unboundPath) {
 		return PojoModelPathBinder.bind( BoundPojoModelPath.root( rootType ),
 				unboundPath, BoundPojoModelPath.walker( extractorBinder ) );
 	}
@@ -263,7 +270,8 @@ public final class PojoImplicitReindexingResolverBuildingHelper {
 	 * because the association could target any of them at runtime.
 	 */
 	Set<? extends PojoRawTypeModel<?>> getConcreteEntitySubTypesForEntitySuperType(PojoRawTypeModel<?> superTypeModel) {
-		return concreteEntitySubTypesByEntitySuperType.computeIfAbsent( superTypeModel, ignored -> Collections.emptySet() );
+		return concreteEntitySubTypesByEntitySuperType.computeIfAbsent( superTypeModel, ignored -> Collections
+				.emptySet() );
 	}
 
 	<T> PojoImplicitReindexingResolverBuilder<T> getOrCreateResolverBuilder(

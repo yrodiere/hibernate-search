@@ -58,7 +58,8 @@ public class SpatialWithinCirclePredicateBaseIT {
 						SearchableIT.searchableYesIndex, SearchableIT.searchableNoIndex,
 						ArgumentCheckingIT.index,
 						TypeCheckingNoConversionIT.index, TypeCheckingNoConversionIT.compatibleIndex,
-						TypeCheckingNoConversionIT.rawFieldCompatibleIndex, TypeCheckingNoConversionIT.missingFieldIndex,
+						TypeCheckingNoConversionIT.rawFieldCompatibleIndex,
+						TypeCheckingNoConversionIT.missingFieldIndex,
 						TypeCheckingNoConversionIT.incompatibleIndex
 				)
 				.setup();
@@ -79,7 +80,8 @@ public class SpatialWithinCirclePredicateBaseIT {
 
 		final BulkIndexer typeCheckingMainIndexer = TypeCheckingNoConversionIT.index.bulkIndexer();
 		final BulkIndexer typeCheckingCompatibleIndexer = TypeCheckingNoConversionIT.compatibleIndex.bulkIndexer();
-		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex.bulkIndexer();
+		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex
+				.bulkIndexer();
 		final BulkIndexer typeCheckingMissingFieldIndexer = TypeCheckingNoConversionIT.missingFieldIndex.bulkIndexer();
 		TypeCheckingNoConversionIT.dataSet.contribute( TypeCheckingNoConversionIT.index, typeCheckingMainIndexer,
 				TypeCheckingNoConversionIT.compatibleIndex, typeCheckingCompatibleIndexer,
@@ -105,7 +107,8 @@ public class SpatialWithinCirclePredicateBaseIT {
 
 	@Nested
 	public static class SingleFieldIT extends AbstractPredicateSingleFieldIT<SpatialWithinCirclePredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinCirclePredicateTestValues> dataSet = new DataSet<>( testValues() );
+		private static final DataSet<GeoPoint, SpatialWithinCirclePredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
@@ -125,7 +128,8 @@ public class SpatialWithinCirclePredicateBaseIT {
 
 	@Nested
 	public static class MultiFieldIT extends AbstractPredicateMultiFieldIT<SpatialWithinCirclePredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinCirclePredicateTestValues> dataSet = new DataSet<>( testValues() );
+		private static final DataSet<GeoPoint, SpatialWithinCirclePredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
@@ -144,7 +148,8 @@ public class SpatialWithinCirclePredicateBaseIT {
 		}
 
 		@Override
-		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths, int matchingDocOrdinal) {
+		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths,
+				int matchingDocOrdinal) {
 			return f.spatial().within().fields( fieldPaths )
 					.circle( dataSet.values.matchingCenter( matchingDocOrdinal ),
 							dataSet.values.matchingRadius( matchingDocOrdinal ) );
@@ -187,7 +192,8 @@ public class SpatialWithinCirclePredicateBaseIT {
 
 	@Nested
 	public static class ScoreIT extends AbstractPredicateFieldScoreIT<SpatialWithinCirclePredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinCirclePredicateTestValues> dataSet = new DataSet<>( testValues() );
+		private static final DataSet<GeoPoint, SpatialWithinCirclePredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
@@ -371,7 +377,8 @@ public class SpatialWithinCirclePredicateBaseIT {
 	@Nested
 	public static class TypeCheckingNoConversionIT
 			extends AbstractPredicateTypeCheckingNoConversionIT<SpatialWithinCirclePredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinCirclePredicateTestValues> dataSet = new DataSet<>( testValues() );
+		private static final DataSet<GeoPoint, SpatialWithinCirclePredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )

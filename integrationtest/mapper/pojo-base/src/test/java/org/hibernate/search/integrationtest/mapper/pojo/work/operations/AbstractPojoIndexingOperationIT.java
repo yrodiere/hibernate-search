@@ -19,11 +19,11 @@ import java.util.function.Consumer;
 
 import org.hibernate.search.engine.backend.work.execution.DocumentCommitStrategy;
 import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrategy;
-import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.mapper.pojo.standalone.loading.SelectionEntityLoader;
 import org.hibernate.search.mapper.pojo.standalone.loading.SelectionLoadingStrategy;
 import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
 import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
+import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
@@ -47,10 +47,14 @@ public abstract class AbstractPojoIndexingOperationIT {
 	@Parameterized.Parameters(name = "commit: {0}, refresh: {1}, tenantID: {2}, routing: {3}")
 	public static List<Object[]> parameters() {
 		Object[][] strategies = new Object[][] {
-				new Object[] { DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE, IndexingPlanSynchronizationStrategy.async() },
-				new Object[] { DocumentCommitStrategy.FORCE, DocumentRefreshStrategy.NONE, IndexingPlanSynchronizationStrategy.writeSync() },
-				new Object[] { DocumentCommitStrategy.NONE, DocumentRefreshStrategy.FORCE, IndexingPlanSynchronizationStrategy.readSync() },
-				new Object[] { DocumentCommitStrategy.FORCE, DocumentRefreshStrategy.FORCE, IndexingPlanSynchronizationStrategy.sync() }
+				new Object[] { DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE,
+						IndexingPlanSynchronizationStrategy.async() },
+				new Object[] { DocumentCommitStrategy.FORCE, DocumentRefreshStrategy.NONE,
+						IndexingPlanSynchronizationStrategy.writeSync() },
+				new Object[] { DocumentCommitStrategy.NONE, DocumentRefreshStrategy.FORCE,
+						IndexingPlanSynchronizationStrategy.readSync() },
+				new Object[] { DocumentCommitStrategy.FORCE, DocumentRefreshStrategy.FORCE,
+						IndexingPlanSynchronizationStrategy.sync() }
 		};
 
 		List<Object[]> params = new ArrayList<>();
@@ -107,11 +111,11 @@ public abstract class AbstractPojoIndexingOperationIT {
 								.indexed().routingBinder( routingBinder );
 					}
 					b.addEntityType( IndexedEntity.class, context -> context
-							.selectionLoadingStrategy( (SelectionLoadingStrategy<IndexedEntity>)
-									(includedTypes, options) -> indexedEntityLoaderMock ) );
+							.selectionLoadingStrategy( (SelectionLoadingStrategy<IndexedEntity>) (includedTypes,
+									options) -> indexedEntityLoaderMock ) );
 					b.addEntityType( ContainedEntity.class, context -> context
-							.selectionLoadingStrategy( (SelectionLoadingStrategy<ContainedEntity>)
-									(includedTypes, options) -> containedEntityLoaderMock ) );
+							.selectionLoadingStrategy( (SelectionLoadingStrategy<ContainedEntity>) (includedTypes,
+									options) -> containedEntityLoaderMock ) );
 				} )
 				.setup( IndexedEntity.class );
 
@@ -147,7 +151,7 @@ public abstract class AbstractPojoIndexingOperationIT {
 				.build();
 	}
 
-	protected final void expectIndexedEntityLoadingIfRelevant(Integer ... ids) {
+	protected final void expectIndexedEntityLoadingIfRelevant(Integer... ids) {
 		List<IndexedEntity> entities = new ArrayList<>();
 		for ( Integer id : ids ) {
 			entities.add( IndexedEntity.of( id ) );
@@ -166,7 +170,7 @@ public abstract class AbstractPojoIndexingOperationIT {
 		when( indexedEntityLoaderMock.load( ids, null ) ).thenReturn( entities );
 	}
 
-	protected final void expectContainedEntityLoadingIfRelevant(Integer ... ids) {
+	protected final void expectContainedEntityLoadingIfRelevant(Integer... ids) {
 		List<ContainedEntity> entities = new ArrayList<>();
 		for ( Integer id : ids ) {
 			entities.add( ContainedEntity.of( id ) );
@@ -185,8 +189,9 @@ public abstract class AbstractPojoIndexingOperationIT {
 		when( containedEntityLoaderMock.load( ids, null ) ).thenReturn( entities );
 	}
 
-	protected final void expectOperation(CompletableFuture<?> futureFromBackend, int id, String providedRoutingKey, String value) {
-		expectOperation( futureFromBackend, ignored -> { }, id, providedRoutingKey, value );
+	protected final void expectOperation(CompletableFuture<?> futureFromBackend, int id, String providedRoutingKey,
+			String value) {
+		expectOperation( futureFromBackend, ignored -> {}, id, providedRoutingKey, value );
 	}
 
 	protected final void expectOperation(CompletableFuture<?> futureFromBackend,
@@ -212,8 +217,8 @@ public abstract class AbstractPojoIndexingOperationIT {
 			Consumer<BackendMock.DocumentWorkCallListContext> worksBefore,
 			int id, String providedRoutingKey, String value) {
 		BackendMock.DocumentWorkCallListContext context = backendMock.expectWorks(
-						IndexedEntity.INDEX, commitStrategy, refreshStrategy
-				)
+				IndexedEntity.INDEX, commitStrategy, refreshStrategy
+		)
 				.createAndExecuteFollowingWorks( futureFromBackend );
 		worksBefore.accept( context );
 		String expectedRoutingKey;
@@ -229,7 +234,7 @@ public abstract class AbstractPojoIndexingOperationIT {
 
 	protected final void expectUpdateCausedByContained(CompletableFuture<?> futureFromBackend, int id,
 			String value, String containedValue) {
-		expectUpdateCausedByContained( futureFromBackend, ignored -> { }, id, value, containedValue );
+		expectUpdateCausedByContained( futureFromBackend, ignored -> {}, id, value, containedValue );
 	}
 
 	protected final void expectUpdateCausedByContained(CompletableFuture<?> futureFromBackend,

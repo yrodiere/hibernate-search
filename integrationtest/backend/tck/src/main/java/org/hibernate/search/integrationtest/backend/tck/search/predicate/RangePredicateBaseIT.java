@@ -63,7 +63,8 @@ public class RangePredicateBaseIT {
 						SearchableIT.searchableYesIndex, SearchableIT.searchableNoIndex,
 						ArgumentCheckingIT.index,
 						TypeCheckingAndConversionIT.index, TypeCheckingAndConversionIT.compatibleIndex,
-						TypeCheckingAndConversionIT.rawFieldCompatibleIndex, TypeCheckingAndConversionIT.missingFieldIndex,
+						TypeCheckingAndConversionIT.rawFieldCompatibleIndex,
+						TypeCheckingAndConversionIT.missingFieldIndex,
 						TypeCheckingAndConversionIT.incompatibleIndex,
 						ScaleCheckingIT.index, ScaleCheckingIT.compatibleIndex, ScaleCheckingIT.incompatibleIndex
 				)
@@ -92,9 +93,11 @@ public class RangePredicateBaseIT {
 
 		final BulkIndexer typeCheckingMainIndexer = TypeCheckingAndConversionIT.index.bulkIndexer();
 		final BulkIndexer typeCheckingCompatibleIndexer = TypeCheckingAndConversionIT.compatibleIndex.bulkIndexer();
-		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingAndConversionIT.rawFieldCompatibleIndex.bulkIndexer();
+		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingAndConversionIT.rawFieldCompatibleIndex
+				.bulkIndexer();
 		final BulkIndexer typeCheckingMissingFieldIndexer = TypeCheckingAndConversionIT.missingFieldIndex.bulkIndexer();
-		TypeCheckingAndConversionIT.dataSets.forEach( d -> d.contribute( TypeCheckingAndConversionIT.index, typeCheckingMainIndexer,
+		TypeCheckingAndConversionIT.dataSets.forEach( d -> d.contribute( TypeCheckingAndConversionIT.index,
+				typeCheckingMainIndexer,
 				TypeCheckingAndConversionIT.compatibleIndex, typeCheckingCompatibleIndexer,
 				TypeCheckingAndConversionIT.rawFieldCompatibleIndex, typeCheckingRawFieldCompatibleIndexer,
 				TypeCheckingAndConversionIT.missingFieldIndex, typeCheckingMissingFieldIndexer ) );
@@ -189,7 +192,8 @@ public class RangePredicateBaseIT {
 		}
 
 		@Override
-		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths, int matchingDocOrdinal) {
+		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths,
+				int matchingDocOrdinal) {
 			return f.range().fields( fieldPaths ).range( dataSet.values.matchingRange( matchingDocOrdinal ) );
 		}
 
@@ -292,7 +296,8 @@ public class RangePredicateBaseIT {
 		@Override
 		protected PredicateFinalStep predicateWithConstantScore(SearchPredicateFactory f, String[] fieldPaths,
 				int matchingDocOrdinal) {
-			return f.range().fields( fieldPaths ).range( dataSet.values.matchingRange( matchingDocOrdinal ) ).constantScore();
+			return f.range().fields( fieldPaths ).range( dataSet.values.matchingRange( matchingDocOrdinal ) )
+					.constantScore();
 		}
 
 		@Override

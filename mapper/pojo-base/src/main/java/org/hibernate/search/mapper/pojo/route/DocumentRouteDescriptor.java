@@ -40,8 +40,12 @@ public final class DocumentRouteDescriptor implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DocumentRouteDescriptor{" +
-				"routingKey='" + routingKey + '\'' +
+		return "DocumentRouteDescriptor{"
+				+
+				"routingKey='"
+				+ routingKey
+				+ '\''
+				+
 				'}';
 	}
 

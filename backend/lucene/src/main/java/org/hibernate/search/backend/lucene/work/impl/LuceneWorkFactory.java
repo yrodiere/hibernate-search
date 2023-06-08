@@ -87,7 +87,8 @@ public final class LuceneWorkFactory {
 		return new DeleteEntriesByQueryWork( Queries.boolFilter( new MatchAllDocsQuery(), filters ) );
 	}
 
-	public <R> ReadWork<R> search(LuceneSearcher<R, ?> searcher, Integer offset, Integer limit, int totalHitCountThreshold) {
+	public <R> ReadWork<R> search(LuceneSearcher<R, ?> searcher, Integer offset, Integer limit,
+			int totalHitCountThreshold) {
 		return new SearchWork<>( searcher, offset, limit, totalHitCountThreshold );
 	}
 

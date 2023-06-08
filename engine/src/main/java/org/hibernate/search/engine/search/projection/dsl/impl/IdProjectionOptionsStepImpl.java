@@ -10,7 +10,8 @@ import org.hibernate.search.engine.search.projection.SearchProjection;
 import org.hibernate.search.engine.search.projection.dsl.IdProjectionOptionsStep;
 import org.hibernate.search.engine.search.projection.dsl.spi.SearchProjectionDslContext;
 
-public final class IdProjectionOptionsStepImpl<I> implements IdProjectionOptionsStep<IdProjectionOptionsStepImpl<I>, I> {
+public final class IdProjectionOptionsStepImpl<I>
+		implements IdProjectionOptionsStep<IdProjectionOptionsStepImpl<I>, I> {
 
 	private final SearchProjection<I> idProjection;
 

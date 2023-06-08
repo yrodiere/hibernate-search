@@ -99,7 +99,8 @@ public class FieldSortDynamicFieldIT<F> {
 	@TestForIssue(jiraKey = "HSEARCH-4531")
 	public void neverPopulated() {
 		assumeTrue(
-				"This backend doesn't support sorts on a field of type '" + fieldTypeDescriptor
+				"This backend doesn't support sorts on a field of type '"
+						+ fieldTypeDescriptor
 						+ "' that is missing from some of the target indexes.",
 				TckConfiguration.get().getBackendFeatures()
 						.supportsFieldSortWhenFieldMissingInSomeTargetIndexes( fieldTypeDescriptor.getJavaType() )
@@ -179,7 +180,7 @@ public class FieldSortDynamicFieldIT<F> {
 		IndexBinding(IndexSchemaElement root) {
 			for ( FieldTypeDescriptor<?> type : supportedFieldTypes ) {
 				root.fieldTemplate( "myTemplate" + type.getUniqueName(),
-								f -> type.configure( f ).sortable( Sortable.YES ) )
+						f -> type.configure( f ).sortable( Sortable.YES ) )
 						.matchingPathGlob( fieldPath( type, "*" ) );
 			}
 		}

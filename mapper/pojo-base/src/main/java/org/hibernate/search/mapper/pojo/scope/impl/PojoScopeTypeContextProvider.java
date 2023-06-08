@@ -32,6 +32,7 @@ public interface PojoScopeTypeContextProvider
 	<E> Optional<? extends Set<? extends PojoScopeIndexedTypeContext<?, ? extends E>>> allIndexedForSuperType(
 			PojoRawTypeIdentifier<E> typeIdentifier);
 
-	<E> Set<? extends PojoWorkTypeContext<?, ? extends E>> allByNonInterfaceSuperType(PojoRawTypeIdentifier<E> typeIdentifier);
+	<E> Set<? extends PojoWorkTypeContext<?, ? extends E>> allByNonInterfaceSuperType(PojoRawTypeIdentifier<
+			E> typeIdentifier);
 
 }

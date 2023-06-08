@@ -11,6 +11,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.UnaryOperator;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -76,12 +77,15 @@ public class OutboxPollingAutomaticIndexingMultiTenancyIT {
 		// Session factory 1 is configured to handle tenant 1 only
 		setup( "none", c -> c
 				.withProperty( "hibernate.search.coordination.event_processor.enabled", false )
-				.withProperty( "hibernate.search.coordination.tenants." + TENANT_1_ID + ".event_processor.enabled", true ) );
+				.withProperty( "hibernate.search.coordination.tenants." + TENANT_1_ID + ".event_processor.enabled",
+						true ) );
 		// Session factory 2 is configured to handle tenants 2 and 3 only
 		setup( "none", c -> c
 				.withProperty( "hibernate.search.coordination.event_processor.enabled", false )
-				.withProperty( "hibernate.search.coordination.tenants." + TENANT_2_ID + ".event_processor.enabled", true )
-				.withProperty( "hibernate.search.coordination.tenants." + TENANT_3_ID + ".event_processor.enabled", true ) );
+				.withProperty( "hibernate.search.coordination.tenants." + TENANT_2_ID + ".event_processor.enabled",
+						true )
+				.withProperty( "hibernate.search.coordination.tenants." + TENANT_3_ID + ".event_processor.enabled",
+						true ) );
 
 		backendMock.verifyExpectationsMet();
 
@@ -141,7 +145,7 @@ public class OutboxPollingAutomaticIndexingMultiTenancyIT {
 
 		static final String NAME = "IndexedEntity";
 
-		static volatile AtomicReference<Runnable> getTextConcurrentOperation = new AtomicReference<>( () -> { } );
+		static volatile AtomicReference<Runnable> getTextConcurrentOperation = new AtomicReference<>( () -> {} );
 
 		private Integer id;
 		private String text;

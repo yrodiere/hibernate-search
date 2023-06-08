@@ -7,6 +7,7 @@
 package org.hibernate.search.test;
 
 import org.hibernate.search.util.logging.impl.Log;
+
 import org.jboss.logging.Logger;
 
 /**

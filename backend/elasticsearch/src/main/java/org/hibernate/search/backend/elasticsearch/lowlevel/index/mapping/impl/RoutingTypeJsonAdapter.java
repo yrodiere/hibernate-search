@@ -15,8 +15,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
-
-
 public class RoutingTypeJsonAdapter extends TypeAdapter<RoutingType> {
 
 	@Override
@@ -33,7 +31,10 @@ public class RoutingTypeJsonAdapter extends TypeAdapter<RoutingType> {
 				out.value( true );
 				break;
 			default:
-				throw new AssertionFailure( "Unexpected value for attribute of type " + RoutingType.class + ": " + value );
+				throw new AssertionFailure( "Unexpected value for attribute of type "
+						+ RoutingType.class
+						+ ": "
+						+ value );
 		}
 		out.endObject();
 	}
@@ -59,7 +60,10 @@ public class RoutingTypeJsonAdapter extends TypeAdapter<RoutingType> {
 					}
 					break;
 				default:
-					throw new AssertionFailure( "Unexpected property for attribute of type " + RoutingType.class + ": " + name );
+					throw new AssertionFailure( "Unexpected property for attribute of type "
+							+ RoutingType.class
+							+ ": "
+							+ name );
 			}
 		}
 		in.endObject();

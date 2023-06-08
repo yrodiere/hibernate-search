@@ -10,15 +10,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.hibernate.search.engine.search.query.dsl.SearchQuerySelectStep;
-import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.engine.common.EntityReference;
+import org.hibernate.search.engine.search.query.dsl.SearchQuerySelectStep;
 import org.hibernate.search.mapper.pojo.standalone.massindexing.MassIndexer;
 import org.hibernate.search.mapper.pojo.standalone.schema.management.SearchSchemaManager;
 import org.hibernate.search.mapper.pojo.standalone.scope.SearchScope;
 import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexer;
 import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexingPlan;
 import org.hibernate.search.mapper.pojo.standalone.work.SearchWorkspace;
+import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy;
 import org.hibernate.search.util.common.annotation.Incubating;
 
 /**
@@ -154,7 +154,7 @@ public interface SearchSession extends AutoCloseable {
 	 * @param types One or more indexed types, or supertypes of all indexed types that will be targeted by the workspace.
 	 * @return A {@link SearchWorkspace}.
 	 */
-	default SearchWorkspace workspace(Class<?> ... types) {
+	default SearchWorkspace workspace(Class<?>... types) {
 		return workspace( Arrays.asList( types ) );
 	}
 

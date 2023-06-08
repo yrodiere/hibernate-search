@@ -17,16 +17,15 @@ import org.hibernate.search.engine.search.sort.dsl.spi.StaticSortThenStep;
 
 import com.google.gson.JsonObject;
 
-
 public class ElasticsearchSearchSortFactoryImpl
 		extends AbstractSearchSortFactory<
-						ElasticsearchSearchSortFactory,
-						ElasticsearchSearchSortIndexScope<?>,
-						ElasticsearchSearchPredicateFactory
-				>
+				ElasticsearchSearchSortFactory,
+				ElasticsearchSearchSortIndexScope<?>,
+				ElasticsearchSearchPredicateFactory>
 		implements ElasticsearchSearchSortFactory {
 
-	public ElasticsearchSearchSortFactoryImpl(SearchSortDslContext<ElasticsearchSearchSortIndexScope<?>, ElasticsearchSearchPredicateFactory> dslContext) {
+	public ElasticsearchSearchSortFactoryImpl(SearchSortDslContext<ElasticsearchSearchSortIndexScope<?>,
+			ElasticsearchSearchPredicateFactory> dslContext) {
 		super( dslContext );
 	}
 

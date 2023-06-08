@@ -14,5 +14,4 @@ package org.hibernate.search.engine.search.aggregation;
  *
  * @param <A> The type of result for this aggregation.
  */
-public interface SearchAggregation<A> {
-}
+public interface SearchAggregation<A> {}

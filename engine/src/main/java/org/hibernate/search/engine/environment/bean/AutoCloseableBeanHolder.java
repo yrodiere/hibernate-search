@@ -23,8 +23,10 @@ final class AutoCloseableBeanHolder<T extends AutoCloseable> implements BeanHold
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "instance=" + instance
+		return getClass().getSimpleName()
+				+ "["
+				+ "instance="
+				+ instance
 				+ "]";
 	}
 

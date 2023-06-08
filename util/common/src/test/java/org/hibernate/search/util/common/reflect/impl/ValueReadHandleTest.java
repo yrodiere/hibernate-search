@@ -196,7 +196,9 @@ public class ValueReadHandleTest {
 		assertThatThrownBy( () -> valueReadHandle.get( entity ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContaining(
-						"Exception while invoking '" + method.toString() + "' on '<EntityType#toString() threw SimulatedRuntimeException>'"
+						"Exception while invoking '"
+								+ method.toString()
+								+ "' on '<EntityType#toString() threw SimulatedRuntimeException>'"
 				)
 				.extracting( Throwable::getCause ).asInstanceOf( InstanceOfAssertFactories.THROWABLE )
 				.isInstanceOf( SimulatedRuntimeException.class )
@@ -226,7 +228,8 @@ public class ValueReadHandleTest {
 		assertThat( valueReadHandle ).isNotEqualTo( differentFieldValueReadHandle );
 	}
 
-	private void testMethodValueReadHandleSuccess(String methodName) throws IllegalAccessException, NoSuchMethodException {
+	private void testMethodValueReadHandleSuccess(
+			String methodName) throws IllegalAccessException, NoSuchMethodException {
 		String expectedValue = methodName + "Value";
 		Method method = EntityType.class.getDeclaredMethod( methodName );
 		setAccessible( method );
@@ -283,24 +286,31 @@ public class ValueReadHandleTest {
 		private String privateMethod() {
 			return "privateMethodValue";
 		}
+
 		String packagePrivateMethod() {
 			return "packagePrivateMethodValue";
 		}
+
 		protected String protectedMethod() {
 			return "protectedMethodValue";
 		}
+
 		public String publicMethod() {
 			return "publicMethodValue";
 		}
+
 		public String otherMethod() {
 			return "otherMethod";
 		}
+
 		public String runtimeExceptionThrowingMethod() {
 			throw new SimulatedRuntimeException( "runtimeExceptionThrowingMethod" );
 		}
+
 		public String errorThrowingMethod() {
 			throw new SimulatedError( "errorThrowingMethod" );
 		}
+
 		private String illegalAccessExceptionThrowingMethod() {
 			return fail( "This method is inaccessible and should not be called" );
 		}

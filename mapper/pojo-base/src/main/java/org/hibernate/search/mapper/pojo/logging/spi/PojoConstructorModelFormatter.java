@@ -19,7 +19,9 @@ public final class PojoConstructorModelFormatter {
 
 	@Override
 	public String toString() {
-		return constructorModel.typeModel().name() + "("
-				+ CommaSeparatedClassesFormatter.format( constructorModel.parametersJavaTypes() ) + ")";
+		return constructorModel.typeModel().name()
+				+ "("
+				+ CommaSeparatedClassesFormatter.format( constructorModel.parametersJavaTypes() )
+				+ ")";
 	}
 }

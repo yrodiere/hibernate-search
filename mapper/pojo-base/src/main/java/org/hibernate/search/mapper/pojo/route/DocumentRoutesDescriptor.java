@@ -52,9 +52,14 @@ public final class DocumentRoutesDescriptor implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DocumentRoutesDescriptor{" +
-				"currentRoute=" + currentRoute +
-				", previousRoutes=" + previousRoutes +
+		return "DocumentRoutesDescriptor{"
+				+
+				"currentRoute="
+				+ currentRoute
+				+
+				", previousRoutes="
+				+ previousRoutes
+				+
 				'}';
 	}
 

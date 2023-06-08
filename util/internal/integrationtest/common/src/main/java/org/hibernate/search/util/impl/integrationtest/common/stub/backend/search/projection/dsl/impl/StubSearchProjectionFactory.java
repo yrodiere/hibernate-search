@@ -11,13 +11,17 @@ import org.hibernate.search.engine.search.projection.dsl.spi.SearchProjectionDsl
 import org.hibernate.search.engine.search.projection.spi.SearchProjectionIndexScope;
 
 public class StubSearchProjectionFactory<R, E>
-		extends AbstractSearchProjectionFactory<StubSearchProjectionFactory<R, E>, SearchProjectionIndexScope<?>, R, E> {
+		extends AbstractSearchProjectionFactory<StubSearchProjectionFactory<R, E>,
+				SearchProjectionIndexScope<?>,
+				R,
+				E> {
 	public StubSearchProjectionFactory(SearchProjectionDslContext<SearchProjectionIndexScope<?>> dslContext) {
 		super( dslContext );
 	}
 
 	@Override
 	public StubSearchProjectionFactory<R, E> withRoot(String objectFieldPath) {
-		return new StubSearchProjectionFactory<>( dslContext.rescope( dslContext.scope().withRoot( objectFieldPath ) ) );
+		return new StubSearchProjectionFactory<>( dslContext.rescope( dslContext.scope().withRoot(
+				objectFieldPath ) ) );
 	}
 }

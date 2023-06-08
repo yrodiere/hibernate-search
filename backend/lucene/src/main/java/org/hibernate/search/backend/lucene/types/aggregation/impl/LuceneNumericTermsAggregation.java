@@ -60,8 +60,7 @@ public class LuceneNumericTermsAggregation<F, E extends Number, K>
 	}
 
 	@Override
-	SortedSet<E> collectFirstTerms(IndexReader reader, boolean descending, int limit)
-			throws IOException {
+	SortedSet<E> collectFirstTerms(IndexReader reader, boolean descending, int limit) throws IOException {
 		TreeSet<E> collectedTerms = new TreeSet<>( descending ? termComparator.reversed() : termComparator );
 		for ( LeafReaderContext leaf : reader.leaves() ) {
 			final LeafReader atomicReader = leaf.reader();
@@ -100,7 +99,9 @@ public class LuceneNumericTermsAggregation<F, E extends Number, K>
 
 	public static class Factory<F>
 			extends
-			AbstractLuceneCodecAwareSearchQueryElementFactory<TermsAggregationBuilder.TypeSelector, F, AbstractLuceneNumericFieldCodec<F, ?>> {
+			AbstractLuceneCodecAwareSearchQueryElementFactory<TermsAggregationBuilder.TypeSelector,
+					F,
+					AbstractLuceneNumericFieldCodec<F, ?>> {
 		public Factory(AbstractLuceneNumericFieldCodec<F, ?> codec) {
 			super( codec );
 		}
@@ -133,7 +134,8 @@ public class LuceneNumericTermsAggregation<F, E extends Number, K>
 		private final AbstractLuceneNumericFieldCodec<F, E> codec;
 
 		public Builder(AbstractLuceneNumericFieldCodec<F, E> codec, LuceneSearchIndexScope<?> scope,
-				LuceneSearchIndexValueFieldContext<F> field, ProjectionConverter<F, ? extends K> fromFieldValueConverter) {
+				LuceneSearchIndexValueFieldContext<F> field, ProjectionConverter<F,
+						? extends K> fromFieldValueConverter) {
 			super( scope, field, fromFieldValueConverter );
 			this.codec = codec;
 		}

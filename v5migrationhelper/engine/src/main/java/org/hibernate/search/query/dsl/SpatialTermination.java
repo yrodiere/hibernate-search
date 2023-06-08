@@ -11,5 +11,4 @@ package org.hibernate.search.query.dsl;
  * @deprecated See the deprecation note on {@link QueryBuilder}.
  */
 @Deprecated
-public interface SpatialTermination extends Termination<SpatialTermination> {
-}
+public interface SpatialTermination extends Termination<SpatialTermination> {}

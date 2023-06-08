@@ -16,16 +16,16 @@ import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrateg
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.PersistenceTypeKey;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.StubLoadingContext;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.StubMassLoadingStrategy;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.massindexing.MassIndexer;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.massindexing.MassIndexer;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.SearchException;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
 import org.hibernate.search.util.impl.integrationtest.common.stub.backend.index.StubSchemaManagementWork;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -47,8 +47,8 @@ public class MassIndexingBaseIT {
 	public final BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public final StandalonePojoMappingSetupHelper setupHelper
-			= StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public final StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private SearchMapping mapping;
 
@@ -83,16 +83,16 @@ public class MassIndexingBaseIT {
 					Book.INDEX, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
 			)
 					.add( "1", b -> b
-					.field( "title", TITLE_1 )
-					.field( "author", AUTHOR_1 )
+							.field( "title", TITLE_1 )
+							.field( "author", AUTHOR_1 )
 					)
 					.add( "2", b -> b
-					.field( "title", TITLE_2 )
-					.field( "author", AUTHOR_2 )
+							.field( "title", TITLE_2 )
+							.field( "author", AUTHOR_2 )
 					)
 					.add( "3", b -> b
-					.field( "title", TITLE_3 )
-					.field( "author", AUTHOR_3 )
+							.field( "title", TITLE_3 )
+							.field( "author", AUTHOR_3 )
 					);
 
 			// purgeAtStart and mergeSegmentsAfterPurge are enabled by default,
@@ -129,16 +129,16 @@ public class MassIndexingBaseIT {
 					Book.INDEX, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
 			)
 					.add( "1", b -> b
-					.field( "title", TITLE_1 )
-					.field( "author", AUTHOR_1 )
+							.field( "title", TITLE_1 )
+							.field( "author", AUTHOR_1 )
 					)
 					.add( "2", b -> b
-					.field( "title", TITLE_2 )
-					.field( "author", AUTHOR_2 )
+							.field( "title", TITLE_2 )
+							.field( "author", AUTHOR_2 )
 					)
 					.add( "3", b -> b
-					.field( "title", TITLE_3 )
-					.field( "author", AUTHOR_3 )
+							.field( "title", TITLE_3 )
+							.field( "author", AUTHOR_3 )
 					);
 
 			backendMock.expectSchemaManagementWorks( Book.INDEX )
@@ -176,16 +176,16 @@ public class MassIndexingBaseIT {
 					Book.INDEX, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
 			)
 					.add( "1", b -> b
-					.field( "title", TITLE_1 )
-					.field( "author", AUTHOR_1 )
+							.field( "title", TITLE_1 )
+							.field( "author", AUTHOR_1 )
 					)
 					.add( "2", b -> b
-					.field( "title", TITLE_2 )
-					.field( "author", AUTHOR_2 )
+							.field( "title", TITLE_2 )
+							.field( "author", AUTHOR_2 )
 					)
 					.add( "3", b -> b
-					.field( "title", TITLE_3 )
-					.field( "author", AUTHOR_3 )
+							.field( "title", TITLE_3 )
+							.field( "author", AUTHOR_3 )
 					);
 
 			// purgeAtStart and mergeSegmentsAfterPurge are enabled by default,
@@ -222,8 +222,8 @@ public class MassIndexingBaseIT {
 			// add operations on indexes can follow any random order,
 			// since they are executed by different threads
 			backendMock.expectWorks(
-							Book.INDEX, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
-					)
+					Book.INDEX, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE
+			)
 					.add( "1", b -> b
 							.field( "title", TITLE_1 )
 							.field( "author", AUTHOR_1 )

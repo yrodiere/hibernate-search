@@ -61,9 +61,14 @@ public class SimpleSearchResultTotal implements SearchResultTotal {
 
 	@Override
 	public String toString() {
-		return "SimpleSearchResultTotal{" +
-				"totalHitCount=" + totalHitCount +
-				", isExact=" + isExact +
+		return "SimpleSearchResultTotal{"
+				+
+				"totalHitCount="
+				+ totalHitCount
+				+
+				", isExact="
+				+ isExact
+				+
 				'}';
 	}
 }

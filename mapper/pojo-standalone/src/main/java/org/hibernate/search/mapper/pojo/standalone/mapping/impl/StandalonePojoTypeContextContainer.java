@@ -13,12 +13,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeIdentifier;
+import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 import org.hibernate.search.mapper.pojo.standalone.loading.impl.LoadingTypeContextProvider;
 import org.hibernate.search.mapper.pojo.standalone.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.standalone.mapping.metadata.impl.StandalonePojoEntityTypeMetadata;
 import org.hibernate.search.mapper.pojo.standalone.session.impl.StandalonePojoSearchSessionTypeContextProvider;
-import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeIdentifier;
-import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeModel;
 import org.hibernate.search.util.common.data.spi.KeyValueProvider;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
@@ -27,15 +27,18 @@ class StandalonePojoTypeContextContainer
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
 	private final KeyValueProvider<PojoRawTypeIdentifier<?>, AbstractStandalonePojoTypeContext<?>> byTypeIdentifier;
-	private final KeyValueProvider<PojoRawTypeIdentifier<?>, StandalonePojoIndexedTypeContext<?>> indexedByTypeIdentifier;
+	private final KeyValueProvider<PojoRawTypeIdentifier<?>,
+			StandalonePojoIndexedTypeContext<?>> indexedByTypeIdentifier;
 	private final KeyValueProvider<Class<?>, AbstractStandalonePojoTypeContext<?>> byExactClass;
 	private final KeyValueProvider<Class<?>, StandalonePojoIndexedTypeContext<?>> indexedByExactClass;
 	private final KeyValueProvider<String, StandalonePojoIndexedTypeContext<?>> indexedByEntityName;
 
 	private StandalonePojoTypeContextContainer(Builder builder) {
 		// Use a LinkedHashMap for deterministic iteration
-		Map<PojoRawTypeIdentifier<?>, AbstractStandalonePojoTypeContext<?>> byTypeIdentifierContent = new LinkedHashMap<>();
-		Map<PojoRawTypeIdentifier<?>, StandalonePojoIndexedTypeContext<?>> indexedByTypeIdentifierContent = new LinkedHashMap<>();
+		Map<PojoRawTypeIdentifier<?>, AbstractStandalonePojoTypeContext<?>> byTypeIdentifierContent =
+				new LinkedHashMap<>();
+		Map<PojoRawTypeIdentifier<?>, StandalonePojoIndexedTypeContext<?>> indexedByTypeIdentifierContent =
+				new LinkedHashMap<>();
 		Map<Class<?>, AbstractStandalonePojoTypeContext<?>> byExactClassContent = new LinkedHashMap<>();
 		Map<Class<?>, StandalonePojoIndexedTypeContext<?>> indexedByExactClassContent = new LinkedHashMap<>();
 		Map<String, StandalonePojoIndexedTypeContext<?>> indexedByEntityNameContent = new LinkedHashMap<>();
@@ -59,11 +62,15 @@ class StandalonePojoTypeContextContainer
 
 			byExactClassContent.put( typeContext.javaClass(), typeContext );
 		}
-		this.byTypeIdentifier = new KeyValueProvider<>( byTypeIdentifierContent, log::unknownTypeIdentifierForMappedEntityType );
-		this.indexedByTypeIdentifier = new KeyValueProvider<>( indexedByTypeIdentifierContent, log::unknownTypeIdentifierForIndexedEntityType );
+		this.byTypeIdentifier = new KeyValueProvider<>( byTypeIdentifierContent,
+				log::unknownTypeIdentifierForMappedEntityType );
+		this.indexedByTypeIdentifier = new KeyValueProvider<>( indexedByTypeIdentifierContent,
+				log::unknownTypeIdentifierForIndexedEntityType );
 		this.byExactClass = new KeyValueProvider<>( byExactClassContent, log::unknownClassForMappedEntityType );
-		this.indexedByExactClass = new KeyValueProvider<>( indexedByExactClassContent, log::unknownClassForIndexedEntityType );
-		this.indexedByEntityName = new KeyValueProvider<>( indexedByEntityNameContent, log::unknownEntityNameForIndexedEntityType );
+		this.indexedByExactClass = new KeyValueProvider<>( indexedByExactClassContent,
+				log::unknownClassForIndexedEntityType );
+		this.indexedByEntityName = new KeyValueProvider<>( indexedByEntityNameContent,
+				log::unknownEntityNameForIndexedEntityType );
 	}
 
 	@Override
@@ -107,7 +114,8 @@ class StandalonePojoTypeContextContainer
 	static class Builder {
 
 		private final List<StandalonePojoIndexedTypeContext.Builder<?>> indexedTypeContextBuilders = new ArrayList<>();
-		private final List<StandalonePojoContainedTypeContext.Builder<?>> containedTypeContextBuilders = new ArrayList<>();
+		private final List<StandalonePojoContainedTypeContext.Builder<?>> containedTypeContextBuilders =
+				new ArrayList<>();
 
 		Builder() {
 		}
@@ -123,7 +131,8 @@ class StandalonePojoTypeContextContainer
 		<E> StandalonePojoContainedTypeContext.Builder<E> addContained(PojoRawTypeModel<E> typeModel, String entityName,
 				StandalonePojoEntityTypeMetadata<E> metadata) {
 			StandalonePojoContainedTypeContext.Builder<E> builder =
-					new StandalonePojoContainedTypeContext.Builder<>( typeModel.typeIdentifier(), entityName, metadata );
+					new StandalonePojoContainedTypeContext.Builder<>( typeModel.typeIdentifier(), entityName,
+							metadata );
 			containedTypeContextBuilders.add( builder );
 			return builder;
 		}

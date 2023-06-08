@@ -36,7 +36,8 @@ public class HibernateOrmMassIndexerMultiTenancyIT {
 	private static final int INIT_DATA_TRANSACTION_SIZE = 500;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private SessionFactory sessionFactory;
 

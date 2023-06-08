@@ -8,10 +8,10 @@ package org.hibernate.search.integrationtest.mapper.pojo.work.operations;
 
 import java.util.concurrent.CompletionStage;
 
+import org.hibernate.search.mapper.pojo.route.DocumentRoutesDescriptor;
 import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexer;
 import org.hibernate.search.mapper.pojo.standalone.work.SearchIndexingPlan;
-import org.hibernate.search.mapper.pojo.route.DocumentRoutesDescriptor;
 import org.hibernate.search.util.impl.test.runner.nested.Nested;
 import org.hibernate.search.util.impl.test.runner.nested.NestedRunner;
 
@@ -20,7 +20,8 @@ import org.junit.runner.RunWith;
 @RunWith(NestedRunner.class)
 public class PojoIndexingAddIT {
 
-	private static final PojoIndexingOperationScenario SCENARIO = new PojoIndexingOperationScenario( BackendIndexingOperation.ADD ) {
+	private static final PojoIndexingOperationScenario SCENARIO = new PojoIndexingOperationScenario(
+			BackendIndexingOperation.ADD ) {
 		@Override
 		boolean expectImplicitLoadingOnNullEntity() {
 			return true;
@@ -37,7 +38,8 @@ public class PojoIndexingAddIT {
 		}
 
 		@Override
-		<T> void addTo(SearchIndexingPlan indexingPlan, Object providedId, DocumentRoutesDescriptor providedRoutes, T entity) {
+		<T> void addTo(SearchIndexingPlan indexingPlan, Object providedId, DocumentRoutesDescriptor providedRoutes,
+				T entity) {
 			indexingPlan.add( providedId, providedRoutes, entity );
 		}
 
@@ -100,7 +102,8 @@ public class PojoIndexingAddIT {
 	}
 
 	@Nested
-	public static class IndexingPlanContainedNullEntityIT extends AbstractPojoIndexingPlanOperationContainedNullEntityIT {
+	public static class IndexingPlanContainedNullEntityIT
+			extends AbstractPojoIndexingPlanOperationContainedNullEntityIT {
 		@Override
 		protected PojoIndexingOperationScenario scenario() {
 			return SCENARIO;

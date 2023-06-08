@@ -78,7 +78,8 @@ public class SearchQueryEntityLoadingGraphIT<T> extends AbstractSearchQueryEntit
 	}
 
 	@ReusableOrmSetupHolder.Setup
-	public void setup(OrmSetupHelper.SetupContext setupContext, ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
+	public void setup(OrmSetupHelper.SetupContext setupContext,
+			ReusableOrmSetupHolder.DataClearConfig dataClearConfig) {
 		backendMock.expectAnySchema( model.getIndexName() );
 		setupContext.withConfiguration( c -> mapping.configure( c, model ) );
 
@@ -158,11 +159,11 @@ public class SearchQueryEntityLoadingGraphIT<T> extends AbstractSearchQueryEntit
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3628")
 	public void graphName_null() {
-		assertThatThrownBy( () -> with( sessionFactory() ).runNoTransaction( session ->
-				Search.session( session ).search( model.getIndexedClass() )
-						.where( f -> f.matchAll() )
-						.loading( o -> o.graph( (String) null, GraphSemantic.FETCH ) )
-						.toQuery()
+		assertThatThrownBy( () -> with( sessionFactory() ).runNoTransaction( session -> Search.session( session )
+				.search( model.getIndexedClass() )
+				.where( f -> f.matchAll() )
+				.loading( o -> o.graph( (String) null, GraphSemantic.FETCH ) )
+				.toQuery()
 		) )
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContaining( "'graphName' must not be null" );
@@ -171,11 +172,11 @@ public class SearchQueryEntityLoadingGraphIT<T> extends AbstractSearchQueryEntit
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3628")
 	public void graphName_invalid() {
-		assertThatThrownBy( () -> with( sessionFactory() ).runNoTransaction( session ->
-				Search.session( session ).search( model.getIndexedClass() )
-						.where( f -> f.matchAll() )
-						.loading( o -> o.graph( "invalidGraphName", GraphSemantic.FETCH ) )
-						.toQuery()
+		assertThatThrownBy( () -> with( sessionFactory() ).runNoTransaction( session -> Search.session( session )
+				.search( model.getIndexedClass() )
+				.where( f -> f.matchAll() )
+				.loading( o -> o.graph( "invalidGraphName", GraphSemantic.FETCH ) )
+				.toQuery()
 		) )
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContainingAll( "Could not locate EntityGraph with given name", "invalidGraphName" );
@@ -184,11 +185,11 @@ public class SearchQueryEntityLoadingGraphIT<T> extends AbstractSearchQueryEntit
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3628")
 	public void graphName_graphSemantic_null() {
-		assertThatThrownBy( () -> with( sessionFactory() ).runNoTransaction( session ->
-				Search.session( session ).search( model.getIndexedClass() )
-						.where( f -> f.matchAll() )
-						.loading( o -> o.graph( model.getEagerGraphName(), null ) )
-						.toQuery()
+		assertThatThrownBy( () -> with( sessionFactory() ).runNoTransaction( session -> Search.session( session )
+				.search( model.getIndexedClass() )
+				.where( f -> f.matchAll() )
+				.loading( o -> o.graph( model.getEagerGraphName(), null ) )
+				.toQuery()
 		) )
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContaining( "'semantic' must not be null" );
@@ -197,11 +198,11 @@ public class SearchQueryEntityLoadingGraphIT<T> extends AbstractSearchQueryEntit
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3628")
 	public void graph_null() {
-		assertThatThrownBy( () -> with( sessionFactory() ).runNoTransaction( session ->
-				Search.session( session ).search( model.getIndexedClass() )
-						.where( f -> f.matchAll() )
-						.loading( o -> o.graph( (RootGraph<?>) null, GraphSemantic.FETCH ) )
-						.toQuery()
+		assertThatThrownBy( () -> with( sessionFactory() ).runNoTransaction( session -> Search.session( session )
+				.search( model.getIndexedClass() )
+				.where( f -> f.matchAll() )
+				.loading( o -> o.graph( (RootGraph<?>) null, GraphSemantic.FETCH ) )
+				.toQuery()
 		) )
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContaining( "'graph' must not be null" );
@@ -210,11 +211,11 @@ public class SearchQueryEntityLoadingGraphIT<T> extends AbstractSearchQueryEntit
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-3628")
 	public void graph_graphSemantic_null() {
-		assertThatThrownBy( () -> with( sessionFactory() ).runNoTransaction( session ->
-				Search.session( session ).search( model.getIndexedClass() )
-						.where( f -> f.matchAll() )
-						.loading( o -> o.graph( session.getEntityGraph( model.getEagerGraphName() ), null ) )
-						.toQuery()
+		assertThatThrownBy( () -> with( sessionFactory() ).runNoTransaction( session -> Search.session( session )
+				.search( model.getIndexedClass() )
+				.where( f -> f.matchAll() )
+				.loading( o -> o.graph( session.getEntityGraph( model.getEagerGraphName() ), null ) )
+				.toQuery()
 		) )
 				.isInstanceOf( IllegalArgumentException.class )
 				.hasMessageContaining( "'semantic' must not be null" );
@@ -223,7 +224,7 @@ public class SearchQueryEntityLoadingGraphIT<T> extends AbstractSearchQueryEntit
 	private void testLoadingWithEntityGraph(String graphName, GraphSemantic graphSemantic,
 			boolean expectEagerAssociationLoaded, boolean expectLazyAssociationLoaded) {
 		testLoading(
-				session -> { }, // No particular session setup
+				session -> {}, // No particular session setup
 				o -> {
 					if ( graphName != null || graphSemantic != null ) {
 						o.graph( graphName, graphSemantic );

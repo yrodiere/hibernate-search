@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 import static org.hibernate.search.util.impl.integrationtest.backend.elasticsearch.ElasticsearchIndexMetadataTestUtils.defaultReadAlias;
 
-
 import org.hibernate.search.backend.elasticsearch.ElasticsearchExtension;
 import org.hibernate.search.backend.elasticsearch.cfg.impl.ElasticsearchBackendImplSettings;
 import org.hibernate.search.backend.elasticsearch.client.impl.Paths;
@@ -50,7 +49,8 @@ public class ElasticsearchSearchQueryRequestTransformerIT {
 	public ElasticsearchClientSpy clientSpy = new ElasticsearchClientSpy();
 
 	private final SimpleMappedIndex<IndexBinding> mainIndex = SimpleMappedIndex.of( IndexBinding::new ).name( "main" );
-	private final SimpleMappedIndex<IndexBinding> otherIndex = SimpleMappedIndex.of( IndexBinding::new ).name( "other" );
+	private final SimpleMappedIndex<IndexBinding> otherIndex = SimpleMappedIndex.of( IndexBinding::new ).name(
+			"other" );
 
 	@Before
 	public void setup() {
@@ -69,7 +69,9 @@ public class ElasticsearchSearchQueryRequestTransformerIT {
 		SearchQuery<DocumentReference> query = scope.query().extension( ElasticsearchExtension.get() )
 				.where( f -> f.matchAll() )
 				.requestTransformer( context -> {
-					assertThat( context.path() ).isEqualTo( "/" + defaultReadAlias( mainIndex.name() ).original + "/_search" );
+					assertThat( context.path() ).isEqualTo( "/"
+							+ defaultReadAlias( mainIndex.name() ).original
+							+ "/_search" );
 					String newPath = "/" + defaultReadAlias( otherIndex.name() ).original + "/_search";
 					context.path( newPath );
 					// Changes should be visible immediately

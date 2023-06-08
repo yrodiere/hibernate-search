@@ -27,7 +27,6 @@ import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-
 public class ElasticsearchStandardMatchPredicate extends AbstractElasticsearchSingleFieldPredicate {
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
@@ -84,24 +83,28 @@ public class ElasticsearchStandardMatchPredicate extends AbstractElasticsearchSi
 
 		@Override
 		public void fuzzy(int maxEditDistance, int exactPrefixLength) {
-			throw log.fullTextFeaturesNotSupportedByFieldType( EventContexts.fromIndexFieldAbsolutePath( absoluteFieldPath ) );
+			throw log.fullTextFeaturesNotSupportedByFieldType( EventContexts.fromIndexFieldAbsolutePath(
+					absoluteFieldPath ) );
 		}
 
 		@Override
 		public void analyzer(String analyzerName) {
-			throw log.fullTextFeaturesNotSupportedByFieldType( EventContexts.fromIndexFieldAbsolutePath( absoluteFieldPath ) );
+			throw log.fullTextFeaturesNotSupportedByFieldType( EventContexts.fromIndexFieldAbsolutePath(
+					absoluteFieldPath ) );
 		}
 
 		@Override
 		public void skipAnalysis() {
-			throw log.fullTextFeaturesNotSupportedByFieldType( EventContexts.fromIndexFieldAbsolutePath( absoluteFieldPath ) );
+			throw log.fullTextFeaturesNotSupportedByFieldType( EventContexts.fromIndexFieldAbsolutePath(
+					absoluteFieldPath ) );
 		}
 
 		@Override
 		public void value(Object value, ValueConvert convert) {
 			DslConverter<?, ? extends F> dslToIndexConverter = field.type().dslConverter( convert );
 			try {
-				F converted = dslToIndexConverter.unknownTypeToDocumentValue( value, scope.toDocumentValueConvertContext() );
+				F converted = dslToIndexConverter.unknownTypeToDocumentValue( value, scope
+						.toDocumentValueConvertContext() );
 				this.value = codec.encode( converted );
 			}
 			catch (RuntimeException e) {

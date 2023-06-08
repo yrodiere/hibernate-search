@@ -25,10 +25,10 @@ import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.search.loading.dsl.SearchLoadingOptionsStep;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.hibernate.search.massindexing.impl.V5MigrationMassIndexerAdapter;
-import org.hibernate.search.scope.spi.V5MigrationSearchScope;
 import org.hibernate.search.query.engine.spi.V5MigrationSearchSession;
 import org.hibernate.search.query.hibernate.impl.FullTextQueryImpl;
 import org.hibernate.search.scope.impl.V5MigrationOrmSearchScopeAdapter;
+import org.hibernate.search.scope.spi.V5MigrationSearchScope;
 import org.hibernate.search.util.logging.impl.Log;
 import org.hibernate.search.util.logging.impl.LoggerFactory;
 
@@ -110,9 +110,8 @@ final class FullTextSessionImpl extends SessionDelegatorBaseImpl
 
 	@Override
 	public MassIndexer createIndexer(Class<?>... types) {
-		return new V5MigrationMassIndexerAdapter( types == null || types.length == 0
-				? searchSession().massIndexer( Object.class )
-				: searchSession().massIndexer( types ) );
+		return new V5MigrationMassIndexerAdapter( types == null || types.length == 0 ?
+				searchSession().massIndexer( Object.class ) : searchSession().massIndexer( types ) );
 	}
 
 	@Override

@@ -14,8 +14,8 @@ import java.util.Map;
 
 import org.hibernate.search.engine.logging.impl.Log;
 import org.hibernate.search.util.common.SearchException;
-import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 import org.hibernate.search.util.common.impl.Throwables;
+import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
 /**
  * Utility class to load instances of other classes by using a fully qualified name,
@@ -135,8 +135,8 @@ public class ClassLoaderHelper {
 		}
 	}
 
-	private static <T> T callNoArgConstructor(Class<T> classToLoad)
-			throws IllegalAccessException, InvocationTargetException, InstantiationException {
+	private static <T> T callNoArgConstructor(Class<
+			T> classToLoad) throws IllegalAccessException, InvocationTargetException, InstantiationException {
 		checkInstantiable( classToLoad );
 		try {
 			Constructor<T> constructor = classToLoad.getConstructor();
@@ -150,8 +150,8 @@ public class ClassLoaderHelper {
 		}
 	}
 
-	private static <T> T callMapArgConstructor(Class<T> classToLoad, Map<String, String> constructorParameter)
-			throws IllegalAccessException, InvocationTargetException, InstantiationException {
+	private static <T> T callMapArgConstructor(Class<T> classToLoad, Map<String,
+			String> constructorParameter) throws IllegalAccessException, InvocationTargetException, InstantiationException {
 		if ( constructorParameter == null ) {
 			constructorParameter = new HashMap<>( 0 );//can't use the emptyMap singleton as it needs to be mutable
 		}

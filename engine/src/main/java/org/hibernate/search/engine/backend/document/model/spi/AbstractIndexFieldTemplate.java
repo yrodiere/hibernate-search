@@ -10,13 +10,11 @@ import org.hibernate.search.engine.backend.common.spi.FieldPaths;
 import org.hibernate.search.engine.backend.common.spi.FieldPaths.RelativizedPath;
 import org.hibernate.search.util.common.pattern.spi.SimpleGlobPattern;
 
-
 public abstract class AbstractIndexFieldTemplate<
-				M extends AbstractIndexModel<?, ?, F>,
-				F extends IndexField<?, C>,
-				C extends IndexCompositeNode<?, ?, ?>,
-				FT
-		> {
+		M extends AbstractIndexModel<?, ?, F>,
+		F extends IndexField<?, C>,
+		C extends IndexCompositeNode<?, ?, ?>,
+		FT> {
 
 	private final FT type;
 	private final IndexFieldInclusion inclusion;
@@ -58,5 +56,6 @@ public abstract class AbstractIndexFieldTemplate<
 		return createNode( parent, relativizedPath.relativePath, type, inclusion, multiValued );
 	}
 
-	protected abstract F createNode(C parent, String relativePath, FT type, IndexFieldInclusion inclusion, boolean multiValued);
+	protected abstract F createNode(C parent, String relativePath, FT type, IndexFieldInclusion inclusion,
+			boolean multiValued);
 }

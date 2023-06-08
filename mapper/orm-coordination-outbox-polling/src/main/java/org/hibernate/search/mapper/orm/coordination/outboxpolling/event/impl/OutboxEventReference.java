@@ -45,9 +45,16 @@ final class OutboxEventReference {
 
 	@Override
 	public String toString() {
-		return "OutboxEventReference{" +
-				"entityName='" + entityName + '\'' +
-				", entityId='" + entityId + '\'' +
+		return "OutboxEventReference{"
+				+
+				"entityName='"
+				+ entityName
+				+ '\''
+				+
+				", entityId='"
+				+ entityId
+				+ '\''
+				+
 				'}';
 	}
 }

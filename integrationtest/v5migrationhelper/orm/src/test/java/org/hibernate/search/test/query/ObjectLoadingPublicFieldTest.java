@@ -15,10 +15,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.MatchAllDocsQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.search.FullTextQuery;
@@ -27,11 +23,17 @@ import org.hibernate.search.Search;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.engine.ProjectionConstants;
-import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.test.SearchTestBase;
 import org.hibernate.search.testsupport.TestForIssue;
+import org.hibernate.search.util.common.AssertionFailure;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 
 /**
  * Tests all kinds of loading when the entities have public fields.
@@ -185,8 +187,8 @@ public class ObjectLoadingPublicFieldTest extends SearchTestBase {
 
 		fullTextSession.clear();
 		fullTextQuery = fullTextSession.createFullTextQuery(
-						fieldFooQuery, A.class, B.class, C.class
-				)
+				fieldFooQuery, A.class, B.class, C.class
+		)
 				.setProjection( ProjectionConstants.THIS );
 		result = fullTextQuery.list();
 		assertPopulated( result );
@@ -231,13 +233,13 @@ public class ObjectLoadingPublicFieldTest extends SearchTestBase {
 			result = tuple[0];
 		}
 		if ( result instanceof A ) {
-			assertNotNull( ((A) result).id );
+			assertNotNull( ( (A) result ).id );
 		}
 		else if ( result instanceof B ) {
-			assertNotNull( ((B) result).id );
+			assertNotNull( ( (B) result ).id );
 		}
 		else if ( result instanceof C ) {
-			assertNotNull( ((C) result).id );
+			assertNotNull( ( (C) result ).id );
 		}
 		else {
 			throw new AssertionFailure( "Unexpected type for result " + result );

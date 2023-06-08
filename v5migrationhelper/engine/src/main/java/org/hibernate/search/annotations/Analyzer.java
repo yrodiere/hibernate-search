@@ -6,11 +6,11 @@
  */
 package org.hibernate.search.annotations;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Documented;
 
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 
@@ -26,7 +26,7 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextFi
  * @deprecated No longer necessary in Hibernate Search 6.
  * Replace {@link Field} with {@link FullTextField} and pass the analyzer name directly to {@link FullTextField#analyzer()}.
  */
-@Retention( RetentionPolicy.RUNTIME )
+@Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.METHOD })
 @Documented
 @Deprecated

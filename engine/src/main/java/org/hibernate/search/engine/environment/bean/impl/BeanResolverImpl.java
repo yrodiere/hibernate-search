@@ -13,8 +13,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
+import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
 import org.hibernate.search.engine.cfg.spi.EngineSpiSettings;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanReference;
@@ -122,10 +122,10 @@ public final class BeanResolverImpl implements BeanResolver {
 			case CONSTRUCTOR:
 				return Collections.singletonList( BeanSource.REFLECTION );
 			case ANY:
-				return hasName
-						? Arrays.asList( BeanSource.CONFIGURATION, BeanSource.BEAN_MANAGER,
-								BeanSource.BEAN_MANAGER_ASSUME_CLASS_NAME, BeanSource.REFLECTION )
-						: Arrays.asList( BeanSource.CONFIGURATION, BeanSource.BEAN_MANAGER, BeanSource.REFLECTION );
+				return hasName ?
+						Arrays.asList( BeanSource.CONFIGURATION, BeanSource.BEAN_MANAGER,
+								BeanSource.BEAN_MANAGER_ASSUME_CLASS_NAME, BeanSource.REFLECTION ) : Arrays.asList(
+										BeanSource.CONFIGURATION, BeanSource.BEAN_MANAGER, BeanSource.REFLECTION );
 			default:
 				throw new AssertionFailure( "Unknown bean retrieval: " + retrieval );
 		}

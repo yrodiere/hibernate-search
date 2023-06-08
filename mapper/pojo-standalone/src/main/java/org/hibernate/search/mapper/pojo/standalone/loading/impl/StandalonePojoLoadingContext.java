@@ -13,14 +13,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.hibernate.search.mapper.pojo.standalone.loading.MassLoadingOptions;
-import org.hibernate.search.mapper.pojo.standalone.loading.MassLoadingStrategy;
-import org.hibernate.search.mapper.pojo.standalone.loading.SelectionLoadingOptions;
-import org.hibernate.search.mapper.pojo.standalone.loading.SelectionLoadingStrategy;
-import org.hibernate.search.mapper.pojo.standalone.loading.dsl.SelectionLoadingOptionsStep;
-import org.hibernate.search.mapper.pojo.standalone.logging.impl.Log;
-import org.hibernate.search.mapper.pojo.standalone.massindexing.impl.StandalonePojoMassIndexingLoadingStrategy;
-import org.hibernate.search.mapper.pojo.standalone.massindexing.impl.StandalonePojoMassIndexingMappingContext;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoLoadingTypeContext;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoSelectionEntityLoader;
 import org.hibernate.search.mapper.pojo.loading.spi.PojoSelectionLoadingContext;
@@ -29,6 +21,14 @@ import org.hibernate.search.mapper.pojo.massindexing.spi.PojoMassIndexingContext
 import org.hibernate.search.mapper.pojo.massindexing.spi.PojoMassIndexingLoadingStrategy;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRawTypeIdentifier;
 import org.hibernate.search.mapper.pojo.model.spi.PojoRuntimeIntrospector;
+import org.hibernate.search.mapper.pojo.standalone.loading.MassLoadingOptions;
+import org.hibernate.search.mapper.pojo.standalone.loading.MassLoadingStrategy;
+import org.hibernate.search.mapper.pojo.standalone.loading.SelectionLoadingOptions;
+import org.hibernate.search.mapper.pojo.standalone.loading.SelectionLoadingStrategy;
+import org.hibernate.search.mapper.pojo.standalone.loading.dsl.SelectionLoadingOptionsStep;
+import org.hibernate.search.mapper.pojo.standalone.logging.impl.Log;
+import org.hibernate.search.mapper.pojo.standalone.massindexing.impl.StandalonePojoMassIndexingLoadingStrategy;
+import org.hibernate.search.mapper.pojo.standalone.massindexing.impl.StandalonePojoMassIndexingMappingContext;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
 public final class StandalonePojoLoadingContext
@@ -108,7 +108,8 @@ public final class StandalonePojoLoadingContext
 				strategyOptional.get(), this );
 	}
 
-	public static final class Builder implements StandalonePojoSelectionLoadingContextBuilder, SelectionLoadingOptionsStep {
+	public static final class Builder
+			implements StandalonePojoSelectionLoadingContextBuilder, SelectionLoadingOptionsStep {
 		private final StandalonePojoMassIndexingMappingContext mappingContext;
 		private final LoadingTypeContextProvider typeContextProvider;
 		private final Map<Class<?>, Object> contextData = new HashMap<>();

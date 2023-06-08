@@ -26,10 +26,9 @@ import org.hibernate.search.engine.search.common.spi.SearchQueryElementTypeKey;
 import org.hibernate.search.engine.search.highlighter.spi.SearchHighlighterType;
 
 public abstract class AbstractIndexValueFieldType<
-				SC extends SearchIndexScope<?>,
-				N extends SearchIndexValueFieldContext<SC>,
-				F
-		>
+		SC extends SearchIndexScope<?>,
+		N extends SearchIndexValueFieldContext<SC>,
+		F>
 		implements IndexValueFieldTypeDescriptor, IndexFieldType<F>, SearchIndexValueFieldTypeContext<SC, N, F> {
 	private final Class<F> valueClass;
 	private final DslConverter<F, F> rawDslConverter;
@@ -43,7 +42,8 @@ public abstract class AbstractIndexValueFieldType<
 	private final boolean aggregable;
 	private final Set<SearchHighlighterType> allowedHighlighterTypes;
 
-	private final Map<SearchQueryElementTypeKey<?>, SearchQueryElementFactory<?, ? super SC, ? super N>> queryElementFactories;
+	private final Map<SearchQueryElementTypeKey<?>,
+			SearchQueryElementFactory<?, ? super SC, ? super N>> queryElementFactories;
 
 	private final String analyzerName;
 	private final String searchAnalyzerName;
@@ -54,7 +54,8 @@ public abstract class AbstractIndexValueFieldType<
 		this.rawDslConverter = builder.rawDslConverter;
 		this.rawProjectionConverter = builder.rawProjectionConverter;
 		this.dslConverter = builder.dslConverter != null ? builder.dslConverter : rawDslConverter;
-		this.projectionConverter = builder.projectionConverter != null ? builder.projectionConverter : rawProjectionConverter;
+		this.projectionConverter = builder.projectionConverter != null ?
+				builder.projectionConverter : rawProjectionConverter;
 		this.searchable = builder.searchable;
 		this.sortable = builder.sortable;
 		this.projectable = builder.projectable;
@@ -62,18 +63,25 @@ public abstract class AbstractIndexValueFieldType<
 		this.allowedHighlighterTypes = Collections.unmodifiableSet( builder.allowedHighlighterTypes );
 		this.queryElementFactories = builder.queryElementFactories;
 		this.analyzerName = builder.analyzerName;
-		this.searchAnalyzerName = builder.searchAnalyzerName != null ? builder.searchAnalyzerName : builder.analyzerName;
+		this.searchAnalyzerName = builder.searchAnalyzerName != null ?
+				builder.searchAnalyzerName : builder.analyzerName;
 		this.normalizerName = builder.normalizerName;
 	}
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "valueClass=" + valueClass.getName()
-				+ ", analyzerName=" + analyzerName
-				+ ", searchAnalyzerName=" + searchAnalyzerName
-				+ ", normalizerName=" + normalizerName
-				+ ", capabilities=" + queryElementFactories.keySet()
+		return getClass().getSimpleName()
+				+ "["
+				+ "valueClass="
+				+ valueClass.getName()
+				+ ", analyzerName="
+				+ analyzerName
+				+ ", searchAnalyzerName="
+				+ searchAnalyzerName
+				+ ", normalizerName="
+				+ normalizerName
+				+ ", capabilities="
+				+ queryElementFactories.keySet()
 				+ "]";
 	}
 
@@ -160,10 +168,9 @@ public abstract class AbstractIndexValueFieldType<
 	}
 
 	public abstract static class Builder<
-					SC extends SearchIndexScope<?>,
-					N extends SearchIndexValueFieldContext<SC>,
-					F
-			> {
+			SC extends SearchIndexScope<?>,
+			N extends SearchIndexValueFieldContext<SC>,
+			F> {
 
 		private final Class<F> valueClass;
 		private final DslConverter<F, F> rawDslConverter;
@@ -178,8 +185,8 @@ public abstract class AbstractIndexValueFieldType<
 		private boolean aggregable;
 		private Set<SearchHighlighterType> allowedHighlighterTypes = Collections.emptySet();
 
-		private final Map<SearchQueryElementTypeKey<?>, SearchQueryElementFactory<?, ? super SC, ? super N>>
-				queryElementFactories = new HashMap<>();
+		private final Map<SearchQueryElementTypeKey<?>,
+				SearchQueryElementFactory<?, ? super SC, ? super N>> queryElementFactories = new HashMap<>();
 
 		private String analyzerName;
 		private String searchAnalyzerName;
@@ -195,11 +202,13 @@ public abstract class AbstractIndexValueFieldType<
 			return valueClass;
 		}
 
-		public final <V> void dslConverter(Class<V> valueType, ToDocumentValueConverter<V, ? extends F> toIndexConverter) {
+		public final <V> void dslConverter(Class<V> valueType, ToDocumentValueConverter<V,
+				? extends F> toIndexConverter) {
 			this.dslConverter = new DslConverter<>( valueType, toIndexConverter );
 		}
 
-		public final <V> void projectionConverter(Class<V> valueType, FromDocumentValueConverter<? super F, V> fromIndexConverter) {
+		public final <V> void projectionConverter(Class<V> valueType, FromDocumentValueConverter<? super F,
+				V> fromIndexConverter) {
 			this.projectionConverter = new ProjectionConverter<>( valueType, fromIndexConverter );
 		}
 

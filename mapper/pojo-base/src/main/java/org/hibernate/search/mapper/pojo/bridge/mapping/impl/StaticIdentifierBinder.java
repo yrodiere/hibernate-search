@@ -21,9 +21,12 @@ class StaticIdentifierBinder<T> implements IdentifierBinder {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "expectedIdentifierType=" + expectedIdentifierType
-				+ "bridge=" + bridge
+		return getClass().getSimpleName()
+				+ "["
+				+ "expectedIdentifierType="
+				+ expectedIdentifierType
+				+ "bridge="
+				+ bridge
 				+ "]";
 	}
 

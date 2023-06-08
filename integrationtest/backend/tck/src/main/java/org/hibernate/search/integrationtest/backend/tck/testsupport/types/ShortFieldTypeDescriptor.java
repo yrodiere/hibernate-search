@@ -51,7 +51,8 @@ public class ShortFieldTypeDescriptor extends FieldTypeDescriptor<Short> {
 
 			private short toShortExact(int value) {
 				if ( value < Short.MIN_VALUE || Short.MAX_VALUE < value ) {
-					throw new IllegalStateException( "Test dataset contains an out-of-bound value for short: " + value );
+					throw new IllegalStateException( "Test dataset contains an out-of-bound value for short: "
+							+ value );
 				}
 				return (short) value;
 			}

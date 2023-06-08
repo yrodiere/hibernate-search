@@ -30,8 +30,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
-
-@SuppressWarnings({"unchecked", "rawtypes"}) // Raw types are the only way to mock parameterized types
+@SuppressWarnings({ "unchecked", "rawtypes" }) // Raw types are the only way to mock parameterized types
 public class ElasticsearchDefaultWorkSequenceBuilderTest {
 
 	@Rule
@@ -870,9 +869,7 @@ public class ElasticsearchDefaultWorkSequenceBuilderTest {
 		return mock;
 	}
 
-	private static class MyException extends Exception {
-	}
+	private static class MyException extends Exception {}
 
-	private static class MyRuntimeException extends RuntimeException {
-	}
+	private static class MyRuntimeException extends RuntimeException {}
 }

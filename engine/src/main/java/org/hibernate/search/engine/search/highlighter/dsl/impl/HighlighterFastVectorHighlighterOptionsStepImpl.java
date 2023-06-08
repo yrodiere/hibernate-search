@@ -57,7 +57,8 @@ public class HighlighterFastVectorHighlighterOptionsStepImpl
 	}
 
 	@Override
-	public HighlighterBoundaryScannerTypeFastVectorHighlighterStep<? extends HighlighterFastVectorHighlighterOptionsStep> boundaryScanner() {
+	public HighlighterBoundaryScannerTypeFastVectorHighlighterStep<
+			? extends HighlighterFastVectorHighlighterOptionsStep> boundaryScanner() {
 		return new HighlighterBoundaryScannerTypeFastVectorHighlighterStepImpl();
 	}
 
@@ -73,21 +74,24 @@ public class HighlighterFastVectorHighlighterOptionsStepImpl
 			HighlighterBoundaryScannerTypeFastVectorHighlighterStep<HighlighterFastVectorHighlighterOptionsStep> {
 
 		@Override
-		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<HighlighterFastVectorHighlighterOptionsStep> chars() {
+		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<
+				HighlighterFastVectorHighlighterOptionsStep> chars() {
 			HighlighterFastVectorHighlighterOptionsStepImpl.this.highlighterBuilder.boundaryScannerType(
 					BoundaryScannerType.CHARS );
 			return new HighlighterBoundaryScannerFastVectorHighlighterOptionsStepImpl();
 		}
 
 		@Override
-		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<HighlighterFastVectorHighlighterOptionsStep> sentence() {
+		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<
+				HighlighterFastVectorHighlighterOptionsStep> sentence() {
 			HighlighterFastVectorHighlighterOptionsStepImpl.this.highlighterBuilder.boundaryScannerType(
 					BoundaryScannerType.SENTENCE );
 			return new HighlighterBoundaryScannerFastVectorHighlighterOptionsStepImpl();
 		}
 
 		@Override
-		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<HighlighterFastVectorHighlighterOptionsStep> word() {
+		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<
+				HighlighterFastVectorHighlighterOptionsStep> word() {
 			HighlighterFastVectorHighlighterOptionsStepImpl.this.highlighterBuilder.boundaryScannerType(
 					BoundaryScannerType.WORD );
 			return new HighlighterBoundaryScannerFastVectorHighlighterOptionsStepImpl();
@@ -99,28 +103,32 @@ public class HighlighterFastVectorHighlighterOptionsStepImpl
 			HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<HighlighterFastVectorHighlighterOptionsStep> {
 
 		@Override
-		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<HighlighterFastVectorHighlighterOptionsStep> boundaryMaxScan(
-				int max) {
+		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<
+				HighlighterFastVectorHighlighterOptionsStep> boundaryMaxScan(
+						int max) {
 			HighlighterFastVectorHighlighterOptionsStepImpl.this.highlighterBuilder.boundaryMaxScan( max );
 			return this;
 		}
 
 		@Override
-		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<HighlighterFastVectorHighlighterOptionsStep> boundaryChars(
-				String boundaryChars) {
+		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<
+				HighlighterFastVectorHighlighterOptionsStep> boundaryChars(
+						String boundaryChars) {
 			HighlighterFastVectorHighlighterOptionsStepImpl.this.highlighterBuilder.boundaryChars( boundaryChars );
 			return this;
 		}
 
 		@Override
-		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<HighlighterFastVectorHighlighterOptionsStep> boundaryChars(Character[] boundaryChars) {
+		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<
+				HighlighterFastVectorHighlighterOptionsStep> boundaryChars(Character[] boundaryChars) {
 			HighlighterFastVectorHighlighterOptionsStepImpl.this.highlighterBuilder.boundaryChars( boundaryChars );
 			return this;
 		}
 
 		@Override
-		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<HighlighterFastVectorHighlighterOptionsStep> locale(
-				Locale locale) {
+		public HighlighterBoundaryScannerFastVectorHighlighterOptionsStep<
+				HighlighterFastVectorHighlighterOptionsStep> locale(
+						Locale locale) {
 			Contracts.assertNotNull( locale, "locale" );
 			HighlighterFastVectorHighlighterOptionsStepImpl.this.highlighterBuilder.boundaryScannerLocale( locale );
 			return this;

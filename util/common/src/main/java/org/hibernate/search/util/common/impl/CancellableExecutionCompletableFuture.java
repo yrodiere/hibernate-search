@@ -58,9 +58,14 @@ class CancellableExecutionCompletableFuture<T> extends CompletableFuture<T> {
 
 		@Override
 		public String toString() {
-			return "CompletingRunnable[" +
-					"future=" + future +
-					", delegate=" + delegate +
+			return "CompletingRunnable["
+					+
+					"future="
+					+ future
+					+
+					", delegate="
+					+ delegate
+					+
 					']';
 		}
 

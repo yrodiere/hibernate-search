@@ -38,15 +38,13 @@ public final class FileUtils {
 	public static void copyRecursively(Path source, Path target, CopyOption... options) throws IOException {
 		Files.walkFileTree( source, new SimpleFileVisitor<Path>() {
 			@Override
-			public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
-					throws IOException {
+			public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
 				Files.createDirectories( target.resolve( source.relativize( dir ).toString() ) );
 				return FileVisitResult.CONTINUE;
 			}
 
 			@Override
-			public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
-					throws IOException {
+			public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 				Files.copy( file, target.resolve( source.relativize( file ).toString() ), options );
 				return FileVisitResult.CONTINUE;
 			}

@@ -71,8 +71,8 @@ public class IndexingGeneratedCorpusTest {
 		storeAllBooksInNation();
 	}
 
-	private static void createMany(Class<? extends TitleAble> entityType, int amount)
-			throws InstantiationException, IllegalAccessException {
+	private static void createMany(Class<? extends TitleAble> entityType,
+			int amount) throws InstantiationException, IllegalAccessException {
 		FullTextSession fullTextSession = builder.openFullTextSession();
 		int totalEntitiesInDB = 0;
 		try {
@@ -110,7 +110,8 @@ public class IndexingGeneratedCorpusTest {
 		FullTextSession fullTextSession = builder.openFullTextSession();
 		try {
 			Transaction tx = fullTextSession.beginTransaction();
-			List<Book> allBooks = fullTextSession.createQuery( "select b from " + Book.class.getName() + " b", Book.class ).list();
+			List<Book> allBooks = fullTextSession.createQuery( "select b from " + Book.class.getName() + " b",
+					Book.class ).list();
 			Nation italy = fullTextSession.load( Nation.class, 1 );
 			italy.getLibrariesHave().addAll( allBooks );
 			tx.commit();

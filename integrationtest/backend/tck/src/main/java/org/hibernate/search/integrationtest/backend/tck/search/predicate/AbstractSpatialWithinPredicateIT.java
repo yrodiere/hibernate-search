@@ -8,9 +8,9 @@ package org.hibernate.search.integrationtest.backend.tck.search.predicate;
 
 import org.hibernate.search.engine.backend.document.IndexFieldReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
+import org.hibernate.search.engine.backend.types.Projectable;
 import org.hibernate.search.engine.backend.types.Searchable;
 import org.hibernate.search.engine.backend.types.Sortable;
-import org.hibernate.search.engine.backend.types.Projectable;
 import org.hibernate.search.engine.spatial.GeoPoint;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
@@ -21,7 +21,7 @@ import org.junit.Rule;
 public abstract class AbstractSpatialWithinPredicateIT {
 
 	protected static final String OURSON_QUI_BOIT_ID = "ourson qui boit";
-	protected static final GeoPoint OURSON_QUI_BOIT_GEO_POINT = GeoPoint.of( 45.7705687,4.835233 );
+	protected static final GeoPoint OURSON_QUI_BOIT_GEO_POINT = GeoPoint.of( 45.7705687, 4.835233 );
 	protected static final String OURSON_QUI_BOIT_STRING = "L'ourson qui boit";
 
 	protected static final String IMOUTO_ID = "imouto";
@@ -57,9 +57,11 @@ public abstract class AbstractSpatialWithinPredicateIT {
 				.add( OURSON_QUI_BOIT_ID, document -> {
 					document.addValue( mainIndex.binding().string, OURSON_QUI_BOIT_STRING );
 					document.addValue( mainIndex.binding().geoPoint, OURSON_QUI_BOIT_GEO_POINT );
-					document.addValue( mainIndex.binding().geoPoint_1, GeoPoint.of( OURSON_QUI_BOIT_GEO_POINT.latitude() - 1,
+					document.addValue( mainIndex.binding().geoPoint_1, GeoPoint.of( OURSON_QUI_BOIT_GEO_POINT.latitude()
+							- 1,
 							OURSON_QUI_BOIT_GEO_POINT.longitude() - 1 ) );
-					document.addValue( mainIndex.binding().geoPoint_2, GeoPoint.of( OURSON_QUI_BOIT_GEO_POINT.latitude() - 2,
+					document.addValue( mainIndex.binding().geoPoint_2, GeoPoint.of( OURSON_QUI_BOIT_GEO_POINT.latitude()
+							- 2,
 							OURSON_QUI_BOIT_GEO_POINT.longitude() - 2 ) );
 					document.addValue( mainIndex.binding().geoPoint_with_longName, OURSON_QUI_BOIT_GEO_POINT );
 					document.addValue( mainIndex.binding().projectableUnsortableGeoPoint, OURSON_QUI_BOIT_GEO_POINT );
@@ -77,14 +79,16 @@ public abstract class AbstractSpatialWithinPredicateIT {
 				.add( CHEZ_MARGOTTE_ID, document -> {
 					document.addValue( mainIndex.binding().string, CHEZ_MARGOTTE_STRING );
 					document.addValue( mainIndex.binding().geoPoint, CHEZ_MARGOTTE_GEO_POINT );
-					document.addValue( mainIndex.binding().geoPoint_1, GeoPoint.of( CHEZ_MARGOTTE_GEO_POINT.latitude() - 1,
+					document.addValue( mainIndex.binding().geoPoint_1, GeoPoint.of( CHEZ_MARGOTTE_GEO_POINT.latitude()
+							- 1,
 							CHEZ_MARGOTTE_GEO_POINT.longitude() - 1 ) );
-					document.addValue( mainIndex.binding().geoPoint_2, GeoPoint.of( CHEZ_MARGOTTE_GEO_POINT.latitude() - 2,
+					document.addValue( mainIndex.binding().geoPoint_2, GeoPoint.of( CHEZ_MARGOTTE_GEO_POINT.latitude()
+							- 2,
 							CHEZ_MARGOTTE_GEO_POINT.longitude() - 2 ) );
 					document.addValue( mainIndex.binding().geoPoint_with_longName, CHEZ_MARGOTTE_GEO_POINT );
 					document.addValue( mainIndex.binding().projectableUnsortableGeoPoint, CHEZ_MARGOTTE_GEO_POINT );
 				} )
-				.add( EMPTY_ID, document -> { } )
+				.add( EMPTY_ID, document -> {} )
 				.join();
 	}
 

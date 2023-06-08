@@ -16,14 +16,14 @@ import org.hibernate.search.engine.backend.work.execution.DocumentRefreshStrateg
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.PersistenceTypeKey;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.StubLoadingContext;
 import org.hibernate.search.integrationtest.mapper.pojo.testsupport.loading.StubMassLoadingStrategy;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.massindexing.MassIndexer;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.GenericField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.massindexing.MassIndexer;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -39,8 +39,8 @@ public class MassIndexingComplexHierarchyIT {
 	public final BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public final StandalonePojoMappingSetupHelper setupHelper
-			= StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public final StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private SearchMapping mapping;
 
@@ -55,7 +55,8 @@ public class MassIndexingComplexHierarchyIT {
 		mapping = setupHelper.start()
 				.withConfiguration( b -> {
 					b.addEntityType( H1_Root_NotIndexed.class, c -> c
-							.massLoadingStrategy( new StubMassLoadingStrategy<>( H1_Root_NotIndexed.PERSISTENCE_KEY ) ) );
+							.massLoadingStrategy( new StubMassLoadingStrategy<>(
+									H1_Root_NotIndexed.PERSISTENCE_KEY ) ) );
 					b.addEntityType( H2_Root_Indexed.class, c -> c
 							.massLoadingStrategy( new StubMassLoadingStrategy<>( H2_Root_Indexed.PERSISTENCE_KEY ) ) );
 				} )
@@ -90,7 +91,7 @@ public class MassIndexingComplexHierarchyIT {
 
 			backendMock.expectWorks( H1_B_Indexed.NAME, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE )
 					.add( "3", b -> b.field( "rootText", "text3" )
-					.field( "bText", "text3" ) );
+							.field( "bText", "text3" ) );
 
 			backendMock.expectIndexScaleWorks( H1_B_Indexed.NAME, searchSession.tenantIdentifier() )
 					.purge()
@@ -118,7 +119,7 @@ public class MassIndexingComplexHierarchyIT {
 
 			backendMock.expectWorks( H1_B_Indexed.NAME, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE )
 					.add( "3", b -> b.field( "rootText", "text3" )
-					.field( "bText", "text3" ) );
+							.field( "bText", "text3" ) );
 
 			backendMock.expectIndexScaleWorks( H1_B_Indexed.NAME, searchSession.tenantIdentifier() )
 					.purge()
@@ -148,11 +149,11 @@ public class MassIndexingComplexHierarchyIT {
 					.add( "1", b -> b.field( "rootText", "text1" ) );
 			backendMock.expectWorks( H2_A_C_Indexed.NAME, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE )
 					.add( "3", b -> b.field( "rootText", "text3" )
-					.field( "aText", "text3" )
-					.field( "cText", "text3" ) );
+							.field( "aText", "text3" )
+							.field( "cText", "text3" ) );
 			backendMock.expectWorks( H2_B_Indexed.NAME, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE )
 					.add( "4", b -> b.field( "rootText", "text4" )
-					.field( "bText", "text4" ) );
+							.field( "bText", "text4" ) );
 
 			backendMock.expectIndexScaleWorks( H2_Root_Indexed.NAME, searchSession.tenantIdentifier() )
 					.purge()
@@ -190,7 +191,7 @@ public class MassIndexingComplexHierarchyIT {
 
 			backendMock.expectWorks( H2_B_Indexed.NAME, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE )
 					.add( "4", b -> b.field( "rootText", "text4" )
-					.field( "bText", "text4" ) );
+							.field( "bText", "text4" ) );
 
 			backendMock.expectIndexScaleWorks( H2_B_Indexed.NAME, searchSession.tenantIdentifier() )
 					.purge()

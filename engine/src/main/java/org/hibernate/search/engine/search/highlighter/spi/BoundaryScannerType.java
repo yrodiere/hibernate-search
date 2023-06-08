@@ -10,6 +10,5 @@ public enum BoundaryScannerType {
 	/**
 	 * Default is dependent on a {@link SearchHighlighterType highlighter type} being used.
 	 */
-	DEFAULT,
-	CHARS, SENTENCE, WORD;
+	DEFAULT, CHARS, SENTENCE, WORD;
 }

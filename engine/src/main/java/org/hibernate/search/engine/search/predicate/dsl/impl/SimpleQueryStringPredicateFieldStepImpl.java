@@ -12,7 +12,6 @@ import org.hibernate.search.engine.search.predicate.dsl.SimpleQueryStringPredica
 import org.hibernate.search.engine.search.predicate.dsl.SimpleQueryStringPredicateFieldStep;
 import org.hibernate.search.engine.search.predicate.dsl.spi.SearchPredicateDslContext;
 
-
 public final class SimpleQueryStringPredicateFieldStepImpl
 		implements SimpleQueryStringPredicateFieldStep<SimpleQueryStringPredicateFieldMoreStep<?, ?>> {
 
@@ -23,7 +22,7 @@ public final class SimpleQueryStringPredicateFieldStepImpl
 	}
 
 	@Override
-	public SimpleQueryStringPredicateFieldMoreStep<?, ?> fields(String ... fieldPaths) {
+	public SimpleQueryStringPredicateFieldMoreStep<?, ?> fields(String... fieldPaths) {
 		return new SimpleQueryStringPredicateFieldMoreStepImpl( commonState, Arrays.asList( fieldPaths ) );
 	}
 }

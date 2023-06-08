@@ -293,7 +293,6 @@ public class HSQueryImpl<LOS> implements HSQuery {
 	}
 
 	private enum TimeoutType {
-		FAIL,
-		TRUNCATE
+		FAIL, TRUNCATE
 	}
 }

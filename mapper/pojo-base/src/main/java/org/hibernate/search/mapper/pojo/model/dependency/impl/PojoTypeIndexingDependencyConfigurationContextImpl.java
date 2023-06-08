@@ -16,10 +16,10 @@ import org.hibernate.search.mapper.pojo.model.additionalmetadata.building.impl.P
 import org.hibernate.search.mapper.pojo.model.dependency.PojoOtherEntityIndexingDependencyConfigurationContext;
 import org.hibernate.search.mapper.pojo.model.dependency.PojoTypeIndexingDependencyConfigurationContext;
 import org.hibernate.search.mapper.pojo.model.path.PojoModelPathValueNode;
-import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPath;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathTypeNode;
 import org.hibernate.search.mapper.pojo.model.path.impl.BoundPojoModelPathValueNode;
+import org.hibernate.search.mapper.pojo.model.path.spi.PojoModelPathBinder;
 import org.hibernate.search.mapper.pojo.model.spi.PojoBootstrapIntrospector;
 import org.hibernate.search.mapper.pojo.model.spi.PojoTypeModel;
 
@@ -28,7 +28,8 @@ public class PojoTypeIndexingDependencyConfigurationContextImpl<T> extends Abstr
 
 	private final BoundPojoModelPathTypeNode<T> modelPath;
 	private final List<BoundPojoModelPathValueNode<?, ?, ?>> usedPaths = new ArrayList<>();
-	private final List<PojoOtherEntityIndexingDependencyConfigurationContextImpl<?>> otherEntityDependencyContexts = new ArrayList<>();
+	private final List<PojoOtherEntityIndexingDependencyConfigurationContextImpl<?>> otherEntityDependencyContexts =
+			new ArrayList<>();
 
 	public PojoTypeIndexingDependencyConfigurationContextImpl(
 			PojoBootstrapIntrospector introspector,
@@ -56,10 +57,11 @@ public class PojoTypeIndexingDependencyConfigurationContextImpl<T> extends Abstr
 	@Override
 	public PojoOtherEntityIndexingDependencyConfigurationContext fromOtherEntity(Class<?> otherEntityType,
 			PojoModelPathValueNode pathFromOtherEntityTypeToBridgedType) {
-		PojoOtherEntityIndexingDependencyConfigurationContextImpl<?> otherEntityDependencyContext = createOtherEntityDependencyContext(
-				modelPath.getTypeModel().rawType(),
-				otherEntityType, pathFromOtherEntityTypeToBridgedType
-		);
+		PojoOtherEntityIndexingDependencyConfigurationContextImpl<?> otherEntityDependencyContext =
+				createOtherEntityDependencyContext(
+						modelPath.getTypeModel().rawType(),
+						otherEntityType, pathFromOtherEntityTypeToBridgedType
+				);
 
 		// If we get here, the path is valid
 
@@ -76,7 +78,8 @@ public class PojoTypeIndexingDependencyConfigurationContextImpl<T> extends Abstr
 					PojoIndexingDependencyCollectorNode.walker()
 			);
 		}
-		for ( PojoOtherEntityIndexingDependencyConfigurationContextImpl<?> otherEntityDependencyContext : otherEntityDependencyContexts ) {
+		for ( PojoOtherEntityIndexingDependencyConfigurationContextImpl<
+				?> otherEntityDependencyContext : otherEntityDependencyContexts ) {
 			otherEntityDependencyContext.contributeDependencies( dependencyCollector );
 		}
 	}

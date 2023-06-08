@@ -87,7 +87,9 @@ public abstract class AbstractPredicateSimpleAnalysisIT {
 				.fetchAll() )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + absoluteFieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ absoluteFieldPath
+								+ "' in a search query across multiple indexes",
 						"Attribute 'searchAnalyzer", "' differs:", " vs. "
 				)
 				.satisfies( FailureReportUtils.hasContext(
@@ -223,7 +225,8 @@ public abstract class AbstractPredicateSimpleAnalysisIT {
 					ngramSearchAnalyzedFieldValues.get( docOrdinal ) );
 		}
 
-		private void initIncompatibleDocument(SimpleMappedIndex<IncompatibleIndexBinding> index, DocumentElement document,
+		private void initIncompatibleDocument(SimpleMappedIndex<IncompatibleIndexBinding> index,
+				DocumentElement document,
 				int docOrdinal) {
 			IncompatibleIndexBinding binding = index.binding();
 			document.addValue( binding.analyzedStringField.reference,

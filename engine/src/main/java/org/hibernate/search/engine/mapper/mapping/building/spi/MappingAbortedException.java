@@ -14,5 +14,4 @@ import org.hibernate.search.engine.reporting.spi.ContextualFailureCollector;
  * and deciding to abort early to avoid a snowball effect creating too many failures,
  * which would make the failure report unclear.
  */
-public class MappingAbortedException extends Exception {
-}
+public class MappingAbortedException extends Exception {}

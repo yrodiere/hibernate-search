@@ -88,7 +88,8 @@ public interface ElasticsearchSearchProjection<P> extends SearchProjection<P> {
 		}
 	}
 
-	static <P> ElasticsearchSearchProjection<P> from(ElasticsearchSearchIndexScope<?> scope, SearchProjection<P> projection) {
+	static <P> ElasticsearchSearchProjection<P> from(ElasticsearchSearchIndexScope<?> scope, SearchProjection<
+			P> projection) {
 		if ( !( projection instanceof ElasticsearchSearchProjection ) ) {
 			throw log.cannotMixElasticsearchSearchQueryWithOtherProjections( projection );
 		}

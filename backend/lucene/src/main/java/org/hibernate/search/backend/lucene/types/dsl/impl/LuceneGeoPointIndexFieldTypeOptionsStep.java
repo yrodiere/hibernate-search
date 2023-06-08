@@ -6,11 +6,8 @@
  */
 package org.hibernate.search.backend.lucene.types.dsl.impl;
 
-import org.hibernate.search.engine.search.predicate.spi.PredicateTypeKeys;
 import org.hibernate.search.backend.lucene.search.projection.impl.LuceneDistanceToFieldProjection;
 import org.hibernate.search.backend.lucene.search.projection.impl.LuceneFieldProjection;
-import org.hibernate.search.engine.search.projection.spi.ProjectionTypeKeys;
-import org.hibernate.search.engine.search.sort.spi.SortTypeKeys;
 import org.hibernate.search.backend.lucene.types.codec.impl.DocValues;
 import org.hibernate.search.backend.lucene.types.codec.impl.Indexing;
 import org.hibernate.search.backend.lucene.types.codec.impl.LuceneGeoPointFieldCodec;
@@ -22,8 +19,10 @@ import org.hibernate.search.backend.lucene.types.predicate.impl.LuceneGeoPointSp
 import org.hibernate.search.backend.lucene.types.predicate.impl.LuceneGeoPointSpatialWithinPolygonPredicate;
 import org.hibernate.search.backend.lucene.types.sort.impl.LuceneGeoPointDistanceSort;
 import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.engine.search.predicate.spi.PredicateTypeKeys;
+import org.hibernate.search.engine.search.projection.spi.ProjectionTypeKeys;
+import org.hibernate.search.engine.search.sort.spi.SortTypeKeys;
 import org.hibernate.search.engine.spatial.GeoPoint;
-
 
 class LuceneGeoPointIndexFieldTypeOptionsStep
 		extends AbstractLuceneStandardIndexFieldTypeOptionsStep<LuceneGeoPointIndexFieldTypeOptionsStep, GeoPoint> {
@@ -60,8 +59,9 @@ class LuceneGeoPointIndexFieldTypeOptionsStep
 		if ( resolvedSearchable ) {
 			builder.searchable( true );
 			builder.queryElementFactory( PredicateTypeKeys.EXISTS,
-					DocValues.ENABLED.equals( docValues ) ? new LuceneExistsPredicate.DocValuesBasedFactory<>()
-							: new LuceneExistsPredicate.DefaultFactory<>() );
+					DocValues.ENABLED.equals( docValues ) ?
+							new LuceneExistsPredicate.DocValuesBasedFactory<>() :
+							new LuceneExistsPredicate.DefaultFactory<>() );
 			builder.queryElementFactory( PredicateTypeKeys.SPATIAL_WITHIN_CIRCLE,
 					new LuceneGeoPointSpatialWithinCirclePredicate.Factory() );
 			builder.queryElementFactory( PredicateTypeKeys.SPATIAL_WITHIN_POLYGON,
@@ -78,7 +78,8 @@ class LuceneGeoPointIndexFieldTypeOptionsStep
 		if ( resolvedProjectable ) {
 			builder.projectable( true );
 			builder.queryElementFactory( ProjectionTypeKeys.FIELD, new LuceneFieldProjection.Factory<>( codec ) );
-			builder.queryElementFactory( ProjectionTypeKeys.DISTANCE, new LuceneDistanceToFieldProjection.Factory( codec ) );
+			builder.queryElementFactory( ProjectionTypeKeys.DISTANCE, new LuceneDistanceToFieldProjection.Factory(
+					codec ) );
 		}
 
 		if ( resolvedAggregable ) {

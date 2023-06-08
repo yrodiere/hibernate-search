@@ -30,19 +30,23 @@ public class MassIndexingFailureContext {
 		 * but we don't want user-implemented failure handlers to fail because of that
 		 * (they would throw an NPE which may produce disastrous results such as killing background threads).
 		 */
-		this.throwable = builder.throwable == null
-				? new AssertionFailure( "Unknown throwable: missing throwable when reporting the failure." )
-				: builder.throwable;
-		this.failingOperation = builder.failingOperation == null
-				? "Unknown operation: missing operation when reporting the failure."
-				: builder.failingOperation;
+		this.throwable = builder.throwable == null ?
+				new AssertionFailure( "Unknown throwable: missing throwable when reporting the failure." ) :
+				builder.throwable;
+		this.failingOperation = builder.failingOperation == null ?
+				"Unknown operation: missing operation when reporting the failure." : builder.failingOperation;
 	}
 
 	@Override
 	public String toString() {
-		return "MassIndexingFailureContext{" +
-				"throwable=" + throwable +
-				", failingOperation=" + failingOperation +
+		return "MassIndexingFailureContext{"
+				+
+				"throwable="
+				+ throwable
+				+
+				", failingOperation="
+				+ failingOperation
+				+
 				'}';
 	}
 

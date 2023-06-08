@@ -10,9 +10,6 @@ import java.lang.invoke.MethodHandles;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.mapper.pojo.automaticindexing.ReindexOnUpdate;
 import org.hibernate.search.mapper.pojo.extractor.builtin.BuiltinContainerExtractors;
 import org.hibernate.search.mapper.pojo.extractor.mapping.annotation.ContainerExtraction;
@@ -24,7 +21,10 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmb
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexingDependency;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.ObjectPath;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.PropertyValue;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.util.impl.test.annotation.TestForIssue;
 
 import org.junit.Rule;
@@ -42,7 +42,7 @@ public class DependencyRepeatableIT {
 			.withBackendMock( MethodHandles.lookup(), backendMock );
 
 	@Test
-	@TestForIssue( jiraKey = "HSEARCH-4000" )
+	@TestForIssue(jiraKey = "HSEARCH-4000")
 	public void associationInverseSide() {
 		backendMock.expectSchema( INDEX_NAME, b -> b
 				.objectField( "keys", b2 -> b2
@@ -61,7 +61,8 @@ public class DependencyRepeatableIT {
 		try ( SearchSession session = mapping.createSession() ) {
 			AssociationInverseSideRootEntity entity = new AssociationInverseSideRootEntity();
 			entity.id = 1;
-			entity.priceByEdition.put( new AssociationInverseSideKeyEntity( "bla", entity ), new AssociationInverseSideValueEntity( "blabla", entity ) );
+			entity.priceByEdition.put( new AssociationInverseSideKeyEntity( "bla", entity ),
+					new AssociationInverseSideValueEntity( "blabla", entity ) );
 
 			session.indexingPlan().add( entity );
 
@@ -75,7 +76,7 @@ public class DependencyRepeatableIT {
 	}
 
 	@Test
-	@TestForIssue( jiraKey = "HSEARCH-4000" )
+	@TestForIssue(jiraKey = "HSEARCH-4000")
 	public void indexingDependency() {
 		backendMock.expectSchema( INDEX_NAME, b -> b
 				.objectField( "keys", b2 -> b2
@@ -94,7 +95,8 @@ public class DependencyRepeatableIT {
 		try ( SearchSession session = mapping.createSession() ) {
 			IndexingDependencyRootEntity entity = new IndexingDependencyRootEntity();
 			entity.id = 1;
-			entity.priceByEdition.put( new IndexingDependencyKeyEntity( "bla", entity ), new IndexingDependencyValueEntity( "blabla", entity ) );
+			entity.priceByEdition.put( new IndexingDependencyKeyEntity( "bla", entity ),
+					new IndexingDependencyValueEntity( "blabla", entity ) );
 
 			session.indexingPlan().add( entity );
 
@@ -114,7 +116,7 @@ public class DependencyRepeatableIT {
 
 		@AssociationInverseSide(
 				extraction = @ContainerExtraction(BuiltinContainerExtractors.MAP_KEY),
-				inversePath = @ObjectPath( @PropertyValue( propertyName = "rootEntity" ) )
+				inversePath = @ObjectPath(@PropertyValue(propertyName = "rootEntity"))
 		)
 		@IndexedEmbedded(
 				name = "keys",
@@ -122,13 +124,14 @@ public class DependencyRepeatableIT {
 		)
 		@AssociationInverseSide(
 				extraction = @ContainerExtraction(BuiltinContainerExtractors.MAP_VALUE),
-				inversePath = @ObjectPath( @PropertyValue( propertyName = "rootEntity" ) )
+				inversePath = @ObjectPath(@PropertyValue(propertyName = "rootEntity"))
 		)
 		@IndexedEmbedded(
 				name = "values",
 				extraction = @ContainerExtraction(BuiltinContainerExtractors.MAP_VALUE)
 		)
-		private Map<AssociationInverseSideKeyEntity, AssociationInverseSideValueEntity> priceByEdition = new LinkedHashMap<>();
+		private Map<AssociationInverseSideKeyEntity, AssociationInverseSideValueEntity> priceByEdition =
+				new LinkedHashMap<>();
 	}
 
 	private static class AssociationInverseSideKeyEntity {

@@ -19,7 +19,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-
 public class PutIndexAliasesWork extends AbstractNonBulkableWork<Void> {
 
 	protected PutIndexAliasesWork(Builder builder) {
@@ -45,8 +44,8 @@ public class PutIndexAliasesWork extends AbstractNonBulkableWork<Void> {
 		protected ElasticsearchRequest buildRequest() {
 			ElasticsearchRequest.Builder builder =
 					ElasticsearchRequest.post()
-					.pathComponent( Paths._ALIASES )
-					.body( payload );
+							.pathComponent( Paths._ALIASES )
+							.body( payload );
 			return builder.build();
 		}
 

@@ -13,40 +13,40 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
 import org.hibernate.search.engine.cfg.EngineSettings;
 import org.hibernate.search.engine.cfg.spi.ConfigurationProperty;
-import org.hibernate.search.engine.cfg.ConfigurationPropertySource;
 import org.hibernate.search.engine.cfg.spi.EngineSpiSettings;
 import org.hibernate.search.engine.common.resources.impl.EngineThreads;
 import org.hibernate.search.engine.common.spi.SearchIntegration;
 import org.hibernate.search.engine.common.spi.SearchIntegrationEnvironment;
-import org.hibernate.search.engine.mapper.mapping.building.spi.BackendsInfo;
+import org.hibernate.search.engine.common.spi.SearchIntegrationPartialBuildState;
 import org.hibernate.search.engine.common.timing.impl.DefaultTimingSource;
 import org.hibernate.search.engine.common.timing.spi.TimingSource;
-import org.hibernate.search.engine.environment.thread.impl.ThreadPoolProviderImpl;
-import org.hibernate.search.engine.mapper.model.spi.TypeMetadataContributorProvider;
-import org.hibernate.search.engine.reporting.FailureHandler;
-import org.hibernate.search.engine.common.spi.SearchIntegrationPartialBuildState;
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.environment.bean.BeanReference;
 import org.hibernate.search.engine.environment.bean.BeanResolver;
+import org.hibernate.search.engine.environment.thread.impl.ThreadPoolProviderImpl;
+import org.hibernate.search.engine.environment.thread.spi.ThreadProvider;
+import org.hibernate.search.engine.mapper.mapping.building.spi.BackendsInfo;
 import org.hibernate.search.engine.mapper.mapping.building.spi.MappedIndexManagerFactory;
 import org.hibernate.search.engine.mapper.mapping.building.spi.Mapper;
 import org.hibernate.search.engine.mapper.mapping.building.spi.MappingAbortedException;
+import org.hibernate.search.engine.mapper.mapping.building.spi.MappingBuildContext;
 import org.hibernate.search.engine.mapper.mapping.building.spi.MappingConfigurationCollector;
 import org.hibernate.search.engine.mapper.mapping.building.spi.MappingInitiator;
-import org.hibernate.search.engine.mapper.model.spi.TypeMetadataDiscoverer;
-import org.hibernate.search.engine.mapper.mapping.building.spi.MappingBuildContext;
 import org.hibernate.search.engine.mapper.mapping.building.spi.MappingKey;
 import org.hibernate.search.engine.mapper.mapping.building.spi.MappingPartialBuildState;
 import org.hibernate.search.engine.mapper.model.spi.MappableTypeModel;
+import org.hibernate.search.engine.mapper.model.spi.TypeMetadataContributorProvider;
+import org.hibernate.search.engine.mapper.model.spi.TypeMetadataDiscoverer;
+import org.hibernate.search.engine.reporting.FailureHandler;
 import org.hibernate.search.engine.reporting.impl.EngineEventContextMessages;
 import org.hibernate.search.engine.reporting.impl.FailSafeFailureHandlerWrapper;
-import org.hibernate.search.engine.reporting.spi.RootFailureCollector;
 import org.hibernate.search.engine.reporting.spi.ContextualFailureCollector;
+import org.hibernate.search.engine.reporting.spi.RootFailureCollector;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.SearchException;
-import org.hibernate.search.engine.environment.thread.spi.ThreadProvider;
 import org.hibernate.search.util.common.impl.SuppressingCloser;
 
 public class SearchIntegrationBuilder implements SearchIntegration.Builder {
@@ -82,7 +82,7 @@ public class SearchIntegrationBuilder implements SearchIntegration.Builder {
 		if ( frozen ) {
 			throw new AssertionFailure(
 					"Attempt to add a mapping initiator"
-					+ " after Hibernate Search has started to build the mappings."
+							+ " after Hibernate Search has started to build the mappings."
 			);
 		}
 
@@ -90,8 +90,13 @@ public class SearchIntegrationBuilder implements SearchIntegration.Builder {
 
 		if ( existing != null ) {
 			throw new AssertionFailure(
-					"Mapping key '" + mappingKey + "' has multiple initiators: '"
-							+ existing + "', '" + initiator + "'."
+					"Mapping key '"
+							+ mappingKey
+							+ "' has multiple initiators: '"
+							+ existing
+							+ "', '"
+							+ initiator
+							+ "'."
 			);
 		}
 		return this;
@@ -107,7 +112,8 @@ public class SearchIntegrationBuilder implements SearchIntegration.Builder {
 		// Use a LinkedHashMap for deterministic iteration
 		List<MappingBuildingState<?, ?>> mappingBuildingStates = new ArrayList<>();
 		Map<MappingKey<?, ?>, MappingPartialBuildState> partiallyBuiltMappings = new HashMap<>();
-		RootFailureCollector failureCollector = new RootFailureCollector( EngineEventContextMessages.INSTANCE.bootstrap() );
+		RootFailureCollector failureCollector = new RootFailureCollector( EngineEventContextMessages.INSTANCE
+				.bootstrap() );
 		boolean checkingRootFailures = false;
 		EngineThreads engineThreads = null;
 		TimingSource timingSource = null;
@@ -133,12 +139,13 @@ public class SearchIntegrationBuilder implements SearchIntegration.Builder {
 					engineThreads, timingSource
 			);
 
-			indexManagerBuildingStateHolder = new IndexManagerBuildingStateHolder( beanResolver, propertySource, rootBuildContext );
+			indexManagerBuildingStateHolder = new IndexManagerBuildingStateHolder( beanResolver, propertySource,
+					rootBuildContext );
 
 			// Step #1: collect configuration for all mappings
 			for ( Map.Entry<MappingKey<?, ?>, MappingInitiator<?, ?>> entry : mappingInitiators.entrySet() ) {
 				// We know the key and initiator have compatible types, see how they are put into the map
-				@SuppressWarnings({"rawtypes", "unchecked"})
+				@SuppressWarnings({ "rawtypes", "unchecked" })
 				MappingBuildingState<?, ?> mappingBuildingState = new MappingBuildingState<>(
 						rootBuildContext,
 						(MappingKey) entry.getKey(), entry.getValue()
@@ -303,7 +310,8 @@ public class SearchIntegrationBuilder implements SearchIntegration.Builder {
 
 			if ( !failureCollector.hasFailure() ) {
 				throw new AssertionFailure(
-						"Caught " + MappingAbortedException.class.getSimpleName()
+						"Caught "
+								+ MappingAbortedException.class.getSimpleName()
 								+ ", but the mapper did not collect any failure.",
 						e
 				);

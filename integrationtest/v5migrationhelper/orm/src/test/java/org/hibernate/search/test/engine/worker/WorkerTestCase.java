@@ -56,14 +56,18 @@ public abstract class WorkerTestCase extends SearchTestBase {
 				iteration * 2,
 				numberOfThreads,
 				i -> ( i % 2 == 0 ) ? work : reverseWork
-			)
+		)
 				// in some machine (e.g. Mac) this call may take more than 2 minutes
 				.setTimeout( 3, TimeUnit.MINUTES )
 				.execute();
 
 		System.out.println(
-				iteration + " iterations (8 tx per iteration) in " + numberOfThreads + " threads: "
-						+ TimeUnit.NANOSECONDS.toMillis( System.nanoTime() - start ) + "ms"
+				iteration
+						+ " iterations (8 tx per iteration) in "
+						+ numberOfThreads
+						+ " threads: "
+						+ TimeUnit.NANOSECONDS.toMillis( System.nanoTime() - start )
+						+ "ms"
 		);
 	}
 

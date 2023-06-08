@@ -97,9 +97,7 @@ public class FailSafeFailureHandlerWrapperTest {
 		verifyNoMoreInteractions( failureHandlerMock );
 	}
 
-	private static class SimulatedError extends Error {
-	}
+	private static class SimulatedError extends Error {}
 
-	private static class SimulatedRuntimeException extends RuntimeException {
-	}
+	private static class SimulatedRuntimeException extends RuntimeException {}
 }

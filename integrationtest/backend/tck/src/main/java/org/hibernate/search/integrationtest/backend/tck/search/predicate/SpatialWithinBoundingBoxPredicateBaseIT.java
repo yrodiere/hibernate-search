@@ -56,7 +56,8 @@ public class SpatialWithinBoundingBoxPredicateBaseIT {
 						SearchableIT.searchableYesIndex, SearchableIT.searchableNoIndex,
 						ArgumentCheckingIT.index,
 						TypeCheckingNoConversionIT.index, TypeCheckingNoConversionIT.compatibleIndex,
-						TypeCheckingNoConversionIT.rawFieldCompatibleIndex, TypeCheckingNoConversionIT.missingFieldIndex,
+						TypeCheckingNoConversionIT.rawFieldCompatibleIndex,
+						TypeCheckingNoConversionIT.missingFieldIndex,
 						TypeCheckingNoConversionIT.incompatibleIndex
 				)
 				.setup();
@@ -77,7 +78,8 @@ public class SpatialWithinBoundingBoxPredicateBaseIT {
 
 		final BulkIndexer typeCheckingMainIndexer = TypeCheckingNoConversionIT.index.bulkIndexer();
 		final BulkIndexer typeCheckingCompatibleIndexer = TypeCheckingNoConversionIT.compatibleIndex.bulkIndexer();
-		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex.bulkIndexer();
+		final BulkIndexer typeCheckingRawFieldCompatibleIndexer = TypeCheckingNoConversionIT.rawFieldCompatibleIndex
+				.bulkIndexer();
 		final BulkIndexer typeCheckingMissingFieldIndexer = TypeCheckingNoConversionIT.missingFieldIndex.bulkIndexer();
 		TypeCheckingNoConversionIT.dataSet.contribute( TypeCheckingNoConversionIT.index, typeCheckingMainIndexer,
 				TypeCheckingNoConversionIT.compatibleIndex, typeCheckingCompatibleIndexer,
@@ -102,8 +104,10 @@ public class SpatialWithinBoundingBoxPredicateBaseIT {
 	}
 
 	@Nested
-	public static class SingleFieldIT extends AbstractPredicateSingleFieldIT<SpatialWithinBoundingBoxPredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinBoundingBoxPredicateTestValues> dataSet = new DataSet<>( testValues() );
+	public static class SingleFieldIT
+			extends AbstractPredicateSingleFieldIT<SpatialWithinBoundingBoxPredicateTestValues> {
+		private static final DataSet<GeoPoint, SpatialWithinBoundingBoxPredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
@@ -121,8 +125,10 @@ public class SpatialWithinBoundingBoxPredicateBaseIT {
 	}
 
 	@Nested
-	public static class MultiFieldIT extends AbstractPredicateMultiFieldIT<SpatialWithinBoundingBoxPredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinBoundingBoxPredicateTestValues> dataSet = new DataSet<>( testValues() );
+	public static class MultiFieldIT
+			extends AbstractPredicateMultiFieldIT<SpatialWithinBoundingBoxPredicateTestValues> {
+		private static final DataSet<GeoPoint, SpatialWithinBoundingBoxPredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
@@ -140,7 +146,8 @@ public class SpatialWithinBoundingBoxPredicateBaseIT {
 		}
 
 		@Override
-		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths, int matchingDocOrdinal) {
+		protected PredicateFinalStep predicateOnFields(SearchPredicateFactory f, String[] fieldPaths,
+				int matchingDocOrdinal) {
 			return f.spatial().within().fields( fieldPaths )
 					.boundingBox( dataSet.values.matchingArg( matchingDocOrdinal ) );
 		}
@@ -173,13 +180,15 @@ public class SpatialWithinBoundingBoxPredicateBaseIT {
 
 		@Override
 		protected PredicateFinalStep predicate(SearchPredicateFactory f, String fieldPath, int matchingDocOrdinal) {
-			return f.spatial().within().field( fieldPath ).boundingBox( dataSet.values.matchingArg( matchingDocOrdinal ) );
+			return f.spatial().within().field( fieldPath ).boundingBox( dataSet.values.matchingArg(
+					matchingDocOrdinal ) );
 		}
 	}
 
 	@Nested
 	public static class ScoreIT extends AbstractPredicateFieldScoreIT<SpatialWithinBoundingBoxPredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinBoundingBoxPredicateTestValues> dataSet = new DataSet<>( testValues() );
+		private static final DataSet<GeoPoint, SpatialWithinBoundingBoxPredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
@@ -340,8 +349,10 @@ public class SpatialWithinBoundingBoxPredicateBaseIT {
 	}
 
 	@Nested
-	public static class TypeCheckingNoConversionIT extends AbstractPredicateTypeCheckingNoConversionIT<SpatialWithinBoundingBoxPredicateTestValues> {
-		private static final DataSet<GeoPoint, SpatialWithinBoundingBoxPredicateTestValues> dataSet = new DataSet<>( testValues() );
+	public static class TypeCheckingNoConversionIT
+			extends AbstractPredicateTypeCheckingNoConversionIT<SpatialWithinBoundingBoxPredicateTestValues> {
+		private static final DataSet<GeoPoint, SpatialWithinBoundingBoxPredicateTestValues> dataSet = new DataSet<>(
+				testValues() );
 
 		private static final SimpleMappedIndex<IndexBinding> index =
 				SimpleMappedIndex.of( root -> new IndexBinding( root, supportedFieldTypes ) )
@@ -365,7 +376,8 @@ public class SpatialWithinBoundingBoxPredicateBaseIT {
 
 		@Override
 		protected PredicateFinalStep predicate(SearchPredicateFactory f, String fieldPath, int matchingDocOrdinal) {
-			return f.spatial().within().field( fieldPath ).boundingBox( dataSet.values.matchingArg( matchingDocOrdinal ) );
+			return f.spatial().within().field( fieldPath ).boundingBox( dataSet.values.matchingArg(
+					matchingDocOrdinal ) );
 		}
 
 		@Override

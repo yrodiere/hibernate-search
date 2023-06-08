@@ -12,15 +12,15 @@ import java.util.List;
 
 import org.hibernate.search.engine.environment.bean.BeanHolder;
 import org.hibernate.search.engine.search.projection.definition.ProjectionDefinition;
+import org.hibernate.search.engine.search.projection.definition.spi.ConstantProjectionDefinition;
 import org.hibernate.search.mapper.pojo.logging.impl.Log;
 import org.hibernate.search.mapper.pojo.mapping.building.impl.PojoMappingHelper;
+import org.hibernate.search.mapper.pojo.model.path.spi.ProjectionConstructorPath;
+import org.hibernate.search.mapper.pojo.model.spi.PojoConstructorIdentifier;
 import org.hibernate.search.mapper.pojo.model.spi.PojoConstructorModel;
 import org.hibernate.search.mapper.pojo.model.spi.PojoMethodParameterModel;
 import org.hibernate.search.mapper.pojo.reporting.spi.PojoEventContexts;
-import org.hibernate.search.engine.search.projection.definition.spi.ConstantProjectionDefinition;
-import org.hibernate.search.mapper.pojo.model.spi.PojoConstructorIdentifier;
 import org.hibernate.search.mapper.pojo.search.definition.impl.PojoConstructorProjectionDefinition;
-import org.hibernate.search.mapper.pojo.model.path.spi.ProjectionConstructorPath;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 import org.hibernate.search.util.common.reporting.EventContext;
 import org.hibernate.search.util.common.reporting.spi.EventContextProvider;
@@ -81,7 +81,8 @@ public class ProjectionConstructorBinder<T> implements EventContextProvider {
 			}
 			parameterDefinitions.add( parameterDefinition );
 		}
-		return new PojoConstructorProjectionDefinition<>( constructorIdentifier, constructor.handle(), parameterDefinitions );
+		return new PojoConstructorProjectionDefinition<>( constructorIdentifier, constructor.handle(),
+				parameterDefinitions );
 	}
 
 	private ProjectionConstructorPath getPathFromSameProjectionConstructor() {
@@ -89,8 +90,9 @@ public class ProjectionConstructorBinder<T> implements EventContextProvider {
 			return null;
 		}
 		ProjectionConstructorBinder<?> matchingAncestor = parent.parent.getMatchingAncestor( constructor );
-		return matchingAncestor == null ? null : parent.parent.createPath( matchingAncestor,
-				new ProjectionConstructorPath( constructorIdentifier ), parent.parameter.index() );
+		return matchingAncestor == null ?
+				null : parent.parent.createPath( matchingAncestor,
+						new ProjectionConstructorPath( constructorIdentifier ), parent.parameter.index() );
 	}
 
 	private ProjectionConstructorBinder<?> getMatchingAncestor(PojoConstructorModel<?> constructorToMatch) {
@@ -107,8 +109,10 @@ public class ProjectionConstructorBinder<T> implements EventContextProvider {
 		}
 	}
 
-	private ProjectionConstructorPath createPath(ProjectionConstructorBinder<?> firstElement, ProjectionConstructorPath child, int childPosition) {
-		ProjectionConstructorPath pathFromSelf = new ProjectionConstructorPath( new PojoConstructorIdentifier( constructor ), child, childPosition );
+	private ProjectionConstructorPath createPath(ProjectionConstructorBinder<?> firstElement,
+			ProjectionConstructorPath child, int childPosition) {
+		ProjectionConstructorPath pathFromSelf = new ProjectionConstructorPath( new PojoConstructorIdentifier(
+				constructor ), child, childPosition );
 		if ( this == firstElement ) {
 			return pathFromSelf;
 		}

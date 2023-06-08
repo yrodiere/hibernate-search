@@ -9,6 +9,7 @@ package org.hibernate.search.integrationtest.batch.jsr352.massindexing.entity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -36,7 +37,7 @@ public class CompanyGroup {
 	public CompanyGroup() {
 	}
 
-	public CompanyGroup(String id, Company ... companies) {
+	public CompanyGroup(String id, Company... companies) {
 		this.id = id;
 		Collections.addAll( this.companies, companies );
 	}

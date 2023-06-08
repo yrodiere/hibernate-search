@@ -20,13 +20,13 @@ import org.hibernate.search.engine.backend.common.DocumentReference;
 import org.hibernate.search.engine.backend.document.IndexFieldReference;
 import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement;
 import org.hibernate.search.engine.backend.types.Sortable;
+import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.engine.search.loading.spi.SearchLoadingContext;
 import org.hibernate.search.engine.search.projection.spi.ProjectionMappedTypeContext;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.engine.search.query.SearchScroll;
 import org.hibernate.search.engine.search.query.SearchScrollResult;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.stub.StubEntity;
-import org.hibernate.search.engine.common.EntityReference;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.BulkIndexer;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.GenericStubMappingScope;
@@ -47,7 +47,8 @@ public class SearchQueryScrollResultLoadingIT {
 	@ClassRule
 	public static final SearchSetupHelper setupHelper = new SearchSetupHelper();
 
-	private static final ProjectionMappedTypeContext typeContextMock = Mockito.mock( ProjectionMappedTypeContext.class );
+	private static final ProjectionMappedTypeContext typeContextMock = Mockito.mock(
+			ProjectionMappedTypeContext.class );
 
 	private static final SimpleMappedIndex<IndexBinding> index = SimpleMappedIndex.of( IndexBinding::new );
 
@@ -80,7 +81,8 @@ public class SearchQueryScrollResultLoadingIT {
 		index.mapping().with()
 				.typeContext( index.typeName(), typeContextMock )
 				.run( () -> {
-					GenericStubMappingScope<EntityReference, StubEntity> scope = index.createGenericScope( loadingContextMock );
+					GenericStubMappingScope<EntityReference, StubEntity> scope = index.createGenericScope(
+							loadingContextMock );
 					SearchQuery<StubEntity> query = scope.query()
 							.where( f -> f.matchAll() )
 							.sort( f -> f.field( "integer" ) )
@@ -156,7 +158,8 @@ public class SearchQueryScrollResultLoadingIT {
 			);
 			SearchScrollResult<StubEntity> chunk = scroll.next();
 			assertThatHits( chunk.hits() ).hasHitsAnyOrder(
-					references[base + 0].loadedEntity, references[base + 1].loadedEntity, references[base + 2].loadedEntity,
+					references[base + 0].loadedEntity, references[base + 1].loadedEntity, references[base
+							+ 2].loadedEntity,
 					references[base + 3].loadedEntity, references[base + 4].loadedEntity
 			);
 			// Check in particular that the backend gets the projection hit mapper from the loading context,

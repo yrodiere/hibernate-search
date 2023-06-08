@@ -8,6 +8,7 @@ package org.hibernate.search.documentation.mapper.orm.binding.bridgeresolver;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -35,7 +36,8 @@ public class MyProductId implements Serializable {
 			return false;
 		}
 		MyProductId productId = (MyProductId) o;
-		return producerId.equals( productId.producerId ) &&
+		return producerId.equals( productId.producerId )
+				&&
 				producerProductId.equals( productId.producerProductId );
 	}
 

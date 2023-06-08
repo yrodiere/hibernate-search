@@ -10,20 +10,19 @@ import java.lang.invoke.MethodHandles;
 
 import org.hibernate.search.engine.backend.types.Projectable;
 import org.hibernate.search.engine.backend.types.Sortable;
-import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
-import org.hibernate.search.mapper.pojo.bridge.builtin.programmatic.GeoPointBinder;
-import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
-import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.ProgrammaticMappingConfigurationContext;
-import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 import org.hibernate.search.engine.spatial.GeoPoint;
+import org.hibernate.search.mapper.pojo.bridge.builtin.programmatic.GeoPointBinder;
+import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.ProgrammaticMappingConfigurationContext;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.TypeMappingStep;
+import org.hibernate.search.mapper.pojo.standalone.mapping.SearchMapping;
+import org.hibernate.search.mapper.pojo.standalone.session.SearchSession;
 import org.hibernate.search.util.common.impl.CollectionHelper;
 import org.hibernate.search.util.impl.integrationtest.common.rule.BackendMock;
+import org.hibernate.search.util.impl.integrationtest.mapper.pojo.standalone.StandalonePojoMappingSetupHelper;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 
 public class ProgrammaticMappingGeoPointBindingIT {
 
@@ -31,23 +30,28 @@ public class ProgrammaticMappingGeoPointBindingIT {
 	public BackendMock backendMock = new BackendMock();
 
 	@Rule
-	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock( MethodHandles.lookup(), backendMock );
+	public StandalonePojoMappingSetupHelper setupHelper = StandalonePojoMappingSetupHelper.withBackendMock(
+			MethodHandles.lookup(), backendMock );
 
 	private SearchMapping mapping;
 
 	@Before
 	public void setup() {
 		backendMock.expectSchema( GeoPointOnTypeEntity.INDEX, b -> b
-				.field( "homeLocation", GeoPoint.class, b2 -> b2.projectable( Projectable.YES ).sortable( Sortable.YES ) )
-				.field( "workLocation", GeoPoint.class, b2 -> b2.projectable( Projectable.DEFAULT ).sortable( Sortable.DEFAULT ) )
+				.field( "homeLocation", GeoPoint.class, b2 -> b2.projectable( Projectable.YES ).sortable(
+						Sortable.YES ) )
+				.field( "workLocation", GeoPoint.class, b2 -> b2.projectable( Projectable.DEFAULT ).sortable(
+						Sortable.DEFAULT ) )
 		);
 		backendMock.expectSchema( GeoPointOnCoordinatesPropertyEntity.INDEX, b -> b
 				.field( "coord", GeoPoint.class )
 				.field( "location", GeoPoint.class, b2 -> b2.projectable( Projectable.NO ) )
 		);
 		backendMock.expectSchema( GeoPointOnCustomCoordinatesPropertyEntity.INDEX, b -> b
-				.field( "coord", GeoPoint.class, b2 -> b2.projectable( Projectable.DEFAULT ).sortable( Sortable.DEFAULT ) )
-				.field( "location", GeoPoint.class, b2 -> b2.projectable( Projectable.DEFAULT ).sortable( Sortable.DEFAULT ) )
+				.field( "coord", GeoPoint.class, b2 -> b2.projectable( Projectable.DEFAULT ).sortable(
+						Sortable.DEFAULT ) )
+				.field( "location", GeoPoint.class, b2 -> b2.projectable( Projectable.DEFAULT ).sortable(
+						Sortable.DEFAULT ) )
 		);
 
 		mapping = setupHelper.start()
@@ -84,16 +88,18 @@ public class ProgrammaticMappingGeoPointBindingIT {
 
 					TypeMappingStep geoPointOnCoordinatesPropertyEntityMapping =
 							mappingDefinition.type( GeoPointOnCoordinatesPropertyEntity.class );
-					geoPointOnCoordinatesPropertyEntityMapping.indexed().index( GeoPointOnCoordinatesPropertyEntity.INDEX );
+					geoPointOnCoordinatesPropertyEntityMapping.indexed().index(
+							GeoPointOnCoordinatesPropertyEntity.INDEX );
 					geoPointOnCoordinatesPropertyEntityMapping.property( "id" )
-									.documentId();
+							.documentId();
 					geoPointOnCoordinatesPropertyEntityMapping.property( "coord" )
-									.genericField()
-									.genericField( "location" ).projectable( Projectable.NO );
+							.genericField()
+							.genericField( "location" ).projectable( Projectable.NO );
 
 					TypeMappingStep geoPointOnCustomCoordinatesPropertyEntityMapping =
 							mappingDefinition.type( GeoPointOnCustomCoordinatesPropertyEntity.class );
-					geoPointOnCustomCoordinatesPropertyEntityMapping.indexed().index( GeoPointOnCustomCoordinatesPropertyEntity.INDEX );
+					geoPointOnCustomCoordinatesPropertyEntityMapping.indexed().index(
+							GeoPointOnCustomCoordinatesPropertyEntity.INDEX );
 					geoPointOnCustomCoordinatesPropertyEntityMapping.property( "id" ).documentId();
 					geoPointOnCustomCoordinatesPropertyEntityMapping.property( "coord" )
 							.binder( GeoPointBinder.create() )

@@ -8,7 +8,6 @@ package org.hibernate.search.documentation.mapper.orm.binding.routingbridge.ormc
 
 public enum MyData {
 
-	INDEXED,
-	NOT_INDEXED;
+	INDEXED, NOT_INDEXED;
 
 }

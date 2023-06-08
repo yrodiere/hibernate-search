@@ -68,7 +68,8 @@ public final class EngineSettings {
 
 		public static final String BACKEND = "backend";
 		public static final String BACKENDS = "backends";
-		public static final String CONFIGURATION_PROPERTY_CHECKING_STRATEGY = "configuration_property_checking.strategy";
+		public static final String CONFIGURATION_PROPERTY_CHECKING_STRATEGY =
+				"configuration_property_checking.strategy";
 		public static final String BACKGROUND_FAILURE_HANDLER = "background_failure_handler";
 	}
 

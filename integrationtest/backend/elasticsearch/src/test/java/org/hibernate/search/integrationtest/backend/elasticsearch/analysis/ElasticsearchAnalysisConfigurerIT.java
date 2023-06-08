@@ -50,7 +50,8 @@ public class ElasticsearchAnalysisConfigurerIT {
 						.failure(
 								ANALYSIS_CONFIGURER_ERROR_MESSAGE_PREFIX,
 								"Invalid value for configuration property 'hibernate.search.backend."
-										+ ElasticsearchIndexSettings.ANALYSIS_CONFIGURER + "': 'foobar'",
+										+ ElasticsearchIndexSettings.ANALYSIS_CONFIGURER
+										+ "': 'foobar'",
 								"Unable to load class 'foobar'"
 						)
 				);
@@ -74,6 +75,7 @@ public class ElasticsearchAnalysisConfigurerIT {
 
 	public static class FailingConfigurer implements ElasticsearchAnalysisConfigurer {
 		private static final String FAILURE_MESSAGE = "Simulated failure for " + FailingConfigurer.class.getName();
+
 		@Override
 		public void configure(ElasticsearchAnalysisConfigurationContext context) {
 			throw new SimulatedFailure( FAILURE_MESSAGE );
@@ -264,21 +266,23 @@ public class ElasticsearchAnalysisConfigurerIT {
 	@Test
 	@TestForIssue(jiraKey = "HSEARCH-4594")
 	public void multipleConfigurers() {
-		StubMappedIndex index = setup( MultipleConfigurers1.class.getName() + "," + MultipleConfigurers2.class.getName() );
+		StubMappedIndex index = setup( MultipleConfigurers1.class.getName()
+				+ ","
+				+ MultipleConfigurers2.class.getName() );
 
 		assertJsonEquals(
 				"{"
-					+ "'analyzer': {"
-							+ "'analyzer1': {"
-									+ "'type': 'custom',"
-									+ "'tokenizer': 'whitespace'"
-							+ "},"
-							+ "'analyzer2': {"
-									+ "'type': 'custom',"
-									+ "'tokenizer': 'whitespace'"
-							+ "}"
-					+ "}"
-				+ "}",
+						+ "'analyzer': {"
+						+ "'analyzer1': {"
+						+ "'type': 'custom',"
+						+ "'tokenizer': 'whitespace'"
+						+ "},"
+						+ "'analyzer2': {"
+						+ "'type': 'custom',"
+						+ "'tokenizer': 'whitespace'"
+						+ "}"
+						+ "}"
+						+ "}",
 				client.index( index.name() ).settings( "index.analysis" ).get()
 		);
 	}
@@ -300,7 +304,7 @@ public class ElasticsearchAnalysisConfigurerIT {
 	}
 
 	private StubMappedIndex setup(String analysisConfigurer) {
-		return setup( analysisConfigurer, c -> { } );
+		return setup( analysisConfigurer, c -> {} );
 	}
 
 	private StubMappedIndex setup(String analysisConfigurer, Consumer<IndexBindingContext> mappingContributor) {

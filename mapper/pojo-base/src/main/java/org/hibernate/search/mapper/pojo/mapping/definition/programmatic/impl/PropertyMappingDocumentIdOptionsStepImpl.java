@@ -17,8 +17,6 @@ import org.hibernate.search.mapper.pojo.mapping.building.spi.PojoPropertyMetadat
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.PropertyMappingDocumentIdOptionsStep;
 import org.hibernate.search.mapper.pojo.mapping.definition.programmatic.PropertyMappingStep;
 
-
-
 class PropertyMappingDocumentIdOptionsStepImpl extends DelegatingPropertyMappingStep
 		implements PropertyMappingDocumentIdOptionsStep, PojoPropertyMetadataContributor {
 
@@ -40,7 +38,8 @@ class PropertyMappingDocumentIdOptionsStepImpl extends DelegatingPropertyMapping
 	}
 
 	@Override
-	public PropertyMappingDocumentIdOptionsStep identifierBridge(BeanReference<? extends IdentifierBridge<?>> bridgeReference) {
+	public PropertyMappingDocumentIdOptionsStep identifierBridge(BeanReference<? extends IdentifierBridge<
+			?>> bridgeReference) {
 		return identifierBinder( new BeanBinder( bridgeReference ) );
 	}
 

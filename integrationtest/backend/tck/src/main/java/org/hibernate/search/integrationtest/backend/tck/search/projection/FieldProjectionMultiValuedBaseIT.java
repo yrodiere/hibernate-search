@@ -147,11 +147,10 @@ public class FieldProjectionMultiValuedBaseIT<F> {
 		String fieldPath = getFieldPath();
 
 		assertThatQuery( scope.query()
-				.select( f ->
-						f.composite(
-								f.field( fieldPath, fieldType.getJavaType() ).multi(),
-								f.field( fieldPath, fieldType.getJavaType() ).multi()
-						)
+				.select( f -> f.composite(
+						f.field( fieldPath, fieldType.getJavaType() ).multi(),
+						f.field( fieldPath, fieldType.getJavaType() ).multi()
+				)
 				)
 				.where( f -> f.matchAll() )
 				.routing( dataSet.routingKey )

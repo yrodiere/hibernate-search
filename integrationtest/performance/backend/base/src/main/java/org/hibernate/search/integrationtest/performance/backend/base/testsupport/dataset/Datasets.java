@@ -22,8 +22,7 @@ public final class Datasets {
 	private Datasets() {
 	}
 
-	public static Dataset createDataset(String name)
-			throws IOException {
+	public static Dataset createDataset(String name) throws IOException {
 		switch ( name ) {
 			case CONSTANT_TEXT:
 				return new ConstantDataset();

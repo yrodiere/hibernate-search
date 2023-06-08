@@ -104,7 +104,8 @@ public final class ValidationErrorCollector {
 		else {
 			if ( pathBuilder.length() > 0 ) {
 				// Flush the path before doing anything
-				currentResult = currentResult.withContext( EventContexts.fromIndexFieldAbsolutePath( pathBuilder.toString() ) );
+				currentResult = currentResult.withContext( EventContexts.fromIndexFieldAbsolutePath( pathBuilder
+						.toString() ) );
 				pathBuilder.setLength( 0 );
 			}
 			switch ( type ) {
@@ -125,15 +126,18 @@ public final class ValidationErrorCollector {
 				case TOKEN_FILTER:
 					return currentResult.withContext( EventContexts.fromTokenFilter( name ) );
 				case ANALYSIS_DEFINITION_PARAMETER:
-					return currentResult.withContext( ElasticsearchEventContexts.fromAnalysisDefinitionParameter( name ) );
+					return currentResult.withContext( ElasticsearchEventContexts.fromAnalysisDefinitionParameter(
+							name ) );
 				case DYNAMIC_TEMPLATE:
 					return currentResult.withContext( EventContexts.fromFieldTemplateAbsolutePath( name ) );
 				case DYNAMIC_TEMPLATE_ATTRIBUTE:
 					return currentResult.withContext( ElasticsearchEventContexts.fromFieldTemplateAttribute( name ) );
 				case CUSTOM_INDEX_SETTINGS_ATTRIBUTE:
-					return currentResult.withContext( ElasticsearchEventContexts.fromCustomIndexSettingAttribute( name ) );
+					return currentResult.withContext( ElasticsearchEventContexts.fromCustomIndexSettingAttribute(
+							name ) );
 				case CUSTOM_INDEX_MAPPING_ATTRIBUTE:
-					return currentResult.withContext( ElasticsearchEventContexts.fromCustomIndexMappingAttribute( name ) );
+					return currentResult.withContext( ElasticsearchEventContexts.fromCustomIndexMappingAttribute(
+							name ) );
 				default:
 					throw new AssertionFailure( "Unexpected validation context element type: " + type );
 			}

@@ -69,6 +69,7 @@ public class TenancyConfiguration {
 	}
 
 	public SearchException invalidTenantId(String tenantId) {
-		return log.invalidTenantId( tenantId, tenantIds.orElse( Collections.emptySet() ), tenantIdsConfigurationPropertyKey );
+		return log.invalidTenantId( tenantId, tenantIds.orElse( Collections.emptySet() ),
+				tenantIdsConfigurationPropertyKey );
 	}
 }

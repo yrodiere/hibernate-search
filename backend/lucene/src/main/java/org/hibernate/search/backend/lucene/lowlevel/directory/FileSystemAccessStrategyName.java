@@ -14,14 +14,11 @@ import org.hibernate.search.util.common.logging.impl.LoggerFactory;
 
 public enum FileSystemAccessStrategyName {
 
-	AUTO( "auto" ),
+	AUTO("auto"),
 	/**
 	 * @deprecated This strategy will be removed in a future version of Lucene.
 	 */
-	@Deprecated
-	SIMPLE( "simple" ),
-	NIO( "nio" ),
-	MMAP( "mmap" );
+	@Deprecated SIMPLE("simple"), NIO("nio"), MMAP("mmap");
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 

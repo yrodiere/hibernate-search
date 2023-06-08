@@ -150,7 +150,9 @@ public abstract class AbstractPredicateTypeCheckingNoConversionIT<V extends Abst
 				0 ) )
 				.isInstanceOf( SearchException.class )
 				.hasMessageContainingAll(
-						"Inconsistent configuration for field '" + fieldPath + "' in a search query across multiple indexes",
+						"Inconsistent configuration for field '"
+								+ fieldPath
+								+ "' in a search query across multiple indexes",
 						"Inconsistent support for '" + predicateNameInErrorMessage() + "'"
 				)
 				.satisfies( FailureReportUtils.hasContext(
@@ -199,7 +201,8 @@ public abstract class AbstractPredicateTypeCheckingNoConversionIT<V extends Abst
 		private final SimpleFieldModelsByType customDslConverterField1;
 
 		public IndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<?>> fieldTypes) {
-			defaultDslConverterField0 = SimpleFieldModelsByType.mapAll( fieldTypes, root, "defaultDslConverterField0_" );
+			defaultDslConverterField0 = SimpleFieldModelsByType.mapAll( fieldTypes, root,
+					"defaultDslConverterField0_" );
 			customDslConverterField0 = SimpleFieldModelsByType.mapAll( fieldTypes, root, "customDslConverterField0_",
 					c -> c.dslConverter( ValueWrapper.class, unusedDslConverter() ) );
 			customDslConverterField1 = SimpleFieldModelsByType.mapAll( fieldTypes, root, "customDslConverterField1_",
@@ -212,7 +215,8 @@ public abstract class AbstractPredicateTypeCheckingNoConversionIT<V extends Abst
 		private final SimpleFieldModelsByType customDslConverterField0;
 		private final SimpleFieldModelsByType customDslConverterField1;
 
-		public CompatibleIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<?>> fieldTypes) {
+		public CompatibleIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<
+				?>> fieldTypes) {
 			defaultDslConverterField0 = SimpleFieldModelsByType.mapAll( fieldTypes, root, "defaultDslConverterField0_",
 					this::addIrrelevantOptions );
 			customDslConverterField0 = SimpleFieldModelsByType.mapAll( fieldTypes, root, "customDslConverterField0_",
@@ -228,7 +232,8 @@ public abstract class AbstractPredicateTypeCheckingNoConversionIT<V extends Abst
 		}
 
 		// See HSEARCH-3307: this checks that irrelevant options are ignored when checking cross-index field compatibility
-		protected void addIrrelevantOptions(FieldTypeDescriptor<?> fieldType, StandardIndexFieldTypeOptionsStep<?, ?> c) {
+		protected void addIrrelevantOptions(FieldTypeDescriptor<?> fieldType, StandardIndexFieldTypeOptionsStep<?,
+				?> c) {
 			c.projectable( Projectable.YES );
 			if ( fieldType.isFieldSortSupported() ) {
 				c.sortable( Sortable.YES );
@@ -242,7 +247,8 @@ public abstract class AbstractPredicateTypeCheckingNoConversionIT<V extends Abst
 		private final SimpleFieldModelsByType customDslConverterField0;
 		private final SimpleFieldModelsByType customDslConverterField1;
 
-		public RawFieldCompatibleIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<?>> fieldTypes) {
+		public RawFieldCompatibleIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<
+				?>> fieldTypes) {
 			defaultDslConverterField0 = SimpleFieldModelsByType.mapAll( fieldTypes, root, "defaultDslConverterField0_",
 					c -> c.dslConverter( ValueWrapper.class, unusedDslConverter() ) );
 			customDslConverterField0 = SimpleFieldModelsByType.mapAll( fieldTypes, root, "customDslConverterField0_" );
@@ -251,23 +257,22 @@ public abstract class AbstractPredicateTypeCheckingNoConversionIT<V extends Abst
 	}
 
 	public static class MissingFieldIndexBinding {
-		public MissingFieldIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<?>> fieldTypes) {
+		public MissingFieldIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<
+				?>> fieldTypes) {
 		}
 	}
 
 	public static final class IncompatibleIndexBinding {
-		public IncompatibleIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<?>> fieldTypes) {
-			fieldTypes.forEach( fieldType ->
-					SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible( fieldType ) )
-							.map( root, "defaultDslConverterField0_" + fieldType.getUniqueName() )
+		public IncompatibleIndexBinding(IndexSchemaElement root, Collection<? extends FieldTypeDescriptor<
+				?>> fieldTypes) {
+			fieldTypes.forEach( fieldType -> SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible( fieldType ) )
+					.map( root, "defaultDslConverterField0_" + fieldType.getUniqueName() )
 			);
-			fieldTypes.forEach( fieldType ->
-					SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible( fieldType ) )
-							.map( root, "customDslConverterField0_" + fieldType.getUniqueName() )
+			fieldTypes.forEach( fieldType -> SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible( fieldType ) )
+					.map( root, "customDslConverterField0_" + fieldType.getUniqueName() )
 			);
-			fieldTypes.forEach( fieldType ->
-					SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible( fieldType ) )
-							.map( root, "customDslConverterField1_" + fieldType.getUniqueName() )
+			fieldTypes.forEach( fieldType -> SimpleFieldModel.mapper( FieldTypeDescriptor.getIncompatible( fieldType ) )
+					.map( root, "customDslConverterField1_" + fieldType.getUniqueName() )
 			);
 		}
 	}
@@ -282,15 +287,17 @@ public abstract class AbstractPredicateTypeCheckingNoConversionIT<V extends Abst
 
 		public void contribute(SimpleMappedIndex<IndexBinding> mainIndex, BulkIndexer mainIndexer,
 				SimpleMappedIndex<CompatibleIndexBinding> compatibleIndex, BulkIndexer compatibleIndexer,
-				SimpleMappedIndex<RawFieldCompatibleIndexBinding> rawFieldCompatibleIndex, BulkIndexer rawFieldCompatibleIndexer,
+				SimpleMappedIndex<RawFieldCompatibleIndexBinding> rawFieldCompatibleIndex,
+				BulkIndexer rawFieldCompatibleIndexer,
 				SimpleMappedIndex<MissingFieldIndexBinding> missingFieldIndex, BulkIndexer missingFieldIndexer) {
 			mainIndexer.add( docId( 0 ), routingKey,
 					document -> initDocument( mainIndex, document, values.fieldValue( 0 ) ) );
 			compatibleIndexer.add( docId( 0 ), routingKey,
 					document -> initCompatibleDocument( compatibleIndex, document, values.fieldValue( 0 ) ) );
 			rawFieldCompatibleIndexer.add( docId( 0 ), routingKey,
-					document -> initRawFieldCompatibleDocument( rawFieldCompatibleIndex, document, values.fieldValue( 0 ) ) );
-			missingFieldIndexer.add( docId( MISSING_FIELD_INDEX_DOC_ORDINAL ), routingKey, document -> { } );
+					document -> initRawFieldCompatibleDocument( rawFieldCompatibleIndex, document, values.fieldValue(
+							0 ) ) );
+			missingFieldIndexer.add( docId( MISSING_FIELD_INDEX_DOC_ORDINAL ), routingKey, document -> {} );
 
 			if ( values.size() > 1 ) {
 				mainIndexer.add( docId( 1 ), routingKey,
@@ -298,7 +305,8 @@ public abstract class AbstractPredicateTypeCheckingNoConversionIT<V extends Abst
 				compatibleIndexer.add( docId( 1 ), routingKey,
 						document -> initCompatibleDocument( compatibleIndex, document, values.fieldValue( 1 ) ) );
 				rawFieldCompatibleIndexer.add( docId( 1 ), routingKey,
-						document -> initRawFieldCompatibleDocument( rawFieldCompatibleIndex, document, values.fieldValue( 1 ) ) );
+						document -> initRawFieldCompatibleDocument( rawFieldCompatibleIndex, document, values
+								.fieldValue( 1 ) ) );
 			}
 		}
 

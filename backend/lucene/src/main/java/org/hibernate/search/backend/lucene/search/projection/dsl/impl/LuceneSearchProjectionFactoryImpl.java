@@ -18,14 +18,14 @@ import org.apache.lucene.search.Explanation;
 
 public class LuceneSearchProjectionFactoryImpl<R, E>
 		extends AbstractSearchProjectionFactory<
-						LuceneSearchProjectionFactory<R, E>,
-						LuceneSearchProjectionIndexScope<?>,
-						R,
-						E
-				>
+				LuceneSearchProjectionFactory<R, E>,
+				LuceneSearchProjectionIndexScope<?>,
+				R,
+				E>
 		implements LuceneSearchProjectionFactory<R, E> {
 
-	public LuceneSearchProjectionFactoryImpl(SearchProjectionDslContext<LuceneSearchProjectionIndexScope<?>> dslContext) {
+	public LuceneSearchProjectionFactoryImpl(SearchProjectionDslContext<LuceneSearchProjectionIndexScope<
+			?>> dslContext) {
 		super( dslContext );
 	}
 

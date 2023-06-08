@@ -77,7 +77,8 @@ public class PropertyValues<EV, DV> {
 		}
 
 		public StringBasedBuilder<EV> add(EV entityModelValue, String documentFieldOrIdentifierValue) {
-			tuples.add( new SingleValue<>( entityModelValue, documentFieldOrIdentifierValue, documentFieldOrIdentifierValue ) );
+			tuples.add( new SingleValue<>( entityModelValue, documentFieldOrIdentifierValue,
+					documentFieldOrIdentifierValue ) );
 			return this;
 		}
 

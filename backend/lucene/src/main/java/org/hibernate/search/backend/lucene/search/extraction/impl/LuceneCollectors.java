@@ -201,9 +201,9 @@ public class LuceneCollectors {
 			// since we don't have access to the relation (EQUAL/GT_OR_EQUAL).
 			// So we get just one topDoc, and infer everything from there.
 			TopDocs firstTopDoc = topDocsCollector.topDocs( 0, 1 );
-			topDocs = firstTopDoc instanceof TopFieldDocs
-					? new TopFieldDocs( firstTopDoc.totalHits, new FieldDoc[0], ( (TopFieldDocs) firstTopDoc ).fields )
-					: new TopDocs( firstTopDoc.totalHits, new ScoreDoc[0] );
+			topDocs = firstTopDoc instanceof TopFieldDocs ?
+					new TopFieldDocs( firstTopDoc.totalHits, new FieldDoc[0], ( (TopFieldDocs) firstTopDoc ).fields ) :
+					new TopDocs( firstTopDoc.totalHits, new ScoreDoc[0] );
 			return;
 		}
 
@@ -230,7 +230,8 @@ public class LuceneCollectors {
 		}
 	}
 
-	private <T> CollectorSet buildTopDocsDataCollectors(TopDocsDataCollector.Factory<T> collectorFactory) throws IOException {
+	private <T> CollectorSet buildTopDocsDataCollectors(TopDocsDataCollector.Factory<
+			T> collectorFactory) throws IOException {
 		TopDocsDataCollectorExecutionContext executionContext = new TopDocsDataCollectorExecutionContext(
 				metadataResolver, indexSearcher,
 				rewrittenLuceneQuery,

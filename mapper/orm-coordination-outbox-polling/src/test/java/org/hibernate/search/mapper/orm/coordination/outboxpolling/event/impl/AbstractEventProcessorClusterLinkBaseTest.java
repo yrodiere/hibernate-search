@@ -12,8 +12,8 @@ import static org.mockito.Mockito.when;
 import java.time.Duration;
 import java.util.UUID;
 
-import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentType;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentState;
+import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.AgentType;
 import org.hibernate.search.mapper.orm.coordination.outboxpolling.cluster.impl.ShardAssignmentDescriptor;
 
 import org.junit.Before;
@@ -75,28 +75,30 @@ abstract class AbstractEventProcessorClusterLinkBaseTest extends AbstractEventPr
 	protected final EventProcessorClusterLinkPulseExpectations expectInitialStateAndPulseAfterDelay(Duration delay) {
 		return expect().pulseAgain( NOW.plus( delay ) )
 				.agent( SELF_ID, repositoryMockHelper.selfInitialState() != null
-						// If self created before this pulse:
+				// If self created before this pulse:
 						? repositoryMockHelper.selfInitialState()
 						// If self created by this pulse:
 						: AgentState.SUSPENDED )
 				.expiration( repositoryMockHelper.selfInitialExpiration() != null
-						// If self created before this pulse:
+				// If self created before this pulse:
 						? repositoryMockHelper.selfInitialExpiration()
 						// If self created by this pulse:
 						: NOW.plus( PULSE_EXPIRATION ) )
-				.shardAssignment( selfStaticShardAssignment() != null ? selfStaticShardAssignment()
-						: repositoryMockHelper.selfInitialShardAssignment() )
+				.shardAssignment( selfStaticShardAssignment() != null ?
+						selfStaticShardAssignment() : repositoryMockHelper.selfInitialShardAssignment() )
 				.build();
 	}
 
-	protected final EventProcessorClusterLinkPulseExpectations expectWaiting(ShardAssignmentDescriptor shardAssignment) {
+	protected final EventProcessorClusterLinkPulseExpectations expectWaiting(
+			ShardAssignmentDescriptor shardAssignment) {
 		return expect().pulseAgain( NOW.plus( POLLING_INTERVAL ) )
 				.agent( SELF_ID, AgentState.WAITING )
 				.shardAssignment( shardAssignment )
 				.build();
 	}
 
-	protected final EventProcessorClusterLinkPulseExpectations expectRunning(ShardAssignmentDescriptor shardAssignment) {
+	protected final EventProcessorClusterLinkPulseExpectations expectRunning(
+			ShardAssignmentDescriptor shardAssignment) {
 		return expect().processThenPulse( shardAssignment )
 				.agent( SELF_ID, AgentState.RUNNING )
 				.shardAssignment( shardAssignment )
@@ -104,12 +106,17 @@ abstract class AbstractEventProcessorClusterLinkBaseTest extends AbstractEventPr
 	}
 
 	protected abstract UUID other1Id();
+
 	protected abstract UUID other2Id();
+
 	protected abstract UUID other3Id();
 
 	protected abstract AgentType other1Type();
+
 	protected abstract AgentType selfType();
+
 	protected abstract AgentType other2Type();
+
 	protected abstract AgentType other3Type();
 
 	protected final boolean isOther1Static() {
@@ -145,13 +152,15 @@ abstract class AbstractEventProcessorClusterLinkBaseTest extends AbstractEventPr
 			case 3:
 				return new ShardAssignmentDescriptor( 4, 3 );
 			default:
-				throw new IllegalArgumentException( "Other with number " + otherNumber + " is not in the 4 node cluster." );
+				throw new IllegalArgumentException( "Other with number "
+						+ otherNumber
+						+ " is not in the 4 node cluster." );
 		}
 	}
 
 	protected final ShardAssignmentDescriptor selfStaticShardAssignment() {
-		return AgentType.EVENT_PROCESSING_STATIC_SHARDING.equals( selfType() )
-				? selfShardAssignmentIn4NodeCluster() : null;
+		return AgentType.EVENT_PROCESSING_STATIC_SHARDING.equals( selfType() ) ?
+				selfShardAssignmentIn4NodeCluster() : null;
 	}
 
 	protected final ShardAssignmentDescriptor shardAssignmentIn5NodeCluster() {

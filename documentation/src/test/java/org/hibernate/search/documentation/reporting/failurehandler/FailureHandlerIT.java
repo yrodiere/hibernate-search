@@ -24,7 +24,8 @@ import org.junit.Test;
 public class FailureHandlerIT {
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	@Rule
 	public StaticCounters staticCounters = new StaticCounters();

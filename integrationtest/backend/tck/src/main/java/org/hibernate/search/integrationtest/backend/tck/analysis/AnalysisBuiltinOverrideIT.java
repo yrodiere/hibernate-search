@@ -16,11 +16,11 @@ import org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.types.KeywordStringFieldTypeDescriptor;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.SimpleFieldModel;
-import org.hibernate.search.util.impl.integrationtest.mapper.stub.SingleFieldDocumentBuilder;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.TckBackendHelper;
 import org.hibernate.search.integrationtest.backend.tck.testsupport.util.rule.SearchSetupHelper;
 import org.hibernate.search.util.impl.integrationtest.common.assertion.SearchResultAssert;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.SimpleMappedIndex;
+import org.hibernate.search.util.impl.integrationtest.mapper.stub.SingleFieldDocumentBuilder;
 import org.hibernate.search.util.impl.integrationtest.mapper.stub.StubMappingScope;
 
 import org.junit.Before;
@@ -37,7 +37,8 @@ import org.junit.Test;
 public class AnalysisBuiltinOverrideIT {
 
 	@Rule
-	public final SearchSetupHelper setupHelper = new SearchSetupHelper( TckBackendHelper::createAnalysisBuiltinOverridesBackendSetupStrategy );
+	public final SearchSetupHelper setupHelper = new SearchSetupHelper(
+			TckBackendHelper::createAnalysisBuiltinOverridesBackendSetupStrategy );
 
 	private final SimpleMappedIndex<IndexBinding> index = SimpleMappedIndex.of( IndexBinding::new );
 
@@ -91,7 +92,8 @@ public class AnalysisBuiltinOverrideIT {
 				.hasDocRefHitsAnyOrder( index.typeName(), "nonempty" );
 	}
 
-	private SearchResultAssert<DocumentReference> assertMatchQuery(SimpleFieldModel<String> fieldModel, String valueToMatch) {
+	private SearchResultAssert<DocumentReference> assertMatchQuery(SimpleFieldModel<String> fieldModel,
+			String valueToMatch) {
 		StubMappingScope scope = index.createScope();
 
 		SearchQuery<DocumentReference> query = scope.query()
@@ -101,7 +103,8 @@ public class AnalysisBuiltinOverrideIT {
 		return assertThatQuery( query );
 	}
 
-	private void initData(SimpleFieldModel<String> fieldModel, Consumer<SingleFieldDocumentBuilder<String>> valueContributor) {
+	private void initData(SimpleFieldModel<String> fieldModel, Consumer<SingleFieldDocumentBuilder<
+			String>> valueContributor) {
 		index.bulkIndexer()
 				.add( fieldModel.reference, valueContributor )
 				.join();

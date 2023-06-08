@@ -22,7 +22,8 @@ class DocumentWorkCreateCall extends Call<DocumentWorkCreateCall> {
 	private final StubTreeNodeDiffer<StubDocumentNode> documentDiffer;
 
 	// Constructor for expected call
-	DocumentWorkCreateCall(String indexName, StubDocumentWork work, StubTreeNodeDiffer<StubDocumentNode> documentDiffer) {
+	DocumentWorkCreateCall(String indexName, StubDocumentWork work, StubTreeNodeDiffer<
+			StubDocumentNode> documentDiffer) {
 		this.documentKey = new DocumentKey( indexName, work.getTenantIdentifier(), work.getIdentifier() );
 		this.work = work;
 		this.documentDiffer = documentDiffer;

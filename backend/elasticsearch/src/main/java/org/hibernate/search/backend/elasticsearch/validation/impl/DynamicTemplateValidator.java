@@ -14,7 +14,8 @@ import com.google.gson.JsonElement;
 
 class DynamicTemplateValidator implements Validator<DynamicTemplate> {
 
-	private final Validator<JsonElement> extraAttributeValidator = new JsonElementValidator( new JsonElementEquivalence() );
+	private final Validator<JsonElement> extraAttributeValidator = new JsonElementValidator(
+			new JsonElementEquivalence() );
 	private final Validator<PropertyMapping> propertyMappingValidator = new PropertyMappingValidator();
 
 	@Override
@@ -49,7 +50,7 @@ class DynamicTemplateValidator implements Validator<DynamicTemplate> {
 					errorCollector, expected.getMapping(), actual.getMapping()
 			);
 		}
-			finally {
+		finally {
 			errorCollector.pop();
 		}
 	}

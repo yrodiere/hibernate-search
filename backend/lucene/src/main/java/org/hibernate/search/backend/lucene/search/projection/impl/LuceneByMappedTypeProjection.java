@@ -36,8 +36,10 @@ public class LuceneByMappedTypeProjection<P>
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "inners=" + inners
+		return getClass().getSimpleName()
+				+ "["
+				+ "inners="
+				+ inners
 				+ "]";
 	}
 
@@ -59,8 +61,10 @@ public class LuceneByMappedTypeProjection<P>
 
 		@Override
 		public String toString() {
-			return getClass().getSimpleName() + "["
-					+ "inners=" + inners
+			return getClass().getSimpleName()
+					+ "["
+					+ "inners="
+					+ inners
 					+ "]";
 		}
 

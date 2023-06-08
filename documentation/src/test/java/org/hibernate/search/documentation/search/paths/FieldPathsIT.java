@@ -11,6 +11,7 @@ import static org.hibernate.search.util.impl.integrationtest.mapper.orm.OrmUtils
 
 import java.util.List;
 import java.util.function.Consumer;
+
 import javax.persistence.EntityManagerFactory;
 
 import org.hibernate.search.documentation.testsupport.BackendConfigurations;
@@ -33,7 +34,8 @@ public class FieldPathsIT {
 	private static final int BOOK5_ID = 5;
 
 	@Rule
-	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations.simple() );
+	public DocumentationSetupHelper setupHelper = DocumentationSetupHelper.withSingleBackend( BackendConfigurations
+			.simple() );
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -64,7 +66,7 @@ public class FieldPathsIT {
 			// tag::nested_implicit[]
 			List<Book> hits = searchSession.search( Book.class )
 					.where( f -> f.match().field( "writers.firstName" ) // <1>
-											.matching( "isaac" ) )
+							.matching( "isaac" ) )
 					.fetchHits( 20 );
 			// end::nested_implicit[]
 			assertThat( hits )
@@ -118,11 +120,11 @@ public class FieldPathsIT {
 	private SearchPredicate matchFirstAndLastName(SearchPredicateFactory f,
 			String firstName, String lastName) {
 		return f.and(
-						f.match().field( "firstName" ) // <1>
-								.matching( firstName ),
-						f.match().field( "lastName" )
-								.matching( lastName )
-				)
+				f.match().field( "firstName" ) // <1>
+						.matching( firstName ),
+				f.match().field( "lastName" )
+						.matching( lastName )
+		)
 				.toPredicate();
 	}
 	// end::withRoot_method[]

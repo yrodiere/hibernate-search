@@ -40,27 +40,34 @@ public class BuildQueryBuilderTest {
 
 	@Test
 	public void forEntity_configured_indexed() {
-		QueryBuilder builder = sfHolder.getSearchFactory().buildQueryBuilder().forEntity( ConfiguredIndexed.class ).get();
+		QueryBuilder builder = sfHolder.getSearchFactory().buildQueryBuilder().forEntity( ConfiguredIndexed.class )
+				.get();
 		assertEquals( new MatchAllDocsQuery(), builder.all().createQuery() );
 	}
 
 	@Test
 	public void forEntity_configured_notIndexed() {
-		thrown.expectMessage( "No matching indexed entity types for types: [" + ConfiguredNotIndexed.class.getName() + "]" );
+		thrown.expectMessage( "No matching indexed entity types for types: ["
+				+ ConfiguredNotIndexed.class.getName()
+				+ "]" );
 		thrown.expectMessage( "These types are not indexed entity types, nor is any of their subtypes" );
 		sfHolder.getSearchFactory().buildQueryBuilder().forEntity( ConfiguredNotIndexed.class ).get();
 	}
 
 	@Test
 	public void forEntity_notConfigured_indexed() {
-		thrown.expectMessage( "No matching indexed entity types for types: [" + NotConfiguredIndexed.class.getName() + "]" );
+		thrown.expectMessage( "No matching indexed entity types for types: ["
+				+ NotConfiguredIndexed.class.getName()
+				+ "]" );
 		thrown.expectMessage( "These types are not indexed entity types, nor is any of their subtypes" );
 		sfHolder.getSearchFactory().buildQueryBuilder().forEntity( NotConfiguredIndexed.class ).get();
 	}
 
 	@Test
 	public void forEntity_notConfigured_notIndexed() {
-		thrown.expectMessage( "No matching indexed entity types for types: [" + NotConfiguredNotIndexed.class.getName() + "]" );
+		thrown.expectMessage( "No matching indexed entity types for types: ["
+				+ NotConfiguredNotIndexed.class.getName()
+				+ "]" );
 		thrown.expectMessage( "These types are not indexed entity types, nor is any of their subtypes" );
 		thrown.expectMessage( NotConfiguredNotIndexed.class.getSimpleName() );
 		sfHolder.getSearchFactory().buildQueryBuilder().forEntity( NotConfiguredNotIndexed.class ).get();

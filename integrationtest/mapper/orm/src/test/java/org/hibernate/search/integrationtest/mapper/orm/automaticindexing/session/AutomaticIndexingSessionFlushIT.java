@@ -9,6 +9,7 @@ package org.hibernate.search.integrationtest.mapper.orm.automaticindexing.sessio
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -31,7 +32,7 @@ import org.junit.rules.MethodRule;
  * Tests the impact of different kinds of {@link Session#flush()} on automatic indexing.
  * Each one has to trigger a {@link PojoIndexingPlan#process()} exactly when the flush is expected.
  */
-@TestForIssue( jiraKey = "HSEARCH-3360" )
+@TestForIssue(jiraKey = "HSEARCH-3360")
 public class AutomaticIndexingSessionFlushIT {
 
 	@ClassRule

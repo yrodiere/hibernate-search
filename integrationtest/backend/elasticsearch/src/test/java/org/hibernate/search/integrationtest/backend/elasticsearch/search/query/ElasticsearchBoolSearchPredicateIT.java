@@ -37,76 +37,132 @@ public class ElasticsearchBoolSearchPredicateIT {
 		SearchPredicateFactory f = index.createScope().predicate();
 
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"query\": {" +
-						"    \"bool\": {" +
-						"      \"must_not\": {" +
-						"        \"match\": {" +
-						"          \"fieldName\": {" +
-						"            \"query\": \"test\"" +
-						"          }" +
-						"        }" +
-						"      }" +
-						"    }" +
-						"  }" +
+				"{"
+						+
+						"  \"query\": {"
+						+
+						"    \"bool\": {"
+						+
+						"      \"must_not\": {"
+						+
+						"        \"match\": {"
+						+
+						"          \"fieldName\": {"
+						+
+						"            \"query\": \"test\""
+						+
+						"          }"
+						+
+						"        }"
+						+
+						"      }"
+						+
+						"    }"
+						+
+						"  }"
+						+
 						"}",
 				index.query()
-						.where( f.bool().must( f.not( f.not( f.not( f.not( f.not( f.not( f.not( f.match().field( "fieldName" ).matching( "test" ) ) ) ) ) ) ) ) ).toPredicate() )
+						.where( f.bool().must( f.not( f.not( f.not( f.not( f.not( f.not( f.not( f.match().field(
+								"fieldName" ).matching( "test" ) ) ) ) ) ) ) ) ).toPredicate() )
 						.toQuery()
 						.queryString()
 		);
 
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"query\": {" +
-						"    \"match\": {" +
-						"      \"fieldName\": {" +
-						"        \"query\": \"test\"" +
-						"      }" +
-						"    }" +
-						"  }" +
+				"{"
+						+
+						"  \"query\": {"
+						+
+						"    \"match\": {"
+						+
+						"      \"fieldName\": {"
+						+
+						"        \"query\": \"test\""
+						+
+						"      }"
+						+
+						"    }"
+						+
+						"  }"
+						+
 						"}",
 				index.query()
-						.where( f.not( f.bool().must( f.not( f.not( f.not( f.not( f.not( f.not( f.not( f.match().field( "fieldName" ).matching( "test" ) ) ) ) ) ) ) ) ) ).toPredicate() )
+						.where( f.not( f.bool().must( f.not( f.not( f.not( f.not( f.not( f.not( f.not( f.match().field(
+								"fieldName" ).matching( "test" ) ) ) ) ) ) ) ) ) ).toPredicate() )
 						.toQuery()
 						.queryString()
 		);
 
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"query\": {" +
-						"    \"bool\": {" +
-						"      \"must\": [" +
-						"        {" +
-						"          \"match\": {" +
-						"            \"fieldName\": {" +
-						"              \"query\": \"test1\"" +
-						"            }" +
-						"          }" +
-						"        }," +
-						"        {" +
-						"          \"match\": {" +
-						"            \"fieldName\": {" +
-						"              \"query\": \"test3\"" +
-						"            }" +
-						"          }" +
-						"        }" +
-						"      ]," +
-						"      \"must_not\": [" +
-						"        {" +
-						"          \"match_none\": {}" +
-						"        }," +
-						"        {" +
-						"          \"match\": {" +
-						"            \"fieldName\": {" +
-						"              \"query\": \"test2\"" +
-						"            }" +
-						"          }" +
-						"        }" +
-						"      ]," +
-						"      \"minimum_should_match\": \"0\"" +
-						"    }" +
-						"  }" +
+				"{"
+						+
+						"  \"query\": {"
+						+
+						"    \"bool\": {"
+						+
+						"      \"must\": ["
+						+
+						"        {"
+						+
+						"          \"match\": {"
+						+
+						"            \"fieldName\": {"
+						+
+						"              \"query\": \"test1\""
+						+
+						"            }"
+						+
+						"          }"
+						+
+						"        },"
+						+
+						"        {"
+						+
+						"          \"match\": {"
+						+
+						"            \"fieldName\": {"
+						+
+						"              \"query\": \"test3\""
+						+
+						"            }"
+						+
+						"          }"
+						+
+						"        }"
+						+
+						"      ],"
+						+
+						"      \"must_not\": ["
+						+
+						"        {"
+						+
+						"          \"match_none\": {}"
+						+
+						"        },"
+						+
+						"        {"
+						+
+						"          \"match\": {"
+						+
+						"            \"fieldName\": {"
+						+
+						"              \"query\": \"test2\""
+						+
+						"            }"
+						+
+						"          }"
+						+
+						"        }"
+						+
+						"      ],"
+						+
+						"      \"minimum_should_match\": \"0\""
+						+
+						"    }"
+						+
+						"  }"
+						+
 						"}",
 				index.query()
 						.where( f.bool()
@@ -126,18 +182,30 @@ public class ElasticsearchBoolSearchPredicateIT {
 		SearchPredicateFactory f = index.createScope().predicate();
 
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"query\": {" +
-						"    \"bool\": {" +
-						"      \"must_not\": {" +
-						"        \"match\": {" +
-						"          \"fieldName\": {" +
-						"            \"query\": \"test\"" +
-						"          }" +
-						"        }" +
-						"      }" +
-						"    }" +
-						"  }" +
+				"{"
+						+
+						"  \"query\": {"
+						+
+						"    \"bool\": {"
+						+
+						"      \"must_not\": {"
+						+
+						"        \"match\": {"
+						+
+						"          \"fieldName\": {"
+						+
+						"            \"query\": \"test\""
+						+
+						"          }"
+						+
+						"        }"
+						+
+						"      }"
+						+
+						"    }"
+						+
+						"  }"
+						+
 						"}",
 				index.query()
 						.where( f.not( f.match().field( "fieldName" ).matching( "test" ) ).toPredicate() )
@@ -147,22 +215,38 @@ public class ElasticsearchBoolSearchPredicateIT {
 
 		// having boost in the not predicate should result in having additional must{match_all{}}
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"query\": {" +
-						"    \"bool\": {" +
-						"      \"boost\": 5.0," +
-						"      \"must_not\": {" +
-						"        \"match\": {" +
-						"          \"fieldName\": {" +
-						"            \"query\": \"test\"" +
-						"          }" +
-						"        }" +
-						"      }," +
-						"      \"must\": {" +
-						"        \"match_all\": {}" +
-						"      }" +
-						"    }" +
-						"  }" +
+				"{"
+						+
+						"  \"query\": {"
+						+
+						"    \"bool\": {"
+						+
+						"      \"boost\": 5.0,"
+						+
+						"      \"must_not\": {"
+						+
+						"        \"match\": {"
+						+
+						"          \"fieldName\": {"
+						+
+						"            \"query\": \"test\""
+						+
+						"          }"
+						+
+						"        }"
+						+
+						"      },"
+						+
+						"      \"must\": {"
+						+
+						"        \"match_all\": {}"
+						+
+						"      }"
+						+
+						"    }"
+						+
+						"  }"
+						+
 						"}",
 				index.query()
 						.where( f.not( f.match().field( "fieldName" ).matching( "test" ) ).boost( 5.0F ).toPredicate() )
@@ -173,59 +257,99 @@ public class ElasticsearchBoolSearchPredicateIT {
 
 	@Test
 	public void nested() {
-		String expectedQueryJson = "{" +
-				"  \"query\": {" +
-				"    \"bool\": {" +
-				"      \"must\": [" +
-				"        {" +
-				"          \"match\": {" +
-				"            \"fieldName\": {" +
-				"              \"query\": \"test\"" +
-				"            }" +
-				"          }" +
-				"        }," +
-				"        {" +
-				"          \"nested\": {" +
-				"            \"path\": \"nested\"," +
-				"            \"query\": {" +
-				"              \"bool\": {" +
-				"                \"must\": [" +
-				"                  {" +
-				"                    \"range\": {" +
-				"                      \"nested.integer\": {" +
-				"                        \"gte\": 5," +
-				"                        \"lte\": 10" +
-				"                      }" +
-				"                    }" +
-				"                  }," +
-				"                  {" +
-				"                    \"match\": {" +
-				"                      \"nested.text\": {" +
-				"                        \"query\": \"value\"" +
-				"                      }" +
-				"                    }" +
-				"                  }" +
-				"                ]" +
-				"              }" +
-				"            }" +
-				"          }" +
-				"        }" +
-				"      ]" +
-				"    }" +
-				"  }" +
+		String expectedQueryJson = "{"
+				+
+				"  \"query\": {"
+				+
+				"    \"bool\": {"
+				+
+				"      \"must\": ["
+				+
+				"        {"
+				+
+				"          \"match\": {"
+				+
+				"            \"fieldName\": {"
+				+
+				"              \"query\": \"test\""
+				+
+				"            }"
+				+
+				"          }"
+				+
+				"        },"
+				+
+				"        {"
+				+
+				"          \"nested\": {"
+				+
+				"            \"path\": \"nested\","
+				+
+				"            \"query\": {"
+				+
+				"              \"bool\": {"
+				+
+				"                \"must\": ["
+				+
+				"                  {"
+				+
+				"                    \"range\": {"
+				+
+				"                      \"nested.integer\": {"
+				+
+				"                        \"gte\": 5,"
+				+
+				"                        \"lte\": 10"
+				+
+				"                      }"
+				+
+				"                    }"
+				+
+				"                  },"
+				+
+				"                  {"
+				+
+				"                    \"match\": {"
+				+
+				"                      \"nested.text\": {"
+				+
+				"                        \"query\": \"value\""
+				+
+				"                      }"
+				+
+				"                    }"
+				+
+				"                  }"
+				+
+				"                ]"
+				+
+				"              }"
+				+
+				"            }"
+				+
+				"          }"
+				+
+				"        }"
+				+
+				"      ]"
+				+
+				"    }"
+				+
+				"  }"
+				+
 				"}";
 
 		assertJsonEqualsIgnoringUnknownFields(
 				expectedQueryJson,
 				index.query().where( f -> f.bool()
-								.must( f.match().field( "fieldName" ).matching( "test" ) )
-								.must( f.nested( "nested" )
-										.add( f.range().field( "nested.integer" )
-												.between( 5, 10 ) )
-										.add( f.match().field( "nested.text" )
-												.matching( "value" )
-										) )
-						).toQuery()
+						.must( f.match().field( "fieldName" ).matching( "test" ) )
+						.must( f.nested( "nested" )
+								.add( f.range().field( "nested.integer" )
+										.between( 5, 10 ) )
+								.add( f.match().field( "nested.text" )
+										.matching( "value" )
+								) )
+				).toQuery()
 						.queryString()
 		);
 
@@ -233,17 +357,17 @@ public class ElasticsearchBoolSearchPredicateIT {
 		assertJsonEqualsIgnoringUnknownFields(
 				expectedQueryJson,
 				index.query().where( f -> f.bool()
-								.must( f.match().field( "fieldName" ).matching( "test" ) )
-								.must( f.nested( "nested" )
-										.add(
-												f.bool()
-														.must( f.range().field( "nested.integer" )
-																.between( 5, 10 ) )
-														.must( f.match().field( "nested.text" )
-																.matching( "value" )
-														)
-										) )
-						).toQuery()
+						.must( f.match().field( "fieldName" ).matching( "test" ) )
+						.must( f.nested( "nested" )
+								.add(
+										f.bool()
+												.must( f.range().field( "nested.integer" )
+														.between( 5, 10 ) )
+												.must( f.match().field( "nested.text" )
+														.matching( "value" )
+												)
+								) )
+				).toQuery()
 						.queryString()
 		);
 	}
@@ -252,72 +376,113 @@ public class ElasticsearchBoolSearchPredicateIT {
 	public void onlyNested() {
 		//bool query remains as there are > 1 clause
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"query\": {" +
-						"    \"nested\": {" +
-						"      \"path\": \"nested\"," +
-						"      \"query\": {" +
-						"        \"bool\": {" +
-						"          \"must\": [" +
-						"            {" +
-						"              \"range\": {" +
-						"                \"nested.integer\": {" +
-						"                  \"gte\": 5," +
-						"                  \"lte\": 10" +
-						"                }" +
-						"              }" +
-						"            }," +
-						"            {" +
-						"              \"match\": {" +
-						"                \"nested.text\": {" +
-						"                  \"query\": \"value\"" +
-						"                }" +
-						"              }" +
-						"            }" +
-						"          ]" +
-						"        }" +
-						"      }" +
-						"    }" +
-						"  }" +
+				"{"
+						+
+						"  \"query\": {"
+						+
+						"    \"nested\": {"
+						+
+						"      \"path\": \"nested\","
+						+
+						"      \"query\": {"
+						+
+						"        \"bool\": {"
+						+
+						"          \"must\": ["
+						+
+						"            {"
+						+
+						"              \"range\": {"
+						+
+						"                \"nested.integer\": {"
+						+
+						"                  \"gte\": 5,"
+						+
+						"                  \"lte\": 10"
+						+
+						"                }"
+						+
+						"              }"
+						+
+						"            },"
+						+
+						"            {"
+						+
+						"              \"match\": {"
+						+
+						"                \"nested.text\": {"
+						+
+						"                  \"query\": \"value\""
+						+
+						"                }"
+						+
+						"              }"
+						+
+						"            }"
+						+
+						"          ]"
+						+
+						"        }"
+						+
+						"      }"
+						+
+						"    }"
+						+
+						"  }"
+						+
 						"}",
 				index.query().where( f -> f.nested( "nested" )
-								.add(
-										f.bool()
-												.must( f.range().field( "nested.integer" )
-														.between( 5, 10 )
-												)
-												.must( f.match().field( "nested.text" )
-														.matching( "value" )
-												)
-								)
-						).toQuery()
+						.add(
+								f.bool()
+										.must( f.range().field( "nested.integer" )
+												.between( 5, 10 )
+										)
+										.must( f.match().field( "nested.text" )
+												.matching( "value" )
+										)
+						)
+				).toQuery()
 						.queryString()
 		);
 
 		// bool query is removed as there's only 1 clause
 		assertJsonEqualsIgnoringUnknownFields(
-				"{" +
-						"  \"query\": {" +
-						"    \"nested\": {" +
-						"      \"path\": \"nested\"," +
-						"      \"query\": {" +
-						"        \"range\": {" +
-						"          \"nested.integer\": {" +
-						"            \"gte\": 5," +
-						"            \"lte\": 10" +
-						"          }" +
-						"        }" +
-						"      }" +
-						"    }" +
-						"  }" +
+				"{"
+						+
+						"  \"query\": {"
+						+
+						"    \"nested\": {"
+						+
+						"      \"path\": \"nested\","
+						+
+						"      \"query\": {"
+						+
+						"        \"range\": {"
+						+
+						"          \"nested.integer\": {"
+						+
+						"            \"gte\": 5,"
+						+
+						"            \"lte\": 10"
+						+
+						"          }"
+						+
+						"        }"
+						+
+						"      }"
+						+
+						"    }"
+						+
+						"  }"
+						+
 						"}",
 				index.query().where( f -> f.nested( "nested" )
-								.add(
-										f.bool()
-												.must( f.range().field( "nested.integer" )
-														.between( 5, 10 ) )
-								)
-						).toQuery()
+						.add(
+								f.bool()
+										.must( f.range().field( "nested.integer" )
+												.between( 5, 10 ) )
+						)
+				).toQuery()
 						.queryString()
 		);
 	}

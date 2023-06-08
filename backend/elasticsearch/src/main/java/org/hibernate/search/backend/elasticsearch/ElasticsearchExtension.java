@@ -76,7 +76,8 @@ public final class ElasticsearchExtension<H, R, E, LOS>
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 
-	private static final ElasticsearchExtension<Object, Object, Object, Object> INSTANCE = new ElasticsearchExtension<>();
+	private static final ElasticsearchExtension<Object, Object, Object, Object> INSTANCE =
+			new ElasticsearchExtension<>();
 
 	/**
 	 * Get the extension with generic parameters automatically set as appropriate for the context in which it's used.

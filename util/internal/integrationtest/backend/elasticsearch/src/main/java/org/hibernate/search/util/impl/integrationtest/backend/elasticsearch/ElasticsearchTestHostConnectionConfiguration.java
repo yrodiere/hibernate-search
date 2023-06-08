@@ -42,8 +42,10 @@ public class ElasticsearchTestHostConnectionConfiguration {
 		this.awsSigningEnabled = enabledAsString == null ? null : Boolean.parseBoolean( enabledAsString );
 		this.awsRegion = System.getProperty( "test.elasticsearch.connection.aws.region" );
 		this.awsCredentialsType = System.getProperty( "test.elasticsearch.connection.aws.credentials.type" );
-		this.awsCredentialsAccessKeyId = System.getProperty( "test.elasticsearch.connection.aws.credentials.access_key_id" );
-		this.awsCredentialsSecretAccessKey = System.getProperty( "test.elasticsearch.connection.aws.credentials.secret_access_key" );
+		this.awsCredentialsAccessKeyId = System.getProperty(
+				"test.elasticsearch.connection.aws.credentials.access_key_id" );
+		this.awsCredentialsSecretAccessKey = System.getProperty(
+				"test.elasticsearch.connection.aws.credentials.secret_access_key" );
 
 		log.infof(
 				"Integration tests will connect to '%s' (AWS signing enabled: '%s')",
@@ -68,7 +70,8 @@ public class ElasticsearchTestHostConnectionConfiguration {
 			// AWS Elasticsearch Service is (sometimes) super slow for index creation.
 			// Just raise the default timeout so that we don't fail a full 30-min
 			// test run just for one small freeze.
-			properties.put( ElasticsearchIndexSettings.SCHEMA_MANAGEMENT_MINIMAL_REQUIRED_STATUS_WAIT_TIMEOUT, "60000" );
+			properties.put( ElasticsearchIndexSettings.SCHEMA_MANAGEMENT_MINIMAL_REQUIRED_STATUS_WAIT_TIMEOUT,
+					"60000" );
 		}
 	}
 }

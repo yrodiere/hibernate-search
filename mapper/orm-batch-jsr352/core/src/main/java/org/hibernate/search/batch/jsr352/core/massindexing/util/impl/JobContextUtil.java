@@ -6,12 +6,12 @@
  */
 package org.hibernate.search.batch.jsr352.core.massindexing.util.impl;
 
-
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.batch.runtime.context.JobContext;
 import javax.persistence.EntityManagerFactory;
 
@@ -48,7 +48,8 @@ public final class JobContextUtil {
 			String entityTypes) {
 		JobContextData data = (JobContextData) jobContext.getTransientUserData();
 		if ( data == null ) {
-			EntityManagerFactory emf = getEntityManagerFactory( emfRegistry, entityManagerFactoryNamespace, entityManagerFactoryReference );
+			EntityManagerFactory emf = getEntityManagerFactory( emfRegistry, entityManagerFactoryNamespace,
+					entityManagerFactoryReference );
 			data = createData( emf, entityTypes );
 			jobContext.setTransientUserData( data );
 		}

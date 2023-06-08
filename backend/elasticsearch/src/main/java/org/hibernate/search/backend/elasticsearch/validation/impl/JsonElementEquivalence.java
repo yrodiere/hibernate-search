@@ -14,7 +14,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-
 /**
  * Determines whether two {@link JsonElement}s should be considered equivalent.
  *
@@ -80,7 +79,7 @@ class JsonElementEquivalence {
 			return false;
 		}
 		int size = left.size();
-		for ( int i = 0 ; i < size ; ++i ) {
+		for ( int i = 0; i < size; ++i ) {
 			if ( !isNestedEquivalent( left.get( i ), right.get( i ) ) ) {
 				return false;
 			}

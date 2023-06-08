@@ -58,13 +58,12 @@ import com.google.gson.JsonObject;
 
 public final class ElasticsearchSearchIndexScopeImpl
 		extends AbstractSearchIndexScope<
-						ElasticsearchSearchIndexScopeImpl,
-						ElasticsearchIndexModel,
-						ElasticsearchSearchIndexNodeContext,
-						ElasticsearchSearchIndexCompositeNodeContext
-				>
+				ElasticsearchSearchIndexScopeImpl,
+				ElasticsearchIndexModel,
+				ElasticsearchSearchIndexNodeContext,
+				ElasticsearchSearchIndexCompositeNodeContext>
 		implements ElasticsearchSearchIndexScope<ElasticsearchSearchIndexScopeImpl>,
-				ElasticsearchSearchQueryIndexScope<ElasticsearchSearchIndexScopeImpl> {
+		ElasticsearchSearchQueryIndexScope<ElasticsearchSearchIndexScopeImpl> {
 
 	// Backend context
 	private final SearchBackendContext backendContext;
@@ -191,7 +190,8 @@ public final class ElasticsearchSearchIndexScopeImpl
 
 	@Override
 	public ElasticsearchSearchAggregationFactory aggregationFactory() {
-		return new ElasticsearchSearchAggregationFactoryImpl( SearchAggregationDslContext.root( this, predicateFactory() ) );
+		return new ElasticsearchSearchAggregationFactoryImpl( SearchAggregationDslContext.root( this,
+				predicateFactory() ) );
 	}
 
 	@Override

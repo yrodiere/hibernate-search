@@ -28,9 +28,12 @@ final class CompositeBeanHolder<T> implements BeanHolder<List<T>> {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "instances=" + instances
-				+ ", dependencies=" + dependencies
+		return getClass().getSimpleName()
+				+ "["
+				+ "instances="
+				+ instances
+				+ ", dependencies="
+				+ dependencies
 				+ "]";
 	}
 

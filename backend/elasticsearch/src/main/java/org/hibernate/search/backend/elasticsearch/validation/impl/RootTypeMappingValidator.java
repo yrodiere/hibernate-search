@@ -14,7 +14,8 @@ import org.hibernate.search.backend.elasticsearch.lowlevel.index.mapping.impl.Ro
 import org.hibernate.search.backend.elasticsearch.reporting.impl.ElasticsearchValidationMessages;
 
 public class RootTypeMappingValidator extends AbstractTypeMappingValidator<RootTypeMapping> {
-	private final Validator<List<NamedDynamicTemplate>> dynamicTemplatesValidator = new NamedDynamicTemplateListValidator();
+	private final Validator<List<NamedDynamicTemplate>> dynamicTemplatesValidator =
+			new NamedDynamicTemplateListValidator();
 	private final Validator<PropertyMapping> propertyMappingValidator = new PropertyMappingValidator();
 
 	@Override

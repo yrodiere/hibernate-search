@@ -104,6 +104,7 @@ public class BindingUsingPropertyMarkerAccessIT<TIndexed> {
 
 	private interface ModelPrimitives<T> {
 		Class<T> getModelClass();
+
 		T create(int id, double latitude, double longitude);
 	}
 
@@ -111,7 +112,8 @@ public class BindingUsingPropertyMarkerAccessIT<TIndexed> {
 	@Indexed(index = INDEX_NAME)
 	@GeoPointBinding(fieldName = "location")
 	public static final class PublicFieldAccessEntity {
-		static final ModelPrimitives<PublicFieldAccessEntity> PRIMITIVES = new ModelPrimitives<PublicFieldAccessEntity>() {
+		static final ModelPrimitives<PublicFieldAccessEntity> PRIMITIVES = new ModelPrimitives<
+				PublicFieldAccessEntity>() {
 			@Override
 			public Class<PublicFieldAccessEntity> getModelClass() {
 				return PublicFieldAccessEntity.class;
@@ -142,7 +144,8 @@ public class BindingUsingPropertyMarkerAccessIT<TIndexed> {
 	@Indexed(index = INDEX_NAME)
 	@GeoPointBinding(fieldName = "location")
 	public static final class ProtectedFieldAccessEntity {
-		static final ModelPrimitives<ProtectedFieldAccessEntity> PRIMITIVES = new ModelPrimitives<ProtectedFieldAccessEntity>() {
+		static final ModelPrimitives<ProtectedFieldAccessEntity> PRIMITIVES = new ModelPrimitives<
+				ProtectedFieldAccessEntity>() {
 			@Override
 			public Class<ProtectedFieldAccessEntity> getModelClass() {
 				return ProtectedFieldAccessEntity.class;
@@ -173,7 +176,8 @@ public class BindingUsingPropertyMarkerAccessIT<TIndexed> {
 	@Indexed(index = INDEX_NAME)
 	@GeoPointBinding(fieldName = "location")
 	public static final class PrivateFieldAccessEntity {
-		static final ModelPrimitives<PrivateFieldAccessEntity> PRIMITIVES = new ModelPrimitives<PrivateFieldAccessEntity>() {
+		static final ModelPrimitives<PrivateFieldAccessEntity> PRIMITIVES = new ModelPrimitives<
+				PrivateFieldAccessEntity>() {
 			@Override
 			public Class<PrivateFieldAccessEntity> getModelClass() {
 				return PrivateFieldAccessEntity.class;
@@ -204,7 +208,8 @@ public class BindingUsingPropertyMarkerAccessIT<TIndexed> {
 	@Indexed(index = INDEX_NAME)
 	@GeoPointBinding(fieldName = "location")
 	public static final class PublicMethodAccessEntity {
-		static final ModelPrimitives<PublicMethodAccessEntity> PRIMITIVES = new ModelPrimitives<PublicMethodAccessEntity>() {
+		static final ModelPrimitives<PublicMethodAccessEntity> PRIMITIVES = new ModelPrimitives<
+				PublicMethodAccessEntity>() {
 			@Override
 			public Class<PublicMethodAccessEntity> getModelClass() {
 				return PublicMethodAccessEntity.class;
@@ -265,7 +270,8 @@ public class BindingUsingPropertyMarkerAccessIT<TIndexed> {
 	@Indexed(index = INDEX_NAME)
 	@GeoPointBinding(fieldName = "location")
 	public static final class ProtectedMethodAccessEntity {
-		static final ModelPrimitives<ProtectedMethodAccessEntity> PRIMITIVES = new ModelPrimitives<ProtectedMethodAccessEntity>() {
+		static final ModelPrimitives<ProtectedMethodAccessEntity> PRIMITIVES = new ModelPrimitives<
+				ProtectedMethodAccessEntity>() {
 			@Override
 			public Class<ProtectedMethodAccessEntity> getModelClass() {
 				return ProtectedMethodAccessEntity.class;
@@ -326,7 +332,8 @@ public class BindingUsingPropertyMarkerAccessIT<TIndexed> {
 	@Indexed(index = INDEX_NAME)
 	@GeoPointBinding(fieldName = "location")
 	public static final class PrivateMethodAccessEntity {
-		static final ModelPrimitives<PrivateMethodAccessEntity> PRIMITIVES = new ModelPrimitives<PrivateMethodAccessEntity>() {
+		static final ModelPrimitives<PrivateMethodAccessEntity> PRIMITIVES = new ModelPrimitives<
+				PrivateMethodAccessEntity>() {
 			@Override
 			public Class<PrivateMethodAccessEntity> getModelClass() {
 				return PrivateMethodAccessEntity.class;

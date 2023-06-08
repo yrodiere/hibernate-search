@@ -26,8 +26,10 @@ class DepthFilter {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "includeDepth=" + includeDepth
+		return getClass().getSimpleName()
+				+ "["
+				+ "includeDepth="
+				+ includeDepth
 				+ "]";
 	}
 

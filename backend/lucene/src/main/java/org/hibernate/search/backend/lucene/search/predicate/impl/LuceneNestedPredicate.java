@@ -36,7 +36,8 @@ public class LuceneNestedPredicate extends AbstractLuceneSingleFieldPredicate {
 		return createNestedQuery( context.getNestedPath(), absoluteFieldPath, nestedPredicate.toQuery( childContext ) );
 	}
 
-	public static Query createNestedQuery(String parentNestedDocumentPath, String nestedDocumentPath, Query nestedQuery) {
+	public static Query createNestedQuery(String parentNestedDocumentPath, String nestedDocumentPath,
+			Query nestedQuery) {
 		if ( nestedDocumentPath.equals( parentNestedDocumentPath ) ) {
 			return nestedQuery;
 		}
@@ -63,7 +64,8 @@ public class LuceneNestedPredicate extends AbstractLuceneSingleFieldPredicate {
 		}
 
 		@Override
-		public NestedPredicateBuilder create(LuceneSearchIndexScope<?> scope, LuceneSearchIndexCompositeNodeContext node) {
+		public NestedPredicateBuilder create(LuceneSearchIndexScope<?> scope,
+				LuceneSearchIndexCompositeNodeContext node) {
 			return new Builder( scope, node );
 		}
 	}

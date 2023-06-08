@@ -119,7 +119,7 @@ public class DynamicMapBaseIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( INDEX1_NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							1L,
 							reference( entityTypeName, "1" )
@@ -204,7 +204,7 @@ public class DynamicMapBaseIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( INDEX1_NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							1L,
 							reference( entityTypeName, "1" )
@@ -264,7 +264,7 @@ public class DynamicMapBaseIT {
 			for ( int i = 0; i < 100; i++ ) {
 				int id = i;
 				backendMock.expectWorks( INDEX1_NAME, DocumentCommitStrategy.NONE, DocumentRefreshStrategy.NONE )
-						.add( String.valueOf( id ), b -> b.field( "title","Hyperion " + id ) );
+						.add( String.valueOf( id ), b -> b.field( "title", "Hyperion " + id ) );
 			}
 
 			try {
@@ -323,7 +323,7 @@ public class DynamicMapBaseIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( INDEX1_NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							1L,
 							reference( entityTypeName, "Hyperion" )
@@ -359,11 +359,13 @@ public class DynamicMapBaseIT {
 							TypeMappingStep entityATypeMapping = context.programmaticMapping().type( entityATypeName );
 							entityATypeMapping.property( "propertyOfA" ).fullTextField().analyzer( "myAnalyzer" );
 
-							TypeMappingStep entityA_BTypeMapping = context.programmaticMapping().type( entityA_BTypeName );
+							TypeMappingStep entityA_BTypeMapping = context.programmaticMapping().type(
+									entityA_BTypeName );
 							entityA_BTypeMapping.indexed().index( INDEX1_NAME );
 							entityA_BTypeMapping.property( "propertyOfB" ).genericField();
 
-							TypeMappingStep entityA_CTypeMapping = context.programmaticMapping().type( entityA_CTypeName );
+							TypeMappingStep entityA_CTypeMapping = context.programmaticMapping().type(
+									entityA_CTypeName );
 							entityA_CTypeMapping.indexed().index( INDEX2_NAME );
 							entityA_CTypeMapping.property( "propertyOfC" ).genericField();
 						}
@@ -409,7 +411,7 @@ public class DynamicMapBaseIT {
 
 			backendMock.expectSearchObjects(
 					Arrays.asList( INDEX1_NAME, INDEX2_NAME ),
-					b -> { },
+					b -> {},
 					StubSearchWorkBehavior.of(
 							2L,
 							reference( entityA_BTypeName, "1" ),
@@ -502,7 +504,8 @@ public class DynamicMapBaseIT {
 							bookTypeMapping.property( "title" ).fullTextField().analyzer( "myAnalyzer" );
 							bookTypeMapping.property( "quote" ).indexedEmbedded();
 
-							TypeMappingStep quoteTypeMapping = context.programmaticMapping().type( QuoteEmbeddable.class );
+							TypeMappingStep quoteTypeMapping = context.programmaticMapping().type(
+									QuoteEmbeddable.class );
 							quoteTypeMapping.property( "author" ).fullTextField().analyzer( "myAnalyzer" );
 							quoteTypeMapping.property( "content" ).fullTextField().analyzer( "myAnalyzer" );
 						}
@@ -558,7 +561,8 @@ public class DynamicMapBaseIT {
 							bookTypeMapping.property( "title" ).fullTextField().analyzer( "myAnalyzer" );
 							bookTypeMapping.property( "quotes" ).indexedEmbedded();
 
-							TypeMappingStep quoteTypeMapping = context.programmaticMapping().type( QuoteEmbeddable.class );
+							TypeMappingStep quoteTypeMapping = context.programmaticMapping().type(
+									QuoteEmbeddable.class );
 							quoteTypeMapping.property( "author" ).fullTextField().analyzer( "myAnalyzer" );
 							quoteTypeMapping.property( "content" ).fullTextField().analyzer( "myAnalyzer" );
 						}
@@ -643,7 +647,7 @@ public class DynamicMapBaseIT {
 			backendMock.expectWorks( INDEX1_NAME )
 					.add( "1", b -> b
 							.field( "title", book.get( "title" ) )
-							.field( "quotes", quote1 , quote2 )
+							.field( "quotes", quote1, quote2 )
 					);
 		} );
 		backendMock.verifyExpectationsMet();
@@ -964,10 +968,10 @@ public class DynamicMapBaseIT {
 							bookTypeMapping.property( "title" ).fullTextField().analyzer( "myAnalyzer" );
 							bookTypeMapping.property( "quotes" )
 									.indexedEmbedded()
-											.extractor( BuiltinContainerExtractors.MAP_KEY )
+									.extractor( BuiltinContainerExtractors.MAP_KEY )
 									// Necessary because there's no concept of "mappedBy" in hbm.xml.
 									.associationInverseSide( PojoModelPath.ofValue( "book" ) )
-											.extractor( BuiltinContainerExtractors.MAP_KEY );
+									.extractor( BuiltinContainerExtractors.MAP_KEY );
 
 							TypeMappingStep quoteTypeMapping = context.programmaticMapping().type( quoteTypeName );
 							quoteTypeMapping.property( "author" ).fullTextField().analyzer( "myAnalyzer" );

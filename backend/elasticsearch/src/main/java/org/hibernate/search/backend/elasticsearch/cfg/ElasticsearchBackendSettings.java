@@ -328,7 +328,8 @@ public final class ElasticsearchBackendSettings {
 		@Deprecated
 		public static final MultiTenancyStrategyName MULTI_TENANCY_STRATEGY = MultiTenancyStrategyName.NONE;
 
-		public static final TypeNameMappingStrategyName MAPPING_TYPE_NAME_STRATEGY = TypeNameMappingStrategyName.DISCRIMINATOR;
+		public static final TypeNameMappingStrategyName MAPPING_TYPE_NAME_STRATEGY =
+				TypeNameMappingStrategyName.DISCRIMINATOR;
 		public static final BeanReference<IndexLayoutStrategy> LAYOUT_STRATEGY =
 				BeanReference.of( IndexLayoutStrategy.class, SimpleIndexLayoutStrategy.NAME );
 		public static final int SCROLL_TIMEOUT = 60;

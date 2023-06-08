@@ -15,5 +15,4 @@ package org.hibernate.search.engine.backend.types;
  *
  * @see org.hibernate.search.engine.backend.document.model.dsl.IndexSchemaElement#field(String, IndexFieldType)
  */
-public interface IndexFieldType<F> {
-}
+public interface IndexFieldType<F> {}

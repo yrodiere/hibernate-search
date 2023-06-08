@@ -63,7 +63,9 @@ public class CallQueue<C extends Call<? super C>> {
 		callsExpectedOutOfOrder.add( expectedCall );
 	}
 
-	public final synchronized <C2 extends C, T> T verify(C2 actualCall, BiFunction<C, C2, CallBehavior<T>> callVerifyFunction,
+	public final synchronized <C2 extends C, T> T verify(C2 actualCall, BiFunction<C,
+			C2,
+			CallBehavior<T>> callVerifyFunction,
 			Function<C2, T> noExpectationBehavior) {
 		try {
 			log.tracef( "Verifying %s", actualCall );
@@ -75,7 +77,9 @@ public class CallQueue<C extends Call<? super C>> {
 		}
 	}
 
-	private synchronized <C2 extends C, T> T tryVerify(C2 actualCall, BiFunction<C, C2, CallBehavior<T>> callVerifyFunction,
+	private synchronized <C2 extends C, T> T tryVerify(C2 actualCall, BiFunction<C,
+			C2,
+			CallBehavior<T>> callVerifyFunction,
 			Function<C2, T> noExpectationBehavior) {
 		boolean allowDuplicates = settings.allowDuplicates();
 
@@ -98,12 +102,14 @@ public class CallQueue<C extends Call<? super C>> {
 		// Maybe this is just a duplicate call?
 		// If duplicate calls are allowed, try to match against last matching calls.
 		if ( allowDuplicates ) {
-			behavior = tryMatchInOrder( lastMatchingCallInOrder, actualCall, callVerifyFunction, duplicateCallsMatchingErrors );
+			behavior = tryMatchInOrder( lastMatchingCallInOrder, actualCall, callVerifyFunction,
+					duplicateCallsMatchingErrors );
 			if ( behavior != null ) {
 				return behavior.execute();
 			}
 
-			behavior = tryMatchOutOfOrder( lastMatchingCallsOutOfOrder, actualCall, callVerifyFunction, duplicateCallsMatchingErrors );
+			behavior = tryMatchOutOfOrder( lastMatchingCallsOutOfOrder, actualCall, callVerifyFunction,
+					duplicateCallsMatchingErrors );
 			if ( behavior != null ) {
 				return behavior.execute();
 			}
@@ -142,7 +148,9 @@ public class CallQueue<C extends Call<? super C>> {
 		}
 		else {
 			// We didn't find any similar call
-			throw createFailure( "Unexpected call: " + actualCall + "; details:\n"
+			throw createFailure( "Unexpected call: "
+					+ actualCall
+					+ "; details:\n"
 					+ new ToStringTreeBuilder( ToStringStyle.multilineDelimiterStructure() ).value( actualCall ) );
 		}
 	}
@@ -234,7 +242,9 @@ public class CallQueue<C extends Call<? super C>> {
 		remaining.addAll( callsExpectedInOrder );
 		remaining.addAll( callsExpectedOutOfOrder );
 		if ( !remaining.isEmpty() ) {
-			fail( "Missing call: expected " + remaining + "; details:\n"
+			fail( "Missing call: expected "
+					+ remaining
+					+ "; details:\n"
 					+ new ToStringTreeBuilder( ToStringStyle.multilineDelimiterStructure() ).value( remaining ) );
 		}
 	}

@@ -20,8 +20,9 @@ import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategy
 import org.hibernate.search.mapper.pojo.work.IndexingPlanSynchronizationStrategyConfigurationContext;
 import org.hibernate.search.mapper.pojo.work.SearchIndexingPlanExecutionReport;
 
-@SuppressWarnings( "deprecation" )
-public class DelegatingAutomaticIndexingSynchronizationStrategy implements org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationStrategy {
+@SuppressWarnings("deprecation")
+public class DelegatingAutomaticIndexingSynchronizationStrategy
+		implements org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationStrategy {
 
 	private final IndexingPlanSynchronizationStrategy delegate;
 
@@ -30,7 +31,8 @@ public class DelegatingAutomaticIndexingSynchronizationStrategy implements org.h
 	}
 
 	@Override
-	public void apply(org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationConfigurationContext context) {
+	public void apply(
+			org.hibernate.search.mapper.orm.automaticindexing.session.AutomaticIndexingSynchronizationConfigurationContext context) {
 		delegate.apply( new IndexingPlanSynchronizationStrategyConfigurationContext() {
 			@Override
 			public void documentCommitStrategy(DocumentCommitStrategy strategy) {
@@ -43,9 +45,10 @@ public class DelegatingAutomaticIndexingSynchronizationStrategy implements org.h
 			}
 
 			@Override
-			public void indexingFutureHandler(Consumer<? super CompletableFuture<? extends SearchIndexingPlanExecutionReport>> handler) {
-				context.indexingFutureHandler( report ->
-						handler.accept( report.thenApply( HibernateOrmDelegatingSearchIndexingPlanExecutionReport::new ) )
+			public void indexingFutureHandler(Consumer<? super CompletableFuture<
+					? extends SearchIndexingPlanExecutionReport>> handler) {
+				context.indexingFutureHandler( report -> handler.accept( report.thenApply(
+						HibernateOrmDelegatingSearchIndexingPlanExecutionReport::new ) )
 				);
 			}
 
@@ -65,11 +68,13 @@ public class DelegatingAutomaticIndexingSynchronizationStrategy implements org.h
 		return delegate;
 	}
 
-	private static class HibernateOrmDelegatingSearchIndexingPlanExecutionReport implements SearchIndexingPlanExecutionReport {
+	private static class HibernateOrmDelegatingSearchIndexingPlanExecutionReport
+			implements SearchIndexingPlanExecutionReport {
 
 		private final org.hibernate.search.mapper.orm.work.SearchIndexingPlanExecutionReport report;
 
-		private HibernateOrmDelegatingSearchIndexingPlanExecutionReport(org.hibernate.search.mapper.orm.work.SearchIndexingPlanExecutionReport report) {
+		private HibernateOrmDelegatingSearchIndexingPlanExecutionReport(
+				org.hibernate.search.mapper.orm.work.SearchIndexingPlanExecutionReport report) {
 			this.report = report;
 		}
 

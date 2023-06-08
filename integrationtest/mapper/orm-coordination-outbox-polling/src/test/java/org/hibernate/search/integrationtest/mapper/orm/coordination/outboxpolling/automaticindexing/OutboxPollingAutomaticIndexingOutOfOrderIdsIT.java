@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -44,9 +45,11 @@ import org.junit.Test;
 
 public class OutboxPollingAutomaticIndexingOutOfOrderIdsIT {
 
-	private static final String OUTBOX_EVENT_UPDATE_ID_AND_TIME = "UPDATE HSEARCH_OUTBOX_EVENT SET ID = ?, PROCESSAFTER = ? WHERE ID = ?";
+	private static final String OUTBOX_EVENT_UPDATE_ID_AND_TIME =
+			"UPDATE HSEARCH_OUTBOX_EVENT SET ID = ?, PROCESSAFTER = ? WHERE ID = ?";
 
-	private static final String OUTBOX_EVENT_SELECT_ORDERED_IDS_AND_PROCESS_AFTER_TIME = "SELECT ID, PROCESSAFTER FROM HSEARCH_OUTBOX_EVENT ORDER BY PROCESSAFTER, ID";
+	private static final String OUTBOX_EVENT_SELECT_ORDERED_IDS_AND_PROCESS_AFTER_TIME =
+			"SELECT ID, PROCESSAFTER FROM HSEARCH_OUTBOX_EVENT ORDER BY PROCESSAFTER, ID";
 
 	private final OutboxEventFilter eventFilter = new OutboxEventFilter();
 
@@ -104,11 +107,14 @@ public class OutboxPollingAutomaticIndexingOutOfOrderIdsIT {
 			assertThat( events ).hasSize( 3 );
 			// Correct order when ordered by id (you'll have to trust me on that)
 			// add
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), IndexedEntity.INDEX, "1", null );
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), IndexedEntity.INDEX, "1",
+					null );
 			// update
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), IndexedEntity.INDEX, "1", null );
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), IndexedEntity.INDEX, "1",
+					null );
 			// delete
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 2 ), IndexedEntity.INDEX, "1", null );
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 2 ), IndexedEntity.INDEX, "1",
+					null );
 		} );
 
 		with( sessionFactory ).runInTransaction( session -> {
@@ -121,11 +127,14 @@ public class OutboxPollingAutomaticIndexingOutOfOrderIdsIT {
 			assertThat( events ).hasSize( 3 );
 			// Out-of-order when ordered by id (you'll have to trust me on that)
 			// delete
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), IndexedEntity.INDEX, "1", null );
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), IndexedEntity.INDEX, "1",
+					null );
 			// update
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), IndexedEntity.INDEX, "1", null );
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), IndexedEntity.INDEX, "1",
+					null );
 			// add
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 2 ), IndexedEntity.INDEX, "1", null );
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 2 ), IndexedEntity.INDEX, "1",
+					null );
 		} );
 
 		// Only a delete work is expected to be executed by the time the outbox events are processed;
@@ -213,9 +222,11 @@ public class OutboxPollingAutomaticIndexingOutOfOrderIdsIT {
 			assertThat( events ).hasSize( 2 );
 			// Correct order when ordered by id (you'll have to trust me on that)
 			// delete
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), IndexedEntity.INDEX, "1", null );
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), IndexedEntity.INDEX, "1",
+					null );
 			// add
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), IndexedEntity.INDEX, "1", null );
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), IndexedEntity.INDEX, "1",
+					null );
 		} );
 
 		with( sessionFactory ).runInTransaction( session -> {
@@ -228,9 +239,11 @@ public class OutboxPollingAutomaticIndexingOutOfOrderIdsIT {
 			assertThat( events ).hasSize( 2 );
 			// Out-of-order when ordered by id (you'll have to trust me on that)
 			// add
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), IndexedEntity.INDEX, "1", null );
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), IndexedEntity.INDEX, "1",
+					null );
 			// delete
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), IndexedEntity.INDEX, "1", null );
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), IndexedEntity.INDEX, "1",
+					null );
 		} );
 
 		backendMock.expectWorks( IndexedEntity.INDEX )
@@ -323,10 +336,12 @@ public class OutboxPollingAutomaticIndexingOutOfOrderIdsIT {
 			List<OutboxEvent> events = eventFilter.findOutboxEventsNoFilter( session );
 			assertThat( events ).hasSize( 2 );
 			// Correct order when ordered by id
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), RoutedIndexedEntity.NAME, "1",
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), RoutedIndexedEntity.NAME,
+					"1",
 					"SECOND", "FIRST"
 			);
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), RoutedIndexedEntity.NAME, "1",
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), RoutedIndexedEntity.NAME,
+					"1",
 					"THIRD", "SECOND"
 			);
 		} );
@@ -341,10 +356,12 @@ public class OutboxPollingAutomaticIndexingOutOfOrderIdsIT {
 			List<OutboxEvent> events = eventFilter.findOutboxEventsNoFilter( session );
 			assertThat( events ).hasSize( 2 );
 			// Out-of-order when ordered by id
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), RoutedIndexedEntity.NAME, "1",
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 0 ), RoutedIndexedEntity.NAME,
+					"1",
 					"THIRD", "SECOND"
 			);
-			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), RoutedIndexedEntity.NAME, "1",
+			OutboxPollingAutomaticIndexingEventSendingIT.verifyOutboxEntry( events.get( 1 ), RoutedIndexedEntity.NAME,
+					"1",
 					"SECOND", "FIRST"
 			);
 		} );
@@ -375,7 +392,8 @@ public class OutboxPollingAutomaticIndexingOutOfOrderIdsIT {
 			if ( javaVersionString != null && !javaVersionString.trim().isEmpty() ) {
 				boolean oldJavaVersion = javaVersionString.startsWith( "1." );
 				assumeTrue(
-						"The H2 actual maximum available precision depends on operating system and JVM and can be 3 (milliseconds) or higher. " +
+						"The H2 actual maximum available precision depends on operating system and JVM and can be 3 (milliseconds) or higher. "
+								+
 								"Higher precision is not available before Java 9.",
 						!( oldJavaVersion && env.getDialect() instanceof H2Dialect )
 				);

@@ -24,7 +24,8 @@ class DocumentWorkExecuteCall extends Call<DocumentWorkExecuteCall> {
 	private final CompletableFuture<?> completableFuture;
 
 	// Constructor for expected call
-	DocumentWorkExecuteCall(String indexName, StubDocumentWork work, StubTreeNodeDiffer<StubDocumentNode> documentDiffer,
+	DocumentWorkExecuteCall(String indexName, StubDocumentWork work, StubTreeNodeDiffer<
+			StubDocumentNode> documentDiffer,
 			CompletableFuture<?> completableFuture) {
 		this.documentKey = new DocumentKey( indexName, work.getTenantIdentifier(), work.getIdentifier() );
 		this.work = work;

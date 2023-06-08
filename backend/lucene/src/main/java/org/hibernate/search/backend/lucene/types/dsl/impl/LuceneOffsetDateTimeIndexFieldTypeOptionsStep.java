@@ -15,7 +15,8 @@ import org.hibernate.search.backend.lucene.types.codec.impl.LuceneOffsetDateTime
 import org.hibernate.search.backend.lucene.types.codec.impl.Storage;
 
 class LuceneOffsetDateTimeIndexFieldTypeOptionsStep
-		extends AbstractLuceneTemporalIndexFieldTypeOptionsStep<LuceneOffsetDateTimeIndexFieldTypeOptionsStep, OffsetDateTime> {
+		extends AbstractLuceneTemporalIndexFieldTypeOptionsStep<LuceneOffsetDateTimeIndexFieldTypeOptionsStep,
+				OffsetDateTime> {
 
 	LuceneOffsetDateTimeIndexFieldTypeOptionsStep(LuceneIndexFieldTypeBuildContext buildContext) {
 		super( buildContext, OffsetDateTime.class );

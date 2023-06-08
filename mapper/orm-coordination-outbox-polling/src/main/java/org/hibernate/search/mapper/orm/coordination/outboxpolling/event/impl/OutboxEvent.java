@@ -8,6 +8,7 @@ package org.hibernate.search.mapper.orm.coordination.outboxpolling.event.impl;
 
 import java.time.Instant;
 import java.util.UUID;
+
 import javax.persistence.Transient;
 
 public final class OutboxEvent {
@@ -44,15 +45,35 @@ public final class OutboxEvent {
 
 	@Override
 	public String toString() {
-		return "OutboxEvent{" +
-				"id=" + id +
-				", entityName='" + entityName + '\'' +
-				", entityId='" + entityId + '\'' +
-				", entityIdHash='" + entityIdHash + '\'' +
-				", retries=" + retries +
-				", processAfter=" + processAfter +
-				", status=" + status +
-				", originalEntityId=" + originalEntityId +
+		return "OutboxEvent{"
+				+
+				"id="
+				+ id
+				+
+				", entityName='"
+				+ entityName
+				+ '\''
+				+
+				", entityId='"
+				+ entityId
+				+ '\''
+				+
+				", entityIdHash='"
+				+ entityIdHash
+				+ '\''
+				+
+				", retries="
+				+ retries
+				+
+				", processAfter="
+				+ processAfter
+				+
+				", status="
+				+ status
+				+
+				", originalEntityId="
+				+ originalEntityId
+				+
 				'}';
 	}
 

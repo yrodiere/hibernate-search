@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+
 import javax.persistence.FlushModeType;
 import javax.persistence.LockModeType;
 import javax.persistence.Parameter;
@@ -99,7 +100,7 @@ public class FullTextQueryImpl extends AbstractProducedQuery implements FullText
 	public FullTextQueryImpl(Query luceneQuery, SessionImplementor session,
 			V5MigrationOrmSearchIntegratorAdapter searchIntegrator,
 			V5MigrationSearchSession<SearchLoadingOptionsStep> searchSession,
-			Class<?> ... entities) {
+			Class<?>... entities) {
 		super( session, new ParameterMetadataImpl( null, null ) );
 		this.searchSession = searchSession;
 		this.hSearchQuery = searchIntegrator.createHSQuery( luceneQuery, searchSession,
@@ -119,7 +120,8 @@ public class FullTextQueryImpl extends AbstractProducedQuery implements FullText
 
 	@Override
 	public Iterator iterate() {
-		throw new UnsupportedOperationException( "iterate() is not implemented in Hibernate Search queries. Use scroll() instead." );
+		throw new UnsupportedOperationException(
+				"iterate() is not implemented in Hibernate Search queries. Use scroll() instead." );
 	}
 
 	@Override
@@ -228,9 +230,7 @@ public class FullTextQueryImpl extends AbstractProducedQuery implements FullText
 
 	@Override
 	public int getMaxResults() {
-		return maxResults == null || maxResults == -1
-				? Integer.MAX_VALUE
-				: maxResults;
+		return maxResults == null || maxResults == -1 ? Integer.MAX_VALUE : maxResults;
 	}
 
 	@Override
@@ -494,7 +494,8 @@ public class FullTextQueryImpl extends AbstractProducedQuery implements FullText
 	}
 
 	@Override
-	public FullTextQueryImpl initializeObjectsWith(ObjectLookupMethod lookupMethod, DatabaseRetrievalMethod retrievalMethod) {
+	public FullTextQueryImpl initializeObjectsWith(ObjectLookupMethod lookupMethod,
+			DatabaseRetrievalMethod retrievalMethod) {
 		switch ( lookupMethod ) {
 			case SKIP:
 				this.cacheLookupStrategy = EntityLoadingCacheLookupStrategy.SKIP;
@@ -534,13 +535,15 @@ public class FullTextQueryImpl extends AbstractProducedQuery implements FullText
 	@Deprecated
 	@Override
 	public FullTextQueryImpl setEntity(int position, Object val) {
-		throw new UnsupportedOperationException( "setEntity(int,Object) is not implemented in Hibernate Search queries" );
+		throw new UnsupportedOperationException(
+				"setEntity(int,Object) is not implemented in Hibernate Search queries" );
 	}
 
 	@Deprecated
 	@Override
 	public FullTextQueryImpl setEntity(String name, Object val) {
-		throw new UnsupportedOperationException( "setEntity(String,Object) is not implemented in Hibernate Search queries" );
+		throw new UnsupportedOperationException(
+				"setEntity(String,Object) is not implemented in Hibernate Search queries" );
 	}
 
 	@Override

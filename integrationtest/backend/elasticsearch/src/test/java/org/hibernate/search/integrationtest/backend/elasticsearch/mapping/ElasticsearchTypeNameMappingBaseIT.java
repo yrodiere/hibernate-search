@@ -42,8 +42,7 @@ public class ElasticsearchTypeNameMappingBaseIT {
 	private static final String ID_2 = "id_2";
 
 	private enum IrregularIndexNameSupport {
-		YES,
-		NO
+		YES, NO
 	}
 
 	@Parameterized.Parameters(name = "{0}")
@@ -228,11 +227,11 @@ public class ElasticsearchTypeNameMappingBaseIT {
 
 	private void initData() {
 		BulkIndexer indexer1 = index1.bulkIndexer()
-				.add( ID_1, document -> { } )
-				.add( ID_2, document -> { } );
+				.add( ID_1, document -> {} )
+				.add( ID_2, document -> {} );
 		BulkIndexer indexer2 = index2.bulkIndexer()
-				.add( ID_1, document -> { } )
-				.add( ID_2, document -> { } );
+				.add( ID_1, document -> {} )
+				.add( ID_2, document -> {} );
 		indexer1.join( indexer2 );
 	}
 

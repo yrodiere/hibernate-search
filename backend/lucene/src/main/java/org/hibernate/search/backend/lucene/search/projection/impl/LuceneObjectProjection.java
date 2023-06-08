@@ -58,8 +58,8 @@ public class LuceneObjectProjection<E, V, P>
 		this.nested = builder.objectField.type().nested();
 		this.filter = builder.filter;
 		this.nestedDocumentPath = builder.objectField.nestedDocumentPath();
-		this.requiredContextAbsoluteFieldPath = accumulatorProvider.isSingleValued()
-				? builder.objectField.closestMultiValuedParentAbsolutePath() : null;
+		this.requiredContextAbsoluteFieldPath = accumulatorProvider.isSingleValued() ?
+				builder.objectField.closestMultiValuedParentAbsolutePath() : null;
 		this.inners = inners;
 		this.compositor = compositor;
 		this.accumulatorProvider = accumulatorProvider;
@@ -67,10 +67,14 @@ public class LuceneObjectProjection<E, V, P>
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "["
-				+ "inners=" + Arrays.toString( inners )
-				+ ", compositor=" + compositor
-				+ ", accumulatorProvider=" + accumulatorProvider
+		return getClass().getSimpleName()
+				+ "["
+				+ "inners="
+				+ Arrays.toString( inners )
+				+ ", compositor="
+				+ compositor
+				+ ", accumulatorProvider="
+				+ accumulatorProvider
 				+ "]";
 	}
 
@@ -107,10 +111,14 @@ public class LuceneObjectProjection<E, V, P>
 
 		@Override
 		public String toString() {
-			return getClass().getSimpleName() + "["
-					+ "inners=" + Arrays.toString( inners )
-					+ ", compositor=" + compositor
-					+ ", accumulator=" + accumulator
+			return getClass().getSimpleName()
+					+ "["
+					+ "inners="
+					+ Arrays.toString( inners )
+					+ ", compositor="
+					+ compositor
+					+ ", accumulator="
+					+ accumulator
 					+ "]";
 		}
 
@@ -149,7 +157,8 @@ public class LuceneObjectProjection<E, V, P>
 
 			@Override
 			protected A accumulate(A accumulated, int docId) throws IOException {
-				if ( filterBitSetProducer != null && ( filterMatchedBitSet == null || !filterMatchedBitSet.get( docId ) ) ) {
+				if ( filterBitSetProducer != null
+						&& ( filterMatchedBitSet == null || !filterMatchedBitSet.get( docId ) ) ) {
 					// The object didn't match the given filter: act as if it didn't exist.
 					// Note that filters are used to detect flattened objects that were null upon indexing.
 					return accumulated;
@@ -192,7 +201,8 @@ public class LuceneObjectProjection<E, V, P>
 							log.missingSupportHintForObjectProjectionOnMultiValuedFlattenedObjectNode(), null );
 				}
 				try {
-					filter = LuceneSearchPredicate.from( scope, node.queryElement( PredicateTypeKeys.EXISTS, scope ).build() )
+					filter = LuceneSearchPredicate.from( scope, node.queryElement( PredicateTypeKeys.EXISTS, scope )
+							.build() )
 							.toQuery( PredicateRequestContext.root() );
 				}
 				catch (SearchException e) {
@@ -227,7 +237,7 @@ public class LuceneObjectProjection<E, V, P>
 						objectField.eventContext() );
 			}
 			LuceneSearchProjection<?>[] typedInners =
-					new LuceneSearchProjection<?>[ inners.length ];
+					new LuceneSearchProjection<?>[inners.length];
 			for ( int i = 0; i < inners.length; i++ ) {
 				typedInners[i] = LuceneSearchProjection.from( scope, inners[i] );
 			}

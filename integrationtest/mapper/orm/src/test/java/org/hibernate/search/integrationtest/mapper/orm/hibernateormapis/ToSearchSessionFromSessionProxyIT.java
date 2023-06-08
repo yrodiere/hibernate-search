@@ -16,6 +16,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -120,8 +121,10 @@ public class ToSearchSessionFromSessionProxyIT {
 							assertThat( sessionFromOtherThread ).isNotSameAs( sessionFromFirstThread );
 							SearchSession searchSessionFromOtherThread = Search.session( sessionFromOtherThread );
 							assertNotNull( searchSessionFromOtherThread );
-							assertThat( searchSessionFromOtherThread.toEntityManager() ).isSameAs( sessionFromOtherThread );
-							assertThat( searchSessionFromOtherThread.toOrmSession() ).isSameAs( sessionFromOtherThread );
+							assertThat( searchSessionFromOtherThread.toEntityManager() ).isSameAs(
+									sessionFromOtherThread );
+							assertThat( searchSessionFromOtherThread.toOrmSession() ).isSameAs(
+									sessionFromOtherThread );
 						},
 						executorService
 				);

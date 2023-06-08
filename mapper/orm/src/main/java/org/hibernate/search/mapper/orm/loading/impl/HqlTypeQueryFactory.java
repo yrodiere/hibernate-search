@@ -46,8 +46,13 @@ class HqlTypeQueryFactory<E, I> extends ConditionalExpressionQueryFactory<E, I> 
 	@Override
 	public Query<E> createQueryForLoadByUniqueProperty(SessionImplementor session, String parameterName) {
 		return session.createQuery(
-				"select e from " + entityPersister.getEntityName()
-						+ " e where " + uniquePropertyName + " in (:" + parameterName + ")",
+				"select e from "
+						+ entityPersister.getEntityName()
+						+ " e where "
+						+ uniquePropertyName
+						+ " in (:"
+						+ parameterName
+						+ ")",
 				(Class<E>) entityPersister.getMappedClass()
 		);
 	}

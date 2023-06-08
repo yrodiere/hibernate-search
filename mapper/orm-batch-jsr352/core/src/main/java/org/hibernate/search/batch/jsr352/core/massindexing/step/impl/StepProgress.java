@@ -57,9 +57,11 @@ public class StepProgress implements Serializable {
 		long prevDone = partitionProgress.getOrDefault( pp.getPartitionId(), 0L );
 		long currDone = pp.getWorkDone();
 		if ( currDone < prevDone ) {
-			throw new ArithmeticException( "Current indexed works (" + currDone
+			throw new ArithmeticException( "Current indexed works ("
+					+ currDone
 					+ " indexed) is smaller than previous indexed works ("
-					+ prevDone + " indexed)." );
+					+ prevDone
+					+ " indexed)." );
 		}
 		increment( pp.getEntityName(), currDone - prevDone );
 		increment( pp.getPartitionId(), currDone - prevDone );

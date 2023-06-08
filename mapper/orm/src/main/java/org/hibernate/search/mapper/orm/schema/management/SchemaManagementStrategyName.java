@@ -22,7 +22,7 @@ public enum SchemaManagementStrategyName {
 	 * <p>
 	 * With Elasticsearch, indexes and their schema will have to be created explicitly.
 	 */
-	NONE( "none" ),
+	NONE("none"),
 
 	/**
 	 * A strategy that does not change indexes nor their schema,
@@ -40,7 +40,7 @@ public enum SchemaManagementStrategyName {
 	 * <strong>Warning:</strong> with the Lucene backend, validation is limited to checking that the indexes exist,
 	 * because local Lucene indexes don't have a schema.
 	 */
-	VALIDATE( "validate" ),
+	VALIDATE("validate"),
 
 	/**
 	 * A strategy that creates missing indexes and their schema on startup,
@@ -50,7 +50,7 @@ public enum SchemaManagementStrategyName {
 	 * a newly created index will always be empty.
 	 * To populate indexes with pre-existing data, use mass indexing.
 	 */
-	CREATE( "create" ),
+	CREATE("create"),
 
 	/**
 	 * A strategy that creates missing indexes and their schema on startup,
@@ -67,7 +67,7 @@ public enum SchemaManagementStrategyName {
 	 * <strong>Warning:</strong> with the Lucene backend, validation is limited to checking that the indexes exist,
 	 * because local Lucene indexes don't have a schema.
 	 */
-	CREATE_OR_VALIDATE( "create-or-validate" ),
+	CREATE_OR_VALIDATE("create-or-validate"),
 
 	/**
 	 * A strategy that creates missing indexes and their schema on startup,
@@ -92,7 +92,7 @@ public enum SchemaManagementStrategyName {
 	 * a field changed its type from string to integer, an analyzer definition changed, ...
 	 * In such cases, the only workaround is to drop and re-create the index.
 	 */
-	CREATE_OR_UPDATE( "create-or-update" ),
+	CREATE_OR_UPDATE("create-or-update"),
 
 	/**
 	 * A strategy that drops existing indexes and re-creates them and their schema on startup.
@@ -102,7 +102,7 @@ public enum SchemaManagementStrategyName {
 	 * the newly created indexes will always be empty.
 	 * To populate indexes with pre-existing data, use mass indexing.
 	 */
-	DROP_AND_CREATE( "drop-and-create" ),
+	DROP_AND_CREATE("drop-and-create"),
 
 	/**
 	 * A strategy that drops existing indexes and re-creates them and their schema on startup,
@@ -113,7 +113,7 @@ public enum SchemaManagementStrategyName {
 	 * the newly created indexes will always be empty.
 	 * To populate indexes with pre-existing data, use mass indexing.
 	 */
-	DROP_AND_CREATE_AND_DROP( "drop-and-create-and-drop" );
+	DROP_AND_CREATE_AND_DROP("drop-and-create-and-drop");
 
 	private static final Log log = LoggerFactory.make( Log.class, MethodHandles.lookup() );
 

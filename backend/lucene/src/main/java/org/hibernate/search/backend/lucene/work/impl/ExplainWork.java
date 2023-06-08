@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 
 import org.hibernate.search.backend.lucene.logging.impl.Log;
-import org.hibernate.search.backend.lucene.lowlevel.query.impl.MappedTypeNameQuery;
 import org.hibernate.search.backend.lucene.lowlevel.common.impl.MetadataFields;
+import org.hibernate.search.backend.lucene.lowlevel.query.impl.MappedTypeNameQuery;
 import org.hibernate.search.backend.lucene.lowlevel.query.impl.Queries;
 import org.hibernate.search.util.common.AssertionFailure;
 import org.hibernate.search.util.common.logging.impl.LoggerFactory;
@@ -80,7 +80,8 @@ class ExplainWork implements ReadWork<Explanation> {
 		BooleanQuery.Builder builder = new BooleanQuery.Builder()
 				.add( Queries.mainDocumentQuery(), BooleanClause.Occur.FILTER )
 				.add( Queries.term( MetadataFields.idFieldName(), explainedDocumentId ), BooleanClause.Occur.FILTER )
-				.add( new MappedTypeNameQuery( context.getIndexReaderMetadataResolver(), explainedDocumentTypeName ), BooleanClause.Occur.FILTER );
+				.add( new MappedTypeNameQuery( context.getIndexReaderMetadataResolver(), explainedDocumentTypeName ),
+						BooleanClause.Occur.FILTER );
 		if ( explainedDocumentFilter != null ) {
 			builder.add( explainedDocumentFilter, BooleanClause.Occur.FILTER );
 		}

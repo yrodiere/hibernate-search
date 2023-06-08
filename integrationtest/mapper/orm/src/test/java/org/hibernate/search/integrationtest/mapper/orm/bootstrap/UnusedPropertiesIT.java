@@ -7,6 +7,7 @@
 package org.hibernate.search.integrationtest.mapper.orm.bootstrap;
 
 import java.util.function.Consumer;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -63,7 +64,8 @@ public class UnusedPropertiesIT {
 				"some properties in the given configuration are not used",
 				"[" + KEY_UNUSED + "]",
 				"To disable this warning, set the property '"
-						+ EngineSettings.CONFIGURATION_PROPERTY_CHECKING_STRATEGY + "' to 'ignore'" )
+						+ EngineSettings.CONFIGURATION_PROPERTY_CHECKING_STRATEGY
+						+ "' to 'ignore'" )
 				.once();
 		logged.expectMessage( "Configuration property tracking is disabled" )
 				.never();
@@ -87,7 +89,7 @@ public class UnusedPropertiesIT {
 		 * Check that the "configuration property tracking strategy" property is considered used.
 		 * This is a corner case worth testing, since the property may legitimately be accessed before
 		 * we start tracking property usage.
- 		 */
+		 */
 		logged.expectMessage( "some properties in the given configuration are not used" )
 				.never();
 		logged.expectMessage( "Configuration property tracking is disabled" )

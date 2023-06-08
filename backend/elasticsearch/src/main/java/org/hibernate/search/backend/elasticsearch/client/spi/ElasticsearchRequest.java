@@ -14,11 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
-import org.hibernate.search.engine.common.timing.Deadline;
 import org.hibernate.search.backend.elasticsearch.util.spi.URLEncodedString;
+import org.hibernate.search.engine.common.timing.Deadline;
 
 import com.google.gson.JsonObject;
-
 
 public final class ElasticsearchRequest {
 
@@ -51,8 +50,10 @@ public final class ElasticsearchRequest {
 	private ElasticsearchRequest(Builder builder) {
 		this.method = builder.method;
 		this.path = builder.pathBuilder.toString();
-		this.parameters = builder.parameters == null ? Collections.emptyMap() : Collections.unmodifiableMap( builder.parameters );
-		this.bodyParts = builder.bodyParts == null ? Collections.emptyList() : Collections.unmodifiableList( builder.bodyParts );
+		this.parameters = builder.parameters == null ?
+				Collections.emptyMap() : Collections.unmodifiableMap( builder.parameters );
+		this.bodyParts = builder.bodyParts == null ?
+				Collections.emptyList() : Collections.unmodifiableList( builder.bodyParts );
 		this.deadline = builder.deadline;
 	}
 
