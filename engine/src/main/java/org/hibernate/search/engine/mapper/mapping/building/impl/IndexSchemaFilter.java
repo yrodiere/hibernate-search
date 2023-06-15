@@ -7,6 +7,7 @@
 package org.hibernate.search.engine.mapper.mapping.building.impl;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Set;
 
 import org.hibernate.search.engine.logging.impl.Log;
 import org.hibernate.search.engine.mapper.mapping.building.spi.IndexedEmbeddedDefinition;
@@ -203,17 +204,58 @@ class IndexSchemaFilter {
 			}
 			else {
 				String path = parent.getPathFromSameIndexedEmbeddedSinceNoCompositionLimits( definition );
-				return path == null ? null : path + this.definition.relativePrefix();
+				if ( path == null ) {
+					return null;
+				}
+
+				String pathToCheck = pathLeadingToCurrentNode();
+				if ( isPotentiallyExcludedPath( pathToCheck ) ) {
+					return null;
+				}
+
+				return path + this.definition.relativePrefix();
 			}
 		}
 		else {
 			/*
 			 * No recursion limits, no parent: this is the root.
-			 * I we reach this point, it means there was no recursion limit at all,
+			 * If we reach this point, it means there was no recursion limit at all,
 			 * but we did not encounter the IndexedEmbedded we were looking for.
 			 */
 			return null;
 		}
+	}
+
+	private String pathLeadingToCurrentNode() {
+		IndexSchemaFilter localParent = parent;
+		StringBuilder path = new StringBuilder();
+		while ( localParent != null && localParent.definition != null ) {
+			path.insert( 0, localParent.definition.relativePrefix() );
+			localParent = localParent.parent;
+		}
+		// we won't need the last dot if it's there:
+		return path.lastIndexOf( "." ) == path.length() - 1 ? path.substring( 0, path.length() - 1 ) : path.toString();
+	}
+
+	private boolean isPotentiallyExcludedPath(String path) {
+		return ( this.definition != null && isPotentiallyExcludedPath( path, this.definition.excludePaths() ) )
+				|| ( parent != null && parent.isPotentiallyExcludedPath( path ) );
+	}
+
+	private boolean isPotentiallyExcludedPath(String path, Set<String> excludePaths) {
+		for ( String excludePath : excludePaths ) {
+			if ( excludePath.startsWith( path ) ) {
+				String remainingPath = excludePath.substring( path.length() );
+				// we want to check that we are not "cutting" a part of a property.
+				// for example if we have a path causing a problem as `node1.node2` but our filter is defined as `node1.node2WithSomeSuffix`
+				// we want to say that `node1.node2` is not excluded:
+				if ( remainingPath.isEmpty() || remainingPath.startsWith( "." ) ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public IndexSchemaFilter compose(IndexedEmbeddedDefinition definition, IndexedEmbeddedPathTracker pathTracker) {
