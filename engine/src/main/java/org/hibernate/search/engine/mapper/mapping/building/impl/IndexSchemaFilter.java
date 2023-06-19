@@ -204,9 +204,7 @@ class IndexSchemaFilter {
 			return null;
 		}
 
-		String cycle = findCycleDifferently( definition );
-
-		return cycle;
+		return findCycle( definition );
 	}
 
 	/*
@@ -218,12 +216,12 @@ class IndexSchemaFilter {
 	 *
 	 * If nothing breaks the cycle -- we are going to return the "shortest" cycle found to be reported to the user.
 	 */
-	private String findCycleDifferently(IndexedEmbeddedDefinition definitionToBeAdded) {
+	private String findCycle(IndexedEmbeddedDefinition definitionToBeAdded) {
 		// we will use these lists for step 2, see below:
 		List<String> paths = new ArrayList<>();
-		List<IndexedEmbeddedDefinition> nodes = new ArrayList<>();
+		List<IndexSchemaFilter> nodes = new ArrayList<>();
 		paths.add( this.definition.relativePrefix() );
-		nodes.add( this.definition );
+		nodes.add( this );
 
 		String shortestCycle = null;
 		String longestCycle = null;
@@ -234,7 +232,7 @@ class IndexSchemaFilter {
 
 			path.insert( 0, localParent.definition.relativePrefix() );
 			paths.add( 0, path.toString() );
-			nodes.add( 0, localParent.definition );
+			nodes.add( 0, localParent );
 
 			if ( localParent.definition.equals( definitionToBeAdded ) ) {
 				longestCycle = path.toString();
@@ -271,15 +269,14 @@ class IndexSchemaFilter {
 		Set<IndexedEmbeddedDefinition> encounteredNodesSoFar = new HashSet<>();
 		// we don't want to start from the beginning but from the next node from the one at which we've found the longest cycle:
 		for ( int index = paths.indexOf( longestCycle ); index < nodes.size(); index++ ) {
-			IndexedEmbeddedDefinition node = nodes.get( index );
+			IndexSchemaFilter node = nodes.get( index );
 			// so we know that we are in the cycle, and we know what the cycle looks like, if the current node can break a cycle
 			// it would mean that if we make a cycle permutation that starts with the "current node ^" and this same node can
 			// potentially break the cycle -- then we are ok to break it:
 
-			if ( encounteredNodesSoFar.add( node )
-					&& isPotentiallyExcludedPath(
-					removeDot( pathPermutation( longestCycle, paths.get( index ), node.relativePrefix() ) ),
-					node.excludePaths()
+			if ( encounteredNodesSoFar.add( node.definition )
+					&& node.pathFilter.isPotentiallyExcluded(
+					removeDot( pathPermutation( longestCycle, paths.get( index ), node.definition.relativePrefix() ) )
 			) ) {
 				return null;
 			}
@@ -297,8 +294,6 @@ class IndexSchemaFilter {
 		// but with the following node:
 		return ( cycle.substring( path.length() ) + cycle.substring( 0, path.length() ) ) // <-- making a permutation
 				.substring( currentNodeRelativePath.length() ); // <-- dropping the current node
-
-
 	}
 
 	private String removeDot(String string) {
@@ -307,28 +302,10 @@ class IndexSchemaFilter {
 
 	private boolean isPotentiallyExcludedPath(String path, IndexSchemaFilter node) {
 		return node.definition != null && (
-				isPotentiallyExcludedPath( removeDot( path ), node.definition.excludePaths() )
+				node.pathFilter.isPotentiallyExcluded( removeDot( path ) )
 						|| ( node.parent != null && isPotentiallyExcludedPath(
 						node.definition.relativePrefix() + path, node.parent
 				) ) );
-	}
-
-	private boolean isPotentiallyExcludedPath(String path, Set<String> excludePaths) {
-		for ( String excludePath : excludePaths ) {
-			if ( excludePath.startsWith( path ) ) {
-				String remainingPath = excludePath.substring( path.length() );
-				// we want to check that we are not "cutting" a part of a property.
-				// for example if we have a path causing a problem as `node1.node2` but our filter is defined as `node1.node2WithSomeSuffix`
-				// we want to say that `node1.node2` is not excluded:
-				if ( remainingPath.isEmpty() || remainingPath.startsWith( "." ) ) {
-					return true;
-				}
-			}
-			// If we'd wanted to make things work for prefixes without dots in the end, we'd need to modify the above ^ conditions.
-			// since there we are checking that the remainingPath starts with a dot, when in case of prefixes-with-no-dots - there won't be a dot....
-		}
-
-		return false;
 	}
 
 	public IndexSchemaFilter compose(IndexedEmbeddedDefinition definition, IndexedEmbeddedPathTracker pathTracker) {
