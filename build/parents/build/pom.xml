@@ -113,7 +113,7 @@
 
         <!-- >>> WildFly dependencies -->
         <!-- This is used to generate a link to the WildFly documentation -->
-        <version.org.wildfly>29.0.0.Final</version.org.wildfly>
+        <version.org.wildfly>30.0.0.Final</version.org.wildfly>
 
         <!-- Test dependencies -->
 
