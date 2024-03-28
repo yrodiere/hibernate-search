@@ -1,6 +1,7 @@
 Guidelines for contributing to Hibernate Search
 ====
 
+
 Contributions from the community are essential in keeping Hibernate Search strong and successful.
 
 This guide focuses on how to contribute back to Hibernate Search using GitHub pull requests.
